@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,300;1,400&display=swap');
+
+/* Hero carousel editorial full-bleed. Namespace: .h / .hs / .hm / .hc / .hk / .ht / .hv / .ha / .hn / .hb
+   (nombres cortos a propósito: cada byte de más acá sale del presupuesto de custom_seal_code,
+   que es donde vive el JS que arma este markup). */
+
+.h {
+  width: 100%;
+  height: 90vh;
+  min-height: 560px;
+  max-height: 900px;
+  position: relative;
+  overflow: hidden;
+  background: #003845;
+}
+
+.hs {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+
+.hs.active {
+  opacity: 1;
+}
+
+.hs::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(0,20,30,0.85) 0%, rgba(0,20,30,0.35) 55%, rgba(0,20,30,0.10) 100%);
+}
+
+.hm {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hs:nth-of-type(1) .hm {
+  object-position: center 60%;
+}
+
+.hs:nth-of-type(2) .hm {
+  object-position: right center;
+}
+
+.hs:nth-of-type(3) .hm {
+  object-position: center 30%;
+}
+
+.hs:nth-of-type(4) .hm {
+  object-position: center 25%;
+}
+
+.hc {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0 56px 52px;
+  max-width: 600px;
+  z-index: 2;
+}
+
+.hk {
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(204,163,82,0.85);
+  margin-bottom: 14px;
+  font-weight: 400;
+}
+
+.ht {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 48px;
+  line-height: 1.15;
+  font-style: italic;
+  font-weight: 300;
+  color: #F4F0E8;
+  margin: 0 0 10px;
+}
+
+.ht em {
+  color: #CCA352;
+  font-style: italic;
+}
+
+.hv {
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  color: rgba(244,240,232,0.5);
+  margin: 14px 0 22px;
+  letter-spacing: 0.02em;
+}
+
+.ha {
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #F4F0E8;
+  background: #C4694F;
+  padding: 12px 24px;
+  border-radius: 24px;
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 400;
+  border: none;
+  cursor: pointer;
+}
+
+.hn {
+  position: absolute;
+  top: 28px;
+  right: 52px;
+  z-index: 10;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  color: rgba(244,240,232,0.45);
+  letter-spacing: 0.08em;
+}
+
+.hb {
+  position: absolute;
+  bottom: 52px;
+  z-index: 10;
+  width: 28px;
+  height: 1.5px;
+  background: rgba(244,240,232,0.2);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.hb:nth-of-type(1) { right: 166px; }
+.hb:nth-of-type(2) { right: 128px; }
+.hb:nth-of-type(3) { right: 90px; }
+.hb:nth-of-type(4) { right: 52px; }
+
+.hb.active {
+  background: rgba(244,240,232,0.2);
+}
+
+.hb.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  background: #CCA352;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: bl-progress 4.5s linear forwards;
+}
+
+@keyframes bl-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (max-width: 768px) {
+  .h {
+    height: 88vh;
+    min-height: 480px;
+  }
+
+  .hc {
+    padding: 0 24px 36px;
+  }
+
+  .ht {
+    font-size: 30px;
+  }
+
+  .hn {
+    top: 20px;
+    right: 24px;
+  }
+
+  .hb:nth-of-type(1) { right: 138px; }
+  .hb:nth-of-type(2) { right: 100px; }
+  .hb:nth-of-type(3) { right: 62px; }
+  .hb:nth-of-type(4) { right: 24px; }
+
+  .hb {
+    bottom: 36px;
+  }
+
+  .hk {
+    font-size: 9px;
+  }
+}
