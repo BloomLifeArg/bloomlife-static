@@ -147,6 +147,13 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden !important;
+  /* Red de seguridad del clamp. En el Chrome donde se testeó esto,
+     display:-webkit-box se rechaza (computa flow-root) incluso seteado inline
+     con !important, mientras que display:flex entra al toque — el clamp igual
+     funciona porque Chrome nuevo aplica line-clamp sobre contenedores block.
+     Este max-height garantiza las 2 líneas también donde no pase ninguna de
+     las dos cosas: 2 líneas x line-height 1.5 = 3em exactos. */
+  max-height: 3em;
 }
 
 /* ---------- "Leer más →" ---------- */
