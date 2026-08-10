@@ -212,9 +212,9 @@
     font-size: 9px;
   }
 
-  .hs:nth-of-type(1) .hm { object-position: 65% 55%; }
+  .hs:nth-of-type(1) .hm { object-position: 68% 55%; }
   .hs:nth-of-type(2) .hm { object-position: 78% center; }
   .hs:nth-of-type(3) .hm { object-position: 80% center; }
-  .hs:nth-of-type(4) .hm { object-position: 48% 50%; }
-  .hs:nth-of-type(5) .hm { object-position: 58% 38%; }
+  .hs:nth-of-type(4) .hm { object-position: 30% 45%; }
+  .hs:nth-of-type(5) .hm { object-position: 60% 40%; }
 }
