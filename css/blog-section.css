@@ -1,207 +1,198 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-/* Sección "Del blog" del home.
-   Módulo nativo reutilizado: "Banners promocionales".
-   Ancla: .section-banners-home[data-store="home-banner-promotional"]
+/* Sección "Del blog" del home. Namespace propio: .bl-blog
+ *
+ * El markup lo arma js/blog-home.js, así que acá no dependemos de ninguna clase
+ * del tema. Esa es la diferencia con la versión anterior, que reutilizaba el
+ * módulo nativo "Banners promocionales" y tenía que ganarle por especificidad a
+ * las reglas !important de la franja de beneficios (.section-banners-home
+ * .js-banner-title y compañía). Ese problema ya no existe.
+ *
+ * Inter no viene cargada por el tema (Morelia trae Work Sans y Public Sans), por
+ * eso el @import de arriba. Ojo: las ~16 reglas del css_code que dicen "Inter"
+ * vienen cayendo a sans-serif de sistema desde siempre.
+ *
+ * Archivo externo servido por jsDelivr: el minificador de TN no lo toca, así que
+ * repetir un mismo selector dentro y fuera de un @media es seguro acá (dentro de
+ * css_code no lo sería). */
 
-   POR QUÉ EL ANCLA ES POR ATRIBUTO Y NO POR CLASE
-   .section-banners-home la comparten TRES secciones del home:
-     - Banners de categorías  -> franja de beneficios (Foco/Energía/Descanso/Piel)
-     - Banners de novedades   -> Fundadores
-     - Banners promocionales  -> esta
-   Anclar por .section-banners-home a secas rompe las otras dos.
-
-   POR QUÉ HAY !important REPETIDO
-   css_code ya tiene reglas con !important pensadas para la franja:
-     .section-banners-home .js-banner-title      (Georgia 15px dorado, todo !important)
-     .section-banners-home .textbanner-paragraph (Inter 10px, color claro, todo !important)
-     .section-banners-home .js-banner-title::before (cuadro 22x22 para los íconos SVG)
-   Son especificidad 0,2,0. Las de acá son 0,3,0, así que ganan — pero solo si
-   también llevan !important, porque !important vs !important lo define la especificidad.
-   El ::before hay que matarlo o cada card del blog arranca con un cuadro vacío de 22px.
-
-   NOTA DE CASCADA
-   Este archivo entra por @import al tope de css_code, o sea que carga ANTES del
-   resto de css_code. No alcanza con "venir después": la pelea se gana por
-   especificidad, no por orden.
-
-   NOTA SOBRE @media
-   Acá el mismo selector aparece dentro y fuera del @media a propósito. Eso es
-   seguro SOLO porque este archivo es externo y el minificador de TN nunca lo toca.
-   Si algo de esto alguna vez se copia a css_code hay que reescribirlo anclando por
-   árbol, no por @media (el minificador de TN mergea selectores idénticos ignorando
-   el breakpoint). Ver PROTOCOLO_SEGURIDAD.md / ESTADO_HOME.md.
-
-   El módulo tiene un árbol mobile (.js-banners-promotional-mobile) que queda en
-   d-none mientras "Cargar otras imágenes para celulares" esté desactivado. Con esa
-   opción apagada, .js-banners-promotional sirve los dos breakpoints. */
-
-/* ---------- Sección ---------- */
-
-.section-banners-home[data-store="home-banner-promotional"] {
-  background: #F4F0E8;
+.bl-blog {
+  background: #f4f0e8;
   padding: 64px 0;
+  /* El tema define box-sizing global, pero por las dudas lo fijamos en el árbol
+     propio: si cambia, el grid no se descuadra. */
+  box-sizing: border-box;
 }
 
-/* ---------- Título de sección ("Del blog", se carga en el admin) ---------- */
+.bl-blog *,
+.bl-blog *::before,
+.bl-blog *::after {
+  box-sizing: inherit;
+}
 
-.section-banners-home[data-store="home-banner-promotional"] .js-banners-section-title {
-  font-family: Georgia, serif !important;
+.bl-blog-cont {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Título ---------- */
+
+.bl-blog .bl-blog-h {
+  margin: 0 0 40px;
+  padding: 0;
+  font-family: Georgia, serif;
   font-style: italic;
-  font-weight: 400 !important;
-  font-size: 32px !important;
-  line-height: 1.2 !important;
-  color: #003845 !important;
-  text-align: center !important;
-  margin: 0 0 40px !important;
-  padding: 0 !important;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
+  text-transform: none;
+  color: #003845;
 }
 
-/* ---------- Grilla: 3 por fila en desktop, gap 24 ---------- */
+/* ---------- Grilla ---------- */
 
-.section-banners-home[data-store="home-banner-promotional"] .js-banner-row {
-  margin-left: -12px;
-  margin-right: -12px;
-}
-
-.section-banners-home[data-store="home-banner-promotional"] .js-banner {
-  flex: 0 0 33.3333%;
-  max-width: 33.3333%;
-  padding: 0 12px;
+.bl-blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
 }
 
 /* ---------- Card ---------- */
 
-.section-banners-home[data-store="home-banner-promotional"] .js-textbanner {
-  height: 100%;
-  background: #FFFFFF;
-  border-radius: 8px;
+.bl-blog .bl-blog-card {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 56, 69, .06), 0 4px 12px rgba(0, 56, 69, .05);
-  text-align: left;
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.section-banners-home[data-store="home-banner-promotional"] .js-textbanner:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 2px 6px rgba(0, 56, 69, .08), 0 10px 24px rgba(0, 56, 69, .09);
-}
-
-.section-banners-home[data-store="home-banner-promotional"] .js-textbanner > a {
-  display: block;
-  height: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 56, 69, 0.06), 0 4px 12px rgba(0, 56, 69, 0.05);
   text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bl-blog .bl-blog-card:hover,
+.bl-blog .bl-blog-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 2px 6px rgba(0, 56, 69, 0.08), 0 10px 24px rgba(0, 56, 69, 0.09);
+  text-decoration: none;
+}
+
+.bl-blog .bl-blog-card:focus-visible {
+  outline: 2px solid #003845;
+  outline-offset: 3px;
 }
 
 /* ---------- Portada 16:9 ---------- */
 
-.section-banners-home[data-store="home-banner-promotional"] .js-textbanner-image-container {
-  padding-top: 56.25%;
-  border-radius: 0;
+.bl-blog-foto {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #e8e2d6; /* mientras carga, en vez de un hueco blanco */
 }
 
-.section-banners-home[data-store="home-banner-promotional"] .js-textbanner-image {
+.bl-blog-foto img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-/* ---------- Bloque de texto ---------- */
+/* ---------- Texto ---------- */
 
-.section-banners-home[data-store="home-banner-promotional"] .js-textbanner-text {
-  background: transparent !important;
+.bl-blog-cuerpo {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   padding: 16px 16px 20px;
-  text-align: left;
 }
 
-/* ---------- Título de la card ---------- */
-
-.section-banners-home[data-store="home-banner-promotional"] .js-banner-title {
-  font-family: Inter, sans-serif !important;
-  font-style: normal !important;
-  font-weight: 600 !important;
-  font-size: 16px !important;
-  line-height: 1.35 !important;
-  letter-spacing: 0 !important;
-  color: #003845 !important;
-  margin: 0 0 8px !important;
-  text-align: left !important;
+.bl-blog .bl-blog-titulo {
+  margin: 0 0 8px;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #003845;
 }
 
-/* mata el cuadro de 22x22 que la franja inyecta en todos los .js-banner-title */
-.section-banners-home[data-store="home-banner-promotional"] .js-banner-title::before {
-  content: none !important;
-  display: none !important;
-}
-
-/* ---------- Extracto, 2 líneas ---------- */
-
-.section-banners-home[data-store="home-banner-promotional"] .textbanner-paragraph {
-  font-family: Inter, sans-serif !important;
-  font-weight: 400 !important;
-  font-size: 14px !important;
-  line-height: 1.5 !important;
-  color: #6B6B6B !important;
-  margin: 0 0 12px !important;
-  text-align: left !important;
-  display: -webkit-box !important;
+.bl-blog .bl-blog-extracto {
+  margin: 0 0 12px;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #6b6b6b;
+  display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden !important;
-  /* Red de seguridad del clamp. En el Chrome donde se testeó esto,
-     display:-webkit-box se rechaza (computa flow-root) incluso seteado inline
-     con !important, mientras que display:flex entra al toque — el clamp igual
-     funciona porque Chrome nuevo aplica line-clamp sobre contenedores block.
-     Este max-height garantiza las 2 líneas también donde no pase ninguna de
-     las dos cosas: 2 líneas x line-height 1.5 = 3em exactos. */
+  overflow: hidden;
+  /* Red de seguridad: en algunos Chrome display:-webkit-box se rechaza y computa
+     flow-root. El clamp igual funciona por line-clamp sobre bloques, pero este
+     tope garantiza las 2 líneas en cualquier caso: 2 x line-height 1.5 = 3em. */
   max-height: 3em;
 }
 
-/* ---------- "Leer más →" ---------- */
-
-.section-banners-home[data-store="home-banner-promotional"] .btn-link {
-  display: inline-block !important;
-  font-family: Inter, sans-serif !important;
-  font-weight: 600 !important;
-  font-size: 13px !important;
-  letter-spacing: .02em;
-  color: #003845 !important;
-  text-decoration: none !important;
-  text-align: left !important;
+/* Empuja el "Leer más" al piso de la card, así quedan alineados entre sí
+   aunque los títulos ocupen distinta cantidad de líneas. */
+.bl-blog .bl-blog-mas {
+  margin-top: auto;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  color: #003845;
+  text-decoration: none;
 }
 
-.section-banners-home[data-store="home-banner-promotional"] .btn-link::after {
-  content: " \2192";
+.bl-blog .bl-blog-mas::after {
+  content: ' \2192';
 }
 
-.section-banners-home[data-store="home-banner-promotional"] .js-textbanner:hover .btn-link {
-  text-decoration: underline !important;
+.bl-blog .bl-blog-card:hover .bl-blog-mas,
+.bl-blog .bl-blog-card:focus-visible .bl-blog-mas {
+  text-decoration: underline;
 }
 
-/* ---------- Mobile: apiladas, gap 16 ---------- */
+/* ---------- Mobile ---------- */
 
 @media (max-width: 767px) {
-  .section-banners-home[data-store="home-banner-promotional"] {
+  .bl-blog {
     padding: 48px 0;
   }
 
-  .section-banners-home[data-store="home-banner-promotional"] .js-banners-section-title {
-    font-size: 26px !important;
-    margin: 0 0 28px !important;
+  .bl-blog-cont {
+    padding: 0 16px;
   }
 
-  .section-banners-home[data-store="home-banner-promotional"] .js-banner-row {
-    margin-left: -8px;
-    margin-right: -8px;
+  .bl-blog .bl-blog-h {
+    margin: 0 0 28px;
+    font-size: 26px;
   }
 
-  .section-banners-home[data-store="home-banner-promotional"] .js-banner {
-    flex: 0 0 100%;
-    max-width: 100%;
-    padding: 0 8px;
-    margin-bottom: 16px;
+  .bl-blog-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
+}
 
-  .section-banners-home[data-store="home-banner-promotional"] .js-banner:last-child {
-    margin-bottom: 0;
+/* Respetar a quien pidió menos movimiento. */
+@media (prefers-reduced-motion: reduce) {
+  .bl-blog .bl-blog-card {
+    transition: none;
+  }
+  .bl-blog .bl-blog-card:hover,
+  .bl-blog .bl-blog-card:focus-visible {
+    transform: none;
   }
 }

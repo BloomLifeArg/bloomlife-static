@@ -1,0 +1,54 @@
+name: Actualizar posts del blog
+
+# Regenera data/blog-latest.json, que es lo que consume la sección "Del blog"
+# del home de bloomlife.co. Sin secrets: lee la página pública del blog.
+#
+# Para refrescar al toque después de publicar una nota, en vez de esperar al
+# cron: pestaña Actions -> "Actualizar posts del blog" -> Run workflow.
+
+on:
+  schedule:
+    - cron: '0 * * * *' # cada hora, en punto (UTC)
+  workflow_dispatch: # botón manual
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-blog-latest.mjs'
+      - '.github/workflows/blog-latest.yml'
+
+# Evita que dos corridas se pisen commiteando a la vez.
+concurrency:
+  group: blog-latest
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # necesario para commitear el JSON
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Si el parser no encuentra los 3 posts, el script tira error y el job
+      # falla. Es a propósito: preferimos un mail de GitHub avisando que se
+      # rompió el parser, antes que pisar el JSON bueno con una lista vacía y
+      # que la sección se caiga del home sin que nadie se entere.
+      - name: Generar data/blog-latest.json
+        run: node scripts/build-blog-latest.mjs
+
+      - name: Commitear si cambió
+        run: |
+          if [[ -z "$(git status --porcelain data/blog-latest.json)" ]]; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/blog-latest.json
+          git commit -m "chore: actualizar posts del blog [skip ci]"
+          git push
