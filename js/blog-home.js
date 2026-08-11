@@ -81,9 +81,12 @@
 
     var marco = el('div', 'bl-blog-foto');
     var img = el('img');
-    img.src = post.image;
+    // Sin src todavía: lo pone activarImagenes() cuando la sección se acerca.
+    // loading="lazy" NO sirve acá — en nodos inyectados después del load el
+    // navegador no dispara la carga (medido en vivo: currentSrc vacío y
+    // complete=false aun con la sección centrada en pantalla).
+    img.setAttribute('data-src', post.image);
     img.alt = ''; // decorativa: el título de al lado ya nombra el link
-    img.loading = 'lazy';
     img.decoding = 'async';
     marco.appendChild(img);
 
@@ -95,6 +98,43 @@
     a.appendChild(marco);
     a.appendChild(cuerpo);
     return a;
+  }
+
+  /* Carga diferida propia. Las 3 portadas pesan ~390 KB y la sección vive al
+     final de un home largo: la mayoría de las visitas nunca llega. Se cargan
+     recién cuando la sección está a 400px de entrar en pantalla. */
+  function activarImagenes(sec) {
+    var pendientes = Array.prototype.slice.call(sec.querySelectorAll('img[data-src]'));
+    if (!pendientes.length) return;
+
+    var soltar = function () {
+      pendientes.forEach(function (img) {
+        var s = img.getAttribute('data-src');
+        if (!s) return;
+        img.src = s;
+        img.removeAttribute('data-src');
+      });
+      pendientes = [];
+    };
+
+    if (!('IntersectionObserver' in window)) {
+      soltar(); // navegador viejo: mejor cargar que no mostrar nada
+      return;
+    }
+
+    var obs = new IntersectionObserver(
+      function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            soltar();
+            obs.disconnect();
+            return;
+          }
+        }
+      },
+      { rootMargin: '400px 0px' }
+    );
+    obs.observe(sec);
   }
 
   function dibujar(posts) {
@@ -119,6 +159,7 @@
     cont.appendChild(grid);
     sec.appendChild(cont);
     ancla.insertAdjacentElement('afterend', sec);
+    activarImagenes(sec);
   }
 
   function arrancar() {
