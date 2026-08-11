@@ -81,13 +81,14 @@
 
     var marco = el('div', 'bl-blog-foto');
     var img = el('img');
-    // Sin src todavía: lo pone activarImagenes() cuando la sección se acerca.
-    // loading="lazy" NO sirve acá — en nodos inyectados después del load el
-    // navegador no dispara la carga (medido en vivo: currentSrc vacío y
-    // complete=false aun con la sección centrada en pantalla).
-    img.setAttribute('data-src', post.image);
-    img.alt = ''; // decorativa: el título de al lado ya nombra el link
+    // loading antes que src: si el src se asigna primero, el navegador puede
+    // arrancar la descarga antes de enterarse de que era diferida.
+    // Las 3 portadas pesan ~390 KB y la sección va al final de un home largo,
+    // así que diferirlas importa.
+    img.loading = 'lazy';
     img.decoding = 'async';
+    img.alt = ''; // decorativa: el título de al lado ya nombra el link
+    img.src = post.image;
     marco.appendChild(img);
 
     var cuerpo = el('div', 'bl-blog-cuerpo');
@@ -98,62 +99,6 @@
     a.appendChild(marco);
     a.appendChild(cuerpo);
     return a;
-  }
-
-  /* Carga diferida propia. Las 3 portadas pesan ~390 KB y la sección vive al
-     final de un home largo: la mayoría de las visitas nunca llega. Se cargan
-     recién cuando la sección está a 400px de entrar en pantalla. */
-  function activarImagenes(sec) {
-    var pendientes = Array.prototype.slice.call(sec.querySelectorAll('img[data-src]'));
-    if (!pendientes.length) return;
-
-    var soltar = function () {
-      pendientes.forEach(function (img) {
-        var s = img.getAttribute('data-src');
-        if (!s) return;
-        img.src = s;
-        img.removeAttribute('data-src');
-      });
-      pendientes = [];
-    };
-
-    // A propósito NO usamos IntersectionObserver ni loading="lazy":
-    //  - loading="lazy" no dispara en <img> inyectados después del load
-    //    (medido en vivo: currentSrc vacío con la sección centrada en pantalla).
-    //  - IntersectionObserver no entregó callbacks en las pruebas sobre el home,
-    //    ni observando document.body.
-    // Un chequeo de posición + listener de scroll es más tosco pero es el que
-    // se pudo verificar de punta a punta contra el sitio publicado.
-    var MARGEN = 400;
-    var tick = false;
-
-    var cerca = function () {
-      var r = sec.getBoundingClientRect();
-      return r.top < window.innerHeight + MARGEN && r.bottom > -MARGEN;
-    };
-
-    var limpiar = function () {
-      window.removeEventListener('scroll', alScrollear);
-      window.removeEventListener('resize', alScrollear);
-    };
-
-    function alScrollear() {
-      if (tick) return;
-      tick = true;
-      window.requestAnimationFrame(function () {
-        tick = false;
-        if (!cerca()) return;
-        soltar();
-        limpiar();
-      });
-    }
-
-    if (cerca()) {
-      soltar(); // ya está en pantalla: no hay nada que esperar
-      return;
-    }
-    window.addEventListener('scroll', alScrollear, { passive: true });
-    window.addEventListener('resize', alScrollear, { passive: true });
   }
 
   function dibujar(posts) {
@@ -178,7 +123,6 @@
     cont.appendChild(grid);
     sec.appendChild(cont);
     ancla.insertAdjacentElement('afterend', sec);
-    activarImagenes(sec);
   }
 
   function arrancar() {
