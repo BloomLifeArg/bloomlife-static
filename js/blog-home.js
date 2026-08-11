@@ -22,7 +22,7 @@
   var DATA_URL =
     'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/blog-latest.json';
   var ANCLA = 'section[data-store="banner-services"]'; // citas BloomCrew
-  var TITULO = 'Del blog';
+  var TITULO = 'Wellness Blog';
   var CACHE_KEY = 'bl-blog-v1';
   var CACHE_MS = 5 * 60 * 1000;
 
