@@ -117,24 +117,43 @@
       pendientes = [];
     };
 
-    if (!('IntersectionObserver' in window)) {
-      soltar(); // navegador viejo: mejor cargar que no mostrar nada
-      return;
+    // A propósito NO usamos IntersectionObserver ni loading="lazy":
+    //  - loading="lazy" no dispara en <img> inyectados después del load
+    //    (medido en vivo: currentSrc vacío con la sección centrada en pantalla).
+    //  - IntersectionObserver no entregó callbacks en las pruebas sobre el home,
+    //    ni observando document.body.
+    // Un chequeo de posición + listener de scroll es más tosco pero es el que
+    // se pudo verificar de punta a punta contra el sitio publicado.
+    var MARGEN = 400;
+    var tick = false;
+
+    var cerca = function () {
+      var r = sec.getBoundingClientRect();
+      return r.top < window.innerHeight + MARGEN && r.bottom > -MARGEN;
+    };
+
+    var limpiar = function () {
+      window.removeEventListener('scroll', alScrollear);
+      window.removeEventListener('resize', alScrollear);
+    };
+
+    function alScrollear() {
+      if (tick) return;
+      tick = true;
+      window.requestAnimationFrame(function () {
+        tick = false;
+        if (!cerca()) return;
+        soltar();
+        limpiar();
+      });
     }
 
-    var obs = new IntersectionObserver(
-      function (entries) {
-        for (var i = 0; i < entries.length; i++) {
-          if (entries[i].isIntersecting) {
-            soltar();
-            obs.disconnect();
-            return;
-          }
-        }
-      },
-      { rootMargin: '400px 0px' }
-    );
-    obs.observe(sec);
+    if (cerca()) {
+      soltar(); // ya está en pantalla: no hay nada que esperar
+      return;
+    }
+    window.addEventListener('scroll', alScrollear, { passive: true });
+    window.addEventListener('resize', alScrollear, { passive: true });
   }
 
   function dibujar(posts) {
