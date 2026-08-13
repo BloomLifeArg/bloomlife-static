@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Sección "También en cápsulas" del home. Namespace propio: .bl-caps
+ *
+ * El markup lo arma js/capsulas-home.js y se inserta justo después de
+ * "We Love Gummies" (section[data-store="home-products-featured"]). Como el
+ * markup es propio, acá no peleamos contra ninguna clase del tema.
+ *
+ * Inter no viene cargada por Morelia (el tema trae Work Sans y Public Sans),
+ * por eso el @import de arriba — igual que en blog-section.css.
+ *
+ * Archivo externo servido por jsDelivr: el minificador de TN no lo toca, así
+ * que repetir un selector dentro y fuera de un @media es seguro acá (dentro de
+ * css_code no lo sería).
+ *
+ * Los h2/p del tema llegan con text-transform, letter-spacing y padding
+ * propios. Todo lo que sea un tag heredado se resetea de forma explícita. */
+
+.bl-caps {
+  background: #003845;
+  box-sizing: border-box;
+}
+
+.bl-caps *,
+.bl-caps *::before,
+.bl-caps *::after {
+  box-sizing: inherit;
+}
+
+/* ---------- Split ---------- */
+
+/* Full-bleed a propósito: la foto toca el borde izquierdo de la ventana. Es
+   una sección de contraste fuerte y contenerla a 1280 le sacaba el golpe.
+   45/55 y no 50/50 porque la columna derecha tiene que alojar 3 cards: a 50%
+   quedaban de ~170px y el nombre se partía en tres líneas. */
+.bl-caps-split {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  align-items: stretch;
+}
+
+/* ---------- Foto lifestyle ---------- */
+
+/* La foto va absoluta dentro de su celda: así no aporta altura y la fila la
+   define la columna de contenido, que es lo que queremos (la foto se estira
+   hasta donde llegue el texto). El min-height es el piso para que no quede
+   una banda chata si algún día el copy se acorta. */
+.bl-caps-media {
+  position: relative;
+  min-height: 540px;
+}
+
+.bl-caps-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* La foto es vertical (2:3) y la celda es apaisada, así que cover recorta
+     fuerte en Y. 60% baja el encuadre: entra el frasco entero y las cápsulas
+     de la mesa, y se pierde el brazo de arriba, que no aporta. A 45% el frasco
+     quedaba cortado al medio. */
+  object-position: 50% 60%;
+}
+
+/* ---------- Contenido ---------- */
+
+.bl-caps-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 88px 64px;
+  /* Tope alto: hasta ~1600px de ventana la columna entra entera y el padding
+     queda simétrico. Más ancho que eso, corta. A 760px sobraba aire muerto
+     contra el borde derecho en pantallas de 1440. */
+  max-width: 900px;
+}
+
+/* Los dos <p> de acá van prefijados con .bl-caps y con !important en el
+   font-size por una sola razón: css_code tiene un `p { font-size: 14px
+   !important }` global. Sin eso el eyebrow salía a 14px en vez de 11 y la
+   bajada a 14 en vez de 16. Es lo único de esa regla que hay que pelear —
+   su line-height y su margin-top no llevan !important y los gana la
+   especificidad normal. El h2 no lo necesita: ninguna regla del tema le pega
+   con !important. */
+.bl-caps .bl-caps-eyebrow {
+  margin: 0 0 14px;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 11px !important;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #cca352;
+}
+
+.bl-caps .bl-caps-h {
+  margin: 0 0 14px;
+  padding: 0;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #f4f0e8;
+}
+
+.bl-caps .bl-caps-sub {
+  margin: 0 0 36px;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 16px !important;
+  line-height: 1.6;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(244, 240, 232, 0.8);
+  max-width: 34em;
+}
+
+/* ---------- Cards ---------- */
+
+.bl-caps-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* La card entera es el link: el target táctil es toda la card y no hace falta
+   un <a> anidado adentro de otro. "Comprar →" es un <span> disfrazado. */
+.bl-caps-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1.5px solid transparent;
+  border-radius: 16px;
+  padding: 16px 14px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bl-caps-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+.bl-caps-card img {
+  display: block;
+  width: 100%;
+  /* Altura fija + contain: los tres frascos quedan del mismo alto aunque el
+     pack de Bye Bye sea más ancho. Sin esto las cards no alinean. */
+  height: 132px;
+  object-fit: contain;
+  object-position: center bottom;
+  margin: 0 0 10px;
+}
+
+.bl-caps-info {
+  display: block;
+}
+
+/* El badge existe en las tres cards (vacío en dos) para que los nombres
+   arranquen a la misma altura. En mobile el vacío se esconde. */
+.bl-caps-badge {
+  display: block;
+  min-height: 20px;
+  margin: 0 0 6px;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 20px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: #003845;
+}
+
+/* width:fit-content para que la píldora abrace al texto. Como bloque a lo ancho
+   de la card leía como banda de promo y no como badge. El elemento vacío de las
+   otras dos cards igual reserva sus 20px y mantiene los nombres alineados. */
+.bl-caps-card--feat .bl-caps-badge {
+  width: fit-content;
+  background: #cca352;
+  border-radius: 999px;
+  padding: 0 10px;
+}
+
+.bl-caps-card--feat {
+  border-color: #cca352;
+  background: #fffcf5;
+}
+
+.bl-caps-name {
+  display: block;
+  margin: 0 0 12px;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #003845;
+}
+
+/* margin-top:auto empuja el botón al piso de la card, así los tres quedan
+   alineados aunque los nombres ocupen distinta cantidad de líneas. */
+.bl-caps-buy {
+  display: block;
+  margin-top: auto;
+  background: #c4694f;
+  border-radius: 999px;
+  padding: 10px 12px;
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ffffff;
+  transition: background 0.2s ease;
+}
+
+.bl-caps-card:hover .bl-caps-buy {
+  background: #a9563f;
+}
+
+/* ---------- Apilado: tablet y mobile ---------- */
+
+/* Debajo de 900px el split 45/55 deja las cards demasiado angostas, así que la
+   foto se va arriba full-width y el contenido abajo. Las cards siguen en fila
+   de 3 hasta 600px — a 768px, apiladas y horizontales, quedaba un vacío enorme
+   entre el nombre y el botón. */
+@media (max-width: 899px) {
+  .bl-caps-split {
+    grid-template-columns: 1fr;
+  }
+
+  /* La foto vuelve al flujo normal y se apila arriba, full-width. */
+  .bl-caps-media {
+    min-height: 0;
+  }
+
+  .bl-caps-media img {
+    position: static;
+    /* Altura fija no sirve acá: 280px a 768px de ancho daba una franja 2,7:1
+       que dejaba afuera las manos y las cápsulas. Que crezca con la ventana
+       mantiene el encuadre legible en todo el rango. */
+    height: clamp(260px, 48vw, 420px);
+  }
+
+  .bl-caps-body {
+    padding: 56px 32px;
+    max-width: none;
+  }
+
+  .bl-caps .bl-caps-h {
+    font-size: 30px;
+  }
+
+  /* Mismo prefijo + !important que en desktop: si no, la regla de arriba
+     (más específica y con !important) le gana a esta y mobile se quedaba
+     en 16px. */
+  .bl-caps .bl-caps-sub {
+    font-size: 15px !important;
+    margin-bottom: 28px;
+  }
+}
+
+/* ---------- Solo mobile ---------- */
+
+@media (max-width: 599px) {
+  .bl-caps-body {
+    padding: 44px 20px 56px;
+  }
+
+  .bl-caps .bl-caps-h {
+    font-size: 28px;
+  }
+
+  /* Cards apiladas, pero con el layout interno horizontal (el patrón .pcard de
+     la landing). Tres cards verticales full-width eran una pared de ~900px. */
+  .bl-caps-cards {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .bl-caps-card {
+    display: grid;
+    grid-template-columns: 72px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+  }
+
+  .bl-caps-card img {
+    height: 64px;
+    margin: 0;
+  }
+
+  /* nowrap + tipografía más chica: en la columna angosta del layout apilado
+     "LO MÁS COMPLETO" se partía en dos líneas y descuadraba la card destacada
+     contra las otras dos. */
+  .bl-caps-badge {
+    display: inline-block;
+    min-height: 0;
+    margin: 0 0 4px;
+    font-size: 9px;
+    line-height: 16px;
+    letter-spacing: 0.06em;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  /* En desktop el badge vacío reserva el espacio que alinea los nombres; acá
+     apilado no hay nada que alinear y solo agregaría un hueco. */
+  .bl-caps-badge:empty {
+    display: none;
+  }
+
+  .bl-caps-name {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  /* Botón compacto al costado y no una barra full-width abajo: tres barras
+     terracota apiladas pesaban demasiado y leían como ecommerce genérico.
+     Igual el target táctil es la card entera, así que el botón acá es
+     affordance, no el único punto de click. */
+  .bl-caps-buy {
+    margin-top: 0;
+    padding: 9px 12px;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+}
