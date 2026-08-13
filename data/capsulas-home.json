@@ -1,0 +1,35 @@
+{
+  "_leeme": "Copy de la sección 'También en cápsulas' del home. Editar ESTE archivo y commitear alcanza: el cambio se ve en el home en <=5 min, sin tocar el admin de Tienda Nube. Si este archivo se rompe o no se puede leer, js/capsulas-home.js dibuja la sección con su copy de fallback: el home nunca se queda sin la sección. Los campos obligatorios son eyebrow, titulo, bajada, cta y al menos un producto con nombre+url+img.",
+  "eyebrow": "Un vaso de agua y listo",
+  "titulo": "Adaptógenos también en formato cápsulas",
+  "bajada": "La misma potencia de siempre, en el gesto más simple del día.",
+  "cta": "Shop now",
+  "foto": {
+    "src": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ash_ritual_mano-7cfad2ab9f708a0eb017839489149855-1024-1024.jpg",
+    "alt": "Manos con un vaso de agua y cápsulas de Bloom Life sobre la mesa"
+  },
+  "productos": [
+    {
+      "nombre": "Melena de León",
+      "beneficio": "Foco & Memoria",
+      "url": "https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-capsulas/",
+      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/mdl_frasco_sq-cd3bf40bb0a8de7d3017846899477616-1024-1024.png",
+      "alt": "Frasco de Melena de León en cápsulas"
+    },
+    {
+      "nombre": "Ashwagandha",
+      "beneficio": "Calma & Equilibrio",
+      "url": "https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-capsulas/",
+      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ash_frasco_sq-1de3135a64ac514e1317846899679453-1024-1024.png",
+      "alt": "Frasco de Ashwagandha en cápsulas"
+    },
+    {
+      "nombre": "Combo Bye Bye Anxiety",
+      "beneficio": "Calma & Foco",
+      "badge": "Combo bestseller",
+      "url": "https://www.bloomlife.co/productos/combo-bye-bye-anxiety-suplementacion-por-1-mes/",
+      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/bye-bye-combos-bloom-529c4348dfddb872c417761714962952-1024-1024.png",
+      "alt": "Combo Bye Bye Anxiety: frascos de Ashwagandha y Melena de León en cápsulas"
+    }
+  ]
+}
