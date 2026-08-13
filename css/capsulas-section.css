@@ -106,6 +106,12 @@
   letter-spacing: 0;
   text-transform: none;
   color: #f4f0e8;
+  /* El título entra en dos líneas y el corte natural dejaba "cápsulas" sola
+     en la segunda. balance reparte las palabras parejo. Es progresivo: donde
+     no está soportado simplemente corta como antes, no rompe nada. Y acá se
+     puede usar libre — este archivo va por jsDelivr, no pasa por el
+     minificador de css_code que se come las propiedades modernas. */
+  text-wrap: balance;
 }
 
 .bl-caps .bl-caps-sub {
@@ -195,7 +201,7 @@
 
 .bl-caps-name {
   display: block;
-  margin: 0 0 12px;
+  margin: 0 0 3px;
   font-family: Inter, sans-serif;
   font-weight: 600;
   font-size: 14px;
@@ -203,6 +209,21 @@
   letter-spacing: 0;
   text-transform: none;
   color: #003845;
+}
+
+/* El beneficio en sage y regular: baja un escalón de jerarquía respecto del
+   nombre sin competirle. Es lo que convierte la card de "listado de productos"
+   en "esto es para vos". */
+.bl-caps-benef {
+  display: block;
+  margin: 0 0 12px;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #608b71;
 }
 
 /* margin-top:auto empuja el botón al piso de la card, así los tres quedan
@@ -322,8 +343,13 @@
   }
 
   .bl-caps-name {
-    margin: 0;
+    margin: 0 0 2px;
     font-size: 14px;
+  }
+
+  .bl-caps-benef {
+    margin: 0;
+    font-size: 12px;
   }
 
   /* Botón compacto al costado y no una barra full-width abajo: tres barras
