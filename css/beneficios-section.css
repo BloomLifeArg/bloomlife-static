@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Sección "Elegí por beneficio" del home. Namespace propio: .bl-ben
+ *
+ * El markup lo arma js/beneficios-home.js y reemplaza a la franja nativa de
+ * "Banners de categorías" (section[data-store="home-banner-categories"]), que
+ * el mismo JS oculta. La franja nativa tenía 4 ítems que iban a categorías
+ * /tu-objetivo/; esta tiene 5 y va directo a las internas de producto.
+ *
+ * Inter no viene cargada por Morelia (el tema trae Work Sans y Public Sans),
+ * por eso el @import de arriba — igual que en capsulas-section.css y
+ * blog-section.css.
+ *
+ * Archivo externo servido por jsDelivr: el minificador de TN no lo toca, así
+ * que acá sí se pueden usar aspect-ratio, inset y clamp(), que dentro de
+ * css_code desaparecen en silencio.
+ *
+ * Los h2/p del tema llegan con text-transform, letter-spacing y padding
+ * propios, y css_code tiene un `p{font-size:14px!important}` GLOBAL. Por eso
+ * el markup no usa <p> en ningún lado: el kicker, la bajada y los taglines son
+ * <div>/<span>, que esquivan la regla sin pelear a fuerza de !important. */
+
+.bl-ben {
+  background: #f4f0e8;
+  box-sizing: border-box;
+  padding: 72px 0 80px;
+  overflow: hidden; /* el carrusel mobile no puede empujar el ancho de la página */
+}
+
+.bl-ben *,
+.bl-ben *::before,
+.bl-ben *::after {
+  box-sizing: inherit;
+}
+
+/* ---------- Header ---------- */
+
+.bl-ben-head {
+  max-width: 1280px;
+  margin: 0 auto 40px;
+  padding: 0 24px;
+}
+
+.bl-ben-kicker {
+  display: block;
+  font-family: Inter, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #c4694f;
+  margin: 0 0 14px;
+}
+
+/* Georgia es de sistema: no hay que descargarla y ya es la serif editorial de
+   la marca (landing /best-sellers e internas). */
+.bl-ben-title {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 700;
+  /* 34px a 375 y 56px a >=1280. clamp() acá es seguro: archivo externo. */
+  font-size: clamp(34px, 4.4vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: #003845;
+  margin: 0;
+  text-transform: none; /* el tema pone uppercase en los headings */
+  padding: 0;
+}
+
+.bl-ben-sub {
+  font-family: Inter, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0, 56, 69, 0.7);
+  margin: 16px 0 0;
+  max-width: 44ch;
+}
+
+/* ---------- Cards ---------- */
+
+.bl-ben-row {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+}
+
+.bl-ben-card {
+  position: relative;
+  display: block;
+  height: 420px;
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  background: #003845; /* color de espera mientras carga la foto */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bl-ben-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Las fotos ya vienen recortadas al ratio del card desde el repo, así que
+     cover casi no recorta. El 50% 40% sube apenas el encuadre para los anchos
+     donde el card queda más angosto que la foto. */
+  object-position: 50% 40%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+/* Degradé de legibilidad. Va como pseudo-elemento y no como otra capa en el
+   markup para que el <a> siga teniendo solo la imagen y el texto adentro. */
+.bl-ben-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.bl-ben-cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 20px 18px;
+}
+
+.bl-ben-name {
+  display: block;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.2;
+  color: #fff;
+  margin: 0 0 4px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.bl-ben-tag {
+  display: block;
+  font-family: Inter, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+/* Hover: el translateY del design system. El zoom de la foto es leve a
+   propósito — con 2px de gap, un zoom fuerte hace que los cards se "toquen"
+   visualmente. */
+.bl-ben-card:hover,
+.bl-ben-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 56, 69, 0.18);
+}
+
+.bl-ben-card:hover img,
+.bl-ben-card:focus-visible img {
+  transform: scale(1.04);
+}
+
+.bl-ben-card:focus-visible {
+  outline: 2px solid #003845;
+  outline-offset: 3px;
+}
+
+/* ---------- Desktop: header en 2 columnas ---------- */
+
+@media (min-width: 1024px) {
+  .bl-ben-head {
+    display: grid;
+    /* La bajada no necesita la mitad del ancho; a 50/50 quedaba una línea
+       larguísima y el titular perdía peso. */
+    grid-template-columns: 1.35fr 1fr;
+    gap: 48px;
+    align-items: center; /* la bajada centrada contra el bloque del titular */
+  }
+
+  .bl-ben-sub {
+    margin: 0;
+  }
+}
+
+/* ---------- Mobile y tablet: carrusel con scroll-snap ---------- */
+
+/* Debajo de 1024 los 5 cards en fila quedarían de menos de 190px: se pasa a
+   scroll horizontal nativo. Sin Swiper — es CSS puro, no hay JS de carrusel
+   que pueda pelearse con el del tema (el home ya tuvo un bug de snapGrid con
+   el carrusel de categorías). */
+@media (max-width: 1023px) {
+  .bl-ben {
+    padding: 56px 0 64px;
+  }
+
+  .bl-ben-head {
+    margin-bottom: 28px;
+  }
+
+  .bl-ben-sub {
+    font-size: 15px;
+    max-width: none;
+  }
+
+  .bl-ben-row {
+    display: flex;
+    gap: 10px;
+    padding: 4px 20px 14px; /* el padding-bottom deja lugar a la sombra del hover */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .bl-ben-row::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bl-ben-card {
+    flex: 0 0 auto;
+    width: 78vw;
+    max-width: 300px; /* en tablet 78vw serían 600px: un card por pantalla */
+    height: 420px;
+    scroll-snap-align: center;
+  }
+
+  /* El último card tiene que poder centrarse: sin esto el snap del final deja
+     el card pegado al borde derecho. */
+  .bl-ben-row::after {
+    content: '';
+    flex: 0 0 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .bl-ben-card {
+    max-width: 78vw;
+    height: 400px;
+  }
+}
+
+/* ---------- Movimiento reducido ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-ben-card,
+  .bl-ben-card img {
+    transition: none;
+  }
+
+  .bl-ben-card:hover,
+  .bl-ben-card:focus-visible {
+    transform: none;
+  }
+
+  .bl-ben-card:hover img,
+  .bl-ben-card:focus-visible img {
+    transform: none;
+  }
+
+  .bl-ben-row {
+    scroll-behavior: auto;
+  }
+}

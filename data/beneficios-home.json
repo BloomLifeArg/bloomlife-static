@@ -1,0 +1,43 @@
+{
+  "_leeme": "Copy de la sección 'Elegí por beneficio' del home. Editar ESTE archivo y commitear alcanza: el cambio se ve en el home en <=5 min, sin tocar el admin de Tienda Nube. Si este archivo se rompe o no se puede leer, js/beneficios-home.js dibuja la sección con su copy de fallback: el home nunca se queda sin la sección. Obligatorios: kicker, titulo, bajada y entre 3 y 6 cards con titulo+tagline+imagen+href. En 'imagen' va SOLO el nombre del archivo (se resuelve contra img/beneficios/ del mismo commit del JS); si algún día hace falta una foto de otro lado, se acepta también una URL http completa.",
+  "kicker": "[03] Elegí por beneficio",
+  "titulo": "¿Qué necesita tu cuerpo hoy?",
+  "bajada": "Cinco caminos, un mismo origen. Elegí por cómo te querés sentir, no por el nombre del hongo.",
+  "cards": [
+    {
+      "titulo": "Foco",
+      "tagline": "Claridad mental sin niebla.",
+      "imagen": "beneficio-foco.jpg",
+      "alt": "Mujer leyendo un libro con luz cálida",
+      "href": "https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/"
+    },
+    {
+      "titulo": "Calma",
+      "tagline": "Menos reactividad al estrés.",
+      "imagen": "beneficio-calma.jpg",
+      "alt": "Mujer meditando sentada junto a una ventana",
+      "href": "https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/"
+    },
+    {
+      "titulo": "Energía",
+      "tagline": "Estable, sin picos ni caídas.",
+      "imagen": "beneficio-energia.jpg",
+      "alt": "Persona caminando por un sendero de madera entre la vegetación",
+      "href": "https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/"
+    },
+    {
+      "titulo": "Sueño",
+      "tagline": "Descanso que repara de verdad.",
+      "imagen": "beneficio-sueno.jpg",
+      "alt": "Persona descansando con los ojos cerrados",
+      "href": "https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/"
+    },
+    {
+      "titulo": "Piel",
+      "tagline": "Hidratación desde adentro.",
+      "imagen": "beneficio-piel.jpg",
+      "alt": "Mujer bebiendo de una taza, con una flor en el pelo",
+      "href": "https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/"
+    }
+  ]
+}

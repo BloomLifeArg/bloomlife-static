@@ -1,0 +1,279 @@
+/* Sección "Elegí por beneficio" del home de bloomlife.co.
+ *
+ * Reemplaza a la franja nativa de "Banners de categorías" por una fila de 5
+ * cards con foto lifestyle a sangre, que van directo a las internas de
+ * producto. La franja nativa NO se borra del admin: este script la oculta.
+ *
+ * ⚠️ CAMBIO DE DESTINO respecto de la franja nativa: la nativa tenía 4 ítems
+ * (Concentración / Energía / Dormir mejor / Piel) que llevaban a las
+ * categorías /tu-objetivo/…; esta tiene 5 (suma Calma) y lleva a la interna
+ * del producto. Si algún día se quiere volver a las categorías, alcanza con
+ * cambiar los href del JSON.
+ *
+ * EL COPY NO VIVE ACÁ: vive en data/beneficios-home.json, que se lee fresco en
+ * cada carga (cache 5 min). Cambiar un título, un tagline o un link es editar
+ * ese JSON y commitear — se ve en el home en <=5 min y NO hace falta tocar el
+ * admin de Tienda Nube ni republicar nada. Este archivo sí está pinneado a un
+ * hash en custom_seal_code, así que tocarlo a él sí pide publish.
+ *
+ * Si el JSON falla se dibuja igual con el FALLBACK de abajo: quedarse sin la
+ * sección sería una regresión (la nativa ya está oculta para entonces). Peor
+ * caso: se ve el copy viejo.
+ *
+ * El JSON se lee de raw.githubusercontent (CORS *, cache 5 min) y NO de
+ * jsDelivr: jsDelivr cachea las rutas de rama hasta 7 días, justo lo contrario
+ * de lo que necesita un archivo pensado para cambiar.
+ *
+ * Ver ESTADO_BENEFICIOS_HOME.md en el repo del proyecto.
+ */
+(function () {
+  'use strict';
+
+  /* Ancla Y guard de página a la vez: section[data-store="home-banner-categories"]
+     existe UNA sola vez y SOLO en el home (verificado contra el HTML vivo del
+     home, una interna, /best-sellers y una categoría: 1 / 0 / 0 / 0). Ojo que
+     el string aparece una segunda vez en todas las páginas, pero dentro del
+     <style> de css_code — por eso el selector va por <section> y no por texto.
+
+     No confundir con home-banner-news (.js-banners-news), que es el banner de
+     Fundadores: es otra sección y no la toca nadie acá. */
+  var ANCLA = 'section[data-store="home-banner-categories"]';
+  var ID = 'bl-ben-section';
+
+  var DATA_URL =
+    'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/beneficios-home.json';
+  var TIMEOUT_MS = 2500;
+
+  /* Copia de seguridad del copy. Tiene que quedar en sync con el JSON — si
+     divergen, esto es lo que ve el usuario cuando GitHub no responde.
+     Las URLs son las canónicas verificadas contra la API (handle real): 4 de
+     las 5 NO son las que uno adivinaría por el nombre del producto. */
+  var FALLBACK = {
+    kicker: '[03] Elegí por beneficio',
+    titulo: '¿Qué necesita tu cuerpo hoy?',
+    bajada:
+      'Cinco caminos, un mismo origen. Elegí por cómo te querés sentir, no por el nombre del hongo.',
+    cards: [
+      {
+        titulo: 'Foco',
+        tagline: 'Claridad mental sin niebla.',
+        imagen: 'beneficio-foco.jpg',
+        alt: 'Mujer leyendo un libro con luz cálida',
+        href:
+          'https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/'
+      },
+      {
+        titulo: 'Calma',
+        tagline: 'Menos reactividad al estrés.',
+        imagen: 'beneficio-calma.jpg',
+        alt: 'Mujer meditando sentada junto a una ventana',
+        href:
+          'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/'
+      },
+      {
+        titulo: 'Energía',
+        tagline: 'Estable, sin picos ni caídas.',
+        imagen: 'beneficio-energia.jpg',
+        alt: 'Persona caminando por un sendero de madera entre la vegetación',
+        href:
+          'https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/'
+      },
+      {
+        titulo: 'Sueño',
+        tagline: 'Descanso que repara de verdad.',
+        imagen: 'beneficio-sueno.jpg',
+        alt: 'Persona descansando con los ojos cerrados',
+        href:
+          'https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/'
+      },
+      {
+        titulo: 'Piel',
+        tagline: 'Hidratación desde adentro.',
+        imagen: 'beneficio-piel.jpg',
+        alt: 'Mujer bebiendo de una taza, con una flor en el pelo',
+        href:
+          'https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/'
+      }
+    ]
+  };
+
+  /* El script se sirve desde .../js/beneficios-home.js; el CSS y las fotos
+     viven al lado, en .../css/ y .../img/beneficios/. Derivarlos del propio
+     src mantiene todo pinneado al mismo commit sin repetir el hash — y sin
+     tocar css_code, que es un campo más que no hace falta republicar. */
+  var self = document.currentScript;
+
+  function resolver(rel) {
+    try {
+      return new URL(rel, self.src).href;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function cargarCSS() {
+    if (document.querySelector('link[data-bl-ben]')) return;
+    var href = resolver('../css/beneficios-section.css');
+    if (!href) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = href;
+    l.setAttribute('data-bl-ben', '1');
+    document.head.appendChild(l);
+  }
+
+  /* La franja nativa se oculta por CSS inyectado y NO por style.display en el
+     elemento: si el tema la re-renderiza (el home la dibuja por JS), un estilo
+     inline se perdería y la regla sobrevive.
+
+     Se hace por acá y no por css_code a propósito: así el feature entero vive
+     en un solo commit de bloomlife-static y se revierte cambiando el hash, sin
+     publicar un segundo campo del admin ni pelear con el minificador de TN. */
+  function ocultarNativa() {
+    if (document.getElementById('bl-ben-hide')) return;
+    var st = document.createElement('style');
+    st.id = 'bl-ben-hide';
+    st.textContent =
+      'section[data-store="home-banner-categories"]{display:none!important}';
+    document.head.appendChild(st);
+  }
+
+  function esc(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function txt(v) {
+    return typeof v === 'string' && v.trim() ? v.trim() : null;
+  }
+
+  /* Valida la forma del JSON antes de usarlo. Un JSON a medias es peor que uno
+     ausente: dibujaría la sección rota en producción. Ante la duda, FALLBACK. */
+  function valido(d) {
+    if (!d || typeof d !== 'object') return false;
+    if (!txt(d.kicker) || !txt(d.titulo) || !txt(d.bajada)) return false;
+    if (!Array.isArray(d.cards)) return false;
+    if (d.cards.length < 3 || d.cards.length > 6) return false;
+    return d.cards.every(function (c) {
+      return c && txt(c.titulo) && txt(c.tagline) && txt(c.imagen) && txt(c.href);
+    });
+  }
+
+  function traerCopy() {
+    if (typeof fetch !== 'function') return Promise.resolve(FALLBACK);
+
+    var ctrl = null;
+    var t = null;
+    try {
+      ctrl = new AbortController();
+      t = setTimeout(function () {
+        ctrl.abort();
+      }, TIMEOUT_MS);
+    } catch (e) {
+      /* sin AbortController seguimos igual, solo sin timeout */
+    }
+
+    return fetch(DATA_URL, ctrl ? { signal: ctrl.signal } : undefined)
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function (d) {
+        return valido(d) ? d : FALLBACK;
+      })
+      .catch(function () {
+        return FALLBACK;
+      })
+      .then(function (d) {
+        if (t) clearTimeout(t);
+        return d;
+      });
+  }
+
+  /* En el JSON va solo el nombre del archivo y se resuelve contra el img/ del
+     mismo commit. Se acepta también una URL completa por si algún día una foto
+     tiene que venir del CDN de Tienda Nube y no del repo. */
+  function urlImagen(nombre) {
+    if (/^https?:\/\//i.test(nombre)) return nombre;
+    return resolver('../img/beneficios/' + nombre) || '';
+  }
+
+  function cardHTML(c) {
+    return (
+      '<a class="bl-ben-card" href="' +
+      esc(c.href) +
+      '">' +
+      '<img src="' +
+      esc(urlImagen(c.imagen)) +
+      '" alt="' +
+      esc(txt(c.alt) || '') +
+      '" loading="lazy" decoding="async">' +
+      '<span class="bl-ben-cap">' +
+      '<span class="bl-ben-name">' +
+      esc(c.titulo) +
+      '</span>' +
+      '<span class="bl-ben-tag">' +
+      esc(c.tagline) +
+      '</span>' +
+      '</span>' +
+      '</a>'
+    );
+  }
+
+  function dibujar(d) {
+    var ancla = document.querySelector(ANCLA);
+    if (!ancla) return; // no es el home
+    if (document.getElementById(ID)) return; // ya insertada
+
+    cargarCSS();
+
+    var sec = document.createElement('section');
+    sec.id = ID;
+    sec.className = 'bl-ben';
+    sec.setAttribute('aria-label', txt(d.titulo) || 'Elegí por beneficio');
+    sec.innerHTML =
+      '<div class="bl-ben-head">' +
+      '<div>' +
+      '<span class="bl-ben-kicker">' +
+      esc(d.kicker) +
+      '</span>' +
+      '<h2 class="bl-ben-title">' +
+      esc(d.titulo) +
+      '</h2>' +
+      '</div>' +
+      '<div class="bl-ben-sub">' +
+      esc(d.bajada) +
+      '</div>' +
+      '</div>' +
+      '<div class="bl-ben-row">' +
+      d.cards.map(cardHTML).join('') +
+      '</div>';
+
+    ancla.parentNode.insertBefore(sec, ancla.nextSibling);
+    ocultarNativa();
+  }
+
+  function arrancar() {
+    // Si no estamos en el home ni siquiera pedimos el JSON.
+    if (!document.querySelector(ANCLA)) return;
+    traerCopy().then(dibujar).catch(function () {
+      /* último recurso: nunca romper el home */
+      try {
+        dibujar(FALLBACK);
+      } catch (e) {}
+    });
+  }
+
+  try {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', arrancar);
+    } else {
+      arrancar();
+    }
+  } catch (e) {
+    /* nunca romper el home */
+  }
+})();
