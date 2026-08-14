@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Sección "Certificaciones + Prensa" del home. Namespace propio: .bl-trust
+ *
+ * El markup lo arma js/trust-home.js y se inserta justo después del banner de
+ * Fundadores (section[data-store="home-banner-news"]).
+ *
+ * Los valores no son de invención propia: están copiados de la sección
+ * `.sec.dark.badges` y de la franja `.press` de las internas de producto, para
+ * que el home y las internas cuenten lo mismo con la misma cara. Cualquier
+ * cambio acá debería replicarse allá (o al revés).
+ *
+ * LAS DOS FRANJAS VAN EN DARK. La de prensa no puede ir sobre fondo claro: los
+ * 6 logos son PNG blanco puro sobre transparente y desaparecerían. Como acá
+ * quedan una pegada a la otra (en las internas están separadas por otras
+ * secciones), se las separa con una hairline en vez de con un cambio de fondo.
+ *
+ * Inter no viene cargada por Morelia (el tema trae Work Sans y Public Sans),
+ * por eso el @import de arriba — igual que en capsulas-section.css.
+ *
+ * Archivo externo servido por jsDelivr: el minificador de TN no lo toca, así
+ * que repetir un selector dentro y fuera de un @media es seguro acá (dentro de
+ * css_code no lo sería).
+ *
+ * Ver ESTADO_TRUST_HOME.md en el repo del proyecto. */
+
+.bl-trust {
+  background: #003845;
+  box-sizing: border-box;
+  font-family: Inter, sans-serif;
+  text-align: center;
+}
+
+.bl-trust *,
+.bl-trust *::before,
+.bl-trust *::after {
+  box-sizing: inherit;
+}
+
+.bl-trust img {
+  max-width: 100%;
+}
+
+.bl-trust-in {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Franja 1: certificaciones ---------- */
+
+.bl-trust-certs {
+  padding: 46px 0;
+}
+
+.bl-trust-certs .bl-trust-in {
+  max-width: 820px;
+}
+
+/* El kicker es un <span> a propósito: el `p { font-size: 14px !important }`
+   global de css_code no lo alcanza, así que no necesita pelear. La bajada sí
+   es un <p> y sí lo necesita (ver más abajo). */
+.bl-trust-kicker {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  /* Gold, que es el kicker-sobre-dark por defecto de la marca (así está en la
+     interna de Ashwagandha y así está el eyebrow de la sección de cápsulas del
+     home). Reishi lo pisa con un verde salvia, pero eso es su paleta de
+     producto: acá no aplica. */
+  color: #cca352;
+}
+
+.bl-trust-h {
+  margin: 12px 0 16px;
+  padding: 0;
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  /* 26/32 son los valores de la interna, no los 36px del h2 de la sección de
+     cápsulas. Es deliberado: esto es una banda de respaldo, no un capítulo del
+     home. A 36px competía con "Nuestros combos", que está a dos secciones. */
+  font-size: 26px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #fff;
+  text-wrap: balance;
+}
+
+/* !important solo en font-size, por el `p { font-size: 14px !important }`
+   global de css_code. Su line-height y su margin-top no llevan !important y
+   los gana la especificidad normal. Mismo criterio que en .bl-caps. */
+.bl-trust-lead {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 15px !important;
+  line-height: 1.6;
+  letter-spacing: 0;
+  text-transform: none;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.bl-trust-certrow {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+  margin: 18px auto 0;
+}
+
+/* ---------- Franja 2: prensa ---------- */
+
+/* Hairline en lugar de cambio de fondo. Es el mismo token que ya usa el
+   separador de la franja de prensa de la landing /best-sellers. */
+.bl-trust-press {
+  padding: 38px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* <div> y no <p>: así lo hacen las internas, y de paso esquiva el
+   font-size !important global. */
+.bl-trust-eye {
+  margin: 0 0 16px;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* flex-wrap y no scroll horizontal: con 6 logos a 20px de alto, en mobile
+   caen solos en 2–3 filas centradas. Es lo que hacen las internas y no
+   introduce un contenedor scrolleable que en el home sería el único. */
+.bl-trust-logos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px 26px;
+}
+
+.bl-trust-logos a {
+  display: inline-flex;
+  align-items: center;
+}
+
+.bl-trust-logos img {
+  height: 20px;
+  width: auto;
+  max-width: 118px;
+  opacity: 0.9;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+/* ---------- Desktop ---------- */
+
+@media (min-width: 768px) {
+  .bl-trust-certs {
+    padding: 48px 0;
+  }
+
+  .bl-trust-h {
+    font-size: 32px;
+  }
+
+  .bl-trust-certrow {
+    max-width: 760px;
+    margin-top: 22px;
+  }
+
+  .bl-trust-press {
+    padding: 44px 0;
+  }
+
+  .bl-trust-logos img {
+    height: 23px;
+    max-width: 150px;
+  }
+}
+
+@media (hover: hover) {
+  .bl-trust-logos a:hover img {
+    opacity: 1;
+  }
+}
