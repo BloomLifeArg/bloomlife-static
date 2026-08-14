@@ -1,5 +1,7 @@
 {
   "_leeme": "Copy de la sección 'Elegí por beneficio' del home. Editar ESTE archivo y commitear alcanza: el cambio se ve en el home en <=5 min, sin tocar el admin de Tienda Nube. Si este archivo se rompe o no se puede leer, js/beneficios-home.js dibuja la sección con su copy de fallback: el home nunca se queda sin la sección. Obligatorios: kicker, titulo, bajada y entre 3 y 6 cards con titulo+tagline+imagen+href. En 'imagen' va SOLO el nombre del archivo (se resuelve contra img/beneficios/ del mismo commit del JS); si algún día hace falta una foto de otro lado, se acepta también una URL http completa.",
+  "_leeme_titulo_nativo": "ocultar_titulo_nativo oculta el módulo 'Mensaje institucional' del home, que hoy contiene una sola línea ('¿Qué beneficio buscás?') y era el título de la franja nativa que esta sección reemplaza. Si se deja visible, el home dice lo mismo tres veces seguidas. Poner en false SOLO si ese módulo se reutiliza para otra cosa (un aviso de promo, por ejemplo).",
+  "ocultar_titulo_nativo": true,
   "kicker": "[03] Elegí por beneficio",
   "titulo": "¿Qué necesita tu cuerpo hoy?",
   "bajada": "Cinco caminos, un mismo origen. Elegí por cómo te querés sentir, no por el nombre del hongo.",

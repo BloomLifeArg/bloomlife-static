@@ -40,6 +40,17 @@
   var ANCLA = 'section[data-store="home-banner-categories"]';
   var ID = 'bl-ben-section';
 
+  /* El "Mensaje institucional" que va JUSTO ARRIBA de la franja nativa contiene
+     una sola línea — "¿Qué beneficio buscás?" — y era el título de esa franja.
+     Con la franja reemplazada queda huérfano y el home dice lo mismo tres veces
+     seguidas: "¿Qué beneficio buscás?" / "[03] Elegí por beneficio" /
+     "¿Qué necesita tu cuerpo hoy?". Por eso se oculta también.
+
+     Va detrás de un flag del JSON y no hardcodeado porque el módulo es genérico:
+     si algún día se usa para un aviso de promo, se pone en false y vuelve a
+     verse, sin republicar nada en el admin. */
+  var TITULO_NATIVO = 'section[data-store="home-institutional-message"]';
+
   var DATA_URL =
     'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/beneficios-home.json';
   var TIMEOUT_MS = 2500;
@@ -49,6 +60,7 @@
      Las URLs son las canónicas verificadas contra la API (handle real): 4 de
      las 5 NO son las que uno adivinaría por el nombre del producto. */
   var FALLBACK = {
+    ocultar_titulo_nativo: true,
     kicker: '[03] Elegí por beneficio',
     titulo: '¿Qué necesita tu cuerpo hoy?',
     bajada:
@@ -129,12 +141,15 @@
      Se hace por acá y no por css_code a propósito: así el feature entero vive
      en un solo commit de bloomlife-static y se revierte cambiando el hash, sin
      publicar un segundo campo del admin ni pelear con el minificador de TN. */
-  function ocultarNativa() {
+  function ocultarNativa(ocultarTitulo) {
     if (document.getElementById('bl-ben-hide')) return;
+    var sel = [ANCLA];
+    /* Por defecto sí: si el JSON no trae el campo, el comportamiento correcto
+       es el de la sección publicada, no el de dejar el título duplicado. */
+    if (ocultarTitulo !== false) sel.push(TITULO_NATIVO);
     var st = document.createElement('style');
     st.id = 'bl-ben-hide';
-    st.textContent =
-      'section[data-store="home-banner-categories"]{display:none!important}';
+    st.textContent = sel.join(',') + '{display:none!important}';
     document.head.appendChild(st);
   }
 
@@ -253,7 +268,7 @@
       '</div>';
 
     ancla.parentNode.insertBefore(sec, ancla.nextSibling);
-    ocultarNativa();
+    ocultarNativa(d.ocultar_titulo_nativo);
   }
 
   function arrancar() {
