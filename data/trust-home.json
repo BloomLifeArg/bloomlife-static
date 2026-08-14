@@ -1,0 +1,46 @@
+{
+  "certificaciones": {
+    "kicker": "Sellos & calidad internacional",
+    "titulo": "Producido en EE.UU., certificado para el mundo.",
+    "bajada": "Cada frasco se fabrica bajo estrictos estándares internacionales de calidad, trazabilidad y pureza de ingredientes.",
+    "imagen": {
+      "src": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ash_certrow_usa3-0a5078bc4485b143c917839744999686-1024-1024.png",
+      "alt": "Made in USA · GMP · Cruelty Free · Non-GMO · Vegan · Gluten Free · Sulfate Free · FDA"
+    }
+  },
+  "prensa": {
+    "eyebrow": "Nos conocieron en",
+    "medios": [
+      {
+        "nombre": "Ámbito",
+        "url": "https://www.ambito.com/negocios/nuevo-negocio-crearon-una-marca-hongos-adaptogenos-y-apuntan-facturar-us1-millon-2026-n6262268",
+        "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_ambito_white-9f44731820ca8a030817839563992995-1024-1024.png"
+      },
+      {
+        "nombre": "Forbes",
+        "url": "https://www.forbesargentina.com/negocios/suplementos-naturales-sello-argentino-produccion-eeuu-crecen-15-mes-proyectan-facturar-us-1-millon-tras-su-primer-ano-n83594",
+        "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_forbes_white-a4e025e2a54ff4b9ef17839564007088-1024-1024.png"
+      },
+      {
+        "nombre": "iProfesional",
+        "url": "https://www.iprofesional.com/negocios/445702-dos-argentinos-no-paran-de-facturar-con-un-negocio-nuevo-planean-facturar-1-millon-de-dolares",
+        "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_iprofesional_white-a5745efa38ae019dcb17839564020390-1024-1024.png"
+      },
+      {
+        "nombre": "La Nación",
+        "url": "https://www.lanacion.com.ar/salud/que-son-los-adaptogenos-y-como-incorporarlos-en-la-dieta-nid09022026",
+        "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_lanacion_white-a46f5e148758864b0117839564034476-1024-1024.png"
+      },
+      {
+        "nombre": "Newsweek",
+        "url": "https://www.newsweek.com.ar/lifestyle/adaptogenos--por-que-se-convierten-en-el-nuevo-estandar-del-bienestar-moderno_a693c65d819b2376a775bb4ed",
+        "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_newsweek_white-3a613495c20b93be7617839564048631-1024-1024.png"
+      },
+      {
+        "nombre": "TN",
+        "url": "https://tn.com.ar/sociedad/2026/02/08/dos-amigos-crearon-una-marca-de-gomitas-de-hongos-adaptogenos-y-proyectan-facturar-us-1-millon-en-2026",
+        "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_tn_white-e9c4521be19a5b6f2e17839564071111-1024-1024.png"
+      }
+    ]
+  }
+}
