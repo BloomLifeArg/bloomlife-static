@@ -65,7 +65,7 @@
   /* El "Mensaje institucional" que va JUSTO ARRIBA de la franja nativa contiene
      una sola línea — "¿Qué beneficio buscás?" — y era el título de esa franja.
      Con la franja reemplazada queda huérfano y el home dice lo mismo tres veces
-     seguidas: "¿Qué beneficio buscás?" / "[03] Elegí por beneficio" /
+     seguidas: "¿Qué beneficio buscás?" / "Elegí por beneficio" /
      "¿Qué necesita tu cuerpo hoy?". Por eso se oculta también.
 
      Va detrás de un flag del JSON y no hardcodeado porque el módulo es genérico:
@@ -83,7 +83,7 @@
      las 5 NO son las que uno adivinaría por el nombre del producto. */
   var FALLBACK = {
     ocultar_titulo_nativo: true,
-    kicker: '[03] Elegí por beneficio',
+    kicker: 'Elegí por beneficio',
     titulo: '¿Qué necesita tu cuerpo hoy?',
     bajada:
       'Cinco caminos, un mismo origen. Elegí por cómo te querés sentir, no por el nombre del hongo.',
