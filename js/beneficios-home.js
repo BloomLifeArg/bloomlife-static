@@ -4,6 +4,11 @@
  * cards con foto lifestyle a sangre, que van directo a las internas de
  * producto. La franja nativa NO se borra del admin: este script la oculta.
  *
+ * ⚠️ OJO: reemplaza a esa franja pero NO va en su lugar. La franja estaba
+ * arriba de todo (bajo el hero); la sección va más abajo, después de
+ * "Adaptógenos también en formato cápsulas". Son dos anclas distintas y es a
+ * propósito — ver ANCLA (guard + lo que se oculta) e INSERT_* (dónde entra).
+ *
  * ⚠️ CAMBIO DE DESTINO respecto de la franja nativa: la nativa tenía 4 ítems
  * (Concentración / Energía / Dormir mejor / Piel) que llevaban a las
  * categorías /tu-objetivo/…; esta tiene 5 (suma Calma) y lleva a la interna
@@ -39,6 +44,23 @@
      Fundadores: es otra sección y no la toca nadie acá. */
   var ANCLA = 'section[data-store="home-banner-categories"]';
   var ID = 'bl-ben-section';
+
+  /* DÓNDE se inserta (distinto de dónde estaba la franja que reemplaza): justo
+     después de "Adaptógenos también en formato cápsulas".
+
+     Esa sección la inyecta otro script nuestro (capsulas-home.js), así que
+     anclarse a ella sería una carrera entre dos loaders. Se evita del todo
+     mirando los dos lados:
+
+       products-featured → [bl-caps-section] → image-text-module
+
+     Si cápsulas ya está, vamos después de ella. Si todavía no llegó, vamos
+     ANTES de image-text-module, que es nativa y siempre está. Las dos ramas dan
+     el mismo orden final, porque cápsulas se ancla a products-featured — o sea
+     más arriba que nosotros — y entra por encima aunque llegue más tarde.
+     Sin MutationObserver, sin timeout, sin carrera. */
+  var INSERT_DESPUES = '#bl-caps-section';
+  var INSERT_ANTES = 'section[data-store="home-image-text-module"]';
 
   /* El "Mensaje institucional" que va JUSTO ARRIBA de la franja nativa contiene
      una sola línea — "¿Qué beneficio buscás?" — y era el título de esa franja.
@@ -239,9 +261,16 @@
   }
 
   function dibujar(d) {
-    var ancla = document.querySelector(ANCLA);
-    if (!ancla) return; // no es el home
+    if (!document.querySelector(ANCLA)) return; // no es el home
     if (document.getElementById(ID)) return; // ya insertada
+
+    /* Ver el comentario de INSERT_DESPUES: las dos ramas dan el mismo orden. */
+    var despues = document.querySelector(INSERT_DESPUES);
+    var antes = despues ? despues.nextSibling : document.querySelector(INSERT_ANTES);
+    var padre = despues
+      ? despues.parentNode
+      : (antes && antes.parentNode) || null;
+    if (!padre) return;
 
     cargarCSS();
 
@@ -267,7 +296,7 @@
       d.cards.map(cardHTML).join('') +
       '</div>';
 
-    ancla.parentNode.insertBefore(sec, ancla.nextSibling);
+    padre.insertBefore(sec, antes);
     ocultarNativa(d.ocultar_titulo_nativo);
   }
 
