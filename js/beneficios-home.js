@@ -92,15 +92,15 @@
         titulo: 'Foco',
         tagline: 'Claridad mental sin niebla.',
         imagen: 'beneficio-foco.jpg',
-        alt: 'Mujer leyendo un libro con luz cálida',
+        alt: 'Una gota de rocío sobre una brizna, con el paisaje enfocado dentro de la gota',
         href:
           'https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/'
       },
       {
         titulo: 'Calma',
-        tagline: 'Menos reactividad al estrés.',
+        tagline: 'Menos ansiedad y estrés.',
         imagen: 'beneficio-calma.jpg',
-        alt: 'Mujer meditando sentada junto a una ventana',
+        alt: 'Un lago en calma al amanecer, con las montañas reflejadas como en un espejo',
         href:
           'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/'
       },
@@ -108,15 +108,15 @@
         titulo: 'Energía',
         tagline: 'Estable, sin picos ni caídas.',
         imagen: 'beneficio-energia.jpg',
-        alt: 'Persona caminando por un sendero de madera entre la vegetación',
+        alt: 'Espigas a contraluz con el sol bajo entre ellas',
         href:
           'https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/'
       },
       {
-        titulo: 'Sueño',
-        tagline: 'Descanso que repara de verdad.',
-        imagen: 'beneficio-sueno.jpg',
-        alt: 'Persona descansando con los ojos cerrados',
+        titulo: 'Descanso',
+        tagline: 'Recuperate de verdad.',
+        imagen: 'beneficio-descanso.jpg',
+        alt: 'Un vilano de diente de león entero, suspendido contra la luz del atardecer',
         href:
           'https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/'
       },
@@ -124,7 +124,7 @@
         titulo: 'Piel',
         tagline: 'Hidratación desde adentro.',
         imagen: 'beneficio-piel.jpg',
-        alt: 'Mujer bebiendo de una taza, con una flor en el pelo',
+        alt: 'Gotas de rocío sostenidas por una gramínea, a contraluz',
         href:
           'https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/'
       }
