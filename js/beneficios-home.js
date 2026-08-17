@@ -90,7 +90,7 @@
     kicker: 'Elegí por beneficio',
     titulo: '¿Qué necesita tu cuerpo hoy?',
     bajada:
-      'Cinco caminos, un mismo origen. Elegí por cómo te querés sentir, no por el nombre del hongo.',
+      'Todo empieza por cómo te querés sentir. El resto lo hace la naturaleza.',
     cards: [
       {
         titulo: 'Foco',
