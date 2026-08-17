@@ -89,13 +89,7 @@
           img:
             'https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_lanacion_white-a46f5e148758864b0117839564034476-1024-1024.png'
         },
-        {
-          nombre: 'Newsweek',
-          url:
-            'https://www.newsweek.com.ar/lifestyle/adaptogenos--por-que-se-convierten-en-el-nuevo-estandar-del-bienestar-moderno_a693c65d819b2376a775bb4ed',
-          img:
-            'https://acdn-us.mitiendanube.com/stores/004/969/223/products/press_newsweek_white-3a613495c20b93be7617839564048631-1024-1024.png'
-        },
+      
         {
           nombre: 'TN',
           url:
