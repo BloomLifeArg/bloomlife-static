@@ -1,8 +1,12 @@
 /* Sección "Elegí por beneficio" del home de bloomlife.co.
  *
  * Reemplaza a la franja nativa de "Banners de categorías" por una fila de 5
- * cards con foto lifestyle a sangre, que van directo a las internas de
- * producto. La franja nativa NO se borra del admin: este script la oculta.
+ * cards que van directo a las internas de producto. La franja nativa NO se
+ * borra del admin: este script la oculta.
+ *
+ * Cada card es foto en ventana (3:4, con el grade de marca ya horneado en el
+ * JPG) + filete del color del producto + texto debajo sobre el fondo arena.
+ * El color llega por la custom property --bl-ben-c. Ver beneficios-section.css.
  *
  * ⚠️ OJO: reemplaza a esa franja pero NO va en su lugar. La franja estaba
  * arriba de todo (bajo el hero); la sección va más abajo, después de
@@ -90,6 +94,7 @@
     cards: [
       {
         titulo: 'Foco',
+        color: '#003845',
         tagline: 'Claridad mental sin niebla.',
         imagen: 'beneficio-foco.jpg',
         alt: 'Una gota de rocío sobre una brizna, con el paisaje enfocado dentro de la gota',
@@ -98,6 +103,7 @@
       },
       {
         titulo: 'Calma',
+        color: '#4A6741',
         tagline: 'Menos ansiedad y estrés.',
         imagen: 'beneficio-calma.jpg',
         alt: 'Un lago en calma al amanecer, con las montañas reflejadas como en un espejo',
@@ -106,6 +112,7 @@
       },
       {
         titulo: 'Energía',
+        color: '#5B7F94',
         tagline: 'Estable, sin picos ni caídas.',
         imagen: 'beneficio-energia.jpg',
         alt: 'Espigas a contraluz con el sol bajo entre ellas',
@@ -114,6 +121,7 @@
       },
       {
         titulo: 'Descanso',
+        color: '#3D4F5C',
         tagline: 'Recuperate de verdad.',
         imagen: 'beneficio-descanso.jpg',
         alt: 'Un vilano de diente de león entero, suspendido contra la luz del atardecer',
@@ -122,6 +130,7 @@
       },
       {
         titulo: 'Piel',
+        color: '#7A5C6E',
         tagline: 'Hidratación desde adentro.',
         imagen: 'beneficio-piel.jpg',
         alt: 'Gotas de rocío sostenidas por una gramínea, a contraluz',
@@ -238,23 +247,37 @@
     return resolver('../img/beneficios/' + nombre) || '';
   }
 
+  /* Solo se acepta un hex de 3 o 6 dígitos: el valor entra en un atributo
+     style, así que no puede venir cualquier cosa del JSON. */
+  function color(v) {
+    return /^#[0-9a-f]{3}([0-9a-f]{3})?$/i.test(String(v || '').trim())
+      ? String(v).trim()
+      : '#003845';
+  }
+
+  /* Estructura v2: foto en ventana + filete de color + texto debajo, sobre el
+     fondo arena de la sección. El texto ya NO va encima de la foto — así se lee
+     igual en las cinco, sin depender de si la foto es clara u oscura. */
   function cardHTML(c) {
     return (
-      '<a class="bl-ben-card" href="' +
+      '<a class="bl-ben-card" style="--bl-ben-c:' +
+      color(c.color) +
+      '" href="' +
       esc(c.href) +
       '">' +
+      '<span class="bl-ben-ph">' +
       '<img src="' +
       esc(urlImagen(c.imagen)) +
       '" alt="' +
       esc(txt(c.alt) || '') +
       '" loading="lazy" decoding="async">' +
-      '<span class="bl-ben-cap">' +
+      '</span>' +
+      '<span class="bl-ben-rule"></span>' +
       '<span class="bl-ben-name">' +
       esc(c.titulo) +
       '</span>' +
       '<span class="bl-ben-tag">' +
       esc(c.tagline) +
-      '</span>' +
       '</span>' +
       '</a>'
     );

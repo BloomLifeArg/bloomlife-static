@@ -11,35 +11,41 @@
       "tagline": "Claridad mental sin niebla.",
       "imagen": "beneficio-foco.jpg",
       "alt": "Una gota de rocío sobre una brizna, con el paisaje enfocado dentro de la gota",
-      "href": "https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/"
+      "href": "https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/",
+      "color": "#003845"
     },
     {
       "titulo": "Calma",
       "tagline": "Menos ansiedad y estrés.",
       "imagen": "beneficio-calma.jpg",
       "alt": "Un lago en calma al amanecer, con las montañas reflejadas como en un espejo",
-      "href": "https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/"
+      "href": "https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/",
+      "color": "#4A6741"
     },
     {
       "titulo": "Energía",
       "tagline": "Estable, sin picos ni caídas.",
       "imagen": "beneficio-energia.jpg",
       "alt": "Espigas a contraluz con el sol bajo entre ellas",
-      "href": "https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/"
+      "href": "https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/",
+      "color": "#5B7F94"
     },
     {
       "titulo": "Descanso",
       "tagline": "Recuperate de verdad.",
       "imagen": "beneficio-descanso.jpg",
       "alt": "Un vilano de diente de león entero, suspendido contra la luz del atardecer",
-      "href": "https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/"
+      "href": "https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/",
+      "color": "#3D4F5C"
     },
     {
       "titulo": "Piel",
       "tagline": "Hidratación desde adentro.",
       "imagen": "beneficio-piel.jpg",
       "alt": "Gotas de rocío sostenidas por una gramínea, a contraluz",
-      "href": "https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/"
+      "href": "https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/",
+      "color": "#7A5C6E"
     }
-  ]
+  ],
+  "_leeme_color": "En 'color' va el color del producto, que pinta el filete debajo de la foto. Sale del design system §12 y de las internas ya publicadas: Melena petróleo, Ashwagandha oliva, Cordyceps celeste (el design system decía terracota y estaba desactualizado; mandó la interna), Reishi pizarra, Tremella malva. Si falta, el filete cae a petróleo."
 }
