@@ -90,7 +90,7 @@
     kicker: 'Elegí por beneficio',
     titulo: '¿Qué necesita tu cuerpo hoy?',
     bajada:
-      'Todo empieza por cómo te querés sentir. El resto lo hace la naturaleza.',
+      'Vos elegís cómo te querés sentir. La naturaleza te acompaña.',
     cards: [
       {
         titulo: 'Foco',
