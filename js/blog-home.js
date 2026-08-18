@@ -21,7 +21,21 @@
 
   var DATA_URL =
     'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/blog-latest.json';
-  var ANCLA = 'section[data-store="banner-services"]'; // citas BloomCrew
+  /* Ancla: "Tu rutina, asegurada por 3 meses".
+     Antes se anclaba a BloomCrew (`banner-services`), pero esa sección se apaga
+     en el editor junto con la de "Referentes" al entrar la sección propia de
+     testimonios — y apagada quiere decir fuera del DOM, o sea que este script
+     se quedaba sin ancla y la sección del blog dejaba de dibujarse, en silencio.
+     Se re-ancló a la sección nativa que queda inmediatamente arriba.
+     Ver ESTADO_TESTIMONIOS_HOME.md en el repo del proyecto. */
+  var ANCLA = 'section[data-store="home-products-sale"]';
+  /* La sección de testimonios entra en ese mismo punto y la inyecta otro script
+     nuestro, así que anclarse solo al ancla nativa sería una carrera entre dos
+     loaders. Se evita mirando los dos lados: si testimonios ya está, vamos
+     después de ella; si todavía no llegó, vamos después del ancla y ella se
+     mete en el medio cuando llegue. Las dos ramas dan el mismo orden final.
+     Mismo truco que usa beneficios-home.js con cápsulas. */
+  var ANCLA_TESTIMONIOS = '#bl-tst-section';
   var TITULO = 'Wellness Blog';
   var CACHE_KEY = 'bl-blog-v1';
   var CACHE_MS = 5 * 60 * 1000;
@@ -102,7 +116,8 @@
   }
 
   function dibujar(posts) {
-    var ancla = document.querySelector(ANCLA);
+    var ancla =
+      document.querySelector(ANCLA_TESTIMONIOS) || document.querySelector(ANCLA);
     if (!ancla || !posts || !posts.length) return;
     if (document.querySelector('.bl-blog')) return; // idempotente
 
