@@ -6,7 +6,14 @@
 
 .h {
   width: 100%;
+  /* svh = alto del viewport CON la barra de direcciones visible: es un valor
+     estable, no se recalcula cuando la barra se oculta al scrollear. Con vh a
+     secas, en mobile el hero cambiaba de alto durante el scroll (medido: 743 ->
+     792 px) y eso reacomodaba el documento entero — la pagina "bailaba".
+     La linea con vh queda arriba como fallback: el navegador que no entiende
+     svh la usa y se comporta como hasta hoy. */
   height: 90vh;
+  height: 90svh;
   min-height: 560px;
   max-height: 900px;
   position: relative;
@@ -182,6 +189,7 @@
 @media (max-width: 768px) {
   .h {
     height: 88vh;
+    height: 88svh;
     min-height: 480px;
   }
 
