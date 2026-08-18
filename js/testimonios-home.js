@@ -55,7 +55,8 @@
   var FALLBACK = {
     promedio: 4.5,
     resenas: '208 reseñas verificadas',
-    titulo: 'Lo que dicen quienes ya las toman',
+    titulo: 'La excelencia, nuestra obsesión',
+    bajada: 'La voz de nuestros clientes',
     testimonios: [
       { cita: 'Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.', nombre: 'Fany G.', estrellas: 5, producto: 'Melena de León Gummies', url: '/productos/melena-de-leon-claridad-mental-gummies/' },
       { cita: 'Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.', nombre: 'Victoria B.', estrellas: 5, producto: 'Combo Brain Health Gummies', url: '/productos/combo-brain-health-gummies-suplementacion-por-3-meses/' },
@@ -115,6 +116,10 @@
     '.bl-tst-stars-fill{position:absolute;top:0;left:0;height:100%;background-image:' + STAR + ';background-repeat:repeat-x;background-size:18px 14.4px;background-position:left center}' +
     '.bl-tst-count{font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:.16em;color:rgba(244,240,232,.55);margin:0 0 12px}' +
     '.bl-tst-h{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:26px;line-height:1.25;color:#F4F0E8;margin:0}' +
+    /* Bajada: Inter, no Georgia, para que contraste con el titulo y no compita
+       con el. Es <div> y no <p> por el p{font-size:14px!important} global de
+       css_code (ver §7.3 del ESTADO). */
+    '.bl-tst-sub{font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:15px;font-weight:400;line-height:1.5;color:rgba(244,240,232,.6);margin:12px 0 0}' +
     /* El track es el elemento que scrollea. En mobile el padding-left de 8vw es
        lo que deja la primera card centrada (84vw de card + 8vw a cada lado). El
        aire de la derecha va como margin-right del ultimo card y no como
@@ -160,6 +165,7 @@
     '#bl-tst-section{padding:96px 0}' +
     '.bl-tst-head{margin-bottom:56px;max-width:760px}' +
     '.bl-tst-h{font-size:38px}' +
+    '.bl-tst-sub{font-size:16px;margin-top:14px}' +
     '.bl-tst-track{gap:24px;padding-left:0;width:' + (CARD_DESK * 3 + GAP_DESK * 2) + 'px;max-width:100%;margin:0 auto}' +
     '.bl-tst-card:last-child{margin-right:0}' +
     '.bl-tst-card{flex:0 0 ' + CARD_DESK + 'px;min-height:320px}' +
@@ -203,6 +209,9 @@
   function valido(d) {
     if (!d || typeof d !== 'object') return false;
     if (!txt(d.resenas) || !txt(d.titulo)) return false;
+    /* `bajada` es opcional a proposito: si falta, el encabezado se dibuja sin
+       ella en vez de caerse al FALLBACK entero por un campo secundario. */
+    if (d.bajada !== undefined && !txt(d.bajada)) return false;
     if (typeof d.promedio !== 'number' || d.promedio < 1 || d.promedio > 5) return false;
     if (!Array.isArray(d.testimonios)) return false;
     if (d.testimonios.length < 1 || d.testimonios.length > 30) return false;
@@ -352,6 +361,7 @@
       '</div>' +
       '<div class="bl-tst-count">' + numero(d.promedio) + ' · ' + esc(d.resenas) + '</div>' +
       '<h2 class="bl-tst-h">' + esc(d.titulo) + '</h2>' +
+      (txt(d.bajada) ? '<div class="bl-tst-sub">' + esc(d.bajada) + '</div>' : '') +
       '</div>' +
       '<div class="bl-tst-track">' +
       d.testimonios.map(cardHTML).join('') +
