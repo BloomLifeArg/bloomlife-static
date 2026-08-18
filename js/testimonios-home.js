@@ -53,21 +53,22 @@
   /* Copia de seguridad del copy. Tiene que quedar en sync con el JSON — si
      divergen, esto es lo que ve el usuario cuando GitHub no responde. */
   var FALLBACK = {
-    resenas: '203 reseñas verificadas',
+    promedio: 4.5,
+    resenas: '208 reseñas verificadas',
     titulo: 'Lo que dicen quienes ya las toman',
     testimonios: [
-      { cita: 'Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.', nombre: 'Fany G.', estrellas: 5, producto: 'Melena de León' },
-      { cita: 'Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.', nombre: 'Victoria B.', estrellas: 5, producto: 'Combo Brain Health' },
-      { cita: 'A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.', nombre: 'María Laura V.', estrellas: 5, producto: 'Ashwagandha' },
-      { cita: 'El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.', nombre: 'Marina C.', estrellas: 5, producto: 'Ashwagandha Cápsulas' },
-      { cita: 'Excelente producto, ayudaron a mi concentración y descanso.', nombre: 'Claudia V.', estrellas: 5, producto: 'Combo Bye Bye Anxiety' },
-      { cita: 'Excelente producto, noto cambios en mi piel. Fácil de consumir y rico.', nombre: 'Agustina U.', estrellas: 5, producto: 'Tremella' },
-      { cita: 'Lo empecé a consumir hace 30 días… sí noté la piel más luminosa.', nombre: 'Valeria S.', estrellas: 4, producto: 'Tremella' },
-      { cita: 'Me encantó el producto, recomendable siempre que esté acompañado de buenos hábitos alimentarios, movimiento y descanso reparador.', nombre: 'María Paula B.', estrellas: 5, producto: 'Combo Bye Bye Anxiety' },
+      { cita: 'Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.', nombre: 'Fany G.', estrellas: 5, producto: 'Melena de León', url: '/productos/melena-de-leon-claridad-mental-gummies/' },
+      { cita: 'Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.', nombre: 'Victoria B.', estrellas: 5, producto: 'Combo Brain Health', url: '/productos/combo-brain-health-gummies-suplementacion-por-3-meses/' },
+      { cita: 'A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.', nombre: 'María Laura V.', estrellas: 5, producto: 'Ashwagandha', url: '/productos/ashwagandha-equilibrio-hormonal-gummies/' },
+      { cita: 'El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.', nombre: 'Marina C.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
+      { cita: 'Excelente producto, ayudaron a mi concentración y descanso.', nombre: 'Claudia V.', estrellas: 5, producto: 'Combo Bye Bye Anxiety', url: '/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/' },
+      { cita: 'Excelente producto, noto cambios en mi piel. Fácil de consumir y rico.', nombre: 'Agustina U.', estrellas: 5, producto: 'Tremella', url: '/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/' },
+      { cita: 'Lo empecé a consumir hace 30 días… sí noté la piel más luminosa.', nombre: 'Valeria S.', estrellas: 4, producto: 'Tremella', url: '/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/' },
+      { cita: 'Me encantó el producto, recomendable siempre que esté acompañado de buenos hábitos alimentarios, movimiento y descanso reparador.', nombre: 'María Paula B.', estrellas: 5, producto: 'Combo Bye Bye Anxiety', url: '/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/' },
       { cita: 'Excelente producto, es un antes y un después. Lo recomiendo totalmente, mantengan esa excelencia.', nombre: 'Silvia B.', estrellas: 5, producto: 'Combo Clarity & Defense' },
-      { cita: 'Excelente atención al cliente vía WhatsApp. Me armaron un combo a pedido y siempre se mostraron súper predispuestos y amables.', nombre: 'Mercedes S.', estrellas: 5, producto: 'Combo Glow & Regulate' },
-      { cita: 'Muy recomendable. Todavía lo estoy testeando. Tendría que hacer refill, ya se me están acabando.', nombre: 'Gabriela C.', estrellas: 5, producto: 'Cordyceps' },
-      { cita: 'Me encanta el producto, me cambió la vida.', nombre: 'Nanete B.', estrellas: 5, producto: 'Ashwagandha Cápsulas' }
+      { cita: 'Excelente atención al cliente vía WhatsApp. Me armaron un combo a pedido y siempre se mostraron súper predispuestos y amables.', nombre: 'Mercedes S.', estrellas: 5, producto: 'Combo Glow & Regulate', url: '/productos/glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0/' },
+      { cita: 'Muy recomendable. Todavía lo estoy testeando. Tendría que hacer refill, ya se me están acabando.', nombre: 'Gabriela C.', estrellas: 5, producto: 'Cordyceps', url: '/productos/cordyceps-energia-sostenida-gummies/' },
+      { cita: 'Me encanta el producto, me cambió la vida.', nombre: 'Nanete B.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' }
     ]
   };
 
@@ -81,9 +82,18 @@
   /* Una sola estrella, en un tile de 30x24 para que el repeat-x deje 6px de aire
      entre estrella y estrella. Se repite con background-repeat en vez de dibujar
      N nodos. El color va horneado (#CCA352): currentColor no funciona dentro de
-     un SVG cargado por url() en background-image. */
-  var STAR =
-    "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 24'%3E%3Cpath fill='%23CCA352' d='M15 1.5l3.09 6.63 7.16.9-5.27 4.96 1.36 7.11L15 17.6l-6.34 3.5 1.36-7.11L4.75 9.03l7.16-.9z'/%3E%3C/svg%3E\")";
+     un SVG cargado por url() en background-image; por eso la opacidad tambien va
+     horneada y la funcion recibe el valor. */
+  function star(op) {
+    return (
+      "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 24'%3E%3Cpath fill='%23CCA352' fill-opacity='" +
+      op +
+      "' d='M15 1.5l3.09 6.63 7.16.9-5.27 4.96 1.36 7.11L15 17.6l-6.34 3.5 1.36-7.11L4.75 9.03l7.16-.9z'/%3E%3C/svg%3E\")"
+    );
+  }
+
+  var STAR = star('1');       // estrella llena, para las cards y la capa de relleno
+  var STAR_OFF = star('.22'); // estrella apagada, el riel de fondo del promedio
 
   function chevron(d) {
     return (
@@ -97,7 +107,12 @@
     '#bl-tst-section{background:#003845;padding:64px 0;overflow:hidden;position:relative}' +
     '#bl-tst-section *{box-sizing:border-box}' +
     '.bl-tst-head{text-align:center;padding:0 20px;margin:0 auto 40px;max-width:640px}' +
-    '.bl-tst-stars{width:90px;height:15px;margin:0 auto 14px;background-image:' + STAR + ';background-repeat:repeat-x;background-size:18px 14.4px;background-position:left center}' +
+    /* El promedio se dibuja con DOS capas: un riel de 5 estrellas apagadas y
+       encima una capa de estrellas llenas recortada por width (4,5/5 = 90%).
+       Asi media estrella es media estrella de verdad, y no 5 llenas diciendo
+       que el promedio es 5. El width lo calcula el JS desde el JSON. */
+    '.bl-tst-stars{position:relative;width:90px;height:15px;margin:0 auto 14px;background-image:' + STAR_OFF + ';background-repeat:repeat-x;background-size:18px 14.4px;background-position:left center}' +
+    '.bl-tst-stars-fill{position:absolute;top:0;left:0;height:100%;background-image:' + STAR + ';background-repeat:repeat-x;background-size:18px 14.4px;background-position:left center}' +
     '.bl-tst-count{font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:.16em;color:rgba(244,240,232,.55);margin:0 0 12px}' +
     '.bl-tst-h{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:26px;line-height:1.25;color:#F4F0E8;margin:0}' +
     /* El track es el elemento que scrollea. En mobile el padding-left de 8vw es
@@ -122,7 +137,19 @@
     '.bl-tst-rule{display:block;width:32px;height:1px;background:rgba(244,240,232,.14);border:0;margin:20px 0}' +
     '.bl-tst-name{font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:#CCA352;margin:0}' +
     '.bl-tst-cstars{height:12px;margin:8px 0 0;background-image:' + STAR + ';background-repeat:repeat-x;background-size:15px 12px;background-position:left center}' +
-    '.bl-tst-prod{font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:11px;font-weight:400;color:rgba(244,240,232,.5);margin:6px 0 0}' +
+    /* El producto es un chip. Cuando el JSON trae `url` es un <a> y se puede
+       clickear: es el camino mas corto entre "me convencio este testimonio" y
+       la interna. Cuando no la trae es un <span> con el mismo aspecto pero sin
+       link (ver Clarity & Defense, despublicado). El hover es solo un realce:
+       ningun estado necesario depende de el, y focus-visible lo acompania. */
+    '.bl-tst-prod{display:inline-block;margin:10px 0 0;padding:5px 12px;border:1px solid rgba(244,240,232,.2);border-radius:999px;font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:11px;font-weight:400;line-height:1.3;color:rgba(244,240,232,.62);text-decoration:none}' +
+    'a.bl-tst-prod:hover{border-color:rgba(204,163,82,.55);color:#CCA352}' +
+    'a.bl-tst-prod:focus-visible{outline:2px solid #CCA352;outline-offset:2px}' +
+    /* Indicador de posicion. Solo mobile: ahi no hay flechas y 12 cards sin
+       ninguna señal no se leen como carrusel. Mismo formato "01 / 12" que ya
+       usa el hero del tema, para no inventar un lenguaje nuevo. */
+    '.bl-tst-pos{margin:24px auto 0;text-align:center;font-family:Inter,system-ui,-apple-system,sans-serif;font-size:11px;font-weight:400;letter-spacing:.14em;color:rgba(244,240,232,.45)}' +
+    '.bl-tst-pos b{font-weight:600;color:#CCA352}' +
     '.bl-tst-nav{display:none}' +
     /* Desktop: el track mide exactamente 3 cards + 2 gaps (1068px). Con esa
        medida, la posición de reposo (scrollLeft 0) ya es un punto de snap válido
@@ -137,6 +164,7 @@
     '.bl-tst-card:last-child{margin-right:0}' +
     '.bl-tst-card{flex:0 0 ' + CARD_DESK + 'px;min-height:320px}' +
     '.bl-tst-quote{font-size:18px;line-height:1.55}' +
+    '.bl-tst-pos{display:none}' +
     '.bl-tst-nav{display:flex;justify-content:center;gap:12px;margin-top:32px}' +
     '.bl-tst-arrow{width:40px;height:40px;padding:0;border:1px solid rgba(244,240,232,.25);border-radius:50%;background-color:transparent;background-repeat:no-repeat;background-position:center;background-size:18px 18px;cursor:pointer;transition:opacity .2s ease}' +
     '.bl-tst-prev{background-image:' + chevron('M15 5l-7 7 7 7') + '}' +
@@ -147,7 +175,8 @@
        instalada y funcionando (fichas de producto incluidas). Esta regla vive
        dentro del <style> que este script inyecta, y el script solo corre en el
        home (ver ANCLA), así que la regla no existe en ninguna otra página. */
-    '#revie-tn-widget{display:none!important}';
+    '@media (prefers-reduced-motion:reduce){.bl-tst-track{scroll-behavior:auto}}' +
+        '#revie-tn-widget{display:none!important}';
 
   function inyectarCSS() {
     if (document.getElementById('bl-tst-css')) return;
@@ -174,6 +203,7 @@
   function valido(d) {
     if (!d || typeof d !== 'object') return false;
     if (!txt(d.resenas) || !txt(d.titulo)) return false;
+    if (typeof d.promedio !== 'number' || d.promedio < 1 || d.promedio > 5) return false;
     if (!Array.isArray(d.testimonios)) return false;
     if (d.testimonios.length < 1 || d.testimonios.length > 30) return false;
     return d.testimonios.every(function (t) {
@@ -184,9 +214,22 @@
         txt(t.producto) &&
         typeof t.estrellas === 'number' &&
         t.estrellas >= 1 &&
-        t.estrellas <= 5
+        t.estrellas <= 5 &&
+        /* `url` es opcional; si viene, tiene que ser una ruta interna. Se rechaza
+           cualquier cosa con esquema o protocolo-relativa para que un JSON tocado
+           no pueda mandar el trafico del home a otro dominio. */
+        (t.url === undefined || (txt(t.url) && /^\/[^\/]/.test(t.url)))
       );
     });
+  }
+
+  function pad(n) {
+    return (n < 10 ? '0' : '') + n;
+  }
+
+  /* 4.5 -> "4,5" (coma decimal, es-AR). Un entero se muestra sin decimal. */
+  function numero(n) {
+    return (Math.round(n * 10) / 10).toString().replace('.', ',');
   }
 
   function traerCopy() {
@@ -220,6 +263,17 @@
       });
   }
 
+  /* Con `url` es un <a> clickeable; sin `url`, un <span> con el mismo aspecto.
+     No se inventa un destino: es mejor un chip muerto que mandar a la gente a un
+     producto que ya no esta en el catalogo. */
+  function prodHTML(t) {
+    var etiqueta = esc(t.producto);
+    if (!txt(t.url)) return '<span class="bl-tst-prod">' + etiqueta + '</span>';
+    return (
+      '<a class="bl-tst-prod" href="' + esc(t.url) + '">' + etiqueta + '</a>'
+    );
+  }
+
   function cardHTML(t) {
     var n = Math.round(t.estrellas);
     return (
@@ -230,7 +284,7 @@
       '<div class="bl-tst-name">' + esc(t.nombre) + '</div>' +
       '<div class="bl-tst-cstars" style="width:' + n * TILE + 'px" role="img" aria-label="' +
       n + ' de 5 estrellas"></div>' +
-      '<div class="bl-tst-prod">' + esc(t.producto) + '</div>' +
+      prodHTML(t) +
       '</div>' +
       '</article>'
     );
@@ -262,10 +316,19 @@
     prev.addEventListener('click', function () { mover(-1); });
     next.addEventListener('click', function () { mover(1); });
 
+    var pos = sec.querySelector('.bl-tst-pos b');
+    var total = sec.querySelectorAll('.bl-tst-card').length;
+
     function estado() {
       var max = track.scrollWidth - track.clientWidth;
       prev.classList.toggle('is-off', track.scrollLeft <= 1);
       next.classList.toggle('is-off', track.scrollLeft >= max - 1);
+      /* El indicador se calcula del scrollLeft, no de un contador propio: asi el
+         swipe nativo y las flechas quedan siempre en sync sin llevar estado. */
+      if (pos) {
+        var i = Math.round(track.scrollLeft / paso()) + 1;
+        pos.textContent = pad(Math.max(1, Math.min(total, i)));
+      }
     }
     track.addEventListener('scroll', estado, { passive: true });
     estado();
@@ -283,13 +346,18 @@
     sec.className = 'bl-tst';
     sec.innerHTML =
       '<div class="bl-tst-head">' +
-      '<div class="bl-tst-stars" role="img" aria-label="5 de 5 estrellas"></div>' +
-      '<div class="bl-tst-count">' + esc(d.resenas) + '</div>' +
+      '<div class="bl-tst-stars" role="img" aria-label="' + numero(d.promedio) +
+      ' de 5 estrellas">' +
+      '<div class="bl-tst-stars-fill" style="width:' + (d.promedio / 5) * 100 + '%"></div>' +
+      '</div>' +
+      '<div class="bl-tst-count">' + numero(d.promedio) + ' · ' + esc(d.resenas) + '</div>' +
       '<h2 class="bl-tst-h">' + esc(d.titulo) + '</h2>' +
       '</div>' +
       '<div class="bl-tst-track">' +
       d.testimonios.map(cardHTML).join('') +
       '</div>' +
+      '<div class="bl-tst-pos" aria-hidden="true"><b>01</b> / ' +
+      pad(d.testimonios.length) + '</div>' +
       '<div class="bl-tst-nav">' +
       '<button type="button" class="bl-tst-arrow bl-tst-prev" aria-label="Testimonios anteriores"></button>' +
       '<button type="button" class="bl-tst-arrow bl-tst-next" aria-label="Testimonios siguientes"></button>' +
