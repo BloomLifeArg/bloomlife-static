@@ -53,7 +53,7 @@
   /* Copia de seguridad del copy. Tiene que quedar en sync con el JSON — si
      divergen, esto es lo que ve el usuario cuando GitHub no responde. */
   var FALLBACK = {
-    promedio: 4.5,
+    promedio: 4.8,
     resenas: '208 reseñas verificadas',
     titulo: 'La excelencia, nuestra obsesión',
     bajada: 'La voz de nuestros clientes',
