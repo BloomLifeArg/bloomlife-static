@@ -1,0 +1,40 @@
+{
+ "_leeme": "Generado por build_menu_adaptogenos.py. NO editar a mano: se regenera. 'filete' es el tono real de la etiqueta con S=0.42 V=0.72 para que los cinco lean como sistema. Las bajadas NO viven acá: están en el copy cerrado del repo del tema (assets-menu/menu-copy-cerrado.json).",
+ "items": {
+  "melena": {
+   "nombre": "Melena de León",
+   "archivo": "adaptogeno-melena.webp",
+   "filete": "#B8A26A",
+   "filete_crudo": "#FECB49",
+   "hue": 43.1
+  },
+  "ashwagandha": {
+   "nombre": "Ashwagandha",
+   "archivo": "adaptogeno-ashwagandha.webp",
+   "filete": "#B8896A",
+   "filete_crudo": "#D6B29B",
+   "hue": 23.4
+  },
+  "cordyceps": {
+   "nombre": "Cordyceps",
+   "archivo": "adaptogeno-cordyceps.webp",
+   "filete": "#6A97B8",
+   "filete_crudo": "#90BAD9",
+   "hue": 205.5
+  },
+  "reishi": {
+   "nombre": "Reishi",
+   "archivo": "adaptogeno-reishi.webp",
+   "filete": "#6AB89E",
+   "filete_crudo": "#66A08D",
+   "hue": 160.3
+  },
+  "tremella": {
+   "nombre": "Tremella",
+   "archivo": "adaptogeno-tremella.webp",
+   "filete": "#846AB8",
+   "filete_crudo": "#896CC4",
+   "hue": 259.8
+  }
+ }
+}
