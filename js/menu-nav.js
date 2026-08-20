@@ -343,27 +343,67 @@
     document.documentElement.style.overflow = v ? 'hidden' : '';
   }
 
+  /* MOBILE CON PESTAÑAS, no con las secciones apiladas.
+     La primera versión concatenaba Shop + Combos + Beneficios y daba 1.247px de
+     scroll: un choclo. Seed resuelve esto dejando la barra arriba como pill y
+     mostrando UNA sección a la vez. Eso conserva lo que me importaba del acordeón
+     —los hermanos siguen a la vista— sin el largo.
+
+     Las pestañas son solo las entradas CON panel. "Suscripción mensual" es un
+     destino, no una sección, así que va como link al pie: con ella arriba la fila
+     de pestañas medía ~430px y no entraba en 375. */
+  var mActiva = 0;
+
+  function pintarSeccionMobile(cont, panelId) {
+    cont.innerHTML = '';
+    var t = panelId === 'shop' ? panelShop()
+          : panelId === 'combos' ? panelCombos()
+          : panelId === 'beneficios' ? panelBeneficios()
+          : panelId === 'blog' ? panelBlog() : null;
+    if (!t) return;
+    t.className = 'bls__mpanel'; /* acá no es panel flotante: es el contenido */
+    cont.appendChild(t);
+  }
+
   function contenidoDrawer(d) {
     d.innerHTML = '';
-    var c = el('button', 'bls__cerrar'); c.type = 'button';
-    c.setAttribute('aria-label', 'Cerrar menú'); c.innerHTML = '&times;';
-    c.addEventListener('click', function () { abrirDrawer(false); });
-    d.appendChild(c);
-    [panelShop(), panelCombos(), panelBeneficios()].forEach(function (t) {
-      if (!t) return;
-      t.className = ''; /* en el drawer no es panel flotante: es el contenido */
-      d.appendChild(t);
+    var conPanel = NIVEL1.filter(function (i) { return i.panel; });
+    if (mActiva >= conPanel.length) mActiva = 0;
+
+    var barra = el('div', 'bls__tabs');
+    var cont = el('div', 'bls__mcont');
+
+    conPanel.forEach(function (it, k) {
+      var t = el('button', 'bls__tab' + (k === mActiva ? ' is-active' : ''), it.texto);
+      t.type = 'button';
+      t.setAttribute('aria-selected', k === mActiva ? 'true' : 'false');
+      t.addEventListener('click', function () {
+        mActiva = k;
+        [].forEach.call(barra.querySelectorAll('.bls__tab'), function (o, j) {
+          o.classList.toggle('is-active', j === k);
+          o.setAttribute('aria-selected', j === k ? 'true' : 'false');
+        });
+        pintarSeccionMobile(cont, it.panel);
+        cont.scrollTop = 0;
+      });
+      barra.appendChild(t);
     });
-    /* En el drawer, las entradas que en desktop abren panel de PRODUCTO ya están
-       arriba como contenido. Las demás van como links: las que tienen href y
-       también el Blog, cuyo panel de 3 notas no se usa acá.
-       Sin este último caso el Blog quedaba INALCANZABLE en mobile: el filtro
-       descartaba todo lo que tuviera panel. */
+
+    var c = el('button', 'bls__cerrar');
+    c.type = 'button';
+    c.setAttribute('aria-label', 'Cerrar menú');
+    c.innerHTML = '&times;';
+    c.addEventListener('click', function () { abrirDrawer(false); });
+    barra.appendChild(c);
+
+    d.appendChild(barra);
+    pintarSeccionMobile(cont, (conPanel[mActiva] || {}).panel);
+    d.appendChild(cont);
+
+    /* "Suscripción mensual" al pie: es un destino, no una sección. */
     var dir = el('ul', 'bls__dir');
-    NIVEL1.forEach(function (i) {
-      var href = i.href || (i.panel === 'blog' ? 'https://www.bloomlife.co/blog/' : null);
-      if (!href) return;
-      var li = el('li'); var a = el('a', null, i.texto); a.href = href;
+    NIVEL1.filter(function (i) { return i.href; }).forEach(function (i) {
+      var li = el('li'); var a = el('a', null, i.texto); a.href = i.href;
       li.appendChild(a); dir.appendChild(li);
     });
     d.appendChild(dir);

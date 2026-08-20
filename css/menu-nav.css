@@ -169,29 +169,57 @@
 .bls__burger span { display: block; height: 1.5px; background: var(--bls-texto); border-radius: 2px; }
 .bls__burger span + span { margin-top: 5px; }
 
+/* Mobile: overlay casi a todo el ancho con la barra de pestañas fija arriba y una
+   sola sección scrolleable abajo. NO es un drawer lateral con todo apilado: eso
+   daba 1.247px de scroll. */
 .bls__drawer {
-  position: fixed; inset: 0 auto 0 0; width: min(88vw, 390px); z-index: 1100;
-  display: flex; flex-direction: column; padding: 54px 16px 28px;
-  overflow-y: auto; overscroll-behavior: contain; background: #fff;
-  transform: translateX(-102%); transition: transform .26s cubic-bezier(.4,0,.2,1);
+  position: fixed; inset: 10px 10px 10px 10px; z-index: 1100;
+  display: flex; flex-direction: column;
+  border-radius: 20px; overflow: hidden;
+  background: #fff; box-shadow: 0 24px 60px -18px rgba(0, 56, 69, .4);
+  transform: translateY(-14px); opacity: 0;
+  transition: transform .24s cubic-bezier(.4,0,.2,1), opacity .2s ease, visibility .24s;
   visibility: hidden;
 }
-.bls__drawer.is-open { transform: none; visibility: visible; }
+.bls__drawer.is-open { transform: none; opacity: 1; visibility: visible; }
+
+/* La fila de pestañas: fija, scrollea en horizontal si hace falta. */
+.bls__tabs {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 4px;
+  padding: 10px 8px 10px 10px;
+  border-bottom: 1px solid var(--bls-linea);
+  overflow-x: auto; scrollbar-width: none;
+}
+.bls__tabs::-webkit-scrollbar { display: none; }
+
+.bls__tab {
+  flex: 0 0 auto; padding: 8px 13px; border: 0; border-radius: 999px;
+  background: none; font: 600 14px/1 Dosis, system-ui, sans-serif;
+  color: var(--bls-mudo); cursor: pointer; white-space: nowrap;
+}
+.bls__tab.is-active { background: var(--bls-arena); color: var(--bls-texto); }
+
+.bls__mcont { flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; padding: 4px 8px 8px; }
+.bls__mpanel { display: block; }
 
 .bls__velo {
-  position: fixed; inset: 0; z-index: 1099; background: rgba(0,56,69,.38);
+  position: fixed; inset: 0; z-index: 1099; background: rgba(0,56,69,.5);
   opacity: 0; transition: opacity .26s ease; pointer-events: none;
 }
 .bls__velo.is-open { opacity: 1; pointer-events: auto; }
 
 .bls__cerrar {
-  position: absolute; top: 10px; right: 12px; width: 36px; height: 36px;
-  border: 0; background: none; font-size: 27px; line-height: 1; color: var(--bls-texto); cursor: pointer;
+  flex: 0 0 auto; margin-left: auto; width: 34px; height: 34px;
+  border: 0; background: none; font-size: 25px; line-height: 1;
+  color: var(--bls-texto); cursor: pointer;
 }
 
-.bls__dir { margin: 14px 0 0; padding: 0; list-style: none; }
+.bls__dir {
+  flex: 0 0 auto; margin: 0; padding: 0 8px 6px; list-style: none;
+  border-top: 1px solid var(--bls-linea); background: #fff;
+}
 .bls__dir a {
-  display: block; padding: 13px 8px; border-top: 1px solid var(--bls-linea);
+  display: block; padding: 12px 8px;
   font: 600 15px/1 Dosis, system-ui, sans-serif; color: var(--bls-texto); text-decoration: none;
 }
 
