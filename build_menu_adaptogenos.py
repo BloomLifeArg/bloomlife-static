@@ -38,13 +38,29 @@ import os
 import sys
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFilter
 
 S = 320                    # cubre un slot de 160px a 2x
 FILL_V = 0.874             # referencia de la familia (la de Melena de León)
 CX, CY = 0.50, 0.52
 CALIDAD = 82
 S_OBJ, V_OBJ = 0.42, 0.72  # registro común del filete
+
+# ── EL SET ───────────────────────────────────────────────────────────────────
+# Las fotos de la columna de COMBOS vienen del og:image de cada producto y ya
+# están escenificadas: los frascos sobre un fondo crema tibio (240,235,225) con
+# sombra de contacto. Se ven mejor que un recorte flotando, y son las que NO
+# podemos reprocesar sin romper la automación horaria que sigue al home.
+#
+# Así que la consistencia se logra al revés: los adaptógenos se hornean sobre el
+# MISMO set que ya tienen los combos. Y se le susurra el tono del producto —un
+# 12% hacia su propio hue— para que cada frasco traiga su identidad sin que las
+# cinco miniaturas dejen de leerse como una familia. Es lo que hace Dirtea con
+# sus fondos de color, pero al nivel de intensidad de nuestra marca.
+SET_BASE = (240, 235, 225)  # el crema exacto de las fotos de combos
+SET_TINTE = 0.12            # cuánto se corre hacia el hue del producto
+SOMBRA_OPACIDAD = 0.13
+SOMBRA_ALTO = 0.055         # de la altura del lienzo
 
 # Las 5 lifestyle de la sección de beneficios se reusan en la columna "Por
 # objetivo" del panel, pero NO se pueden usar tal cual: son JPEG de 800x1066 que
@@ -64,16 +80,38 @@ ITEMS = [
 ]
 
 
-def encuadrar(im):
-    """Alinea por bounding box del objeto opaco, no por el lienzo."""
+def color_set(hue):
+    """El crema de los combos, corrido SET_TINTE hacia el hue del producto."""
+    r, g, b = colorsys.hsv_to_rgb(hue, 0.55, 1.0)
+    base = np.array(SET_BASE, np.float32)
+    tinte = np.array([r * 255, g * 255, b * 255], np.float32)
+    return tuple(int(round(v)) for v in (base * (1 - SET_TINTE) + tinte * SET_TINTE))
+
+
+def encuadrar(im, hue):
+    """Alinea por bounding box del objeto opaco y lo hornea sobre el set."""
     a = np.asarray(im)[..., 3]
     ys, xs = np.where(a > 8)
     obj = im.crop((xs.min(), ys.min(), xs.max() + 1, ys.max() + 1))
     h = int(S * FILL_V)
     w = max(1, round(obj.width * h / obj.height))
     obj = obj.resize((w, h), Image.LANCZOS)
-    lienzo = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-    lienzo.paste(obj, (round(S * CX - w / 2), round(S * CY - h / 2)), obj)
+
+    lienzo = Image.new("RGB", (S, S), color_set(hue))
+
+    # Sombra de contacto: una elipse difusa al pie del frasco. Sin esto el objeto
+    # flota sobre el color y se nota que es un recorte pegado, que es justo lo
+    # que estamos corrigiendo.
+    x0, y0 = round(S * CX - w / 2), round(S * CY - h / 2)
+    sh = Image.new("L", (S, S), 0)
+    ImageDraw.Draw(sh).ellipse(
+        [x0 + w * 0.10, y0 + h - S * SOMBRA_ALTO * 0.6,
+         x0 + w * 0.90, y0 + h + S * SOMBRA_ALTO * 0.9], fill=255)
+    sh = sh.filter(ImageFilter.GaussianBlur(S * 0.022))
+    sh = sh.point(lambda v: int(v * SOMBRA_OPACIDAD))
+    lienzo.paste(Image.new("RGB", (S, S), (60, 52, 44)), (0, 0), sh)
+
+    lienzo.paste(obj, (x0, y0), obj)
     return lienzo
 
 
@@ -113,7 +151,7 @@ def main(src):
         orig = Image.open(os.path.join(src, slug + ".png")).convert("RGBA")
         crudo = color_etiqueta(orig)
         filete, hue = armonizar(crudo)
-        im = encuadrar(orig)
+        im = encuadrar(orig, hue / 360.0)
         nom = f"adaptogeno-{slug}.webp"
         p = os.path.join(dst, nom)
         im.save(p, "WEBP", quality=CALIDAD, method=6)
