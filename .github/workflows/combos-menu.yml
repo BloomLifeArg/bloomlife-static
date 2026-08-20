@@ -1,0 +1,63 @@
+name: Actualizar combos del menú
+
+# Regenera data/combos-menu.json, que es la columna "Combos" del megamenú de
+# navegación de bloomlife.co.
+#
+# LA FUENTE DE VERDAD ES EL HOME. Los combos destacados se eligen en el editor
+# de Tienda Nube (Diseño → módulo "Novedades") y este job los sigue: dentro de
+# la hora el menú se actualiza solo, sin tocar código ni publicar nada en TN.
+#
+# Para cambiar QUÉ combos aparecen → editor de TN.
+# Para cambiar el TEXTO de una bajada → data/combos-copy.json (y este job corre).
+# Para refrescar al toque → pestaña Actions → este workflow → Run workflow.
+#
+# Sin secrets: lee páginas públicas.
+
+on:
+  schedule:
+    - cron: '20 * * * *' # cada hora, a y 20 (desfasado del job del blog, que va en punto)
+  workflow_dispatch: # botón manual
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-combos-menu.mjs'
+      - '.github/workflows/combos-menu.yml'
+      - 'data/combos-copy.json' # cambiar una bajada regenera la salida
+
+concurrency:
+  group: combos-menu
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # necesario para commitear el JSON
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Si el módulo del home no aparece, o el parser encuentra menos de 4
+      # combos, el script tira error y el job falla SIN escribir nada. Es a
+      # propósito: preferimos un mail de GitHub avisando que se rompió el parser
+      # antes que pisar el JSON bueno con una lista corta y que la columna del
+      # menú se degrade en todo el sitio sin que nadie se entere. Probado: con el
+      # módulo ausente y con el markup cambiado, el JSON queda byte-idéntico.
+      - name: Generar data/combos-menu.json
+        run: node scripts/build-combos-menu.mjs
+
+      - name: Commitear si cambió
+        run: |
+          if [[ -z "$(git status --porcelain data/combos-menu.json)" ]]; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/combos-menu.json
+          git commit -m "chore: actualizar combos del menú [skip ci]"
+          git push
