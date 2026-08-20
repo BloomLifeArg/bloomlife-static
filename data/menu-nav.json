@@ -1,0 +1,51 @@
+{
+  "_leeme": "Estructura del menú de navegación de bloomlife.co. Editar ESTE archivo y commitear alcanza: se lee fresco en cada carga (cache 5 min de raw.githubusercontent) y NO hace falta tocar el admin de Tienda Nube ni republicar nada. El JS sí está pinneado a un hash en custom_seal_code, así que tocar menu-nav.js sí pide publish.",
+  "_leeme_columnas": "Las tres columnas del panel NO se configuran acá, porque cada una tiene su propia fuente: adaptógenos → data/menu-adaptogenos.json (generado por build_menu_adaptogenos.py); combos → data/combos-menu.json (generado por la Action horaria, sigue a los destacados del home); objetivos → data/beneficios-home.json (el mismo que usa la sección del home, ya cerrado y publicado). Acá solo van el nivel 1, los títulos de columna y el destacado.",
+
+  "_leeme_nivel1": "Son TRES entradas, no cuatro. La arquitectura aprobada tenía 'Nosotros' como cuarta, pero esa página NO EXISTE: se probaron /nosotros/, /sobre-nosotros/, /quienes-somos/, /nuestra-historia/, /about/, /fundadores/ y /ciencia/ y las siete dan 404 (verificado 2026-08-19). Cuando exista, se agrega acá y aparece sin publicar nada. Dejar 'Nosotros' apuntando a un 404 era peor que no tenerlo.",
+  "_leeme_best_sellers": "Ojo si alguna vez se quiere sumar /best-sellers/ al nivel 1: esa landing oculta el header entero con .js-head-main{display:none}, así que el usuario aterriza en una página SIN menú y no puede seguir navegando salvo con el botón atrás del browser. No sumarla hasta resolver eso.",
+
+  "nivel1": [
+    { "texto": "Tienda",      "panel": true },
+    { "texto": "Suscripción", "href": "https://www.bloomlife.co/suscripciones/" },
+    { "texto": "Blog",        "href": "https://www.bloomlife.co/blog/" }
+  ],
+
+  "columnas": {
+    "adaptogenos": {
+      "titulo": "Los adaptógenos",
+      "pie": [
+        { "texto": "Ver los 8", "href": "https://www.bloomlife.co/elegi-tu-suplemento/" },
+        { "texto": "También en cápsulas", "href": "https://www.bloomlife.co/tipo-de-adaptogenos/capsulas1/" }
+      ],
+      "bajadas": {
+        "melena":      "1000 mg con zinc. Una gomita al día.",
+        "ashwagandha": "1000 mg de raíz, con vitamina D. Cereza.",
+        "cordyceps":   "Con zinc. Limonada de frutilla.",
+        "reishi":      "1000 mg con zinc. Limonada de frambuesa.",
+        "tremella":    "Con biotina. Sabor frutilla."
+      },
+      "_leeme_bajadas": "Estilo COMPOSICIÓN, no beneficio: la columna de objetivos ya dice el para qué y se pisaban. Fórmulas extraídas de las descripciones vivas de cada interna por API, no de memoria. Melena de León y Reishi son casi idénticos en composición (1000 mg + zinc): los separa el sabor y la dosis. Cordyceps y Tremella son las bajadas más cortas porque son las dos únicas que NO declaran cifra en su interna — se arregla declarándola allá, no inventando acá."
+    },
+    "combos": {
+      "titulo": "Combos",
+      "pie": [
+        { "texto": "Ver los 26 combos", "href": "https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/" }
+      ]
+    },
+    "objetivos": {
+      "titulo": "Por objetivo",
+      "pie": []
+    }
+  },
+
+  "destacado": {
+    "kicker": "Suscripción",
+    "titulo": "10% OFF, todos los meses",
+    "bajada": "Con envío gratis y sin compromiso: la pausás o la cancelás cuando quieras.",
+    "cta": "Ver cómo funciona",
+    "href": "https://www.bloomlife.co/suscripciones/",
+    "imagen": null,
+    "_leeme_imagen": "Sin foto por ahora, a propósito: las únicas lifestyle disponibles en el repo son las 5 de la sección de beneficios, y reusar una acá haría que el panel se repita a sí mismo (esa misma foto está tres columnas más a la izquierda). Va como bloque tipográfico sobre el petróleo de marca, que además pesa 0 KB en un header que carga en todas las páginas. Cuando haya una lifestyle propia de suscripción, se pone el nombre del archivo acá (se resuelve contra img/menu/ del mismo commit del JS) y el bloque pasa a foto."
+  }
+}
