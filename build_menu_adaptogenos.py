@@ -69,7 +69,10 @@ SOMBRA_ALTO = 0.055         # de la altura del lienzo
 # así que el browser las considera en viewport y las baja igual, en el header de
 # TODAS las páginas, sin que nadie abra nada. Medido: 15/15 requests sin abrir el
 # panel. Con estas miniaturas, 333 KB pasan a ~35 KB.
-OBJETIVOS = ["foco", "calma", "energia", "descanso", "piel"]
+# Ya NO se generan: la columna "Por objetivo" de chips salió del panel de Shop y
+# pasó a ser una sección propia con foto de PERSONA (ver BENEFICIOS). Las de
+# naturaleza siguen vivas en la sección del home, que las genera build_beneficios.py.
+OBJETIVOS = []
 
 ITEMS = [
     ("melena",      "Melena de León"),
@@ -78,6 +81,42 @@ ITEMS = [
     ("reishi",      "Reishi"),
     ("tremella",    "Tremella"),
 ]
+
+# Las CÁPSULAS son las otras dos únicas presentaciones que existen: solo Melena de
+# León y Ashwagandha vienen en cápsulas. Mismo tratamiento que las gummies —set
+# crema tintado + sombra— para que las dos secciones del panel se lean como una
+# sola familia y la diferencia sea el formato, no el estilo de la foto.
+# El color NO se muestrea de la etiqueta de cápsulas: el frasco tiene otro layout
+# y la banda que se muestrea pega en la zona blanca (Melena salía crema, Ashwagandha
+# verde menta). Y la lógica correcta es otra igual: MISMA INGREDIENTE, MISMO COLOR.
+# Así que heredan el hue de su gummie hermana.
+CAPSULAS = [
+    ("caps-melena",      "Melena de León", "melena"),
+    ("caps-ashwagandha", "Ashwagandha",    "ashwagandha"),
+]
+
+# Los BENEFICIOS con foto de PERSONA. Son las 5 originales de la sección del home
+# (commit 8bb8f57), reemplazadas después por las de naturaleza.
+#
+# VAN SIN EL GRADE DE MARCA. Se probó y se ve mal: sobre piel humana el split
+# toning deja los tonos gris verdosos y el set entero apagado —el que duerme queda
+# oliva, la que camina pierde toda la vida—. El grade sirve para unificar
+# naturaleza abstracta, no gente. Comparativa en assets-menu/fotos/H_ben_grade.jpg
+# del repo del tema.
+#
+# Estas cinco además ya venían cohesionadas: misma paleta cálida y apagada, que es
+# por lo que se eligieron en su momento.
+#
+# Ojo con los nombres: la original de "Descanso" se llamaba "sueno".
+BENEFICIOS = [
+    ("foco",   "foco"),
+    ("calma",  "calma"),
+    ("energia", "energia"),
+    ("sueno",  "descanso"),
+    ("piel",   "piel"),
+]
+GRADE_SAT, GRADE_TINT, GRADE_CONTRASTE = 0.40, 0.30, 0.12
+GRADE_SOMBRA, GRADE_LUZ = (18, 46, 52), (245, 232, 208)
 
 
 def color_set(hue):
@@ -113,6 +152,29 @@ def encuadrar(im, hue):
 
     lienzo.paste(obj, (x0, y0), obj)
     return lienzo
+
+
+def grade(im):
+    """El grade de marca de build_beneficios.py: desatura parcial + split toning
+    + curva S. Acá sí corresponde: unifica 5 fuentes distintas."""
+    a = np.asarray(im.convert("RGB")).astype(np.float32) / 255.0
+    lum = (a[..., 0] * .2126 + a[..., 1] * .7152 + a[..., 2] * .0722)[..., None]
+    a = lum + (a - lum) * GRADE_SAT
+    sh = np.array(GRADE_SOMBRA, np.float32) / 255.0
+    lz = np.array(GRADE_LUZ, np.float32) / 255.0
+    a = a * (1 - GRADE_TINT) + (sh + (lz - sh) * lum) * GRADE_TINT
+    a = np.clip(a, 0, 1)
+    a = a + GRADE_CONTRASTE * (a - 0.5) * (1 - np.abs(a - 0.5) * 2)
+    return Image.fromarray((np.clip(a, 0, 1) * 255).astype(np.uint8))
+
+
+def cuadrado(im, S_, con_grade=False):
+    """Recorte cuadrado centrado. El grade va DESPUÉS del recorte, sobre los
+    píxeles que realmente se van a ver."""
+    lado = min(im.width, im.height)
+    im = im.crop(((im.width - lado) // 2, (im.height - lado) // 2,
+                  (im.width + lado) // 2, (im.height + lado) // 2)).resize((S_, S_), Image.LANCZOS)
+    return grade(im) if con_grade else im
 
 
 def color_etiqueta(im):
@@ -165,6 +227,39 @@ def main(src):
             "hue": hue,
         }
         print(f"{nom:28s} {S}x{S}  {kb:5.1f} KB   filete {filete}  (crudo {meta[slug]['filete_crudo']})")
+    # CÁPSULAS: mismo set tintado que las gummies.
+    for slug, nombre, hermana in CAPSULAS:
+        f = os.path.join(src, slug + ".png")
+        if not os.path.exists(f):
+            print("  ⚠ falta %s, se saltea" % f)
+            continue
+        orig = Image.open(f).convert("RGBA")
+        hue = meta[hermana]["hue"]
+        filete = meta[hermana]["filete"]
+        im = encuadrar(orig, hue / 360.0)
+        nom = "%s.webp" % slug
+        p2 = os.path.join(dst, nom)
+        im.save(p2, "WEBP", quality=CALIDAD, method=6)
+        kb = os.path.getsize(p2) / 1024
+        total += kb
+        meta[slug] = {"nombre": nombre, "archivo": nom, "filete": filete,
+                      "hue": hue, "hereda_de": hermana}
+        print(f"{nom:28s} {S}x{S}  {kb:5.1f} KB   filete {filete} (heredado de {hermana})")
+
+    # BENEFICIOS con foto de persona, CON el grade de marca.
+    for orig_slug, slug in BENEFICIOS:
+        f = os.path.join(src, "ben-" + orig_slug + ".jpg")
+        if not os.path.exists(f):
+            print("  ⚠ falta %s, se saltea" % f)
+            continue
+        im = cuadrado(Image.open(f).convert("RGB"), S, con_grade=False)
+        nom = "beneficio-%s.webp" % slug
+        p2 = os.path.join(dst, nom)
+        im.save(p2, "WEBP", quality=CALIDAD, method=6)
+        kb = os.path.getsize(p2) / 1024
+        total += kb
+        print(f"{nom:28s} {S}x{S}  {kb:5.1f} KB   (sin grade, a propósito)")
+
     # Miniaturas de la columna "Por objetivo": recorte cuadrado centrado, sin
     # regrade (ya vienen con el grade de marca horneado del build de beneficios).
     for slug in OBJETIVOS:

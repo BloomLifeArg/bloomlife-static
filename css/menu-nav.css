@@ -50,7 +50,10 @@
   top: calc(100% + 14px);
   left: -14px;
   width: 420px;
-  max-height: 70vh;
+  /* Valor de arranque nomás: el real lo calcula altoPanel() en el JS contra el
+     borde del header sticky, porque un vh estático no lo descuenta y el panel se
+     pasa del borde inferior en viewports bajos. */
+  max-height: 80vh;
   overflow-y: auto;
   overscroll-behavior: contain;
   z-index: 30;
@@ -74,14 +77,14 @@
 
 .bls__item {
   display: flex; align-items: center; gap: 14px;
-  padding: 7px 8px; border-radius: 14px;
+  padding: 6px 8px; border-radius: 12px;
   text-decoration: none;
   transition: background .15s ease;
 }
 .bls__item:hover, .bls__item:focus-visible { background: var(--bls-arena); outline: none; }
 
 .bls__foto {
-  flex: 0 0 auto; width: 76px; height: 76px;
+  flex: 0 0 auto; width: 64px; height: 64px;
   border-radius: 14px; overflow: hidden;
 }
 .bls__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -114,7 +117,7 @@
 }
 
 /* Los combos son secundarios: misma fila, foto más chica. */
-.bls__lista--sec .bls__foto { width: 56px; height: 56px; border-radius: 11px; }
+.bls__lista--sec .bls__foto { width: 48px; height: 48px; border-radius: 10px; }
 .bls__lista--sec .bls__nombre { font-size: 14.5px; }
 .bls__lista--sec .bls__bajada { font-size: 11.5px; }
 
@@ -199,7 +202,7 @@
 
 @media (min-width: 768px) and (max-width: 1023.98px) {
   .bls__panel { width: 380px; }
-  .bls__foto { width: 68px; height: 68px; }
+  .bls__foto { width: 58px; height: 58px; }
   .bls__barra { gap: 18px; }
 }
 

@@ -69,10 +69,19 @@
      adaptógenos" arriba de la lista, así el panel se lee como UNA SECCIÓN de la
      tienda y no como la tienda entera. Es el mismo patrón de labels de Seed. */
   var NIVEL1 = [
-    { texto: 'Tienda', panel: 'adaptogenos' },
+    { texto: 'Shop', panel: 'shop' },
     { texto: 'Combos', panel: 'combos' },
+    { texto: 'Beneficios', panel: 'beneficios' },
     { texto: 'Suscripción mensual', href: 'https://www.bloomlife.co/suscripciones/' },
     { texto: 'Blog', panel: 'blog' }
+  ];
+
+  /* Los dos únicos productos que existen en cápsulas. Handles verificados por API. */
+  var CAPS = [
+    { k: 'caps-melena', href: 'https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-capsulas/',
+      bajada: 'Extracto 20:1 con piperina. Sin sabor.' },
+    { k: 'caps-ashwagandha', href: 'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-capsulas/',
+      bajada: '1000 mg con zinc y piperina. Dos por día.' }
   ];
 
   var HREFS = {
@@ -172,34 +181,59 @@
 
   /* ── panel de Tienda ────────────────────────────────────────────────────── */
 
-  function panelAdaptogenos() {
+  /* SHOP, con los dos formatos separados por título. "Shop" y no "Tienda" es
+     decisión de Sergio; los labels GUMMIES / CÁPSULAS hacen además que el panel
+     se lea como una sección del catálogo y no como el catálogo entero, que era
+     el riesgo de tener "Shop" y "Combos" como pares. */
+  function panelShop() {
     var p = el('div', 'bls__panel');
     var meta = (datos && datos.nav && datos.nav.columnas) || {};
-    p.appendChild(el('p', 'bls__label bls__label--top', 'Los adaptógenos'));
+    var a = (datos && datos.adaptogenos && datos.adaptogenos.items) || {};
+
+    p.appendChild(el('p', 'bls__label bls__label--top', 'Gummies'));
     var ul = el('ul', 'bls__lista');
     adaptogenos().forEach(function (it) { ul.appendChild(fila(it, null, false)); });
     p.appendChild(ul);
 
-    /* El eje de objetivo se queda —nuestros nombres son ingredientes, no
-       beneficios como los de Seed— pero como chips en UNA línea. Cinco filas
-       con foto ahí habrían sumado 480px para decir lo que el nombre ya dice. */
-    var obj = objetivos();
-    if (obj.length) {
-      p.appendChild(el('p', 'bls__label', 'Por objetivo'));
-      var box = el('div', 'bls__inline');
-      obj.forEach(function (o) { var a = el('a', 'bls__chip', o.nombre); a.href = o.href; box.appendChild(a); });
-      p.appendChild(box);
+    var caps = CAPS.filter(function (c) { return a[c.k]; });
+    if (caps.length) {
+      p.appendChild(el('p', 'bls__label', 'Cápsulas'));
+      var ul2 = el('ul', 'bls__lista bls__lista--sec');
+      caps.forEach(function (c) {
+        ul2.appendChild(fila({
+          nombre: a[c.k].nombre, bajada: c.bajada, href: c.href,
+          img: resolver('../img/menu/' + a[c.k].archivo)
+        }, null, true));
+      });
+      p.appendChild(ul2);
     }
 
     var pie = el('div', 'bls__pie');
     var v1 = el('a', 'bls__vertodo', 'Ver los 8');
     v1.href = ((meta.adaptogenos && meta.adaptogenos.pie && meta.adaptogenos.pie[0]) || {}).href
       || 'https://www.bloomlife.co/elegi-tu-suplemento/';
-    var v2 = el('a', 'bls__vertodo', 'También en cápsulas');
-    v2.href = ((meta.adaptogenos && meta.adaptogenos.pie && meta.adaptogenos.pie[1]) || {}).href
-      || 'https://www.bloomlife.co/tipo-de-adaptogenos/capsulas1/';
-    pie.appendChild(v1); pie.appendChild(v2);
+    pie.appendChild(v1);
     p.appendChild(pie);
+    return p;
+  }
+
+  /* BENEFICIOS: sección propia, con foto de PERSONA. Antes eran chips de texto
+     dentro del panel de Shop. Las 5 fotos son las originales de la sección del
+     home (las de personas, previas a las de naturaleza) y son la única parte del
+     menú donde hay gente — que es justo lo que hace Dirtea en su "By Benefit". */
+  function panelBeneficios() {
+    var b = (datos && datos.beneficios && datos.beneficios.cards) || [];
+    if (!b.length) return null;
+    var p = el('div', 'bls__panel');
+    var ul = el('ul', 'bls__lista');
+    b.forEach(function (c) {
+      var m = /beneficio-([a-z]+)\./.exec(c.imagen || '');
+      ul.appendChild(fila({
+        nombre: c.titulo, bajada: c.tagline, href: c.href,
+        img: m ? resolver('../img/menu/beneficio-' + m[1] + '.webp') : null
+      }, null, false));
+    });
+    p.appendChild(ul);
     return p;
   }
 
@@ -245,8 +279,24 @@
 
   /* ── barra ──────────────────────────────────────────────────────────────── */
 
+  /* El max-height NO puede ser un vh estático: el header es sticky y mide 128px,
+     así que 80vh se pasa del borde inferior en viewports bajos. Se calcula contra
+     el borde real del header, como hace el propio tema con sus dropdowns — pero
+     con listener de resize, que el tema no tiene.
+     Residuo conocido y aceptado: en viewports de 768px de alto o menos, el panel
+     de Shop (7 filas + 2 labels) scrollea unos 30px. Antes eran 97. */
+  function altoPanel() {
+    var h = document.querySelector(HEADER);
+    if (!h) return;
+    var libre = window.innerHeight - h.getBoundingClientRect().bottom - 26;
+    [].forEach.call(document.querySelectorAll('#' + ID + ' .bls__panel'), function (p) {
+      p.style.maxHeight = Math.max(280, libre) + 'px';
+    });
+  }
+
   function abrir(i) {
     abierta = i;
+    if (i !== null) altoPanel();
     [].forEach.call(document.querySelectorAll('#' + ID + ' .bls__li'), function (li, k) {
       li.classList.toggle('is-open', k === i);
       var b = li.querySelector('.bls__n1[aria-expanded]');
@@ -258,8 +308,9 @@
     var barra = el('ul', 'bls__barra');
     NIVEL1.forEach(function (it, i) {
       var li = el('li', 'bls__li');
-      var panel = it.panel === 'adaptogenos' ? panelAdaptogenos()
+      var panel = it.panel === 'shop' ? panelShop()
                 : it.panel === 'combos' ? panelCombos()
+                : it.panel === 'beneficios' ? panelBeneficios()
                 : it.panel === 'blog' ? panelBlog() : null;
       var nodo;
       if (panel) {
@@ -298,7 +349,7 @@
     c.setAttribute('aria-label', 'Cerrar menú'); c.innerHTML = '&times;';
     c.addEventListener('click', function () { abrirDrawer(false); });
     d.appendChild(c);
-    [panelAdaptogenos(), panelCombos()].forEach(function (t) {
+    [panelShop(), panelCombos(), panelBeneficios()].forEach(function (t) {
       if (!t) return;
       t.className = ''; /* en el drawer no es panel flotante: es el contenido */
       d.appendChild(t);
@@ -359,6 +410,10 @@
     document.addEventListener('click', function (e) {
       var r = document.getElementById(ID);
       if (abierta !== null && r && !r.contains(e.target)) abrir(null);
+    });
+    window.addEventListener('resize', function () {
+      altoPanel();
+      if (window.innerWidth >= DESKTOP_MIN) abrirDrawer(false);
     });
   }
 

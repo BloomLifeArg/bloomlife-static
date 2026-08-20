@@ -35,6 +35,20 @@
    "filete": "#846AB8",
    "filete_crudo": "#896CC4",
    "hue": 259.8
+  },
+  "caps-melena": {
+   "nombre": "Melena de León",
+   "archivo": "caps-melena.webp",
+   "filete": "#B8A26A",
+   "hue": 43.1,
+   "hereda_de": "melena"
+  },
+  "caps-ashwagandha": {
+   "nombre": "Ashwagandha",
+   "archivo": "caps-ashwagandha.webp",
+   "filete": "#B8896A",
+   "hue": 23.4,
+   "hereda_de": "ashwagandha"
   }
  }
 }
