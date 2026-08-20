@@ -1,0 +1,206 @@
+/* VARIANTE SEED del megamenú — solo para comparar. NO está publicada.
+ *
+ * Diferencias con la versión viva (css/menu-nav.css):
+ *   · Panel ANGOSTO y flotante (~420px), colgado de su disparador, con esquinas
+ *     redondeadas y sombra. No full-bleed: no pelea con el contenedor de 1200 ni
+ *     necesita el truco del -50vw.
+ *   · UNA columna vertical. Los productos son la lista primaria, con miniatura
+ *     grande (80px). Nada de tres columnas simultáneas.
+ *   · Jerarquía adentro del panel, como hace Seed: primario con foto grande,
+ *     después secciones secundarias bajo un label chico en mayúsculas — combos
+ *     con foto más chica, objetivos como texto en línea.
+ *   · Un panel POR ENTRADA de nivel 1. "Blog" tiene el suyo con las 3 notas.
+ *
+ * Lo que NO se copia de Seed: el vidrio esmerilado. A ellos les funciona porque
+ * su nav flota sobre una foto; el nuestro es blanco opaco y sticky sobre el hero
+ * de Morelia, y ahí el glass se vería sucio.
+ */
+
+:root {
+  --bls-petroleo: #003845;
+  --bls-arena: #F4F0E8;
+  --bls-oro: #CCA352;
+  --bls-linea: #E7E1D6;
+  --bls-texto: #1A1A1A;
+  --bls-mudo: #6B6B6B;
+}
+
+.bls { position: static; font-family: Dosis, system-ui, sans-serif; }
+
+.bls__barra { display: flex; align-items: center; gap: 26px; margin: 0; padding: 0; list-style: none; }
+.bls__barra > li { margin: 0; position: relative; }
+
+.bls__n1 {
+  display: inline-block; padding: 7px 0; border: 0; background: none;
+  font: 600 15px/1 Dosis, system-ui, sans-serif; color: var(--bls-texto);
+  text-decoration: none; cursor: pointer; white-space: nowrap; position: relative;
+}
+
+.bls__n1::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px;
+  background: var(--bls-petroleo); transform: scaleX(0); transition: transform .2s ease;
+}
+.bls__n1:hover::after, .bls__n1[aria-expanded="true"]::after { transform: scaleX(1); }
+.bls__n1:focus-visible { outline: 2px solid var(--bls-oro); outline-offset: 3px; }
+
+/* ── el panel: angosto, flotante, anclado a SU disparador ─────────────────── */
+
+.bls__panel {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: -14px;
+  width: 420px;
+  max-height: 70vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  z-index: 30;
+  padding: 14px;
+  background: #fff;
+  border: 1px solid var(--bls-linea);
+  border-radius: 18px;
+  box-shadow: 0 22px 50px -20px rgba(0, 56, 69, .30);
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+  transition: opacity .16s ease, transform .16s ease, visibility .16s;
+}
+
+.bls__li.is-open .bls__panel { opacity: 1; visibility: visible; transform: none; }
+
+/* El último panel se alinea a la derecha para no salirse por el borde. */
+.bls__barra > li:last-child .bls__panel { left: auto; right: -14px; }
+
+/* ── lista primaria: producto con miniatura grande ────────────────────────── */
+
+.bls__lista { margin: 0; padding: 0; list-style: none; }
+
+.bls__item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 8px; border-radius: 14px;
+  text-decoration: none;
+  transition: background .15s ease;
+}
+.bls__item:hover, .bls__item:focus-visible { background: var(--bls-arena); outline: none; }
+
+.bls__foto {
+  flex: 0 0 auto; width: 80px; height: 80px;
+  border-radius: 14px; overflow: hidden;
+}
+.bls__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.bls__txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.bls__nombre { font: 600 16px/1.2 Dosis, system-ui, sans-serif; color: var(--bls-texto); }
+.bls__bajada { font: 400 12.5px/1.4 Georgia, serif; color: var(--bls-mudo); }
+
+/* El badge del combo va donde Seed pone su pill de "Save 25%": arriba del
+   nombre, no al costado. Así la fila del combo se lee distinta de un vistazo
+   sin romper la grilla. */
+.bls__badge {
+  align-self: flex-start;
+  margin-bottom: 1px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--bls-petroleo);
+  font: 700 9.5px/1.5 Dosis, system-ui, sans-serif;
+  letter-spacing: .1em; text-transform: uppercase; color: #fff;
+}
+
+/* ── secciones secundarias ────────────────────────────────────────────────── */
+
+.bls__label {
+  margin: 16px 0 6px 8px;
+  font: 700 10px/1 Dosis, system-ui, sans-serif;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--bls-mudo);
+}
+
+/* Los combos son secundarios: misma fila, foto más chica. */
+.bls__lista--sec .bls__foto { width: 56px; height: 56px; border-radius: 11px; }
+.bls__lista--sec .bls__nombre { font-size: 14.5px; }
+.bls__lista--sec .bls__bajada { font-size: 11.5px; }
+
+/* Los objetivos, en una sola línea de texto: cinco filas ahí habrían sumado
+   130px de alto para decir lo que el nombre ya dice. */
+.bls__inline { display: flex; flex-wrap: wrap; gap: 6px 8px; padding: 2px 8px 0; }
+
+.bls__chip {
+  padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--bls-linea);
+  font: 600 12.5px/1 Dosis, system-ui, sans-serif;
+  color: var(--bls-petroleo); text-decoration: none;
+  transition: background .15s ease, border-color .15s ease;
+}
+.bls__chip:hover { background: var(--bls-arena); border-color: var(--bls-petroleo); }
+
+.bls__pie {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-top: 14px; padding: 12px 8px 2px;
+  border-top: 1px solid var(--bls-linea);
+}
+
+.bls__vertodo {
+  font: 600 13px/1 Dosis, system-ui, sans-serif;
+  color: var(--bls-petroleo); text-decoration: none;
+  border-bottom: 1px solid rgba(0, 56, 69, .3);
+}
+.bls__vertodo::after { content: ' →'; }
+
+/* ── la suscripción, como tira compacta al pie ────────────────────────────── */
+
+.bls__susc {
+  display: block; margin-top: 12px; padding: 14px 16px;
+  border-radius: 14px; background: var(--bls-petroleo);
+  color: #fff; text-decoration: none;
+}
+.bls__susc-kicker {
+  display: block; font: 700 9.5px/1 Dosis, system-ui, sans-serif;
+  letter-spacing: .15em; text-transform: uppercase; color: var(--bls-oro);
+}
+.bls__susc-tit { display: block; margin-top: 5px; font: 600 15.5px/1.25 Dosis, system-ui, sans-serif; color: #fff; }
+.bls__susc-baj { display: block; margin-top: 4px; font: 400 12px/1.45 Georgia, serif; color: rgba(255,255,255,.82); }
+.bls__susc-cta { display: block; margin-top: 8px; font: 600 12.5px/1 Dosis, system-ui, sans-serif; color: #fff; border-bottom: 1px solid var(--bls-oro); width: fit-content; padding-bottom: 2px; }
+.bls__susc-cta::after { content: ' →'; }
+
+/* ── mobile: el mismo contenido, en drawer ────────────────────────────────── */
+
+.bls__burger { display: none; width: 40px; height: 40px; border: 0; background: none; padding: 10px 8px; cursor: pointer; }
+.bls__burger span { display: block; height: 1.5px; background: var(--bls-texto); border-radius: 2px; }
+.bls__burger span + span { margin-top: 5px; }
+
+.bls__drawer {
+  position: fixed; inset: 0 auto 0 0; width: min(88vw, 390px); z-index: 1100;
+  display: flex; flex-direction: column; padding: 54px 16px 28px;
+  overflow-y: auto; overscroll-behavior: contain; background: #fff;
+  transform: translateX(-102%); transition: transform .26s cubic-bezier(.4,0,.2,1);
+  visibility: hidden;
+}
+.bls__drawer.is-open { transform: none; visibility: visible; }
+
+.bls__velo {
+  position: fixed; inset: 0; z-index: 1099; background: rgba(0,56,69,.38);
+  opacity: 0; transition: opacity .26s ease; pointer-events: none;
+}
+.bls__velo.is-open { opacity: 1; pointer-events: auto; }
+
+.bls__cerrar {
+  position: absolute; top: 10px; right: 12px; width: 36px; height: 36px;
+  border: 0; background: none; font-size: 27px; line-height: 1; color: var(--bls-texto); cursor: pointer;
+}
+
+.bls__dir { margin: 14px 0 0; padding: 0; list-style: none; }
+.bls__dir a {
+  display: block; padding: 13px 8px; border-top: 1px solid var(--bls-linea);
+  font: 600 15px/1 Dosis, system-ui, sans-serif; color: var(--bls-texto); text-decoration: none;
+}
+
+@media (max-width: 767.98px) {
+  .bls { display: none; }
+  .bls__burger { display: block; }
+}
+
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .bls__panel { width: 380px; }
+  .bls__foto { width: 68px; height: 68px; }
+  .bls__barra { gap: 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bls__panel, .bls__drawer, .bls__velo, .bls__n1::after { transition: none; }
+}
