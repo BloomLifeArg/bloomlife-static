@@ -1,36 +1,55 @@
 {
   "_leeme": "Estructura del menú de navegación de bloomlife.co. Editar ESTE archivo y commitear alcanza: se lee fresco en cada carga (cache 5 min de raw.githubusercontent) y NO hace falta tocar el admin de Tienda Nube ni republicar nada. El JS sí está pinneado a un hash en custom_seal_code, así que tocar menu-nav.js sí pide publish.",
   "_leeme_columnas": "Las tres columnas del panel NO se configuran acá, porque cada una tiene su propia fuente: adaptógenos → data/menu-adaptogenos.json (generado por build_menu_adaptogenos.py); combos → data/combos-menu.json (generado por la Action horaria, sigue a los destacados del home); objetivos → data/beneficios-home.json (el mismo que usa la sección del home, ya cerrado y publicado). Acá solo van el nivel 1, los títulos de columna y el destacado.",
-
   "_leeme_nivel1": "Son TRES entradas, no cuatro. La arquitectura aprobada tenía 'Nosotros' como cuarta, pero esa página NO EXISTE: se probaron /nosotros/, /sobre-nosotros/, /quienes-somos/, /nuestra-historia/, /about/, /fundadores/ y /ciencia/ y las siete dan 404 (verificado 2026-08-19). Cuando exista, se agrega acá y aparece sin publicar nada. Dejar 'Nosotros' apuntando a un 404 era peor que no tenerlo.",
   "_leeme_best_sellers": "Ojo si alguna vez se quiere sumar /best-sellers/ al nivel 1: esa landing oculta el header entero con .js-head-main{display:none}, así que el usuario aterriza en una página SIN menú y no puede seguir navegando salvo con el botón atrás del browser. No sumarla hasta resolver eso.",
-
   "nivel1": [
-    { "texto": "Tienda",      "panel": true },
-    { "texto": "Suscripción mensual", "href": "https://www.bloomlife.co/suscripciones/" },
-    { "texto": "Blog",        "href": "https://www.bloomlife.co/blog/" }
+    {
+      "texto": "Tienda",
+      "panel": true
+    },
+    {
+      "texto": "Suscripción mensual",
+      "href": "https://www.bloomlife.co/suscripciones/"
+    },
+    {
+      "texto": "Blog",
+      "href": "https://www.bloomlife.co/blog/"
+    }
   ],
-
   "columnas": {
     "adaptogenos": {
       "titulo": "Los adaptógenos",
       "pie": [
-        { "texto": "Ver los 8", "href": "https://www.bloomlife.co/elegi-tu-suplemento/" },
-        { "texto": "También en cápsulas", "href": "https://www.bloomlife.co/tipo-de-adaptogenos/capsulas1/" }
+        {
+          "texto": "Ver los 8",
+          "href": "https://www.bloomlife.co/elegi-tu-suplemento/"
+        },
+        {
+          "texto": "También en cápsulas",
+          "href": "https://www.bloomlife.co/tipo-de-adaptogenos/capsulas1/"
+        }
       ],
       "bajadas": {
-        "melena":      "1000 mg con zinc. Una gomita al día.",
-        "ashwagandha": "1000 mg de raíz, con vitamina D. Cereza.",
-        "cordyceps":   "Con zinc. Limonada de frutilla.",
-        "reishi":      "1000 mg con zinc. Limonada de frambuesa.",
-        "tremella":    "Con biotina. Sabor frutilla."
+        "melena": "Foco para las horas que importan.",
+        "ashwagandha": "Calma para tu día a día.",
+        "cordyceps": "Energía que no se apaga a media tarde.",
+        "reishi": "Noches de descanso profundo.",
+        "tremella": "Piel y pelo cuidados, con biotina."
       },
-      "_leeme_bajadas": "Estilo COMPOSICIÓN, no beneficio: la columna de objetivos ya dice el para qué y se pisaban. Fórmulas extraídas de las descripciones vivas de cada interna por API, no de memoria. Melena de León y Reishi son casi idénticos en composición (1000 mg + zinc): los separa el sabor y la dosis. Cordyceps y Tremella son las bajadas más cortas porque son las dos únicas que NO declaran cifra en su interna — se arregla declarándola allá, no inventando acá."
+      "_leeme_bajadas": "Estilo CLAIM (beneficio + momento), decisión de Sergio del 2026-08-20. Reemplaza al estilo COMPOSICION anterior, cuyo motivo caduco: se habia elegido composicion porque la columna de objetivos del panel decia el para que y se pisaban, y esa columna ya no existe. El panel Beneficios es un panel APARTE, no una columna del mismo panel, asi que no se ven al mismo tiempo. Igual se escribieron en otro eje que las taglines de Beneficios (que son outcome puro) porque los 5 productos mapean 1:1 con los 5 beneficios y un claim de outcome habria sido un calco: 'beneficio + momento' contesta ademas cuando tomarlo, que es la pregunta de compra real. TREMELLA conserva 'con biotina' a proposito: es la unica que no puede ir a claim puro, porque la regla de su interna es que los claims de belleza se anclan en la biotina y Tremella sola es tradicion e hidratacion — 'Belleza para tu piel' bajo una fila que dice Tremella se lo atribuye a Tremella. Las CAPSULAS no repiten el claim textual (mismo texto arriba y abajo lee como error) y los dos grupos se ven a la vez, asi que 'el mismo foco' tiene antecedente en pantalla. Se pierden el sabor y el miligramaje; estan en cada interna. Este archivo se lee de raw.githubusercontent/main: cambiarlo NO requiere publicar en TN. Ajuste del 2026-08-20 tras ver las 7 renderizadas como conjunto: MELENA paso de 'Foco para lo que tenes que hacer' (3 palabras de relleno al final, y arrancaba la lista con el tropiezo) y TREMELLA de 'Piel y pelo, con biotina' — era la unica con forma de ficha tecnica entre 6 promesas; ahora cumple la misma restriccion de la biotina en forma de promesa. Las otras 5 quedaron intactas.",
+      "bajadas_caps": {
+        "caps-melena": "El mismo foco, en cápsulas.",
+        "caps-ashwagandha": "La misma calma, en cápsulas."
+      }
     },
     "combos": {
       "titulo": "Combos",
       "pie": [
-        { "texto": "Ver los 26 combos", "href": "https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/" }
+        {
+          "texto": "Ver los 26 combos",
+          "href": "https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/"
+        }
       ]
     },
     "objetivos": {
@@ -38,9 +57,7 @@
       "pie": []
     }
   },
-
   "_leeme_newsletter": "OJO: varios clientes confundieron esto con una suscripción a un NEWSLETTER. Por eso el nivel 1 dice 'Suscripción mensual' y no 'Suscripción' sola (el menú nativo decía 'Suscripción Mensual'; acortarlo fue un error nuestro), y por eso el título del destacado nombra los SUPLEMENTOS en vez de liderar con el descuento. No volver a escribir 'Suscripción' pelada ni un título que solo diga el % OFF.",
-
   "destacado": {
     "kicker": "Suscripción mensual",
     "titulo": "Tus suplementos, todos los meses",

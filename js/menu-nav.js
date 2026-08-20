@@ -76,12 +76,15 @@
     { texto: 'Blog', panel: 'blog' }
   ];
 
-  /* Los dos únicos productos que existen en cápsulas. Handles verificados por API. */
+  /* Los dos únicos productos que existen en cápsulas. Handles verificados por API.
+     La bajada sale de menu-nav.json (columnas.adaptogenos.bajadas_caps), igual que
+     las de gummies: ese JSON se lee de raw/main, así que el copy se cambia SIN
+     publicar en TN. La de acá es solo el fallback si el JSON no trae la clave. */
   var CAPS = [
     { k: 'caps-melena', href: 'https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-capsulas/',
-      bajada: 'Extracto 20:1 con piperina. Sin sabor.' },
+      bajada: 'El mismo foco, en cápsulas.' },
     { k: 'caps-ashwagandha', href: 'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-capsulas/',
-      bajada: '1000 mg con zinc y piperina. Dos por día.' }
+      bajada: 'La misma calma, en cápsulas.' }
   ];
 
   var HREFS = {
@@ -226,9 +229,10 @@
     if (caps.length) {
       p.appendChild(el('p', 'bls__label', 'Cápsulas'));
       var ul2 = el('ul', 'bls__lista bls__lista--sec');
+      var bajCaps = (meta.adaptogenos && meta.adaptogenos.bajadas_caps) || {};
       caps.forEach(function (c) {
         ul2.appendChild(fila({
-          nombre: a[c.k].nombre, bajada: c.bajada, href: c.href,
+          nombre: a[c.k].nombre, bajada: bajCaps[c.k] || c.bajada, href: c.href,
           img: resolver('../img/menu/' + a[c.k].archivo)
         }, null, true));
       });
