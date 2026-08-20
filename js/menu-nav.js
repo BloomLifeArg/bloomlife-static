@@ -1,71 +1,35 @@
-/* Menú de navegación de bloomlife.co — megamenú desktop + drawer mobile propio.
+/* VARIANTE SEED del menú — SOLO PARA COMPARAR. No está pinneada en el seal.
  *
- * ─────────────────────────────────────────────────────────────────────────────
- * ESTE ARCHIVO CORRE EN TODAS LAS PÁGINAS DEL SITIO. No es una sección del home.
- * Si se rompe, no falta un bloque: se cae la navegación entera. Tratar con más
- * cuidado que cualquier otro script del proyecto.
- * ─────────────────────────────────────────────────────────────────────────────
+ * Misma plomería que js/menu-nav.js (guard invertido, guard por geometría, los
+ * 4 JSON de raw.githubusercontent, resolver del propio currentScript.src,
+ * drawer propio). Lo único que cambia es el RENDER del panel.
  *
- * QUÉ REEMPLAZA
- * Los tres desplegables nativos "Elegí tu suplemento / beneficio / formato" eran
- * tres recortes del MISMO catálogo (34 productos: 8 monoingrediente + 26 combos)
- * y se excluían entre sí. Acá los tres ejes conviven como columnas simultáneas de
- * un solo panel, como en Dirtea. El nivel 1 pasa de 4 imperativas repetidas a
- * tres destinos distintos.
+ * QUÉ CAMBIA Y POR QUÉ
+ * La versión viva usa 3 columnas simultáneas al estilo Dirtea. Con 8 productos
+ * reales eso obliga a rellenar: la columna "Por objetivo" son los mismos 8
+ * recortados otra vez, que es justo el pecado del menú nativo que salimos a
+ * arreglar.
  *
- * EL GUARD INVERTIDO — la regla dura de esta área
- * El nav nativo lo oculta ESTE script, recién después de tener el nuestro en el
- * DOM. NUNCA por CSS que viaje aparte. Motivo: si jsDelivr falla (ya pasó, 7
- * minutos con dos secciones caídas porque cacheó un 404), el usuario tiene que
- * ver el menú viejo, no un sitio sin navegación en todas las páginas.
+ * Seed lista 7 productos en UNA columna angosta, con miniatura grande, y mete la
+ * profundidad como secciones secundarias bajo labels chicos. Nuestro catálogo
+ * tiene ese tamaño, no el de Dirtea. Y usa el inventario de fotos que tenemos:
+ * packshots, sin personas.
  *
- * LA VENTANA DE 800ms
- * El tema deja .js-desktop-nav-col en visibility:hidden y la revela con un
- * setTimeout(250) que en la práctica cae a los ~798ms (medido frame a frame en
- * el sitio vivo). Si montamos antes, el usuario nunca ve el nav viejo: no hay
- * flash que evitar, hay una ventana que aprovechar. Por eso el nivel 1 se dibuja
- * SIN esperar ningún fetch, desde las constantes de abajo. Los datos de las
- * columnas llegan después y no bloquean nada: el panel no se ve hasta que
- * alguien lo abre.
+ * Lo único que Seed puede tirar y nosotros no es el eje de beneficio: sus
+ * nombres YA son el beneficio ("Sleep + Restore"), los nuestros son ingredientes
+ * ("Reishi"). Así que el eje se queda, pero como lista secundaria de texto — que
+ * es un patrón de Seed mismo (su bloque "REFERENCE").
  *
- * OCULTAR, JAMÁS BORRAR
- * El <ul> nativo se oculta con display:none y se queda en el DOM. Sus 26 links
- * de desktop + 36 del drawer son el grafo de linkeo interno que ve el crawler.
- * Borrarlos sería tirar SEO a la basura.
- *
- * LOS HANDLERS DEL TEMA MUEREN SOLOS
- * Morelia ata sus handlers de nav directo al nodo con jQueryNuvem(...).click(),
- * sin delegación desde document. Al ocultar sus nodos y montar los nuestros no
- * hay que neutralizar nada, y el buscador y el drawer del carrito no comparten
- * un solo handler con el nav. Verificado leyendo el bundle inline del tema.
- *
- * DOS MONTAJES, NO UNO
- * El nav mobile del tema NO vive en el header: está en #nav-hamburger, un modal
- * fuera de </header>, dentro del sistema genérico de modales que comparte con el
- * carrito. Por eso armamos drawer propio y botón propio en vez de reusar ese
- * modal: no queremos tocar el sistema de modales del carrito.
- *
- * MOBILE: ACORDEÓN, NO PANEL-REEMPLAZO
- * El drawer del tema tapa cada nivel con el siguiente (js-toggle-menu-back), así
- * que perdés de vista a los hermanos y llegar a un producto son 6 toques. Acá las
- * tres columnas son acordeones: se abren en su lugar y el resto sigue visible.
- *
- * EL COPY Y LOS DATOS NO VIVEN ACÁ
- *   data/menu-nav.json          nivel 1, títulos de columna, destacado
- *   data/menu-adaptogenos.json  las 5 fotos + su filete (build_menu_adaptogenos.py)
- *   data/combos-menu.json       la columna de combos (Action horaria: sigue al home)
- *   data/beneficios-home.json   la columna de objetivos (la misma del home)
- * Los cuatro se leen de raw.githubusercontent (CORS *, cache 5 min) y NO de
- * jsDelivr, que cachea las rutas de rama hasta 7 días — justo lo contrario de lo
- * que necesita un archivo pensado para cambiar.
- *
- * Ver ESTADO_MENU.md en el repo del tema.
+ * Los combos van donde Seed pone su "Daily Essentials Duo" con el pill de
+ * "Save 25%": en la misma lista que los simples, con badge. Mejor que una
+ * columna aparte, porque pone el combo AL LADO del single, que es donde la
+ * comparación pasa de verdad.
  */
 (function () {
   'use strict';
 
-  var ID = 'bl-menu';
-  var ID_DRAWER = 'bl-menu-drawer';
+  var ID = 'bls-menu';
+  var ID_DRAWER = 'bls-drawer';
   var COL_NATIVA = '.js-desktop-nav-col';
   var UL_NATIVO = '.js-nav-desktop-list';
   var HEADER = '.js-head-main';
@@ -74,521 +38,347 @@
   var MODAL_NATIVO = '#nav-hamburger';
 
   var RAW = 'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/';
-
-  /* El CSS y las imágenes viven al lado de este archivo, en ../css/ y ../img/.
-     Derivarlos del propio src los mantiene pinneados al MISMO commit sin
-     repetir el hash en ninguna parte y sin el huevo-y-gallina de tener que
-     conocer el hash del commit que estás por hacer. Mismo patrón que
-     beneficios-home.js. */
   var self = document.currentScript;
+  function resolver(rel) { try { return new URL(rel, self.src).href; } catch (e) { return null; } }
 
-  function resolver(rel) {
-    try { return new URL(rel, self.src).href; } catch (e) { return null; }
-  }
   var TIMEOUT_MS = 3000;
-  var DESKTOP_MIN = 768; /* mismo umbral que el tema para que no haya un ancho en
-                            el que se vean los dos o ninguno. El tema usa
-                            innerWidth > 768 (off-by-one propio) pero su CSS
-                            muestra la columna desde 768: mandamos sobre el CSS. */
+  var DESKTOP_MIN = 768;
+  /* NIVEL 1 de la variante: CUATRO entradas, no tres.
+     Al renderizar la primera versión apareció el límite real del modelo Seed: su
+     panel angosto entra porque muestran 7 productos y NADA más. Nosotros queríamos
+     5 adaptógenos + 3 combos + 5 objetivos + la promo de suscripción: pedía 840px
+     contra los 630 de 70vh. Un dropdown de desktop que scrollea es mala UX — el
+     mouse se va del panel y se cierra.
 
-  /* Nivel 1 de emergencia. Si el JSON no llega, el usuario navega igual.
-     Tiene que quedar en sync con data/menu-nav.json. */
-  var FALLBACK_N1 = [
-    { texto: 'Tienda', panel: true },
+     La salida no es recortar: es dividir. Un panel por familia, que es justo lo
+     que hace Seed (Shop / Science / Learn, tres paneles). Y de paso resuelve algo
+     que ninguna columna resolvía: los combos son el 76% del catálogo y dejan de
+     estar subordinados.
+
+     Ojo: "Adaptógenos" y "Combos" NO son dos recortes del mismo catálogo —son
+     conjuntos disjuntos—, así que esto no repite el pecado del menú nativo, donde
+     los tres ejes eran los mismos 34 productos tres veces.
+
+     La suscripción sale del panel: ya es una entrada del nivel 1, y Seed no mete
+     bloques de promo adentro de sus paneles. */
+  /* "Tienda" y no "Adaptógenos": decisión de Sergio, y tiene razón — a alguien que
+     llega de Instagram sin saber qué es un adaptógeno, "Tienda" le habla y
+     "Adaptógenos" no.
+     El costo es un agujero lógico: con "Tienda" y "Combos" como pares, se puede
+     leer que los combos NO están en la tienda. Se tapa con el label "Los
+     adaptógenos" arriba de la lista, así el panel se lee como UNA SECCIÓN de la
+     tienda y no como la tienda entera. Es el mismo patrón de labels de Seed. */
+  var NIVEL1 = [
+    { texto: 'Tienda', panel: 'adaptogenos' },
+    { texto: 'Combos', panel: 'combos' },
     { texto: 'Suscripción mensual', href: 'https://www.bloomlife.co/suscripciones/' },
-    { texto: 'Blog', href: 'https://www.bloomlife.co/blog/' }
+    { texto: 'Blog', panel: 'blog' }
   ];
 
+  var HREFS = {
+    melena: 'https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/',
+    ashwagandha: 'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/',
+    cordyceps: 'https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/',
+    reishi: 'https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/',
+    tremella: 'https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/'
+  };
+  var ORDEN = ['melena', 'ashwagandha', 'cordyceps', 'reishi', 'tremella'];
+
   var datos = null;
-  var abierto = false;
-  /* "Fijado" = abierto por click o por teclado, no por hover.
-     Sin esta distinción el hover y el click se pelean: pasás el mouse por
-     "Tienda" → se abre; hacés click → el toggle lo cierra. El usuario ve que el
-     panel se cierra justo cuando lo clickea. Con el flag, el hover abre suelto,
-     el click fija, y mouseleave solo cierra lo que no está fijado. */
-  var fijado = false;
+  var abierta = null; /* índice del panel abierto, o null */
   var HOVERABLE = !(window.matchMedia && window.matchMedia('(hover: none)').matches);
 
-  /* CSS crítico de la BARRA, inline. El resto (panel, drawer, destacado) va por
-     <link> asíncrono, porque nada de eso se ve hasta que el usuario abre algo.
-     La barra sí se ve al instante: sin esto habría un flash de nav sin estilo en
-     el header de todas las páginas. Son ~700 bytes, no un stylesheet completo. */
   var CRITICO =
-    '.bl-menu{font-family:Dosis,system-ui,sans-serif}' +
-    '.bl-menu__barra{display:flex;align-items:center;gap:28px;margin:0;padding:0;list-style:none}' +
-    '.bl-menu__n1{display:inline-block;padding:6px 0;border:0;background:none;' +
+    '.bls{font-family:Dosis,system-ui,sans-serif}' +
+    '.bls__barra{display:flex;align-items:center;gap:26px;margin:0;padding:0;list-style:none}' +
+    '.bls__barra>li{position:relative}' +
+    '.bls__n1{display:inline-block;padding:7px 0;border:0;background:none;' +
     'font:600 15px/1 Dosis,system-ui,sans-serif;color:#1A1A1A;text-decoration:none;' +
     'cursor:pointer;white-space:nowrap;position:relative}' +
-    '.bl-menu__panel,.bl-menu__drawer{visibility:hidden}' +
-    '.bl-menu__burger{display:none;width:40px;height:40px;border:0;background:none;padding:10px 8px;cursor:pointer}' +
-    '.bl-menu__burger span{display:block;height:1.5px;background:#1A1A1A;border-radius:2px}' +
-    '.bl-menu__burger span+span{margin-top:5px}' +
-    '@media(max-width:767.98px){.bl-menu{display:none}.bl-menu__burger{display:block}}';
+    '.bls__panel,.bls__drawer{visibility:hidden}' +
+    '.bls__burger{display:none;width:40px;height:40px;border:0;background:none;padding:10px 8px;cursor:pointer}' +
+    '.bls__burger span{display:block;height:1.5px;background:#1A1A1A;border-radius:2px}' +
+    '.bls__burger span+span{margin-top:5px}' +
+    '@media(max-width:767.98px){.bls{display:none}.bls__burger{display:block}}';
+
+  function el(t, c, x) { var n = document.createElement(t); if (c) n.className = c; if (x != null) n.textContent = x; return n; }
 
   function estiloCritico() {
-    if (document.getElementById('bl-menu-critico')) return;
-    var st = document.createElement('style');
-    st.id = 'bl-menu-critico';
-    st.textContent = CRITICO;
-    document.head.appendChild(st);
+    if (document.getElementById('bls-critico')) return;
+    var s = document.createElement('style'); s.id = 'bls-critico'; s.textContent = CRITICO;
+    document.head.appendChild(s);
   }
-
   function cargarCSS() {
-    if (document.querySelector('link[data-bl-menu]')) return;
-    var href = resolver('../css/menu-nav.css');
-    if (!href) return;
-    var l = document.createElement('link');
-    l.rel = 'stylesheet';
-    l.href = href;
-    l.setAttribute('data-bl-menu', '');
-    document.head.appendChild(l);
+    if (document.querySelector('link[data-bls]')) return;
+    var h = resolver('../css/menu-nav.css'); if (!h) return;
+    var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = h;
+    l.setAttribute('data-bls', ''); document.head.appendChild(l);
   }
 
-  /* ── utilidades ─────────────────────────────────────────────────────────── */
-
-  function el(tag, cls, txt) {
-    var n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (txt != null) n.textContent = txt;
-    return n;
-  }
-
-  function traer(archivo) {
-    var ctrl = typeof AbortController === 'function' ? new AbortController() : null;
-    var t = setTimeout(function () { if (ctrl) ctrl.abort(); }, TIMEOUT_MS);
-    return fetch(RAW + archivo, ctrl ? { signal: ctrl.signal } : undefined)
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+  function traer(a) {
+    var c = typeof AbortController === 'function' ? new AbortController() : null;
+    var t = setTimeout(function () { if (c) c.abort(); }, TIMEOUT_MS);
+    return fetch(RAW + a, c ? { signal: c.signal } : undefined)
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(function (j) { clearTimeout(t); return j; })
       .catch(function () { clearTimeout(t); return null; });
   }
 
-  function esDesktop() { return window.innerWidth >= DESKTOP_MIN; }
+  function chico(u) { return u ? u.replace(/-(\d{3,4})-0(\.[a-z]{3,4})(\?.*)?$/i, '-320-0$2$3') : u; }
 
-  /* Las fotos de combos salen del og:image de cada producto, que el CDN de TN
-     sirve a 640px: 47,5 KB para un thumb de 46px. El mismo archivo a 320 pesa
-     15,7 KB — 5 combos pasan de 238 KB a 78 KB. Ojo: TN NO sirve cualquier
-     tamaño (-160-0 devuelve 403), así que se usa 320, que es la mitad exacta del
-     que viene y está siempre disponible. Si el patrón no matchea, se deja la URL
-     original: mejor una foto grande que ninguna. */
-  function chico(url) {
-    if (!url) return url;
-    return url.replace(/-(\d{3,4})-0(\.[a-z]{3,4})(\?.*)?$/i, '-320-0$2$3');
+  /* ── filas ──────────────────────────────────────────────────────────────── */
+
+  function fila(it, badge, sec) {
+    var a = el('a', 'bls__item');
+    a.href = it.href;
+    if (it.img) {
+      var f = el('span', 'bls__foto');
+      var im = document.createElement('img');
+      im.src = it.img; im.alt = ''; im.loading = 'lazy'; im.decoding = 'async';
+      im.width = 80; im.height = 80;
+      f.appendChild(im); a.appendChild(f);
+    }
+    var t = el('span', 'bls__txt');
+    if (badge) t.appendChild(el('span', 'bls__badge', badge));
+    t.appendChild(el('span', 'bls__nombre', it.nombre));
+    if (it.bajada) t.appendChild(el('span', 'bls__bajada', it.bajada));
+    a.appendChild(t);
+    var li = el('li'); li.appendChild(a); return li;
   }
 
-  /* El slug sale del nombre del archivo del JSON de beneficios
-     (beneficio-foco.jpg → foco), no del título: el título es copy y puede
-     cambiar sin que cambie el archivo. */
-  function slugObjetivo(card) {
-    var m = /beneficio-([a-z]+)\./.exec(card.imagen || '');
-    return m ? m[1] : 'foco';
-  }
-
-  /* ── el panel (desktop) y los acordeones (mobile) comparten los datos ───── */
-
-  function filas(col) {
-    /* Devuelve [{nombre, bajada, href, img, filete}] para una de las tres
-       columnas, o [] si su fuente no llegó. Cada columna tiene su propia forma
-       porque cada una la genera un proceso distinto: no unificarlas a la fuerza. */
+  function adaptogenos() {
     var d = datos || {};
-    if (col === 'adaptogenos') {
-      var a = d.adaptogenos && d.adaptogenos.items;
-      var baj = (d.nav && d.nav.columnas && d.nav.columnas.adaptogenos && d.nav.columnas.adaptogenos.bajadas) || {};
-      if (!a) return [];
-      return ['melena', 'ashwagandha', 'cordyceps', 'reishi', 'tremella']
-        .filter(function (k) { return a[k]; })
-        .map(function (k) {
-          return {
-            nombre: a[k].nombre,
-            bajada: baj[k] || '',
-            href: (d.hrefs && d.hrefs[k]) || '#',
-            img: resolver('../img/menu/' + a[k].archivo),
-            filete: a[k].filete
-          };
-        });
-    }
-    if (col === 'combos') {
-      var c = d.combos && d.combos.items;
-      if (!c) return [];
-      return c.map(function (i) {
-        return { nombre: i.nombre, bajada: i.bajada, href: i.href, img: chico(i.imagen), filete: null };
-      });
-    }
-    var b = d.beneficios && d.beneficios.cards;
-    if (!b) return [];
-    /* Reusa el TRATAMIENTO de las 5 fotos de "Elegí por beneficio" del home,
-       pero no los archivos: los del home son JPEG de 800x1066 (333 KB los cinco)
-       y acá se ven a 46px. build_menu_adaptogenos.py emite miniaturas WebP
-       cuadradas en img/menu/objetivo-<slug>.webp — 333 KB pasan a ~35 KB. Y sí
-       importa: el panel está en visibility:hidden, no display:none, así que el
-       browser baja las 15 fotos en el header de TODAS las páginas aunque nadie
-       abra nada (medido: 15/15 requests sin abrir el panel). */
-    return b.map(function (i) {
-      return {
-        nombre: i.titulo, bajada: i.tagline, href: i.href,
-        img: resolver('../img/menu/objetivo-' + slugObjetivo(i) + '.webp'),
-        filete: i.color
-      };
+    var a = d.adaptogenos && d.adaptogenos.items;
+    var baj = (d.nav && d.nav.columnas && d.nav.columnas.adaptogenos && d.nav.columnas.adaptogenos.bajadas) || {};
+    if (!a) return [];
+    return ORDEN.filter(function (k) { return a[k]; }).map(function (k) {
+      return { nombre: a[k].nombre, bajada: baj[k] || '', href: HREFS[k] || '#',
+               img: resolver('../img/menu/' + a[k].archivo) };
     });
   }
 
-  function pintarColumna(cont, clave, conFoto) {
-    var meta = (datos && datos.nav && datos.nav.columnas && datos.nav.columnas[clave]) || {};
-    var box = el('div', 'bl-menu__col');
-    box.appendChild(el('p', 'bl-menu__coltitulo', meta.titulo || ''));
-    var lista = el('ul', 'bl-menu__lista');
-    var items = filas(clave);
-    if (!items.length) {
-      /* Sin datos todavía (o la fuente falló): la columna no se dibuja vacía,
-         se dibuja un link a la categoría para que el camino nunca sea un
-         callejón sin salida. */
-      var pie0 = (meta.pie && meta.pie[0]) || null;
-      if (pie0) {
-        var li0 = el('li');
-        var a0 = el('a', 'bl-menu__pie', pie0.texto);
-        a0.href = pie0.href;
-        li0.appendChild(a0);
-        lista.appendChild(li0);
-      }
-      box.appendChild(lista);
-      return box;
-    }
-    items.forEach(function (it) {
-      var li = el('li');
-      var a = el('a', 'bl-menu__item');
-      a.href = it.href;
-      if (it.filete) a.style.setProperty('--bl-menu-c', it.filete);
-      if (conFoto && it.img) {
-        var f = el('span', 'bl-menu__foto');
-        var img = document.createElement('img');
-        img.src = it.img;
-        img.alt = '';
-        img.loading = 'lazy';
-        img.decoding = 'async';
-        img.width = 56; img.height = 56;
-        f.appendChild(img);
-        a.appendChild(f);
-      }
-      var t = el('span', 'bl-menu__txt');
-      t.appendChild(el('span', 'bl-menu__nombre', it.nombre));
-      if (it.bajada) t.appendChild(el('span', 'bl-menu__bajada', it.bajada));
-      a.appendChild(t);
-      li.appendChild(a);
-      lista.appendChild(li);
+  function combos() {
+    var c = datos && datos.combos && datos.combos.items;
+    if (!c) return [];
+    return c.map(function (i) {
+      return { nombre: i.nombre, bajada: i.bajada, href: i.href, img: chico(i.imagen) };
     });
-    box.appendChild(lista);
-    (meta.pie || []).forEach(function (p) {
-      var a = el('a', 'bl-menu__pie', p.texto);
-      a.href = p.href;
-      box.appendChild(a);
+  }
+
+  function objetivos() {
+    var b = datos && datos.beneficios && datos.beneficios.cards;
+    return b ? b.map(function (i) { return { nombre: i.titulo, href: i.href }; }) : [];
+  }
+
+  /* ── panel de Tienda ────────────────────────────────────────────────────── */
+
+  function panelAdaptogenos() {
+    var p = el('div', 'bls__panel');
+    var meta = (datos && datos.nav && datos.nav.columnas) || {};
+    p.appendChild(el('p', 'bls__label bls__label--top', 'Los adaptógenos'));
+    var ul = el('ul', 'bls__lista');
+    adaptogenos().forEach(function (it) { ul.appendChild(fila(it, null, false)); });
+    p.appendChild(ul);
+
+    /* El eje de objetivo se queda —nuestros nombres son ingredientes, no
+       beneficios como los de Seed— pero como chips en UNA línea. Cinco filas
+       con foto ahí habrían sumado 480px para decir lo que el nombre ya dice. */
+    var obj = objetivos();
+    if (obj.length) {
+      p.appendChild(el('p', 'bls__label', 'Por objetivo'));
+      var box = el('div', 'bls__inline');
+      obj.forEach(function (o) { var a = el('a', 'bls__chip', o.nombre); a.href = o.href; box.appendChild(a); });
+      p.appendChild(box);
+    }
+
+    var pie = el('div', 'bls__pie');
+    var v1 = el('a', 'bls__vertodo', 'Ver los 8');
+    v1.href = ((meta.adaptogenos && meta.adaptogenos.pie && meta.adaptogenos.pie[0]) || {}).href
+      || 'https://www.bloomlife.co/elegi-tu-suplemento/';
+    var v2 = el('a', 'bls__vertodo', 'También en cápsulas');
+    v2.href = ((meta.adaptogenos && meta.adaptogenos.pie && meta.adaptogenos.pie[1]) || {}).href
+      || 'https://www.bloomlife.co/tipo-de-adaptogenos/capsulas1/';
+    pie.appendChild(v1); pie.appendChild(v2);
+    p.appendChild(pie);
+    return p;
+  }
+
+  function panelCombos() {
+    var cs = combos();
+    if (!cs.length) return null;
+    var p = el('div', 'bls__panel');
+    var ul = el('ul', 'bls__lista');
+    cs.forEach(function (it) { ul.appendChild(fila(it, null, false)); });
+    p.appendChild(ul);
+    var pie = el('div', 'bls__pie');
+    var v = el('a', 'bls__vertodo', 'Ver los 26 combos');
+    var meta = (datos && datos.nav && datos.nav.columnas) || {};
+    v.href = ((meta.combos && meta.combos.pie && meta.combos.pie[0]) || {}).href
+      || 'https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/';
+    pie.appendChild(v); p.appendChild(pie);
+    return p;
+  }
+
+  /* ── panel de Blog: las 3 notas, del JSON que ya se regenera solo ───────── */
+
+  function panelBlog() {
+    var posts = (datos && datos.blog && datos.blog.posts) || [];
+    if (!posts.length) return null;
+    var p = el('div', 'bls__panel');
+    p.appendChild(el('p', 'bls__label', 'Últimas notas'));
+    var ul = el('ul', 'bls__lista');
+    posts.slice(0, 3).forEach(function (n) {
+      ul.appendChild(fila({
+        nombre: n.title,
+        bajada: (n.summary || '').slice(0, 92) + ((n.summary || '').length > 92 ? '…' : ''),
+        href: n.url.indexOf('http') === 0 ? n.url : 'https://www.bloomlife.co' + n.url,
+        img: n.image
+      }, null, false));
     });
-    return box;
+    p.appendChild(ul);
+    var pie = el('div', 'bls__pie');
+    var v = el('a', 'bls__vertodo', 'Ver todo el blog');
+    v.href = 'https://www.bloomlife.co/blog/';
+    pie.appendChild(v); p.appendChild(pie);
+    return p;
   }
 
-  function pintarDestacado() {
-    var d = (datos && datos.nav && datos.nav.destacado) || null;
-    if (!d) return null;
-    var a = el('a', 'bl-menu__destacado');
-    a.href = d.href;
-    if (d.imagen) {
-      /* La foto va por custom property y no por style.backgroundImage: el CSS
-         necesita componer el velo oscuro Y la foto en el mismo background-image,
-         y si el JS setea la propiedad directa gana él y se pierde el velo. */
-      a.classList.add('bl-menu__destacado--foto');
-      a.style.setProperty('--bl-menu-bg', 'url("' + resolver('../img/menu/' + d.imagen) + '")');
-    }
-    a.appendChild(el('span', 'bl-menu__deskicker', d.kicker));
-    a.appendChild(el('span', 'bl-menu__destitulo', d.titulo));
-    a.appendChild(el('span', 'bl-menu__desbajada', d.bajada));
-    a.appendChild(el('span', 'bl-menu__descta', d.cta));
-    return a;
+  /* ── barra ──────────────────────────────────────────────────────────────── */
+
+  function abrir(i) {
+    abierta = i;
+    [].forEach.call(document.querySelectorAll('#' + ID + ' .bls__li'), function (li, k) {
+      li.classList.toggle('is-open', k === i);
+      var b = li.querySelector('.bls__n1[aria-expanded]');
+      if (b) b.setAttribute('aria-expanded', k === i ? 'true' : 'false');
+    });
   }
 
-  function contenidoPanel() {
-    var wrap = el('div', 'bl-menu__panelinner');
-    wrap.appendChild(pintarColumna(wrap, 'adaptogenos', true));
-    wrap.appendChild(pintarColumna(wrap, 'combos', true));
-    wrap.appendChild(pintarColumna(wrap, 'objetivos', true));
-    var des = pintarDestacado();
-    if (des) wrap.appendChild(des);
-    return wrap;
-  }
-
-  function refrescarPanel() {
-    /* Repintar la barra, no solo el panel: el nivel1 viene del JSON. Se hace
-       preservando el estado abierto, que vive en la clase de la raíz. */
-    var raiz0 = document.getElementById(ID);
-    if (raiz0) {
-      var vieja = raiz0.querySelector('.bl-menu__barra');
-      if (vieja) raiz0.replaceChild(pintarBarra(), vieja);
-    }
-    var dir = document.querySelector('#' + ID_DRAWER + ' .bl-menu__directos');
-    if (dir) {
-      dir.innerHTML = '';
-      ((datos && datos.nav && datos.nav.nivel1) || FALLBACK_N1)
-        .filter(function (i) { return !i.panel; })
-        .forEach(function (i) {
-          var li = el('li'); var a = el('a', null, i.texto); a.href = i.href;
-          li.appendChild(a); dir.appendChild(li);
-        });
-    }
-    var p = document.querySelector('#' + ID + ' .bl-menu__panel');
-    if (p) { p.innerHTML = ''; p.appendChild(contenidoPanel()); }
-    var acc = document.querySelector('#' + ID_DRAWER + ' .bl-menu__accs');
-    if (acc) { acc.innerHTML = ''; pintarAcordeones(acc); }
-    /* El destacado del drawer NO se repintaba: al montar, datos todavía es null,
-       así que pintarDestacado() devuelve null y nunca se agregó. En desktop no
-       pasaba porque ahí se repinta el panel entero, que lo incluye. */
-    var dr = document.getElementById(ID_DRAWER);
-    if (dr) {
-      var viejo = dr.querySelector('.bl-menu__destacado');
-      if (viejo) viejo.remove();
-      var nuevo = pintarDestacado();
-      if (nuevo) dr.appendChild(nuevo);
-    }
-  }
-
-  /* ── desktop ────────────────────────────────────────────────────────────── */
-
-  function abrir(v) {
-    var raiz = document.getElementById(ID);
-    if (!raiz) return;
-    abierto = v;
-    raiz.classList.toggle('is-open', v);
-    var b = raiz.querySelector('.bl-menu__n1[data-panel]');
-    if (b) b.setAttribute('aria-expanded', v ? 'true' : 'false');
-    if (v) altoPanel();
-  }
-
-  function altoPanel() {
-    /* El tema calcula esto una sola vez al cargar y NO escucha resize; nosotros
-       sí. El header es sticky (z-index 1040) y el panel cuelga de él. */
-    var h = document.querySelector(HEADER);
-    var p = document.querySelector('#' + ID + ' .bl-menu__panel');
-    if (!h || !p) return;
-    var libre = window.innerHeight - h.getBoundingClientRect().height - 24;
-    p.style.maxHeight = Math.max(240, libre) + 'px';
-  }
-
-  /* La barra se dibuja aparte porque hay que poder REPINTARLA cuando llega el
-     JSON: si no, el nivel1 de data/menu-nav.json no sirve para nada y la barra
-     queda pegada para siempre al FALLBACK de este archivo, que solo se cambia
-     con un publish del seal. Pasó exactamente eso con "Suscripción mensual". */
   function pintarBarra() {
-    var barra = el('ul', 'bl-menu__barra');
-    var n1 = (datos && datos.nav && datos.nav.nivel1) || FALLBACK_N1;
-    n1.forEach(function (it) {
-    var col = document.querySelector(COL_NATIVA);
-    if (!col || !col.parentNode) return false;
-
-    var raiz = el('nav', 'bl-menu');
-    raiz.id = ID;
-    raiz.setAttribute('aria-label', 'Navegación principal');
-
-      var li = el('li');
+    var barra = el('ul', 'bls__barra');
+    NIVEL1.forEach(function (it, i) {
+      var li = el('li', 'bls__li');
+      var panel = it.panel === 'adaptogenos' ? panelAdaptogenos()
+                : it.panel === 'combos' ? panelCombos()
+                : it.panel === 'blog' ? panelBlog() : null;
       var nodo;
-      if (it.panel) {
-        nodo = el('button', 'bl-menu__n1', it.texto);
+      if (panel) {
+        nodo = el('button', 'bls__n1', it.texto);
         nodo.type = 'button';
-        nodo.setAttribute('data-panel', '');
         nodo.setAttribute('aria-expanded', 'false');
-        nodo.addEventListener('click', function (e) {
-          e.preventDefault();
-          if (abierto && fijado) { fijado = false; abrir(false); }
-          else { fijado = true; abrir(true); }
-        });
-        if (HOVERABLE) {
-          nodo.addEventListener('mouseenter', function () { if (esDesktop()) abrir(true); });
-        }
+        nodo.addEventListener('click', function (e) { e.preventDefault(); abrir(abierta === i ? null : i); });
+        if (HOVERABLE) nodo.addEventListener('mouseenter', function () { abrir(i); });
+        li.appendChild(nodo);
+        li.appendChild(panel);
+        if (HOVERABLE) li.addEventListener('mouseleave', function () { if (abierta === i) abrir(null); });
       } else {
-        nodo = el('a', 'bl-menu__n1', it.texto);
+        nodo = el('a', 'bls__n1', it.texto);
         nodo.href = it.href;
-        if (HOVERABLE) {
-          nodo.addEventListener('mouseenter', function () { if (!fijado) abrir(false); });
-        }
+        if (HOVERABLE) nodo.addEventListener('mouseenter', function () { abrir(null); });
+        li.appendChild(nodo);
       }
-      li.appendChild(nodo);
       barra.appendChild(li);
     });
     return barra;
   }
 
-  function montarDesktop() {
-    var col = document.querySelector(COL_NATIVA);
-    if (!col || !col.parentNode) return false;
-
-    var raiz = el('nav', 'bl-menu');
-    raiz.id = ID;
-    raiz.setAttribute('aria-label', 'Navegación principal');
-    raiz.appendChild(pintarBarra());
-
-    var panel = el('div', 'bl-menu__panel');
-    panel.appendChild(contenidoPanel());
-    panel.addEventListener('mouseleave', function () {
-      if (esDesktop() && !fijado) abrir(false);
-    });
-    raiz.appendChild(panel);
-
-    col.parentNode.insertBefore(raiz, col);
-
-    /* ── acá y no antes: el nativo se oculta con el nuestro YA en el DOM ── */
-    var ul = document.querySelector(UL_NATIVO);
-    if (ul) ul.style.display = 'none';
-    col.style.display = 'none';
-
-    return true;
-  }
-
   /* ── mobile ─────────────────────────────────────────────────────────────── */
 
-  function pintarAcordeones(cont) {
-    [['adaptogenos', true], ['combos', true], ['objetivos', true]].forEach(function (par) {
-      var clave = par[0];
-      var meta = (datos && datos.nav && datos.nav.columnas && datos.nav.columnas[clave]) || {};
-      var det = el('details', 'bl-menu__acc');
-      var sum = el('summary', 'bl-menu__accsum', meta.titulo || '');
-      det.appendChild(sum);
-      det.appendChild(pintarColumna(null, clave, par[1]));
-      cont.appendChild(det);
-    });
-  }
-
   function abrirDrawer(v) {
-    var d = document.getElementById(ID_DRAWER);
-    if (!d) return;
+    var d = document.getElementById(ID_DRAWER); if (!d) return;
     d.classList.toggle('is-open', v);
     d.setAttribute('aria-hidden', v ? 'false' : 'true');
-    var velo = document.querySelector('.bl-menu__velo');
-    if (velo) velo.classList.toggle('is-open', v);
+    var velo = document.querySelector('.bls__velo'); if (velo) velo.classList.toggle('is-open', v);
     document.documentElement.style.overflow = v ? 'hidden' : '';
-    var b = document.querySelector('.bl-menu__burger');
-    if (b) b.setAttribute('aria-expanded', v ? 'true' : 'false');
-    if (v) { var f = d.querySelector('a,button,summary'); if (f) f.focus(); }
   }
 
-  function montarMobile() {
-    var fila = document.querySelector(FILA + ' .row');
-    if (!fila) return false;
-
-    var btn = el('button', 'bl-menu__burger');
-    btn.type = 'button';
-    btn.setAttribute('aria-label', 'Abrir menú');
-    btn.setAttribute('aria-expanded', 'false');
-    btn.innerHTML = '<span></span><span></span><span></span>';
-    btn.addEventListener('click', function () { abrirDrawer(true); });
-    fila.insertBefore(btn, fila.firstChild);
-
-    var d = el('div', 'bl-menu__drawer');
-    d.id = ID_DRAWER;
-    d.setAttribute('aria-hidden', 'true');
-    var cerrar = el('button', 'bl-menu__cerrar');
-    cerrar.type = 'button';
-    cerrar.setAttribute('aria-label', 'Cerrar menú');
-    cerrar.innerHTML = '&times;';
-    cerrar.addEventListener('click', function () { abrirDrawer(false); });
-    d.appendChild(cerrar);
-
-    var directos = el('ul', 'bl-menu__directos');
-    ((datos && datos.nav && datos.nav.nivel1) || FALLBACK_N1)
-      .filter(function (i) { return !i.panel; })
-      .forEach(function (i) {
-        var li = el('li');
-        var a = el('a', null, i.texto);
-        a.href = i.href;
-        li.appendChild(a);
-        directos.appendChild(li);
-      });
-
-    var accs = el('div', 'bl-menu__accs');
-    pintarAcordeones(accs);
-    d.appendChild(accs);
-    d.appendChild(directos);
-    var des = pintarDestacado();
-    if (des) d.appendChild(des);
-
-    /* El velo va HERMANO del drawer, no adentro: el drawer se mueve con
-       transform, y un position:fixed dentro de un ancestro transformado se
-       posiciona contra ese ancestro en vez del viewport — el velo cubriría
-       solo el ancho del drawer. */
-    var velo = el('div', 'bl-menu__velo');
-    velo.addEventListener('click', function () { abrirDrawer(false); });
-
-    document.body.appendChild(velo);
-    document.body.appendChild(d);
-
-    /* ── ocultar el nativo, después de tener el nuestro ── */
-    var bn = document.querySelector(BURGER_NATIVO);
-    if (bn) bn.style.display = 'none';
-    var mn = document.querySelector(MODAL_NATIVO);
-    if (mn) mn.style.display = 'none';
-
-    return true;
+  function contenidoDrawer(d) {
+    d.innerHTML = '';
+    var c = el('button', 'bls__cerrar'); c.type = 'button';
+    c.setAttribute('aria-label', 'Cerrar menú'); c.innerHTML = '&times;';
+    c.addEventListener('click', function () { abrirDrawer(false); });
+    d.appendChild(c);
+    [panelAdaptogenos(), panelCombos()].forEach(function (t) {
+      if (!t) return;
+      t.className = ''; /* en el drawer no es panel flotante: es el contenido */
+      d.appendChild(t);
+    });
+    /* En el drawer, las entradas que en desktop abren panel de PRODUCTO ya están
+       arriba como contenido. Las demás van como links: las que tienen href y
+       también el Blog, cuyo panel de 3 notas no se usa acá.
+       Sin este último caso el Blog quedaba INALCANZABLE en mobile: el filtro
+       descartaba todo lo que tuviera panel. */
+    var dir = el('ul', 'bls__dir');
+    NIVEL1.forEach(function (i) {
+      var href = i.href || (i.panel === 'blog' ? 'https://www.bloomlife.co/blog/' : null);
+      if (!href) return;
+      var li = el('li'); var a = el('a', null, i.texto); a.href = href;
+      li.appendChild(a); dir.appendChild(li);
+    });
+    d.appendChild(dir);
   }
 
-  /* ── arranque ───────────────────────────────────────────────────────────── */
+  /* ── montaje ────────────────────────────────────────────────────────────── */
 
   function montar() {
     if (document.getElementById(ID)) return;
-
     var h = document.querySelector(HEADER);
-    /* Guard por GEOMETRÍA, no por existencia: en /best-sellers el header existe
-       en el DOM pero está tapado con display:none (landing 100% pauta), así que
-       .js-desktop-nav-col se encuentra igual y montaríamos basura invisible. */
     if (!h || h.offsetParent === null) return;
 
-    montarDesktop();
-    montarMobile();
+    var col = document.querySelector(COL_NATIVA);
+    if (col && col.parentNode) {
+      var raiz = el('nav', 'bls'); raiz.id = ID;
+      raiz.setAttribute('aria-label', 'Navegación principal');
+      raiz.appendChild(pintarBarra());
+      col.parentNode.insertBefore(raiz, col);
+      var ul = document.querySelector(UL_NATIVO); if (ul) ul.style.display = 'none';
+      col.style.display = 'none';
+    }
+
+    var fila0 = document.querySelector(FILA + ' .row');
+    if (fila0 && !document.getElementById(ID_DRAWER)) {
+      var b = el('button', 'bls__burger'); b.type = 'button';
+      b.setAttribute('aria-label', 'Abrir menú');
+      b.innerHTML = '<span></span><span></span><span></span>';
+      b.addEventListener('click', function () { abrirDrawer(true); });
+      fila0.insertBefore(b, fila0.firstChild);
+
+      var velo = el('div', 'bls__velo');
+      velo.addEventListener('click', function () { abrirDrawer(false); });
+      var dr = el('div', 'bls__drawer'); dr.id = ID_DRAWER; dr.setAttribute('aria-hidden', 'true');
+      contenidoDrawer(dr);
+      document.body.appendChild(velo); document.body.appendChild(dr);
+
+      var bn = document.querySelector(BURGER_NATIVO); if (bn) bn.style.display = 'none';
+      var mn = document.querySelector(MODAL_NATIVO); if (mn) mn.style.display = 'none';
+    }
 
     document.addEventListener('keydown', function (e) {
-      if (e.key !== 'Escape') return;
-      fijado = false;
-      abrir(false);
-      abrirDrawer(false);
-      /* Devolver el foco al disparador: si el usuario abrió con teclado y cierra
-         con Esc, el foco no puede quedar flotando en un panel invisible. */
-      var b = document.querySelector('#' + ID + ' .bl-menu__n1[data-panel]');
-      if (b && document.activeElement && document.activeElement.closest &&
-          document.activeElement.closest('#' + ID)) b.focus();
+      if (e.key === 'Escape') { abrir(null); abrirDrawer(false); }
     });
     document.addEventListener('click', function (e) {
-      var raiz = document.getElementById(ID);
-      if (abierto && raiz && !raiz.contains(e.target)) { fijado = false; abrir(false); }
+      var r = document.getElementById(ID);
+      if (abierta !== null && r && !r.contains(e.target)) abrir(null);
     });
-    window.addEventListener('resize', function () {
-      if (abierto) altoPanel();
-      if (esDesktop()) abrirDrawer(false);
-    });
+  }
+
+  function refrescar() {
+    var r = document.getElementById(ID);
+    if (r) { var v = r.querySelector('.bls__barra'); if (v) r.replaceChild(pintarBarra(), v); }
+    var d = document.getElementById(ID_DRAWER); if (d) contenidoDrawer(d);
   }
 
   function arrancar() {
-    estiloCritico();
-    cargarCSS();
-    montar();
-    /* Los datos llegan después y NO bloquean el montaje: el panel no se ve hasta
-       que alguien lo abre, así que refrescarlo a los 300ms es invisible. */
-    Promise.all([
-      traer('menu-nav.json'),
-      traer('menu-adaptogenos.json'),
-      traer('combos-menu.json'),
-      traer('beneficios-home.json')
-    ]).then(function (r) {
-      datos = {
-        nav: r[0], adaptogenos: r[1], combos: r[2], beneficios: r[3],
-        hrefs: {
-          melena: 'https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/',
-          ashwagandha: 'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/',
-          cordyceps: 'https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/',
-          reishi: 'https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/',
-          tremella: 'https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/'
-        }
-      };
-      if (!document.getElementById(ID)) montar();
-      else refrescarPanel();
-    });
+    estiloCritico(); cargarCSS(); montar();
+    Promise.all([traer('menu-nav.json'), traer('menu-adaptogenos.json'),
+                 traer('combos-menu.json'), traer('beneficios-home.json'),
+                 traer('blog-latest.json')])
+      .then(function (r) {
+        datos = { nav: r[0], adaptogenos: r[1], combos: r[2], beneficios: r[3], blog: r[4] };
+        if (!document.getElementById(ID)) montar(); else refrescar();
+      });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', arrancar);
-  } else {
-    arrancar();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
+  else arrancar();
 })();
