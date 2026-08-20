@@ -217,7 +217,14 @@
   color: var(--bl-menu-oro);
 }
 
-.bl-menu__destitulo { font: 600 19px/1.2 Dosis, system-ui, sans-serif; }
+.bl-menu__destitulo {
+  font: 600 19px/1.2 Dosis, system-ui, sans-serif;
+  /* color EXPLÍCITO, no heredado del padre. Sin esto, algo del css_code del
+     sitio se lo pisaba y el título salía en rgb(106,96,96) — un gris terroso,
+     más apagado que su propia bajada. Regla general en este entorno: ningún
+     texto nuestro confía en la herencia de color. */
+  color: #fff;
+}
 .bl-menu__desbajada { font: 400 12.5px/1.5 Georgia, serif; color: rgba(255, 255, 255, .82); }
 
 .bl-menu__descta {
