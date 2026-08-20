@@ -95,6 +95,33 @@
 
   var datos = null;
   var abierta = null; /* índice del panel abierto, o null */
+
+  /* CIERRE DEMORADO + GRACIA POR SCROLL.
+     El tema COMPRIME el header al scrollear (clase .compress): el alto pasa de
+     128 a 115 y el borde inferior de 128 a 87, porque la adbar se va. El panel
+     cuelga del header, así que SALTA 41px hacia arriba mientras el cursor se
+     queda donde estaba: se dispara mouseleave y el panel se cierra justo cuando
+     el usuario quería leerlo. Reportado por Sergio y reproducido.
+
+     Un período de gracia solo no alcanza —el puntero queda genuinamente afuera y
+     no vuelve a entrar—, así que mientras haya scroll reciente el mouseleave NO
+     cierra. Y de paso se recalcula el alto, que con el header comprimido tiene
+     41px más de aire. */
+  var tCerrar = null;
+  var tScroll = 0;
+  var GRACIA_MS = 220;
+  var GRACIA_SCROLL_MS = 500;
+
+  function cancelarCierre() { if (tCerrar) { clearTimeout(tCerrar); tCerrar = null; } }
+
+  function cerrarDemorado() {
+    cancelarCierre();
+    tCerrar = setTimeout(function () {
+      tCerrar = null;
+      if (Date.now() - tScroll < GRACIA_SCROLL_MS) return; /* está scrolleando */
+      abrir(null);
+    }, GRACIA_MS);
+  }
   var HOVERABLE = !(window.matchMedia && window.matchMedia('(hover: none)').matches);
 
   var CRITICO =
@@ -317,15 +344,18 @@
         nodo = el('button', 'bls__n1', it.texto);
         nodo.type = 'button';
         nodo.setAttribute('aria-expanded', 'false');
-        nodo.addEventListener('click', function (e) { e.preventDefault(); abrir(abierta === i ? null : i); });
-        if (HOVERABLE) nodo.addEventListener('mouseenter', function () { abrir(i); });
+        nodo.addEventListener('click', function (e) { e.preventDefault(); cancelarCierre(); abrir(abierta === i ? null : i); });
+        if (HOVERABLE) nodo.addEventListener('mouseenter', function () { cancelarCierre(); abrir(i); });
         li.appendChild(nodo);
         li.appendChild(panel);
-        if (HOVERABLE) li.addEventListener('mouseleave', function () { if (abierta === i) abrir(null); });
+        if (HOVERABLE) {
+          li.addEventListener('mouseenter', cancelarCierre);
+          li.addEventListener('mouseleave', function () { if (abierta === i) cerrarDemorado(); });
+        }
       } else {
         nodo = el('a', 'bls__n1', it.texto);
         nodo.href = it.href;
-        if (HOVERABLE) nodo.addEventListener('mouseenter', function () { abrir(null); });
+        if (HOVERABLE) nodo.addEventListener('mouseenter', function () { cancelarCierre(); abrir(null); });
         li.appendChild(nodo);
       }
       barra.appendChild(li);
@@ -455,6 +485,14 @@
       altoPanel();
       if (window.innerWidth >= DESKTOP_MIN) abrirDrawer(false);
     });
+    /* passive: este handler corre en cada scroll de todas las páginas del sitio;
+       no debe poder bloquear el hilo de composición. */
+    window.addEventListener('scroll', function () {
+      tScroll = Date.now();
+      if (abierta === null) return;
+      cancelarCierre();
+      altoPanel();
+    }, { passive: true });
   }
 
   function refrescar() {
