@@ -430,13 +430,12 @@
     pintarSeccionMobile(cont, (conPanel[mActiva] || {}).panel);
     d.appendChild(cont);
 
-    /* "Suscripción mensual" al pie: es un destino, no una sección. */
-    var dir = el('ul', 'bls__dir');
-    NIVEL1.filter(function (i) { return i.href; }).forEach(function (i) {
-      var li = el('li'); var a = el('a', null, i.texto); a.href = i.href;
-      li.appendChild(a); dir.appendChild(li);
-    });
-    d.appendChild(dir);
+    /* SIN tira de suscripción al pie: decisión de Sergio, le sobraba en mobile.
+       ⚠ CONSECUENCIA: /suscripciones/ deja de ser alcanzable desde el menú en
+       mobile. En desktop sigue estando como entrada de nivel 1. Si algún día se
+       quiere de vuelta, la alternativa es sumarla como PESTAÑA (con label corto,
+       porque "Suscripción mensual" hacía que la fila midiera ~430px y no entrara
+       en 375) — no como tira al pie. */
   }
 
   /* ── montaje ────────────────────────────────────────────────────────────── */

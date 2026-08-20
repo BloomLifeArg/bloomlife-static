@@ -237,3 +237,29 @@
 @media (prefers-reduced-motion: reduce) {
   .bls__panel, .bls__drawer, .bls__velo, .bls__n1::after { transition: none; }
 }
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   PARCHE AJENO AL MENÚ: el botón de /suscripciones/
+
+   El CTA "Ver suplementos con suscripción" es un <a> con estilos INLINE
+   (padding:14px 32px; background:#608671) y display:inline, que es el default de
+   un <a>. Un elemento inline con padding vertical NO agranda su caja: cuando el
+   texto pasa a dos líneas —y a 375px pasa, porque hereda font-size:24px— el fondo
+   y el padding se desbordan por arriba y por abajo. Reportado por Sergio.
+
+   display:inline-block lo arregla: la caja crece con el contenido.
+
+   POR QUÉ VIVE ACÁ Y NO EN css_code: este archivo ya carga en todas las páginas
+   (lo trae el JS del menú), así que el parche viaja gratis y no gasta del margen
+   de css_code, que está a ~3.700 del techo verde. No es su lugar conceptual.
+
+   EL ARREGLO DE VERDAD es agregarle display:inline-block al style inline en el
+   contenido de la página, desde el editor de Páginas del admin. Cuando se haga,
+   BORRAR esta regla.
+
+   El selector matchea exactamente UN elemento en todo el sitio (verificado en
+   /suscripciones/, home, /contacto/, una interna y /preguntas-frecuentes/), y de
+   paso previene que el mismo error vuelva si alguien arma otro botón así.
+   ───────────────────────────────────────────────────────────────────────────── */
+a[style*="padding"] { display: inline-block; max-width: 100%; }
