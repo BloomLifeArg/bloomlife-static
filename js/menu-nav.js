@@ -164,6 +164,25 @@
 
   function esDesktop() { return window.innerWidth >= DESKTOP_MIN; }
 
+  /* Las fotos de combos salen del og:image de cada producto, que el CDN de TN
+     sirve a 640px: 47,5 KB para un thumb de 46px. El mismo archivo a 320 pesa
+     15,7 KB — 5 combos pasan de 238 KB a 78 KB. Ojo: TN NO sirve cualquier
+     tamaño (-160-0 devuelve 403), así que se usa 320, que es la mitad exacta del
+     que viene y está siempre disponible. Si el patrón no matchea, se deja la URL
+     original: mejor una foto grande que ninguna. */
+  function chico(url) {
+    if (!url) return url;
+    return url.replace(/-(\d{3,4})-0(\.[a-z]{3,4})(\?.*)?$/i, '-320-0$2$3');
+  }
+
+  /* El slug sale del nombre del archivo del JSON de beneficios
+     (beneficio-foco.jpg → foco), no del título: el título es copy y puede
+     cambiar sin que cambie el archivo. */
+  function slugObjetivo(card) {
+    var m = /beneficio-([a-z]+)\./.exec(card.imagen || '');
+    return m ? m[1] : 'foco';
+  }
+
   /* ── el panel (desktop) y los acordeones (mobile) comparten los datos ───── */
 
   function filas(col) {
@@ -191,20 +210,22 @@
       var c = d.combos && d.combos.items;
       if (!c) return [];
       return c.map(function (i) {
-        return { nombre: i.nombre, bajada: i.bajada, href: i.href, img: i.imagen, filete: null };
+        return { nombre: i.nombre, bajada: i.bajada, href: i.href, img: chico(i.imagen), filete: null };
       });
     }
     var b = d.beneficios && d.beneficios.cards;
     if (!b) return [];
-    /* Reusa las 5 fotos de la sección "Elegí por beneficio" del home: ya están
-       tratadas con el grade de marca, ya son 3:4 y ya viven en el repo. Sin
-       ellas la columna queda de solo texto al lado de dos columnas con foto y
-       el panel se lee desbalanceado. Van por CDN_IMG_BEN, que apunta a
-       img/beneficios/ y no a img/menu/. */
+    /* Reusa el TRATAMIENTO de las 5 fotos de "Elegí por beneficio" del home,
+       pero no los archivos: los del home son JPEG de 800x1066 (333 KB los cinco)
+       y acá se ven a 46px. build_menu_adaptogenos.py emite miniaturas WebP
+       cuadradas en img/menu/objetivo-<slug>.webp — 333 KB pasan a ~35 KB. Y sí
+       importa: el panel está en visibility:hidden, no display:none, así que el
+       browser baja las 15 fotos en el header de TODAS las páginas aunque nadie
+       abra nada (medido: 15/15 requests sin abrir el panel). */
     return b.map(function (i) {
       return {
         nombre: i.titulo, bajada: i.tagline, href: i.href,
-        img: i.imagen && i.imagen.indexOf('http') !== 0 ? resolver('../img/beneficios/' + i.imagen) : i.imagen,
+        img: resolver('../img/menu/objetivo-' + slugObjetivo(i) + '.webp'),
         filete: i.color
       };
     });

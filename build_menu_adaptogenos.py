@@ -46,6 +46,15 @@ CX, CY = 0.50, 0.52
 CALIDAD = 82
 S_OBJ, V_OBJ = 0.42, 0.72  # registro común del filete
 
+# Las 5 lifestyle de la sección de beneficios se reusan en la columna "Por
+# objetivo" del panel, pero NO se pueden usar tal cual: son JPEG de 800x1066 que
+# pesan 38-89 KB cada uno (333 KB los cinco) y en el menú se ven a 46px. Y no
+# alcanza con loading="lazy": el panel está en visibility:hidden, no display:none,
+# así que el browser las considera en viewport y las baja igual, en el header de
+# TODAS las páginas, sin que nadie abra nada. Medido: 15/15 requests sin abrir el
+# panel. Con estas miniaturas, 333 KB pasan a ~35 KB.
+OBJETIVOS = ["foco", "calma", "energia", "descanso", "piel"]
+
 ITEMS = [
     ("melena",      "Melena de León"),
     ("ashwagandha", "Ashwagandha"),
@@ -118,6 +127,25 @@ def main(src):
             "hue": hue,
         }
         print(f"{nom:28s} {S}x{S}  {kb:5.1f} KB   filete {filete}  (crudo {meta[slug]['filete_crudo']})")
+    # Miniaturas de la columna "Por objetivo": recorte cuadrado centrado, sin
+    # regrade (ya vienen con el grade de marca horneado del build de beneficios).
+    for slug in OBJETIVOS:
+        src_ben = os.path.join(raiz, "img", "beneficios", "beneficio-%s.jpg" % slug)
+        if not os.path.exists(src_ben):
+            print("  ⚠ falta %s, se saltea" % src_ben)
+            continue
+        im = Image.open(src_ben).convert("RGB")
+        lado = min(im.width, im.height)
+        im = im.crop(((im.width - lado) // 2, (im.height - lado) // 2,
+                      (im.width + lado) // 2, (im.height + lado) // 2))
+        im = im.resize((S, S), Image.LANCZOS)
+        nom = "objetivo-%s.webp" % slug
+        p2 = os.path.join(dst, nom)
+        im.save(p2, "WEBP", quality=CALIDAD, method=6)
+        kb = os.path.getsize(p2) / 1024
+        total += kb
+        print(f"{nom:28s} {S}x{S}  {kb:5.1f} KB")
+
     with open(os.path.join(raiz, "data", "menu-adaptogenos.json"), "w", encoding="utf-8") as f:
         json.dump({
             "_leeme": "Generado por build_menu_adaptogenos.py. NO editar a mano: se regenera. "
