@@ -314,6 +314,23 @@
   }
 
   function refrescarPanel() {
+    /* Repintar la barra, no solo el panel: el nivel1 viene del JSON. Se hace
+       preservando el estado abierto, que vive en la clase de la raíz. */
+    var raiz0 = document.getElementById(ID);
+    if (raiz0) {
+      var vieja = raiz0.querySelector('.bl-menu__barra');
+      if (vieja) raiz0.replaceChild(pintarBarra(), vieja);
+    }
+    var dir = document.querySelector('#' + ID_DRAWER + ' .bl-menu__directos');
+    if (dir) {
+      dir.innerHTML = '';
+      ((datos && datos.nav && datos.nav.nivel1) || FALLBACK_N1)
+        .filter(function (i) { return !i.panel; })
+        .forEach(function (i) {
+          var li = el('li'); var a = el('a', null, i.texto); a.href = i.href;
+          li.appendChild(a); dir.appendChild(li);
+        });
+    }
     var p = document.querySelector('#' + ID + ' .bl-menu__panel');
     if (p) { p.innerHTML = ''; p.appendChild(contenidoPanel()); }
     var acc = document.querySelector('#' + ID_DRAWER + ' .bl-menu__accs');
@@ -352,7 +369,14 @@
     p.style.maxHeight = Math.max(240, libre) + 'px';
   }
 
-  function montarDesktop() {
+  /* La barra se dibuja aparte porque hay que poder REPINTARLA cuando llega el
+     JSON: si no, el nivel1 de data/menu-nav.json no sirve para nada y la barra
+     queda pegada para siempre al FALLBACK de este archivo, que solo se cambia
+     con un publish del seal. Pasó exactamente eso con "Suscripción mensual". */
+  function pintarBarra() {
+    var barra = el('ul', 'bl-menu__barra');
+    var n1 = (datos && datos.nav && datos.nav.nivel1) || FALLBACK_N1;
+    n1.forEach(function (it) {
     var col = document.querySelector(COL_NATIVA);
     if (!col || !col.parentNode) return false;
 
@@ -360,9 +384,6 @@
     raiz.id = ID;
     raiz.setAttribute('aria-label', 'Navegación principal');
 
-    var barra = el('ul', 'bl-menu__barra');
-    var n1 = (datos && datos.nav && datos.nav.nivel1) || FALLBACK_N1;
-    n1.forEach(function (it) {
       var li = el('li');
       var nodo;
       if (it.panel) {
@@ -388,7 +409,17 @@
       li.appendChild(nodo);
       barra.appendChild(li);
     });
-    raiz.appendChild(barra);
+    return barra;
+  }
+
+  function montarDesktop() {
+    var col = document.querySelector(COL_NATIVA);
+    if (!col || !col.parentNode) return false;
+
+    var raiz = el('nav', 'bl-menu');
+    raiz.id = ID;
+    raiz.setAttribute('aria-label', 'Navegación principal');
+    raiz.appendChild(pintarBarra());
 
     var panel = el('div', 'bl-menu__panel');
     panel.appendChild(contenidoPanel());
