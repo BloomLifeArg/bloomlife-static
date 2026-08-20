@@ -95,7 +95,7 @@
      Tiene que quedar en sync con data/menu-nav.json. */
   var FALLBACK_N1 = [
     { texto: 'Tienda', panel: true },
-    { texto: 'Suscripción', href: 'https://www.bloomlife.co/suscripciones/' },
+    { texto: 'Suscripción mensual', href: 'https://www.bloomlife.co/suscripciones/' },
     { texto: 'Blog', href: 'https://www.bloomlife.co/blog/' }
   ];
 

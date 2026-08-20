@@ -7,7 +7,7 @@
 
   "nivel1": [
     { "texto": "Tienda",      "panel": true },
-    { "texto": "Suscripción", "href": "https://www.bloomlife.co/suscripciones/" },
+    { "texto": "Suscripción mensual", "href": "https://www.bloomlife.co/suscripciones/" },
     { "texto": "Blog",        "href": "https://www.bloomlife.co/blog/" }
   ],
 
@@ -39,10 +39,12 @@
     }
   },
 
+  "_leeme_newsletter": "OJO: varios clientes confundieron esto con una suscripción a un NEWSLETTER. Por eso el nivel 1 dice 'Suscripción mensual' y no 'Suscripción' sola (el menú nativo decía 'Suscripción Mensual'; acortarlo fue un error nuestro), y por eso el título del destacado nombra los SUPLEMENTOS en vez de liderar con el descuento. No volver a escribir 'Suscripción' pelada ni un título que solo diga el % OFF.",
+
   "destacado": {
-    "kicker": "Suscripción",
-    "titulo": "10% OFF, todos los meses",
-    "bajada": "Con envío gratis y sin compromiso: la pausás o la cancelás cuando quieras.",
+    "kicker": "Suscripción mensual",
+    "titulo": "Tus suplementos, todos los meses",
+    "bajada": "Recibí todos los meses tus suplementos favoritos para mantener la constancia. Automatizá la compra con tu tarjeta y obtené además 10% de descuento. La forma más simple de cuidar tus hábitos.",
     "cta": "Ver cómo funciona",
     "href": "https://www.bloomlife.co/suscripciones/",
     "imagen": null,
