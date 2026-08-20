@@ -309,9 +309,16 @@
     gap: 10px;
   }
 
+  /* minmax(0,1fr) y no 1fr: un `1fr` es `minmax(auto,1fr)`, y ese `auto` le pone
+     al track un PISO igual al min-content de su contenido. El badge es nowrap
+     (ver abajo), así que ese piso era el ancho del badge y la card no podía
+     bajar de ~350px — el grid de arriba se desbordaba del viewport en vez de
+     encogerse. Con minmax(0,…) el track puede achicarse y el texto envuelve.
+     No cambia nada a 400-599 (medido: alturas idénticas); lo que hace es que un
+     badge más largo en el futuro no vuelva a desbordar la página en silencio. */
   .bl-caps-card {
     display: grid;
-    grid-template-columns: 72px 1fr auto;
+    grid-template-columns: 72px minmax(0, 1fr) auto;
     align-items: center;
     gap: 14px;
     padding: 12px 14px;
@@ -364,3 +371,45 @@
     white-space: nowrap;
   }
 }
+
+/* ---------- Teléfonos angostos ---------- */
+
+/* A 375px la sección desbordaba la página 15px, y 30 a 360 y 70 a 320: la fila
+   thumb + texto + botón no entraba, y el desborde salía del grid de arriba en
+   lugar de comprimirse. El minmax(0,1fr) de arriba saca el piso; esto le compra
+   los ~28px que faltan sin tocar el badge, que se queda en UNA línea como lo
+   pedía la decisión de diseño original.
+
+   Se probaron 4 variantes en 320/360/375/414/599: las cuatro dejaban el overflow
+   en 0, pero las que dejaban envolver el badge disparaban la card destacada a
+   ~150px de alto a 320 y rompían la armonía de la fila. Esta es la única que
+   mantiene las tres cards parejas en todo el rango. */
+@media (max-width: 399px) {
+  .bl-caps-body {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .bl-caps-card {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .bl-caps-card img {
+    height: 58px;
+  }
+}
+
+/* A 320px la columna de texto baja a ~80px y el badge, que mide 122 en una
+   línea, se le montaba encima al botón "Comprar" — cambiar un desborde de
+   página por dos elementos superpuestos no es un arreglo. Abajo de 360 lo
+   dejamos envolver: la card destacada queda un renglón más alta, que es el
+   precio correcto a pagar en los teléfonos más angostos. De 360 para arriba el
+   badge sigue en una línea, como se decidió. */
+@media (max-width: 359px) {
+  .bl-caps-badge {
+    white-space: normal;
+  }
+}
+
