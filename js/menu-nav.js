@@ -74,8 +74,17 @@
   var MODAL_NATIVO = '#nav-hamburger';
 
   var RAW = 'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/';
-  var CDN_IMG = 'https://cdn.jsdelivr.net/gh/BloomLifeArg/bloomlife-static@__HASH__/img/menu/';
-  var CDN_IMG_BEN = 'https://cdn.jsdelivr.net/gh/BloomLifeArg/bloomlife-static@__HASH__/img/beneficios/';
+
+  /* El CSS y las imágenes viven al lado de este archivo, en ../css/ y ../img/.
+     Derivarlos del propio src los mantiene pinneados al MISMO commit sin
+     repetir el hash en ninguna parte y sin el huevo-y-gallina de tener que
+     conocer el hash del commit que estás por hacer. Mismo patrón que
+     beneficios-home.js. */
+  var self = document.currentScript;
+
+  function resolver(rel) {
+    try { return new URL(rel, self.src).href; } catch (e) { return null; }
+  }
   var TIMEOUT_MS = 3000;
   var DESKTOP_MIN = 768; /* mismo umbral que el tema para que no haya un ancho en
                             el que se vean los dos o ninguno. El tema usa
@@ -99,6 +108,41 @@
      el click fija, y mouseleave solo cierra lo que no está fijado. */
   var fijado = false;
   var HOVERABLE = !(window.matchMedia && window.matchMedia('(hover: none)').matches);
+
+  /* CSS crítico de la BARRA, inline. El resto (panel, drawer, destacado) va por
+     <link> asíncrono, porque nada de eso se ve hasta que el usuario abre algo.
+     La barra sí se ve al instante: sin esto habría un flash de nav sin estilo en
+     el header de todas las páginas. Son ~700 bytes, no un stylesheet completo. */
+  var CRITICO =
+    '.bl-menu{font-family:Dosis,system-ui,sans-serif}' +
+    '.bl-menu__barra{display:flex;align-items:center;gap:28px;margin:0;padding:0;list-style:none}' +
+    '.bl-menu__n1{display:inline-block;padding:6px 0;border:0;background:none;' +
+    'font:600 15px/1 Dosis,system-ui,sans-serif;color:#1A1A1A;text-decoration:none;' +
+    'cursor:pointer;white-space:nowrap;position:relative}' +
+    '.bl-menu__panel,.bl-menu__drawer{visibility:hidden}' +
+    '.bl-menu__burger{display:none;width:40px;height:40px;border:0;background:none;padding:10px 8px;cursor:pointer}' +
+    '.bl-menu__burger span{display:block;height:1.5px;background:#1A1A1A;border-radius:2px}' +
+    '.bl-menu__burger span+span{margin-top:5px}' +
+    '@media(max-width:767.98px){.bl-menu{display:none}.bl-menu__burger{display:block}}';
+
+  function estiloCritico() {
+    if (document.getElementById('bl-menu-critico')) return;
+    var st = document.createElement('style');
+    st.id = 'bl-menu-critico';
+    st.textContent = CRITICO;
+    document.head.appendChild(st);
+  }
+
+  function cargarCSS() {
+    if (document.querySelector('link[data-bl-menu]')) return;
+    var href = resolver('../css/menu-nav.css');
+    if (!href) return;
+    var l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = href;
+    l.setAttribute('data-bl-menu', '');
+    document.head.appendChild(l);
+  }
 
   /* ── utilidades ─────────────────────────────────────────────────────────── */
 
@@ -138,7 +182,7 @@
             nombre: a[k].nombre,
             bajada: baj[k] || '',
             href: (d.hrefs && d.hrefs[k]) || '#',
-            img: CDN_IMG + a[k].archivo,
+            img: resolver('../img/menu/' + a[k].archivo),
             filete: a[k].filete
           };
         });
@@ -160,7 +204,7 @@
     return b.map(function (i) {
       return {
         nombre: i.titulo, bajada: i.tagline, href: i.href,
-        img: i.imagen && i.imagen.indexOf('http') !== 0 ? CDN_IMG_BEN + i.imagen : i.imagen,
+        img: i.imagen && i.imagen.indexOf('http') !== 0 ? resolver('../img/beneficios/' + i.imagen) : i.imagen,
         filete: i.color
       };
     });
@@ -229,7 +273,7 @@
          necesita componer el velo oscuro Y la foto en el mismo background-image,
          y si el JS setea la propiedad directa gana él y se pierde el velo. */
       a.classList.add('bl-menu__destacado--foto');
-      a.style.setProperty('--bl-menu-bg', 'url("' + CDN_IMG + d.imagen + '")');
+      a.style.setProperty('--bl-menu-bg', 'url("' + resolver('../img/menu/' + d.imagen) + '")');
     }
     a.appendChild(el('span', 'bl-menu__deskicker', d.kicker));
     a.appendChild(el('span', 'bl-menu__destitulo', d.titulo));
@@ -464,6 +508,8 @@
   }
 
   function arrancar() {
+    estiloCritico();
+    cargarCSS();
     montar();
     /* Los datos llegan después y NO bloquean el montaje: el panel no se ve hasta
        que alguien lo abre, así que refrescarlo a los 300ms es invisible. */
