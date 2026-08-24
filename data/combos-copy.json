@@ -1,8 +1,7 @@
 {
   "_leeme": "Bajadas de los combos del megamenú. Editar ESTE archivo y commitear alcanza. Es la única parte HECHA A MANO del pipeline de combos: la LISTA la genera build-combos-menu.mjs leyendo el home, pero el texto sale de acá. Un combo sin entrada acá NO entra al menú (el generador lo salta y lo reporta en _sin_copy del JSON de salida): preferimos que falte antes que mostrar una fila a medio construir.",
-  "_leeme_bajadas": "Estilo COMPOSICIÓN: la bajada dice solo QUÉ trae, porque el nombre del combo ya dice el para qué. Convención fija: SIEMPRE 'Melena de León' completo, nunca 'Melena' sola. Sin precios. Copy cerrado con Sergio el 2026-08-19; el razonamiento está en assets-menu/menu-copy-cerrado.json del repo del tema.",
+  "_leeme_bajadas": "Estilo COMPOSICIÓN: la bajada dice solo QUÉ trae, porque el nombre del combo ya dice el para qué. Convención fija: SIEMPRE 'Melena de León' completo, nunca 'Melena' sola. Sin precios. Copy cerrado con Sergio el 2026-08-19; el razonamiento está en assets-menu/menu-copy-cerrado.json del repo del tema. Renombre 2026-08-20: el combo de Reishi pasó a llamarse Full Day Stack, el de Ashwagandha (todo gomitas) All Day Stack y el de formatos mixtos All Day Mix. 'Full Day Gummies' ya no existe como nombre.",
   "_leeme_ranking": "El orden de 'ranking' es el de relleno: si en el home sobreviven menos de MIN combos con interna premium, el generador completa desde acá en este orden. No es la lista final.",
-
   "ranking": [
     "full-day-gummies-melena-de-leon-cordyceps-reishi",
     "glorygummies",
@@ -12,15 +11,39 @@
     "glowyourmindgummies",
     "menopausebalancegummies"
   ],
-
   "bajadas": {
-    "full-day-gummies-melena-de-leon-cordyceps-reishi":               { "nombre": "Full Day",          "bajada": "Melena de León, Cordyceps y Reishi." },
-    "glorygummies":                                                   { "nombre": "Glory Gummies",     "bajada": "Los cinco adaptógenos, juntos." },
-    "deepsleep":                                                      { "nombre": "Deep Sleep",        "bajada": "Ashwagandha y Reishi, de noche." },
-    "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q": { "nombre": "Bye Bye Anxiety",   "bajada": "Ashwagandha y Melena de León." },
-    "combo-performance-gummies-suplementacion-por-1-mes":             { "nombre": "High Performance",  "bajada": "Melena de León y Cordyceps." },
-    "glowyourmindgummies":                                            { "nombre": "Glow your Mind",    "bajada": "Tremella, Melena de León y Ashwagandha." },
-    "menopausebalancegummies":                                        { "nombre": "Menopause Balance", "bajada": "Ashwagandha, Melena de León y Reishi." },
-    "combo-bye-bye-anxiety-suplementacion-por-1-mes":                 { "nombre": "Bye Bye Anxiety",   "bajada": "Ashwagandha y Melena de León, en cápsulas.", "_nota": "Versión cápsulas (product_id 279852999). Handle verificado por API el 2026-08-19: NO sigue el patrón del nombre." }
+    "full-day-gummies-melena-de-leon-cordyceps-reishi": {
+      "nombre": "Full Day Stack",
+      "bajada": "Melena de León, Cordyceps y Reishi."
+    },
+    "glorygummies": {
+      "nombre": "Glory Gummies",
+      "bajada": "Los cinco adaptógenos, juntos."
+    },
+    "deepsleep": {
+      "nombre": "Deep Sleep",
+      "bajada": "Ashwagandha y Reishi, de noche."
+    },
+    "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q": {
+      "nombre": "Bye Bye Anxiety",
+      "bajada": "Ashwagandha y Melena de León."
+    },
+    "combo-performance-gummies-suplementacion-por-1-mes": {
+      "nombre": "High Performance",
+      "bajada": "Melena de León y Cordyceps."
+    },
+    "glowyourmindgummies": {
+      "nombre": "Glow your Mind",
+      "bajada": "Tremella, Melena de León y Ashwagandha."
+    },
+    "menopausebalancegummies": {
+      "nombre": "Menopause Balance",
+      "bajada": "Ashwagandha, Melena de León y Reishi."
+    },
+    "combo-bye-bye-anxiety-suplementacion-por-1-mes": {
+      "nombre": "Bye Bye Anxiety",
+      "bajada": "Ashwagandha y Melena de León, en cápsulas.",
+      "_nota": "Versión cápsulas (product_id 279852999). Handle verificado por API el 2026-08-19: NO sigue el patrón del nombre."
+    }
   }
 }
