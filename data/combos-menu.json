@@ -11,28 +11,15 @@
   "deepsleep",
   "glorygummies"
  ],
- "_descartados": [
-  {
-   "handle": "radiance-mind-combo-1y7mt",
-   "nombre_tn": "Radiance & Mind Combo | Melena de León + Reishi + Tremella | Gummies",
-   "motivo": "sin interna premium"
-  },
-  {
-   "handle": "glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq",
-   "nombre_tn": "Glow & Energy Combo | Tremella + Ashwagandha cápsulas + Cordyceps",
-   "motivo": "sin interna premium"
-  },
-  {
-   "handle": "ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws",
-   "nombre_tn": "Ultimate Balance Mix | Melena de León + Ashwagandha + Reishi + Tremella",
-   "motivo": "sin interna premium"
-  }
- ],
+ "_descartados": [],
  "_rellenados_del_ranking": [
   "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q",
   "combo-performance-gummies-suplementacion-por-1-mes"
  ],
  "_sin_copy": [
+  "radiance-mind-combo-1y7mt",
+  "glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq",
+  "ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws",
   "glow-go-combo-tremella-y-cordyceps-gummies-134yf",
   "combo-beauty-balance-tremella-reishi-wb97u"
  ],
