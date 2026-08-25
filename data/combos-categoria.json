@@ -1,0 +1,549 @@
+{
+ "hero": {
+  "kicker": "Combos",
+  "titulo": "Solos funcionan. Juntos se potencian.",
+  "bajada": "Elegí por lo que querés resolver, o mirá los tres tamaños de ritual. Todos rinden un mes y todos salen menos que comprar los frascos sueltos."
+ },
+ "objetivos": [
+  {
+   "k": "all",
+   "t": "Ver todos"
+  },
+  {
+   "k": "calma",
+   "t": "Calma"
+  },
+  {
+   "k": "dormir",
+   "t": "Dormir"
+  },
+  {
+   "k": "foco",
+   "t": "Foco"
+  },
+  {
+   "k": "energia",
+   "t": "Energía"
+  },
+  {
+   "k": "piel",
+   "t": "Piel y pelo"
+  },
+  {
+   "k": "dia",
+   "t": "Todo el día"
+  }
+ ],
+ "ingredientes": {
+  "trm": {
+   "nombre": "Tremella",
+   "color": "#8A6F9C"
+  },
+  "mln": {
+   "nombre": "Melena de León",
+   "color": "#A85713"
+  },
+  "ash": {
+   "nombre": "Ashwagandha",
+   "color": "#6E7A2C"
+  },
+  "cor": {
+   "nombre": "Cordyceps",
+   "color": "#3E7C9C"
+  },
+  "rsh": {
+   "nombre": "Reishi",
+   "color": "#6E9E88"
+  }
+ },
+ "bloques": [
+  {
+   "k": "top",
+   "titulo": "Los que más se llevan",
+   "chip": "Top 3 · 180 días",
+   "nota": "59% de las unidades de combo",
+   "vacio": "Ninguno de los tres más vendidos para ese objetivo."
+  },
+  {
+   "k": "2",
+   "titulo": "Empezá por dos",
+   "chip": "2 frascos",
+   "nota": "$132.050 · ahorrás $6.950",
+   "vacio": "Ningún combo de dos frascos para ese objetivo."
+  },
+  {
+   "k": "3",
+   "titulo": "Tu día completo",
+   "chip": "3 frascos",
+   "nota": "$198.075 · ahorrás $10.425",
+   "vacio": "Ningún combo de tres frascos para ese objetivo."
+  },
+  {
+   "k": "4",
+   "titulo": "El sistema entero",
+   "chip": "4 y 5 frascos",
+   "nota": "desde $264.100 · ahorrás hasta $17.375",
+   "vacio": "Ningún combo grande para ese objetivo."
+  }
+ ],
+ "cierre": {
+  "titulo": "¿Ya sabés cuál es el tuyo?",
+  "bajada": "Llevate tres meses del que ya te funciona, en una sola compra."
+ },
+ "combos": [
+  {
+   "id": 270150341,
+   "nombre": "High Performance",
+   "formato": "Gomitas",
+   "ing": [
+    "cor",
+    "mln"
+   ],
+   "why": "Cuerpo y cabeza para las horas que exigen.",
+   "objetivos": [
+    "energia",
+    "foco"
+   ],
+   "handle": "combo-performance-gummies-suplementacion-por-1-mes",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add7452d4a1df21fb917853805473765-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 163
+  },
+  {
+   "id": 279852999,
+   "nombre": "Bye Bye Anxiety",
+   "formato": "Cápsulas",
+   "ing": [
+    "ash",
+    "mln"
+   ],
+   "why": "Bajar un cambio sin perder la cabeza clara.",
+   "objetivos": [
+    "calma",
+    "foco"
+   ],
+   "handle": "combo-bye-bye-anxiety-suplementacion-por-1-mes",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e578516853d9ca5cb817853805215691-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 434
+  },
+  {
+   "id": 305609431,
+   "nombre": "Bye Bye Anxiety",
+   "formato": "Gomitas",
+   "ing": [
+    "ash",
+    "mln"
+   ],
+   "why": "La misma fórmula, en gomita: calma y claridad.",
+   "objetivos": [
+    "calma",
+    "foco"
+   ],
+   "handle": "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add5a37476bac282d617853803647110-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 159
+  },
+  {
+   "id": 294585978,
+   "nombre": "Deep Sleep",
+   "formato": "Gomitas",
+   "ing": [
+    "ash",
+    "rsh"
+   ],
+   "why": "Cerrar el día de verdad y despertarte repuesto.",
+   "objetivos": [
+    "dormir",
+    "calma"
+   ],
+   "handle": "deepsleep",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-aa1c6ad0b7a9d319a817853804728910-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 0
+  },
+  {
+   "id": 294591691,
+   "nombre": "Clarity & Defense",
+   "formato": "Gomitas",
+   "ing": [
+    "mln",
+    "rsh"
+   ],
+   "why": "Foco sostenido, con las defensas acompañadas.",
+   "objetivos": [
+    "foco"
+   ],
+   "handle": "comboclarityanddefense",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/clarity-y-defense-6e4b1b97340e62ac4917860672615043-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 0
+  },
+  {
+   "id": 330540800,
+   "nombre": "Beauty & Balance",
+   "formato": "Gomitas",
+   "ing": [
+    "trm",
+    "rsh"
+   ],
+   "why": "Lo que se ve, y el descanso que lo sostiene.",
+   "objetivos": [
+    "piel",
+    "dormir"
+   ],
+   "handle": "combo-beauty-balance-tremella-reishi-wb97u",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beauty-balance-perfil-washi-1600-2a31246c6043b99aef17860595940383-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 0
+  },
+  {
+   "id": 341180946,
+   "nombre": "Glow & Go",
+   "formato": "Gomitas",
+   "ing": [
+    "trm",
+    "cor"
+   ],
+   "why": "Verte bien sin quedarte sin energía.",
+   "objetivos": [
+    "piel",
+    "energia"
+   ],
+   "handle": "glow-go-combo-tremella-y-cordyceps-gummies-134yf",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-go-perfil-washi-1600-e356179032e2cd014217860595427166-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 0
+  },
+  {
+   "id": 349316562,
+   "nombre": "Glow & Regulate",
+   "formato": "Gomitas",
+   "ing": [
+    "trm",
+    "ash"
+   ],
+   "why": "Belleza desde adentro, con el estrés en su lugar.",
+   "objetivos": [
+    "piel",
+    "calma"
+   ],
+   "handle": "glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-y-regulate-50422e4e9aa3bcea9917860671938108-1024-1024.jpg",
+   "precio": 132050,
+   "lista": 139000,
+   "vendidas": 0
+  },
+  {
+   "id": 294593106,
+   "nombre": "Full Day Stack",
+   "formato": "Gomitas",
+   "ing": [
+    "mln",
+    "cor",
+    "rsh"
+   ],
+   "why": "Foco, energía y descanso: el arco entero del día.",
+   "objetivos": [
+    "dia",
+    "dormir"
+   ],
+   "handle": "full-day-gummies-melena-de-leon-cordyceps-reishi",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-186c29075b156566dc17853804164501-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 325250064,
+   "nombre": "All Day Stack",
+   "formato": "Gomitas",
+   "ing": [
+    "mln",
+    "cor",
+    "ash"
+   ],
+   "why": "El día completo, cerrando con calma en vez de sueño.",
+   "objetivos": [
+    "dia",
+    "calma"
+   ],
+   "handle": "fulldaygummies2",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/fullday2-01-perfil-27aef611e53a49157817857080223984-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 331475056,
+   "nombre": "All Day Mix",
+   "formato": "Mixto",
+   "ing": [
+    "mln",
+    "cor",
+    "ash"
+   ],
+   "why": "El mismo día completo, para quien prefiere la cápsula.",
+   "objetivos": [
+    "dia",
+    "foco"
+   ],
+   "handle": "fulldaymix",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/full-day-mix-c9c0207ab4693bc85017860676810708-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 332298698,
+   "nombre": "Clear Mind",
+   "formato": "Gomitas",
+   "ing": [
+    "mln",
+    "rsh",
+    "ash"
+   ],
+   "why": "La cabeza clara y el sistema nervioso acompañado.",
+   "objetivos": [
+    "foco",
+    "calma"
+   ],
+   "handle": "focusandchill",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/clear-mind-aff15a6fe3b5fa51d617860672235983-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 339648634,
+   "nombre": "Glow your Mind",
+   "formato": "Gomitas",
+   "ing": [
+    "trm",
+    "mln",
+    "ash"
+   ],
+   "why": "Verse bien, pensar mejor, sentirse en calma.",
+   "objetivos": [
+    "piel",
+    "foco"
+   ],
+   "handle": "glowyourmindgummies",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-994e4695c9f85bb91017853802487925-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 342427990,
+   "nombre": "Radiance & Mind",
+   "formato": "Gomitas",
+   "ing": [
+    "trm",
+    "mln",
+    "rsh"
+   ],
+   "why": "Piel cuidada, cabeza clara, cuerpo que se repone.",
+   "objetivos": [
+    "piel",
+    "foco"
+   ],
+   "handle": "radiance-mind-combo-1y7mt",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/radiance-mind-perfil-washi-1600-b99af3b7ce763d62bc17860594673609-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 357970572,
+   "nombre": "Glow & Energy",
+   "formato": "Mixto",
+   "ing": [
+    "trm",
+    "cor",
+    "ash"
+   ],
+   "why": "Piel, energía pareja y una cabeza tranquila.",
+   "objetivos": [
+    "piel",
+    "energia"
+   ],
+   "handle": "glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-energy-perfil-washi-1600-3a81a05451b0c35d1517860216770120-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 357970722,
+   "nombre": "Menopause Balance",
+   "formato": "Gomitas",
+   "ing": [
+    "ash",
+    "mln",
+    "rsh"
+   ],
+   "why": "Para transitar la etapa con calma y descanso.",
+   "objetivos": [
+    "calma",
+    "dormir"
+   ],
+   "handle": "menopausebalancegummies",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-8bc5bd64ef9e630dbd17853801947475-1024-1024.jpg",
+   "precio": 198075,
+   "lista": 208500,
+   "vendidas": 0
+  },
+  {
+   "id": 294595560,
+   "nombre": "Ultimate Balance",
+   "formato": "Gomitas",
+   "ing": [
+    "mln",
+    "cor",
+    "ash",
+    "rsh"
+   ],
+   "why": "Los cuatro tramos del día, sin huecos.",
+   "objetivos": [
+    "dia",
+    "dormir"
+   ],
+   "handle": "combo-gloria-adaptogena-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-ubwy1",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-balance-8e81c359240507365117860672530306-1024-1024.jpg",
+   "precio": 264100,
+   "lista": 278000,
+   "vendidas": 0
+  },
+  {
+   "id": 341313375,
+   "nombre": "Fresh Flow",
+   "formato": "Gomitas",
+   "ing": [
+    "mln",
+    "cor",
+    "trm",
+    "ash"
+   ],
+   "why": "Mente, cuerpo, piel y calma a la vez.",
+   "objetivos": [
+    "dia",
+    "piel"
+   ],
+   "handle": "fresh-flow-combo-1km44",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/fresh-flow-dee11673b84b89275817860672041093-1024-1024.jpg",
+   "precio": 264100,
+   "lista": 278000,
+   "vendidas": 0
+  },
+  {
+   "id": 356749974,
+   "nombre": "Ultimate Balance Mix",
+   "formato": "Mixto",
+   "ing": [
+    "mln",
+    "ash",
+    "trm",
+    "rsh"
+   ],
+   "why": "El combo completo, en dos formatos.",
+   "objetivos": [
+    "dia",
+    "piel"
+   ],
+   "handle": "ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-balance-mix-6e2144576cd496136517860671835044-1024-1024.jpg",
+   "precio": 264100,
+   "lista": 278000,
+   "vendidas": 0
+  },
+  {
+   "id": 330540927,
+   "nombre": "Glory Gummies",
+   "formato": "Gomitas",
+   "ing": [
+    "trm",
+    "rsh",
+    "ash",
+    "mln",
+    "cor"
+   ],
+   "why": "Los cinco adaptógenos. El sistema entero.",
+   "objetivos": [
+    "dia",
+    "piel"
+   ],
+   "handle": "glorygummies",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e3bc1500f11ff5c9f417853803206380-1024-1024.jpg",
+   "precio": 330125,
+   "lista": 347500,
+   "vendidas": 0
+  }
+ ],
+ "x3": [
+  {
+   "id": 268200978,
+   "nombre": "Melena de León",
+   "detalle": "Gummies",
+   "handle": "combo-brain-health-gummies-suplementacion-por-3-meses",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/brain-health-melena-gummies-x3-5bc0935d098623b9d517860673399605-1024-1024.jpg",
+   "precio": 208500
+  },
+  {
+   "id": 268207436,
+   "nombre": "Ashwagandha",
+   "detalle": "Cápsulas",
+   "handle": "combo-hormonal-balance-suplementacion-por-3-meses-con-ashwagandha-capsulas",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/hormonal-balance-ashwagandha-capsulas-x3-f24a5dc8f795fb713217860673276715-1024-1024.jpg",
+   "precio": 208500
+  },
+  {
+   "id": 268208596,
+   "nombre": "Reishi",
+   "detalle": "Gummies",
+   "handle": "combo-relaxation-suplementacion-por-3-meses",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/relaxation-reishi-gummies-x3-9130335d94cb99b5e817860673172228-1024-1024.jpg",
+   "precio": 208500
+  },
+  {
+   "id": 268209140,
+   "nombre": "Cordyceps",
+   "detalle": "Gummies",
+   "handle": "combo-energy-support-suplementacion-por-3-meses",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/energy-support-cordyceps-gummies-x3-544ef31b7d8d9c486c17860673075427-1024-1024.jpg",
+   "precio": 208500
+  },
+  {
+   "id": 286699791,
+   "nombre": "Ashwagandha",
+   "detalle": "Gummies",
+   "handle": "combo-hormonal-balance-suplementacion-con-ashwagandha-gummies-por-3-meses",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/hormonal-balance-ashwagandha-gummies-x3-fd09ae0e2896759e3117860672978464-1024-1024.jpg",
+   "precio": 208500
+  },
+  {
+   "id": 286700321,
+   "nombre": "Melena de León",
+   "detalle": "Cápsulas",
+   "handle": "combo-brain-health-capsulas-suplementacion-por-3-meses",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/brain-health-melena-capsulas-x3-80f9cc5f2db741102d17860672806577-1024-1024.jpg",
+   "precio": 208500
+  },
+  {
+   "id": 331418228,
+   "nombre": "Tremella",
+   "detalle": "Gummies",
+   "handle": "combobeautiful",
+   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beautiful-tremella-gummies-x3-a1eceda76a3ccc04ca17860672325228-1024-1024.jpg",
+   "precio": 208500
+  }
+ ]
+}
