@@ -241,9 +241,14 @@
     [].forEach.call(document.querySelectorAll(
       '.js-pagination, .pagination, .js-category-controls, .category-controls'),
       function (n) { n.style.display = 'none'; });
-    // el H1 nativo repetiría lo que ya dice el hero
-    var h1 = document.querySelector('.category-body h1, .js-category-title, h1.category-title');
-    if (h1 && /combos/i.test(h1.textContent)) h1.style.display = 'none';
+    // el H1 nativo repetiría lo que ya dice el hero. Se oculta a la vista pero se deja
+    // en el DOM: es el H1 de la página y sacarlo del árbol le costaría SEO y lectores.
+    [].forEach.call(document.querySelectorAll('h1'), function (h) {
+      if (/combos/i.test(h.textContent)) {
+        h.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;' +
+          'clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap';
+      }
+    });
   }
 
   fetch(DATA, { cache: 'no-cache' })
