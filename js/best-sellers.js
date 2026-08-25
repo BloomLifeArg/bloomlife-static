@@ -50,7 +50,7 @@ var m = document.querySelector('meta[' + attr + '="' + key + '"]');
 if (!m) { m = document.createElement('meta'); m.setAttribute(attr, key); document.head.appendChild(m); }
 m.setAttribute('content', content);
 }
-upsertMeta('name', 'description', 'Foco, energia y descanso en gummies adaptogenas. Ashwagandha, Melena de Leon, Reishi y mas. 3 cuotas sin interes y envio gratis desde $180.000.');
+upsertMeta('name', 'description', 'Foco, energia y descanso en gummies adaptogenas. Ashwagandha, Melena de Leon, Reishi y mas. 6 cuotas sin interes y envio gratis desde $180.000.');
 upsertMeta('property', 'og:title', 'Wellness Gummies | Bloom Life');
 upsertMeta('property', 'og:description', 'Suplementarse tambien puede ser rico. Gummies adaptogenas para tu dia a dia.');
 upsertMeta('property', 'og:image', 'https://d1a9qnv764bsoo.cloudfront.net/stores/004/969/223/rte/reishi-padded.png');
@@ -87,7 +87,7 @@ var hero = document.querySelector('.user-content .hero');
 if (hero && !document.querySelector('.bl-promo-bar')) {
 var pb = document.createElement('div');
 pb.className = 'bl-promo-bar';
-pb.innerHTML = '<b>3 cuotas sin inter&eacute;s</b> &nbsp;&middot;&nbsp; Env&iacute;o gratis desde $180.000 &nbsp;&middot;&nbsp; <b>10% OFF</b> en suscripciones';
+pb.innerHTML = '<b>6 cuotas sin inter&eacute;s</b> &nbsp;&middot;&nbsp; Env&iacute;o gratis desde $180.000 &nbsp;&middot;&nbsp; <b>10% OFF</b> en suscripciones';
 hero.parentNode.insertBefore(pb, hero);
 }
 if (!document.querySelector('.bl-sticky-cta')) {
