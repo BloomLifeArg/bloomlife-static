@@ -83,6 +83,14 @@ tb.innerHTML = '<img class="bl-usa-badge" src="https://d1a9qnv764bsoo.cloudfront
 '<img src="https://d1a9qnv764bsoo.cloudfront.net/stores/004/969/223/rte/img_26.png" alt="Certificaciones GMP Cruelty Free Non GMO Allergen Free Paraben Free Sulfate Free FDA" loading="lazy">';
 heroTb.parentNode.insertBefore(tb, heroTb.nextSibling);
 }
+// El HTML de la pagina (editor de TN) dice "3 cuotas" en las 5 fichas de producto.
+// La tienda pasó a 6 sin interés y la API de /pages devuelve 500 en toda escritura,
+// asi que se corrige en el DOM hasta que se pueda editar la fuente desde el admin.
+Array.prototype.forEach.call(document.querySelectorAll('.pcard-fine'), function(el) {
+if (el.textContent.indexOf('3 cuotas sin inter') === 0) {
+el.textContent = el.textContent.replace('3 cuotas sin inter', '6 cuotas sin inter');
+}
+});
 var hero = document.querySelector('.user-content .hero');
 if (hero && !document.querySelector('.bl-promo-bar')) {
 var pb = document.createElement('div');
