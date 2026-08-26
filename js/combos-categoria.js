@@ -70,6 +70,29 @@
     '.bl-cc .grid{display:grid;gap:14px;grid-template-columns:1fr}',
     '@media(min-width:600px){.bl-cc .grid{grid-template-columns:1fr 1fr}}',
     '@media(min-width:960px){.bl-cc .grid{grid-template-columns:repeat(3,1fr)}}',
+    /* escena de frascos: los que trae el combo, en abanico */
+    /* el fondo son bandas: una por ingrediente, con su color. Un combo de dos tiene dos
+       bandas; uno de cinco, cinco. El sistema de color se lee sin leer nada. */
+    '.bl-cc .escena{position:relative;height:150px;margin:-3px -5px 13px;border-radius:12px;overflow:hidden;',
+    'display:flex;align-items:flex-end;justify-content:center;padding:16px 6px 10px;isolation:isolate;',
+    'background:var(--bandas)}',
+    '.bl-cc .escena:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;',
+    'background:linear-gradient(180deg,rgba(255,255,255,.72) 0%,rgba(255,255,255,.34) 38%,rgba(255,255,255,.62) 100%)}',
+    '.bl-cc .escena img{position:relative;z-index:2;height:110px;width:auto;max-width:33%;object-fit:contain;',
+    'object-position:bottom;display:block;filter:drop-shadow(0 9px 14px rgba(0,56,69,.22));',
+    'transition:transform .36s cubic-bezier(.22,1.1,.36,1)}',
+    '.bl-cc .escena img+img{margin-left:-12%}',
+    '@media(min-width:600px){.bl-cc .escena{height:164px}.bl-cc .escena img{height:122px}}',
+    /* al pasar el cursor, el abanico se abre */
+    '.bl-cc .c:hover .escena img{transform:translateY(-3px) rotate(var(--rot)) translateX(var(--dx))}',
+    /* aparición escalonada */
+    '.bl-cc .c{opacity:0;transform:translateY(14px)}',
+    '.bl-cc .c.dentro{opacity:1;transform:none;transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}',
+    '.bl-cc .c.saliendo{opacity:0;transform:scale(.97);transition:opacity .2s ease,transform .2s ease}',
+    '.bl-cc .fila img{opacity:0;transform:translateY(10px);animation:blSube .6s cubic-bezier(.22,1,.36,1) forwards}',
+    '@keyframes blSube{to{opacity:1;transform:none}}',
+    '@media(prefers-reduced-motion:reduce){.bl-cc .c{opacity:1;transform:none}',
+    '.bl-cc .fila img{opacity:1;transform:none;animation:none}}',
     /* card */
     '.bl-cc .c{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;',
     'display:flex;flex-direction:column;text-decoration:none;color:inherit;',
@@ -83,14 +106,8 @@
     'border-radius:999px;padding:3px 9px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}',
     '.bl-cc .fmt.mix{border-color:var(--gold);color:var(--gold-ink)}',
     /* la fórmula en colores */
-    '.bl-cc .fx{display:flex;align-items:center;margin:15px 0 12px}',
-    '.bl-cc .fx i{width:26px;height:26px;border-radius:50%;display:block;flex:none;',
-    'border:3px solid var(--card);margin-right:-9px;transition:margin-right .18s cubic-bezier(.3,1.4,.5,1)}',
-    '.bl-cc .fx i:last-of-type{margin-right:0}',
-    '.bl-cc .c:hover .fx i{margin-right:1px}',
-    '.bl-cc .fx .n{margin-left:auto;padding-left:12px;font-size:11px;font-weight:700;',
-    'letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap}',
-    '.bl-cc .ings{font-size:12.5px;color:var(--muted);margin:0 0 13px;line-height:1.4}',
+    '.bl-cc .ings{font-size:12.5px;color:var(--muted);margin:11px 0 12px;line-height:1.4}',
+    '.bl-cc .ings b{color:var(--dark);font-weight:700}',
     '.bl-cc .why{font-family:var(--serif);font-size:14px;color:var(--muted);line-height:1.5;margin:0 0 13px;min-height:42px}',
     '.bl-cc .sold{font-size:11.5px;font-weight:600;color:var(--gold-ink);margin:0 0 12px;',
     'display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}',
@@ -129,21 +146,36 @@
     return e;
   }
 
-  function card(c, ING, conVentas) {
+  function card(c, ING, conVentas, FR) {
     var a = el('a', 'c');
     a.href = '/productos/' + c.handle + '/';
     a.dataset.goals = (c.objetivos || []).join(' ');
-    var puntos = c.ing.map(function (k) {
-      var i = ING[k] || { nombre: k, color: '#999' };
-      return '<i style="background:' + i.color + '" title="' + i.nombre + '"></i>';
+    var caps = c.caps || [];
+    var n = c.ing.length;
+    // los frascos del combo, abriéndose desde el centro
+    var escena = c.ing.map(function (k, i) {
+      var set = (FR || {})[k] || {};
+      var src = (caps.indexOf(k) > -1 && set.cap) ? set.cap : set.gom;
+      if (!src) return '';
+      var medio = (n - 1) / 2;
+      var rot = ((i - medio) * 3.4).toFixed(1);
+      var dx = ((i - medio) * 9).toFixed(0);
+      return '<img src="' + src + '" alt="' + ((ING[k] || {}).nombre || k) + '" loading="lazy" ' +
+             'style="--rot:' + rot + 'deg;--dx:' + dx + '%">';
     }).join('');
+    var paso = 100 / n;
+    var bandas = 'linear-gradient(100deg,' + c.ing.map(function (k, i) {
+      var col = (ING[k] || {}).color || '#608B71';
+      return col + ' ' + (i * paso).toFixed(1) + '%,' + col + ' ' + ((i + 1) * paso).toFixed(1) + '%';
+    }).join(',') + ')';
+
     var nombres = c.ing.map(function (k) { return (ING[k] || {}).nombre || k; }).join(' · ');
     var ahorro = c.lista - c.precio;
     a.innerHTML =
+      (escena ? '<div class="escena" style="--bandas:' + bandas + '">' + escena + '</div>' : '') +
       '<div class="ct"><h4>' + c.nombre + '</h4>' +
       '<span class="fmt' + (c.formato === 'Mixto' ? ' mix' : '') + '">' + c.formato + '</span></div>' +
-      '<div class="fx">' + puntos + '<span class="n">' + c.ing.length + ' frascos</span></div>' +
-      '<p class="ings">' + nombres + '</p>' +
+      '<p class="ings"><b>' + n + ' frascos</b> &middot; ' + nombres + '</p>' +
       '<p class="why">' + c.why + '</p>' +
       (conVentas && c.vendidas ? '<p class="sold">' + c.vendidas + ' vendidos en los últimos 6 meses</p>' : '') +
       '<div class="cb"><span><span class="amt">' + money(c.precio) + '</span>' +
@@ -202,8 +234,9 @@
         '<span class="qty">' + b.chip + '</span>' +
         '<span class="nota">' + b.nota + '</span></div>';
       var g = el('div', 'grid');
-      lista.forEach(function (c) { g.appendChild(card(c, ING, b.k === 'top')); });
-      g.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
+      lista.forEach(function (c) { g.appendChild(card(c, ING, b.k === 'top', cfg.frascos)); });
+      // el destacado no lleva estado vacío: si no hay match, la sección entera se va
+      if (b.k !== 'top') g.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
       sec.appendChild(g);
       wrap.appendChild(sec);
     });
@@ -226,6 +259,26 @@
 
     host.parentNode.insertBefore(raiz, host);
 
+    // las cards aparecen al entrar en viewport, escalonadas por fila
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          var i = [].indexOf.call(e.target.parentNode.children, e.target);
+          e.target.style.transitionDelay = ((i % 3) * 70) + 'ms';
+          e.target.classList.add('dentro');
+          io.unobserve(e.target);
+        });
+      }, { rootMargin: '0px 0px -60px 0px', threshold: 0.06 });
+      [].forEach.call(raiz.querySelectorAll('.c'), function (c) { io.observe(c); });
+    } else {
+      [].forEach.call(raiz.querySelectorAll('.c'), function (c) { c.classList.add('dentro'); });
+    }
+    // los frascos del hero entran uno detrás de otro
+    [].forEach.call(raiz.querySelectorAll('.fila img'), function (im, i) {
+      im.style.animationDelay = (120 + i * 85) + 'ms';
+    });
+
     // filtro por objetivo
     var botones = [].slice.call(raiz.querySelectorAll('.goal'));
     botones.forEach(function (b) {
@@ -233,11 +286,21 @@
         var g = b.dataset.g;
         botones.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
         [].forEach.call(raiz.querySelectorAll('.c'), function (c) {
-          c.hidden = !(g === 'all' || c.dataset.goals.split(' ').indexOf(g) > -1);
+          var queda = (g === 'all' || c.dataset.goals.split(' ').indexOf(g) > -1);
+          if (!queda && !c.hidden) {
+            c.classList.add('saliendo');
+            setTimeout(function () { c.hidden = true; c.classList.remove('saliendo'); }, 190);
+          } else if (queda && c.hidden) {
+            c.hidden = false;
+            c.classList.remove('dentro');
+            requestAnimationFrame(function () { c.classList.add('dentro'); });
+          }
         });
         [].forEach.call(raiz.querySelectorAll('.rung'), function (sec) {
           var vivos = [].filter.call(sec.querySelectorAll('.c'), function (c) { return !c.hidden; }).length;
-          sec.querySelector('.vacio').hidden = vivos > 0;
+          var v = sec.querySelector('.vacio');
+          if (v) v.hidden = vivos > 0;
+          else sec.hidden = vivos === 0;   // el destacado se oculta entero
         });
       });
     });
@@ -265,6 +328,15 @@
     [].forEach.call(document.querySelectorAll(
       '.js-pagination, .pagination, .js-category-controls, .category-controls, .category-banner'),
       function (n) { n.style.display = 'none'; });
+    // la paginación del tema es un div.row sin clase propia: se la reconoce por su texto ("1 / 2")
+    var cont = host.parentElement;
+    if (cont) {
+      [].forEach.call(cont.children, function (n) {
+        if (n === host || n.classList.contains('bl-cc')) return;
+        var t = (n.textContent || '').replace(/\s+/g, ' ').trim();
+        if (/^[\u2190\u2192<>\s]*\d+\s*\/\s*\d+[\u2190\u2192<>\s]*$/.test(t)) n.style.display = 'none';
+      });
+    }
     // el H1 nativo repetiría lo que ya dice el hero. Se oculta a la vista pero se deja
     // en el DOM: es el H1 de la página y sacarlo del árbol le costaría SEO y lectores.
     [].forEach.call(document.querySelectorAll('h1'), function (h) {

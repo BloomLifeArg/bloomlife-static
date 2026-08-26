@@ -2,35 +2,7 @@
  "hero": {
   "kicker": "Combos",
   "titulo": "Solos funcionan. Juntos se potencian.",
-  "bajada": "Elegí por lo que querés resolver, o mirá los tres tamaños de ritual. Todos rinden un mes y todos salen menos que comprar los frascos sueltos.",
-  "frascos": [
-   {
-    "k": "trm",
-    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_trm_aligned-5c8a6794e8d4bcffeb17852036898521-1024-1024.png",
-    "alt": "Tremella"
-   },
-   {
-    "k": "mln",
-    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-1024-1024.png",
-    "alt": "Melena de León"
-   },
-   {
-    "k": "cor",
-    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-1024-1024.png",
-    "alt": "Cordyceps"
-   },
-   {
-    "k": "ash",
-    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-1024-1024.png",
-    "alt": "Ashwagandha"
-   },
-   {
-    "k": "rsh",
-    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-1024-1024.png",
-    "alt": "Reishi"
-   }
-  ],
-  "pie": "Cinco adaptógenos. Todas las combinaciones que necesitás."
+  "bajada": "Elegí por lo que querés resolver, o mirá los tres tamaños de ritual. Todos rinden un mes y todos salen menos que comprar los frascos sueltos."
  },
  "objetivos": [
   {
@@ -89,7 +61,7 @@
    "k": "top",
    "titulo": "Los que más se llevan",
    "chip": "Top 3 · 180 días",
-   "nota": "59% de las unidades de combo",
+   "nota": "62% de las unidades de combo",
    "vacio": "Ninguno de los tres más vendidos para ese objetivo."
   },
   {
@@ -136,7 +108,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add7452d4a1df21fb917853805473765-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 163
+   "vendidas": 163,
+   "caps": []
   },
   {
    "id": 279852999,
@@ -155,7 +128,11 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e578516853d9ca5cb817853805215691-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 434
+   "vendidas": 434,
+   "caps": [
+    "ash",
+    "mln"
+   ]
   },
   {
    "id": 305609431,
@@ -174,7 +151,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add5a37476bac282d617853803647110-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 159
+   "vendidas": 159,
+   "caps": []
   },
   {
    "id": 294585978,
@@ -193,7 +171,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-aa1c6ad0b7a9d319a817853804728910-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 294591691,
@@ -211,7 +190,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/clarity-y-defense-6e4b1b97340e62ac4917860672615043-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 330540800,
@@ -230,7 +210,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beauty-balance-perfil-washi-1600-2a31246c6043b99aef17860595940383-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 341180946,
@@ -249,7 +230,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-go-perfil-washi-1600-e356179032e2cd014217860595427166-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 349316562,
@@ -268,7 +250,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-y-regulate-50422e4e9aa3bcea9917860671938108-1024-1024.jpg",
    "precio": 132050,
    "lista": 139000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 294593106,
@@ -288,7 +271,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-186c29075b156566dc17853804164501-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 325250064,
@@ -308,7 +292,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/fullday2-01-perfil-27aef611e53a49157817857080223984-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 331475056,
@@ -328,7 +313,11 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/full-day-mix-c9c0207ab4693bc85017860676810708-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": [
+    "mln",
+    "ash"
+   ]
   },
   {
    "id": 332298698,
@@ -348,7 +337,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/clear-mind-aff15a6fe3b5fa51d617860672235983-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 339648634,
@@ -368,7 +358,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-994e4695c9f85bb91017853802487925-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 342427990,
@@ -388,7 +379,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/radiance-mind-perfil-washi-1600-b99af3b7ce763d62bc17860594673609-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 357970572,
@@ -408,7 +400,10 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-energy-perfil-washi-1600-3a81a05451b0c35d1517860216770120-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": [
+    "ash"
+   ]
   },
   {
    "id": 357970722,
@@ -428,7 +423,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-8bc5bd64ef9e630dbd17853801947475-1024-1024.jpg",
    "precio": 198075,
    "lista": 208500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 294595560,
@@ -449,7 +445,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-balance-8e81c359240507365117860672530306-1024-1024.jpg",
    "precio": 264100,
    "lista": 278000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 341313375,
@@ -470,7 +467,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/fresh-flow-dee11673b84b89275817860672041093-1024-1024.jpg",
    "precio": 264100,
    "lista": 278000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   },
   {
    "id": 356749974,
@@ -491,7 +489,11 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-balance-mix-6e2144576cd496136517860671835044-1024-1024.jpg",
    "precio": 264100,
    "lista": 278000,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": [
+    "mln",
+    "ash"
+   ]
   },
   {
    "id": 330540927,
@@ -513,7 +515,8 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e3bc1500f11ff5c9f417853803206380-1024-1024.jpg",
    "precio": 330125,
    "lista": 347500,
-   "vendidas": 0
+   "vendidas": 0,
+   "caps": []
   }
  ],
  "x3": [
@@ -573,5 +576,25 @@
    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beautiful-tremella-gummies-x3-a1eceda76a3ccc04ca17860672325228-1024-1024.jpg",
    "precio": 208500
   }
- ]
+ ],
+ "frascos": {
+  "trm": {
+   "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_trm_aligned-5c8a6794e8d4bcffeb17852036898521-240-0.png"
+  },
+  "mln": {
+   "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-240-0.png",
+   "cap": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/mdl_frasco_sq-cd3bf40bb0a8de7d3017846899477616-240-0.png"
+  },
+  "cor": {
+   "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-240-0.png"
+  },
+  "ash": {
+   "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-240-0.png",
+   "cap": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ash_frasco_sq-1de3135a64ac514e1317846899679453-240-0.png"
+  },
+  "rsh": {
+   "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-240-0.png"
+  }
+ },
+ "ventas_al": "2026-08-25"
 }
