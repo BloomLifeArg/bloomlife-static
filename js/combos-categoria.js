@@ -159,6 +159,17 @@
     '.bl-cc .cita .qui{font-size:11.5px!important;letter-spacing:.05em;color:rgba(255,255,255,.6);margin:0}',
     '.bl-cc .cita .qui b{color:#fff;font-weight:600}',
     '.bl-cc .estrellas{color:var(--gold);font-size:13px;letter-spacing:2px;display:block;margin-bottom:8px}',
+    /* El combo de cinco cerraba el escalón solo, con dos huecos al lado, y era el producto
+       más caro de la página. Va a lo ancho: llena la fila y le da un cierre a la escalera. */
+    '@media(min-width:600px){',
+    '.bl-cc .c.ancha{grid-column:1/-1;display:grid;grid-template-columns:1.15fr 1fr;gap:26px;align-items:center;padding:22px}',
+    '.bl-cc .c.ancha .escena{margin:0;height:100%;min-height:230px;border-radius:14px}',
+    '.bl-cc .c.ancha .cuerpo{display:flex;flex-direction:column;justify-content:center}',
+    '.bl-cc .c.ancha h4{font-size:30px}',
+    '.bl-cc .c.ancha .why{font-size:16px!important;min-height:0}',
+    '.bl-cc .c.ancha .amt{font-size:25px}',
+    '}',
+    '.bl-cc .c.ancha .cuerpo{min-width:0}',
     /* cierre */
     '.bl-cc .cierre{margin:44px 0 0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}',
     '.bl-cc .cierre h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;line-height:1.15;color:var(--dark);margin:0 0 8px}',
@@ -188,6 +199,7 @@
     var a = el('a', 'c');
     a.href = '/productos/' + c.handle + '/';
     a.dataset.goals = (c.objetivos || []).join(' ');
+    if (c.ing.length >= 5) a.classList.add('ancha');
     var caps = c.caps || [];
     var n = c.ing.length;
     // los frascos del combo, abriéndose desde el centro
@@ -215,13 +227,13 @@
     }).join(' · ');
     a.innerHTML =
       (escena ? '<div class="escena" style="--bandas:' + bandas + ';--w:' + ancho + '%;--solape:-' + solape + '%">' + escena + '</div>' : '') +
-      '<div class="ct"><h4>' + c.nombre + '</h4>' +
+      '<div class="cuerpo"><div class="ct"><h4>' + c.nombre + '</h4>' +
       '<span class="fmt' + (c.formato === 'Mixto' ? ' mix' : '') + '">' + c.formato + '</span></div>' +
       '<p class="ings"><b>' + n + ' frascos</b> &middot; ' + nombres + '</p>' +
       '<p class="why">' + c.why + '</p>' +
       (conVentas && c.vendidas ? '<p class="sold">' + c.vendidas + ' vendidos en 6 meses</p>' : '') +
       '<div class="cb"><span class="amt">' + money(c.precio) + '</span>' +
-      '<span class="go">Ver combo</span></div>';
+      '<span class="go">Ver combo</span></div></div>';
     return a;
   }
 
