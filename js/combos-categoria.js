@@ -31,6 +31,11 @@
     '.bl-cc .hero h2{font-family:var(--serif);font-style:italic;font-weight:400;color:#fff;',
     'font-size:clamp(27px,4.4vw,42px);line-height:1.1;margin:12px auto;max-width:17ch;text-wrap:balance}',
     '.bl-cc .hero p{color:rgba(255,255,255,.76);font-family:var(--serif);font-size:15.5px;margin:0 auto;max-width:54ch}',
+    /* fila de frascos: reemplaza al banner de la categoría */
+    '.bl-cc .fila{display:flex;align-items:flex-end;justify-content:center;gap:2px;margin:22px auto 0;max-width:560px}',
+    '.bl-cc .fila img{flex:1 1 0;min-width:0;max-width:96px;height:78px;object-fit:contain;object-position:bottom;display:block}',
+    '@media(min-width:760px){.bl-cc .fila{gap:6px;max-width:660px}.bl-cc .fila img{max-width:120px;height:104px}}',
+    '.bl-cc .pie{font-size:12px;letter-spacing:.06em;color:rgba(255,255,255,.6);margin:12px 0 0;text-align:center}',
     '.bl-cc .goals{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:24px auto 0;max-width:680px}',
     '.bl-cc .goal{font:600 13px var(--sans);color:rgba(255,255,255,.9);background:rgba(255,255,255,.08);',
     'border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:9px 16px;cursor:pointer;',
@@ -139,10 +144,15 @@
 
     // hero + chips
     var hero = el('section', 'hero');
+    var frascos = (cfg.hero.frascos || []).map(function (f) {
+      return '<img src="' + f.img + '" alt="' + f.alt + '" loading="lazy">';
+    }).join('');
     hero.innerHTML =
       '<span class="k">' + cfg.hero.kicker + '</span>' +
       '<h2>' + cfg.hero.titulo + '</h2>' +
-      '<p>' + cfg.hero.bajada + '</p>';
+      '<p>' + cfg.hero.bajada + '</p>' +
+      (frascos ? '<div class="fila">' + frascos + '</div>' : '') +
+      (cfg.hero.pie ? '<p class="pie">' + cfg.hero.pie + '</p>' : '');
     var goals = el('div', 'goals');
     goals.setAttribute('role', 'group');
     goals.setAttribute('aria-label', 'Filtrar por objetivo');
@@ -239,7 +249,7 @@
     // recién ahora se esconde lo nativo
     host.style.display = 'none';
     [].forEach.call(document.querySelectorAll(
-      '.js-pagination, .pagination, .js-category-controls, .category-controls'),
+      '.js-pagination, .pagination, .js-category-controls, .category-controls, .category-banner'),
       function (n) { n.style.display = 'none'; });
     // el H1 nativo repetiría lo que ya dice el hero. Se oculta a la vista pero se deja
     // en el DOM: es el H1 de la página y sacarlo del árbol le costaría SEO y lectores.

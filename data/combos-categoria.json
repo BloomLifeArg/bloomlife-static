@@ -2,7 +2,35 @@
  "hero": {
   "kicker": "Combos",
   "titulo": "Solos funcionan. Juntos se potencian.",
-  "bajada": "Elegí por lo que querés resolver, o mirá los tres tamaños de ritual. Todos rinden un mes y todos salen menos que comprar los frascos sueltos."
+  "bajada": "Elegí por lo que querés resolver, o mirá los tres tamaños de ritual. Todos rinden un mes y todos salen menos que comprar los frascos sueltos.",
+  "frascos": [
+   {
+    "k": "trm",
+    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_trm_aligned-5c8a6794e8d4bcffeb17852036898521-1024-1024.png",
+    "alt": "Tremella"
+   },
+   {
+    "k": "mln",
+    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-1024-1024.png",
+    "alt": "Melena de León"
+   },
+   {
+    "k": "cor",
+    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-1024-1024.png",
+    "alt": "Cordyceps"
+   },
+   {
+    "k": "ash",
+    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-1024-1024.png",
+    "alt": "Ashwagandha"
+   },
+   {
+    "k": "rsh",
+    "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-1024-1024.png",
+    "alt": "Reishi"
+   }
+  ],
+  "pie": "Cinco adaptógenos. Todas las combinaciones que necesitás."
  },
  "objetivos": [
   {
