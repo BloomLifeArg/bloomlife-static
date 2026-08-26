@@ -10,16 +10,16 @@
    "t": "Ver todos"
   },
   {
+   "k": "foco",
+   "t": "Foco"
+  },
+  {
    "k": "calma",
    "t": "Calma"
   },
   {
    "k": "dormir",
    "t": "Dormir"
-  },
-  {
-   "k": "foco",
-   "t": "Foco"
   },
   {
    "k": "energia",
@@ -60,7 +60,7 @@
   {
    "k": "top",
    "titulo": "Los que más se llevan",
-   "chip": "Top 3 · 180 días",
+   "chip": "Top 3 · 6 meses",
    "nota": "62% de las unidades de combo",
    "vacio": "Ninguno de los tres más vendidos para ese objetivo."
   },
@@ -88,7 +88,8 @@
  ],
  "cierre": {
   "titulo": "¿Ya sabés cuál es el tuyo?",
-  "bajada": "Llevate tres meses del que ya te funciona, en una sola compra."
+  "bajada": "Llevate tres meses del que ya te funciona, en una sola compra.",
+  "precio_txt": "$208.500"
  },
  "combos": [
   {
@@ -596,5 +597,28 @@
    "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-240-0.png"
   }
  },
- "ventas_al": "2026-08-25"
+ "ventas_al": "2026-08-25",
+ "sold_txt": "vendidos en 6 meses",
+ "prueba": {
+  "promedio": "4,8",
+  "resenas": 211,
+  "titulo": "No lo decimos nosotros.",
+  "citas": [
+   {
+    "cita": "Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.",
+    "nombre": "Fany G.",
+    "producto": "Melena de León Gummies"
+   },
+   {
+    "cita": "Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.",
+    "nombre": "Victoria B.",
+    "producto": "Combo Brain Health Cápsulas"
+   },
+   {
+    "cita": "A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.",
+    "nombre": "María Laura V.",
+    "producto": "Ashwagandha Cápsulas"
+   }
+  ]
+ }
 }
