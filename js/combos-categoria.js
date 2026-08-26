@@ -17,6 +17,20 @@
 
   var DATA = 'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/combos-categoria.json';
   var money = function (n) { return '$' + n.toLocaleString('es-AR'); };
+  /* Los frascos del hero son estructura, no copy: viajan con el JS (pinneado por hash)
+   * y no en el JSON. El JSON se lee de main, cuyo CDN propaga desigual entre edges —
+   * medido el 2026-08-25: curl recibía 15.021 bytes y el navegador 13.905 del mismo URL,
+   * con el caché del cliente deshabilitado. Si el JSON los trae, manda el JSON. */
+  var P = 'https://acdn-us.mitiendanube.com/stores/004/969/223/products/';
+  var FRASCOS = [
+    { img: P + 'glo_frasco_trm_aligned-5c8a6794e8d4bcffeb17852036898521-1024-1024.png', alt: 'Tremella' },
+    { img: P + 'glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-1024-1024.png', alt: 'Melena de León' },
+    { img: P + 'glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-1024-1024.png', alt: 'Cordyceps' },
+    { img: P + 'glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-1024-1024.png', alt: 'Ashwagandha' },
+    { img: P + 'glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-1024-1024.png', alt: 'Reishi' }
+  ];
+  var PIE = 'Cinco adaptógenos. Todas las combinaciones que necesitás.';
+
 
   var CSS = [
     '.bl-cc{--dark:#003845;--gold:#CCA352;--gold-ink:#7E5F2A;--terra:#C4694F;--mid:#608B71;',
@@ -144,7 +158,7 @@
 
     // hero + chips
     var hero = el('section', 'hero');
-    var frascos = (cfg.hero.frascos || []).map(function (f) {
+    var frascos = (cfg.hero.frascos || FRASCOS).map(function (f) {
       return '<img src="' + f.img + '" alt="' + f.alt + '" loading="lazy">';
     }).join('');
     hero.innerHTML =
@@ -152,7 +166,7 @@
       '<h2>' + cfg.hero.titulo + '</h2>' +
       '<p>' + cfg.hero.bajada + '</p>' +
       (frascos ? '<div class="fila">' + frascos + '</div>' : '') +
-      (cfg.hero.pie ? '<p class="pie">' + cfg.hero.pie + '</p>' : '');
+      '<p class="pie">' + (cfg.hero.pie || PIE) + '</p>';
     var goals = el('div', 'goals');
     goals.setAttribute('role', 'group');
     goals.setAttribute('aria-label', 'Filtrar por objetivo');
