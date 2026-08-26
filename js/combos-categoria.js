@@ -35,6 +35,34 @@
     }
     return o;
   };
+
+  /* El color de cada card es el del ingrediente que ABRE su promesa: una decisión editorial
+   * estable, no copy. Vive acá y no en el JSON porque el JSON se lee de main y propaga desigual
+   * entre edges — mientras no llega, el color de media página sale mal. Si el JSON trae
+   * `principal`, gana el JSON. */
+  var PRINCIPAL = {
+    270150341: 'cor',     // High Performance
+    279852999: 'ash',     // Bye Bye Anxiety
+    294585978: 'rsh',     // Deep Sleep
+    294591691: 'mln',     // Clarity & Defense
+    294593106: 'mln',     // Full Day Stack
+    294595560: 'mln',     // Ultimate Balance
+    305609431: 'ash',     // Bye Bye Anxiety
+    325250064: 'mln',     // All Day Stack
+    330540800: 'trm',     // Beauty & Balance
+    330540927: 'trm',     // Glory Gummies
+    331475056: 'mln',     // All Day Mix
+    332298698: 'mln',     // Clear Mind
+    339648634: 'trm',     // Glow your Mind
+    341180946: 'trm',     // Glow & Go
+    341313375: 'mln',     // Fresh Flow
+    342427990: 'trm',     // Radiance & Mind
+    349316562: 'trm',     // Glow & Regulate
+    356749974: 'mln',     // Ultimate Balance Mix
+    357970572: 'trm',     // Glow & Energy
+    357970722: 'ash',     // Menopause Balance
+  };
+
   var esc = function (v) {
     return String(v == null ? '' : v)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -243,7 +271,8 @@
              'style="--dx:' + dx + '%">';
     }).join('');
     // el color de la card sale del ingrediente que abre su promesa; si el JSON no lo dice, el primero
-    var kPri = (c.principal && c.ing.indexOf(c.principal) > -1) ? c.principal : c.ing[0];
+    var pri = c.principal || PRINCIPAL[c.id];
+    var kPri = (pri && c.ing.indexOf(pri) > -1) ? pri : c.ing[0];
     var base = (ING[kPri] || {}).color || '#608B71';
     var tinte = 'linear-gradient(168deg,' + mezclar(base, 46) + ' 0%,' +
                 mezclar(base, 26) + ' 58%,' + mezclar(base, 15) + ' 100%)';
