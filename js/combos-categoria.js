@@ -444,6 +444,36 @@
     // filtro por objetivo
     var botones = [].slice.call(raiz.querySelectorAll('.goal'));
     var gen = 0;
+
+    // Al filtrar cambia el largo de la lista y el navegador deja al visitante en un punto
+    // arbitrario: puede quedar a mitad de los resultados sin haber visto el primero. Si el
+    // arranque quedó por encima de la vista, lo traemos. Si ya se ve, no lo movemos: saltar
+    // cuando alguien está mirando los chips es peor que no hacer nada.
+    function alInicio(mi) {
+      setTimeout(function () {
+        if (mi !== gen) return;              // llegó otro click: este ya no manda
+        var ancla = raiz.querySelector('.resumen');
+        if (!ancla || ancla.hidden) ancla = raiz.querySelector('.escalera') || raiz;
+        var techo = 0;                       // lo que tape un header fijo del tema
+        [].forEach.call(document.querySelectorAll('header,[class*="header"],[class*="nav"]'), function (h) {
+          var pos = getComputedStyle(h).position;
+          if (pos !== 'fixed' && pos !== 'sticky') return;
+          var r = h.getBoundingClientRect();
+          if (r.top <= 1 && r.height > 0 && r.height < 160) techo = Math.max(techo, r.bottom);
+        });
+        var y = ancla.getBoundingClientRect().top;
+        if (y >= techo - 2) return;          // ya está a la vista
+        var destino = Math.max(0, (window.pageYOffset || document.documentElement.scrollTop) + y - techo - 12);
+        // un smooth de miles de píxeles se hace eterno: de lejos, se salta
+        var quieto = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+          || Math.abs(y - techo) > 2500;
+        try {
+          window.scrollTo({ top: destino, behavior: quieto ? 'auto' : 'smooth' });
+        } catch (e) {
+          window.scrollTo(0, destino);
+        }
+      }, 210);                               // después de los 190ms en que salen las cards
+    }
     botones.forEach(function (b, i) {
       b.addEventListener('keydown', function (e) {
         var d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
@@ -509,6 +539,8 @@
         if (vivo) vivo.textContent = (g === 'all')
           ? (cards.length + ' combos, todos los objetivos')
           : (total + (total === 1 ? ' combo para ' : ' combos para ') + etq);
+
+        alInicio(mi);
       });
     });
     return raiz;
