@@ -14,20 +14,29 @@
 
   var RUTA = /\/combos-bienestar-integral\/?$/;
   if (!RUTA.test(location.pathname)) return;
+  // en ?page=2 el pathname no cambia: sin esto se pintaría una copia exacta de la página 1
+  if (/[?&]page=/.test(location.search)) return;
 
   var DATA = 'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/combos-categoria.json';
-  var money = function (n) { return '$' + n.toLocaleString('es-AR'); };
+  var money = function (n) { return '$' + Number(n || 0).toLocaleString('es-AR'); };
+  // El JSON se lee de main, donde cualquiera con push escribe. Nada de lo que viene de ahí
+  // entra crudo al innerHTML: ni en texto ni —sobre todo— dentro de un atributo.
+  var esc = function (v) {
+    return String(v == null ? '' : v)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  };
   /* Los frascos del hero son estructura, no copy: viajan con el JS (pinneado por hash)
    * y no en el JSON. El JSON se lee de main, cuyo CDN propaga desigual entre edges —
    * medido el 2026-08-25: curl recibía 15.021 bytes y el navegador 13.905 del mismo URL,
    * con el caché del cliente deshabilitado. Si el JSON los trae, manda el JSON. */
   var P = 'https://acdn-us.mitiendanube.com/stores/004/969/223/products/';
   var FRASCOS = [
-    { img: P + 'glo_frasco_trm_aligned-5c8a6794e8d4bcffeb17852036898521-1024-1024.png', alt: 'Tremella' },
-    { img: P + 'glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-1024-1024.png', alt: 'Melena de León' },
-    { img: P + 'glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-1024-1024.png', alt: 'Cordyceps' },
-    { img: P + 'glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-1024-1024.png', alt: 'Ashwagandha' },
-    { img: P + 'glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-1024-1024.png', alt: 'Reishi' }
+    { img: P + 'glo_frasco_trm_aligned-5c8a6794e8d4bcffeb17852036898521-240-0.png', alt: 'Tremella' },
+    { img: P + 'glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-240-0.png', alt: 'Melena de León' },
+    { img: P + 'glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-240-0.png', alt: 'Cordyceps' },
+    { img: P + 'glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-240-0.png', alt: 'Ashwagandha' },
+    { img: P + 'glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-240-0.png', alt: 'Reishi' }
   ];
   var PIE = 'Cinco adaptógenos. Todas las combinaciones que necesitás.';
 
@@ -57,10 +66,12 @@
     'transition:background .16s,border-color .16s,color .16s}',
     '.bl-cc .goal:hover{background:rgba(255,255,255,.16)}',
     '.bl-cc .goal:focus-visible{outline:2px solid var(--gold);outline-offset:2px}',
-    '.bl-cc .goal[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#003845}',
+    '.bl-cc .goal[aria-checked="true"]{background:var(--gold);border-color:var(--gold);color:#003845}',
     '.bl-cc .resumen{font-family:var(--serif);font-style:italic;font-size:21px!important;color:var(--dark);',
     'margin:34px 0 -6px;padding-bottom:14px;border-bottom:1px solid var(--line)}',
     '.bl-cc .resumen[hidden]{display:none}',
+    '.bl-cc .aviso{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);',
+    'clip-path:inset(50%);white-space:nowrap;margin:0}',
     /* con filtro, las cuatro grillas se funden en una: si no, cada escalón deja su propia
        fila huérfana. display:contents promueve las cards al contenedor. */
     '.bl-cc.filtrado .in{display:grid;gap:14px;grid-template-columns:1fr;align-items:start}',
@@ -197,9 +208,11 @@
 
   function card(c, ING, conVentas, FR) {
     var a = el('a', 'c');
-    a.href = '/productos/' + c.handle + '/';
+    a.href = '/productos/' + encodeURIComponent(c.handle) + '/';
     a.dataset.goals = (c.objetivos || []).join(' ');
     if (c.ing.length >= 5) a.classList.add('ancha');
+    a.setAttribute('aria-label', [c.nombre, String(c.formato || '').toLowerCase(),
+      c.ing.length + ' frascos', money(c.precio)].join(', '));
     var caps = c.caps || [];
     var n = c.ing.length;
     // los frascos del combo, abriéndose desde el centro
@@ -212,26 +225,28 @@
       if (!src) return '';
       var medio = (n - 1) / 2;
       var dx = ((i - medio) * (n >= 4 ? 6 : 9)).toFixed(0);
-      return '<img src="' + src + '" alt="' + ((ING[k] || {}).nombre || k) + '" loading="lazy" ' +
+      return '<img src="' + esc(src) + '" alt="" loading="lazy" ' +
              'style="--dx:' + dx + '%">';
     }).join('');
     var paso = 100 / n;
     var bandas = 'linear-gradient(100deg,' + c.ing.map(function (k, i) {
       var col = (ING[k] || {}).color || '#608B71';
+      if (!/^#[0-9a-f]{3,8}$/i.test(col)) col = '#608B71';   // sólo hex: el color entra en un atributo style
       return col + ' ' + (i * paso).toFixed(1) + '%,' + col + ' ' + ((i + 1) * paso).toFixed(1) + '%';
     }).join(',') + ')';
 
     var nombres = c.ing.map(function (k) {
       var i = ING[k] || {};
-      return '<span class="ing"><i style="background:' + (i.color || '#608B71') + '"></i>' + (i.nombre || k) + '</span>';
+      var col = /^#[0-9a-f]{3,8}$/i.test(i.color || '') ? i.color : '#608B71';
+      return '<span class="ing"><i style="background:' + col + '"></i>' + esc(i.nombre || k) + '</span>';
     }).join(' · ');
     a.innerHTML =
       (escena ? '<div class="escena" style="--bandas:' + bandas + ';--w:' + ancho + '%;--solape:-' + solape + '%">' + escena + '</div>' : '') +
-      '<div class="cuerpo"><div class="ct"><h4>' + c.nombre + '</h4>' +
-      '<span class="fmt' + (c.formato === 'Mixto' ? ' mix' : '') + '">' + c.formato + '</span></div>' +
+      '<div class="cuerpo"><div class="ct"><h4>' + esc(c.nombre) + '</h4>' +
+      '<span class="fmt' + (c.formato === 'Mixto' ? ' mix' : '') + '">' + esc(c.formato) + '</span></div>' +
       '<p class="ings"><b>' + n + ' frascos</b> &middot; ' + nombres + '</p>' +
-      '<p class="why">' + c.why + '</p>' +
-      (conVentas && c.vendidas ? '<p class="sold">' + c.vendidas + ' vendidos en 6 meses</p>' : '') +
+      '<p class="why">' + esc(c.why) + '</p>' +
+      (conVentas && c.vendidas ? '<p class="sold">' + (parseInt(c.vendidas, 10) || 0) + ' vendidos en 6 meses</p>' : '') +
       '<div class="cb"><span class="amt">' + money(c.precio) + '</span>' +
       '<span class="go">Ver combo</span></div></div>';
     return a;
@@ -244,22 +259,25 @@
     // hero + chips
     var hero = el('section', 'hero');
     var frascos = (cfg.hero.frascos || FRASCOS).map(function (f) {
-      return '<img src="' + f.img + '" alt="' + f.alt + '" loading="lazy">';
+      return '<img src="' + esc(f.img) + '" alt="" loading="eager" fetchpriority="high">';
     }).join('');
     hero.innerHTML =
-      '<span class="k">' + cfg.hero.kicker + '</span>' +
-      '<h2>' + cfg.hero.titulo + '</h2>' +
-      '<p>' + cfg.hero.bajada + '</p>' +
+      '<span class="k">' + esc(cfg.hero.kicker) + '</span>' +
+      '<h2>' + esc(cfg.hero.titulo) + '</h2>' +
+      '<p>' + esc(cfg.hero.bajada) + '</p>' +
       (frascos ? '<div class="fila">' + frascos + '</div>' : '') +
-      '<p class="pie">' + (cfg.hero.pie || PIE) + '</p>';
+      '<p class="pie">' + esc(cfg.hero.pie || PIE) + '</p>';
     var goals = el('div', 'goals');
-    goals.setAttribute('role', 'group');
+    goals.setAttribute('role', 'radiogroup');
     goals.setAttribute('aria-label', 'Filtrar por objetivo');
     cfg.objetivos.forEach(function (o, i) {
-      var b = el('button', 'goal', o.t);
+      var b = el('button', 'goal', esc(o.t));
       b.type = 'button';
       b.dataset.g = o.k;
-      b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+      // excluyente, no toggle: uno solo puede estar activo
+      b.setAttribute('role', 'radio');
+      b.setAttribute('aria-checked', i === 0 ? 'true' : 'false');
+      b.tabIndex = i === 0 ? 0 : -1;      // un solo tab stop, como un radiogroup de verdad
       goals.appendChild(b);
     });
     hero.appendChild(goals);
@@ -270,14 +288,21 @@
     var resumen = el('p', 'resumen');
     resumen.hidden = true;
     wrap.appendChild(resumen);
+    var aviso = el('p', 'aviso');            // sólo para lectores de pantalla
+    aviso.setAttribute('role', 'status');
+    aviso.setAttribute('aria-live', 'polite');
+    wrap.appendChild(aviso);
 
     // los tres más vendidos, en orden
     var top = cfg.combos.filter(function (c) { return c.vendidas > 0; })
-                        .sort(function (a, b) { return b.vendidas - a.vendidas; });
+                        .sort(function (a, b) { return b.vendidas - a.vendidas; })
+                        .slice(0, 3);   // el chip promete tres
     var porEscalon = { '2': [], '3': [], '4': [] };
     cfg.combos.forEach(function (c) {
-      var k = c.ing.length >= 4 ? '4' : String(c.ing.length);
-      if (porEscalon[k]) porEscalon[k].push(c);
+      if (!c || !c.ing || !c.ing.length) return;        // sin ingredientes no hay card
+      var n = c.ing.length;
+      var k = n >= 4 ? '4' : (n <= 2 ? '2' : '3');      // un combo de 1 cae en el primer escalón
+      porEscalon[k].push(c);
     });
 
     cfg.bloques.forEach(function (b) {
@@ -286,11 +311,14 @@
       var sec = el('section', 'rung');
       sec.dataset.k = b.k;
       sec.innerHTML =
-        '<div class="rh"><h3>' + b.titulo + '</h3>' +
-        '<span class="qty">' + b.chip + '</span>' +
-        '<span class="nota">' + b.nota + '</span></div>';
+        '<div class="rh"><h3>' + esc(b.titulo) + '</h3>' +
+        '<span class="qty">' + esc(b.chip) + '</span>' +
+        '<span class="nota">' + esc(b.nota) + '</span></div>';
       var g = el('div', 'grid');
-      lista.forEach(function (c) { g.appendChild(card(c, ING, b.k === 'top', cfg.frascos)); });
+      lista.forEach(function (c) {
+        // un combo malformado no puede tumbar la página entera: se descarta solo esa card
+        try { g.appendChild(card(c, ING, b.k === 'top', cfg.frascos)); } catch (e) {}
+      });
       // el destacado no lleva estado vacío: si no hay match, la sección entera se va
       if (b.k !== 'top') g.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
       sec.appendChild(g);
@@ -302,11 +330,11 @@
       var pr = el('section', 'prueba');
       var citas = cfg.prueba.citas.map(function (q) {
         return '<blockquote class="cita"><span class="estrellas" aria-hidden="true">★★★★★</span>' +
-               '<p>“' + q.cita + '”</p><p class="qui"><b>' + q.nombre + '</b>' +
-               (q.producto ? ' · ' + q.producto : '') + '</p></blockquote>';
+               '<p>“' + esc(q.cita) + '”</p><p class="qui"><b>' + esc(q.nombre) + '</b>' +
+               (q.producto ? ' · ' + esc(q.producto) : '') + '</p></blockquote>';
       }).join('');
-      pr.innerHTML = '<div class="in2"><div class="cab"><h3>' + cfg.prueba.titulo + '</h3>' +
-        '<p class="nota2"><b>' + cfg.prueba.promedio + '</b> sobre ' + cfg.prueba.resenas +
+      pr.innerHTML = '<div class="in2"><div class="cab"><h3>' + esc(cfg.prueba.titulo) + '</h3>' +
+        '<p class="nota2"><b>' + esc(cfg.prueba.promedio) + '</b> sobre ' + esc(cfg.prueba.resenas) +
         ' reseñas verificadas</p></div><div class="citas">' + citas + '</div></div>';
       wrap.appendChild(pr);
     }
@@ -314,13 +342,13 @@
     // cierre: los packs de 3 meses
     if (cfg.x3 && cfg.x3.length) {
       var ci = el('div', 'cierre');
-      ci.innerHTML = '<h3>' + cfg.cierre.titulo + '</h3><p>' + cfg.cierre.bajada + '</p>';
+      ci.innerHTML = '<h3>' + esc(cfg.cierre.titulo) + '</h3><p>' + esc(cfg.cierre.bajada) + '</p>';
       var row = el('div', 'x3row');
       cfg.x3.forEach(function (p) {
         var a = el('a', 'x3');
-        a.href = '/productos/' + p.handle + '/';
-        a.innerHTML = '<img src="' + p.img + '" alt="' + p.nombre + '" loading="lazy">' +
-                      '<b>' + p.nombre + '</b><span>' + p.detalle + ' · x3</span>' +
+        a.href = '/productos/' + encodeURIComponent(p.handle) + '/';
+        a.innerHTML = '<img src="' + esc(p.img) + '" alt="" loading="lazy">' +
+                      '<b>' + esc(p.nombre) + '</b><span>' + esc(p.detalle) + ' · x3</span>' +
                       '<em>' + money(p.precio) + '</em>';
         row.appendChild(a);
       });
@@ -354,7 +382,7 @@
           revelar(e.target, [].indexOf.call(e.target.parentNode.children, e.target));
           io.unobserve(e.target);
         });
-      }, { rootMargin: '200px 0px 80px 0px', threshold: 0 });
+      }, { rootMargin: '0px 0px 220px 0px', threshold: 0 });
       cards.forEach(function (c) { io.observe(c); });
       setTimeout(function () {
         cards.forEach(function (c, i) { if (c.classList.contains('pre')) revelar(c, i); });
@@ -369,47 +397,75 @@
 
     // filtro por objetivo
     var botones = [].slice.call(raiz.querySelectorAll('.goal'));
+    var gen = 0;
+    botones.forEach(function (b, i) {
+      b.addEventListener('keydown', function (e) {
+        var d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key];
+        if (!d) return;
+        e.preventDefault();
+        var t = botones[(i + d + botones.length) % botones.length];
+        t.focus(); t.click();
+      });
+    });
     botones.forEach(function (b) {
       b.addEventListener('click', function () {
+        var mi = ++gen;
         var g = b.dataset.g;
-        botones.forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
-        [].forEach.call(raiz.querySelectorAll('.c'), function (c) {
-          var sigue = (g === 'all' || c.dataset.goals.split(' ').indexOf(g) > -1);
-          if (!sigue && !c.hidden) {
-            c.classList.add('saliendo');
-            setTimeout(function () { c.hidden = true; c.classList.remove('saliendo'); }, 190);
-          } else if (sigue && c.hidden) {
-            c.hidden = false;
-            c.classList.remove('dentro', 'pre');
-            requestAnimationFrame(function () { c.classList.add('dentro'); });
-          }
+        botones.forEach(function (o) {
+          o.setAttribute('aria-checked', String(o === b));
+          o.tabIndex = (o === b) ? 0 : -1;
         });
-        // el conteo no puede leer .hidden: las cards que salen lo toman recién a los 190ms
+
+        // qué queda se resuelve sobre los datos, nunca sobre .hidden (que llega 190ms tarde)
         var queda = function (c) {
           return g === 'all' || c.dataset.goals.split(' ').indexOf(g) > -1;
         };
+        [].forEach.call(raiz.querySelectorAll('.c'), function (c) {
+          if (!queda(c)) {
+            if (!c.hidden) {
+              c.classList.add('saliendo');
+              setTimeout(function () {
+                if (mi !== gen) return;            // llegó otro click: este ya no manda
+                c.hidden = true;
+                c.classList.remove('saliendo');
+              }, 190);
+            }
+          } else {
+            c.classList.remove('saliendo');
+            if (c.hidden) {
+              c.hidden = false;
+              c.classList.remove('dentro', 'pre');
+              requestAnimationFrame(function () { c.classList.add('dentro'); });
+            }
+          }
+        });
+
         var total = 0;
         [].forEach.call(raiz.querySelectorAll('.rung'), function (sec) {
           var vivos = [].filter.call(sec.querySelectorAll('.c'), queda).length;
           if (sec.dataset.k !== 'top') total += vivos;
           var v = sec.querySelector('.vacio');
-          if (v) v.hidden = true;          // con filtro no hay estado vacío: la sección se va
+          if (v) v.hidden = true;
           // el destacado no aparece dentro de un filtro: duplicaría cards y el conteo mentiría
           sec.hidden = (vivos === 0) || (g !== 'all' && sec.dataset.k === 'top');
         });
-        // Con un objetivo elegido la escalera pierde sentido: es un criterio de navegación, no de
-        // resultado. Se colapsan los encabezados y queda una lista, para no dejar filas huérfanas.
+
+        // Con un objetivo elegido la escalera pierde sentido: es un criterio de navegación, no
+        // de resultado. Se colapsan los encabezados y queda una lista, sin filas huérfanas.
         raiz.classList.toggle('filtrado', g !== 'all');
+        var etq = (b.textContent || '').toLowerCase();
         var res = raiz.querySelector('.resumen');
         if (res) {
           res.hidden = (g === 'all');
-          if (g !== 'all') {
-            var etq = (botones.filter(function (x) { return x.dataset.g === g; })[0] || {}).textContent || '';
-            res.textContent = total + (total === 1 ? ' combo para ' : ' combos para ') + etq.toLowerCase();
-          }
+          if (g !== 'all') res.textContent = total + (total === 1 ? ' combo para ' : ' combos para ') + etq;
         }
+        var vivo = raiz.querySelector('.aviso');
+        if (vivo) vivo.textContent = (g === 'all')
+          ? (cards.length + ' combos, todos los objetivos')
+          : (total + (total === 1 ? ' combo para ' : ' combos para ') + etq);
       });
     });
+    return raiz;
   }
 
   function arrancar(cfg) {
@@ -423,11 +479,23 @@
     var st = document.createElement('style');
     st.textContent = CSS;
     document.head.appendChild(st);
+    var raiz;
     try {
-      render(cfg, host);
+      raiz = render(cfg, host);
     } catch (e) {
+      if (raiz && raiz.parentNode) raiz.parentNode.removeChild(raiz);
       st.remove();
       return; // ante cualquier error, la grilla nativa queda intacta
+    }
+    // No alcanza con que render() no explote: un JSON válido pero vacío pinta un hero y cero
+    // cards, y esconder lo nativo dejaría la categoría sin un solo producto. Se compara contra
+    // lo que el tema ya tenía y, si no llegamos, se desarma todo y gana la grilla nativa.
+    var pintadas = raiz.querySelectorAll('.c').length;
+    var nativas = document.querySelectorAll('.js-item-product').length;
+    if (pintadas < Math.max(1, Math.floor(nativas * 0.8))) {
+      raiz.parentNode.removeChild(raiz);
+      st.remove();
+      return;
     }
     // recién ahora se esconde lo nativo
     host.style.display = 'none';
