@@ -115,15 +115,17 @@
     '.bl-cc .resumen[hidden]{display:none}',
     '.bl-cc .aviso{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);',
     'clip-path:inset(50%);white-space:nowrap;margin:0}',
-    /* con filtro, las cuatro grillas se funden en una: si no, cada escalón deja su propia
-       fila huérfana. display:contents promueve las cards al contenedor. */
-    '.bl-cc.filtrado .in{display:grid;gap:14px;grid-template-columns:1fr;align-items:start}',
-    '@media(min-width:600px){.bl-cc.filtrado .in{grid-template-columns:1fr 1fr}}',
-    '@media(min-width:960px){.bl-cc.filtrado .in{grid-template-columns:repeat(3,1fr)}}',
+    /* Con filtro, las cuatro grillas se funden en una: si no, cada escalón deja su propia fila
+       huérfana. display:contents promueve las cards. El grid se aplica a .escalera y no a .in
+       justamente para que la banda de prueba y el cierre queden AFUERA — cuando estaban adentro,
+       la banda tomaba una celda de 357px pero se dibujaba a 100vw y tapaba media página. */
+    '.bl-cc.filtrado .escalera{display:grid;gap:14px;grid-template-columns:1fr;align-items:start}',
+    '@media(min-width:600px){.bl-cc.filtrado .escalera{grid-template-columns:1fr 1fr}}',
+    '@media(min-width:960px){.bl-cc.filtrado .escalera{grid-template-columns:repeat(3,1fr)}}',
     '.bl-cc.filtrado .rung,.bl-cc.filtrado .grid{display:contents}',
     '.bl-cc.filtrado .rung[hidden]{display:none}',
     '.bl-cc.filtrado .rh,.bl-cc.filtrado .vacio{display:none}',
-    '.bl-cc.filtrado .resumen,.bl-cc.filtrado .cierre{grid-column:1/-1}',
+    '.bl-cc.filtrado .resumen{grid-column:1/-1}',
     /* escalera */
     '.bl-cc .rung{padding:60px 0 0}',
     '@media(min-width:760px){.bl-cc .rung{padding:88px 0 0}}',
@@ -166,7 +168,7 @@
     'display:flex;flex-direction:column;text-decoration:none;color:inherit;',
     'transition:transform .18s,box-shadow .18s,border-color .18s}',
     '.bl-cc .c:hover{transform:translateY(-3px);box-shadow:0 18px 34px -22px rgba(0,56,69,.42);border-color:var(--mid)}',
-    '.bl-cc .c[hidden]{display:none}',
+    '.bl-cc .c[hidden]{display:none!important}',   /* la card ancha declara display:grid en su media query y con la misma especificidad le ganaba a [hidden]: Glory aparecia en filtros que no le correspondian */
     '.bl-cc .c:focus-visible{outline:3px solid var(--gold);outline-offset:3px}',
     '.bl-cc .ct{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}',
     '@media(max-width:420px){.bl-cc .c h4{font-size:19px}}',
@@ -327,9 +329,11 @@
 
     var wrap = el('div', 'in');
     raiz.appendChild(wrap);
+    var escalera = el('div', 'escalera');
+    wrap.appendChild(escalera);
     var resumen = el('p', 'resumen');
     resumen.hidden = true;
-    wrap.appendChild(resumen);
+    escalera.appendChild(resumen);
     var aviso = el('p', 'aviso');            // sólo para lectores de pantalla
     aviso.setAttribute('role', 'status');
     aviso.setAttribute('aria-live', 'polite');
@@ -364,7 +368,7 @@
       // el destacado no lleva estado vacío: si no hay match, la sección entera se va
       if (b.k !== 'top') g.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
       sec.appendChild(g);
-      wrap.appendChild(sec);
+      escalera.appendChild(sec);
     });
 
     // prueba social: lo único de la página que no dice la marca de sí misma
