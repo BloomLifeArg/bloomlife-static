@@ -110,7 +110,8 @@
    "precio": 132050,
    "lista": 139000,
    "vendidas": 163,
-   "caps": []
+   "caps": [],
+   "principal": "cor"
   },
   {
    "id": 279852999,
@@ -133,7 +134,8 @@
    "caps": [
     "ash",
     "mln"
-   ]
+   ],
+   "principal": "ash"
   },
   {
    "id": 305609431,
@@ -153,7 +155,8 @@
    "precio": 132050,
    "lista": 139000,
    "vendidas": 159,
-   "caps": []
+   "caps": [],
+   "principal": "ash"
   },
   {
    "id": 294585978,
@@ -173,7 +176,8 @@
    "precio": 132050,
    "lista": 139000,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "rsh"
   },
   {
    "id": 294591691,
@@ -192,7 +196,8 @@
    "precio": 132050,
    "lista": 139000,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "mln"
   },
   {
    "id": 330540800,
@@ -212,7 +217,8 @@
    "precio": 132050,
    "lista": 139000,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "trm"
   },
   {
    "id": 341180946,
@@ -232,7 +238,8 @@
    "precio": 132050,
    "lista": 139000,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "trm"
   },
   {
    "id": 349316562,
@@ -252,7 +259,8 @@
    "precio": 132050,
    "lista": 139000,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "trm"
   },
   {
    "id": 294593106,
@@ -273,7 +281,8 @@
    "precio": 198075,
    "lista": 208500,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "mln"
   },
   {
    "id": 325250064,
@@ -294,7 +303,8 @@
    "precio": 198075,
    "lista": 208500,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "mln"
   },
   {
    "id": 331475056,
@@ -318,7 +328,8 @@
    "caps": [
     "mln",
     "ash"
-   ]
+   ],
+   "principal": "mln"
   },
   {
    "id": 332298698,
@@ -339,7 +350,8 @@
    "precio": 198075,
    "lista": 208500,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "mln"
   },
   {
    "id": 339648634,
@@ -360,7 +372,8 @@
    "precio": 198075,
    "lista": 208500,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "trm"
   },
   {
    "id": 342427990,
@@ -381,7 +394,8 @@
    "precio": 198075,
    "lista": 208500,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "trm"
   },
   {
    "id": 357970572,
@@ -404,7 +418,8 @@
    "vendidas": 0,
    "caps": [
     "ash"
-   ]
+   ],
+   "principal": "trm"
   },
   {
    "id": 357970722,
@@ -425,7 +440,8 @@
    "precio": 198075,
    "lista": 208500,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "ash"
   },
   {
    "id": 294595560,
@@ -447,7 +463,8 @@
    "precio": 264100,
    "lista": 278000,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "mln"
   },
   {
    "id": 341313375,
@@ -469,7 +486,8 @@
    "precio": 264100,
    "lista": 278000,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "mln"
   },
   {
    "id": 356749974,
@@ -494,7 +512,8 @@
    "caps": [
     "mln",
     "ash"
-   ]
+   ],
+   "principal": "mln"
   },
   {
    "id": 330540927,
@@ -517,7 +536,8 @@
    "precio": 330125,
    "lista": 347500,
    "vendidas": 0,
-   "caps": []
+   "caps": [],
+   "principal": "trm"
   }
  ],
  "x3": [

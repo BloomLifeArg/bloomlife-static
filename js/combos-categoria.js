@@ -21,6 +21,20 @@
   var money = function (n) { return '$' + Number(n || 0).toLocaleString('es-AR'); };
   // El JSON se lee de main, donde cualquiera con push escribe. Nada de lo que viene de ahí
   // entra crudo al innerHTML: ni en texto ni —sobre todo— dentro de un atributo.
+  // mezcla un hex con blanco: pct 46 = 46 % del color. Se hace acá y no con color-mix() para no
+  // depender del soporte del navegador — un fondo que no resuelve deja la escena transparente.
+  var mezclar = function (hex, pct) {
+    var h = String(hex || '').replace('#', '');
+    if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
+    if (!/^[0-9a-f]{6}$/i.test(h)) h = '608B71';
+    var f = pct / 100, o = '#';
+    for (var i = 0; i < 3; i++) {
+      var v = parseInt(h.substr(i * 2, 2), 16);
+      var m = Math.round(v * f + 255 * (1 - f));
+      o += ('0' + m.toString(16)).slice(-2);
+    }
+    return o;
+  };
   var esc = function (v) {
     return String(v == null ? '' : v)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -97,13 +111,12 @@
     '@media(min-width:600px){.bl-cc .grid{grid-template-columns:1fr 1fr}}',
     '@media(min-width:960px){.bl-cc .grid{grid-template-columns:repeat(3,1fr)}}',
     /* escena de frascos: los que trae el combo, en abanico */
-    /* el fondo son bandas: una por ingrediente, con su color. Un combo de dos tiene dos
-       bandas; uno de cinco, cinco. El sistema de color se lee sin leer nada. */
+    /* Un color por card: el del ingrediente que abre su promesa. Antes había una banda por
+       ingrediente y con veintitrés cards en pantalla el color se volvía ruido. Las mezclas se
+       calculan en JS, así no dependemos de color-mix(). */
     '.bl-cc .escena{position:relative;height:150px;margin:-3px -5px 13px;border-radius:12px;overflow:hidden;',
     'display:flex;align-items:flex-end;justify-content:center;padding:16px 6px 10px;isolation:isolate;',
-    'background:var(--bandas)}',
-    '.bl-cc .escena:after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;',
-    'background:linear-gradient(180deg,rgba(255,255,255,.6) 0%,rgba(255,255,255,.2) 42%,rgba(255,255,255,.5) 100%)}',
+    'background:var(--tinte)}',
     '.bl-cc .escena img{position:relative;z-index:2;height:auto;width:var(--w);max-height:100%;',
     'object-fit:contain;object-position:bottom;display:block;',
     'filter:drop-shadow(0 9px 14px rgba(0,56,69,.22));',
@@ -229,12 +242,11 @@
       return '<img src="' + esc(src) + '" alt="" loading="lazy" ' +
              'style="--dx:' + dx + '%">';
     }).join('');
-    var paso = 100 / n;
-    var bandas = 'linear-gradient(100deg,' + c.ing.map(function (k, i) {
-      var col = (ING[k] || {}).color || '#608B71';
-      if (!/^#[0-9a-f]{3,8}$/i.test(col)) col = '#608B71';   // sólo hex: el color entra en un atributo style
-      return col + ' ' + (i * paso).toFixed(1) + '%,' + col + ' ' + ((i + 1) * paso).toFixed(1) + '%';
-    }).join(',') + ')';
+    // el color de la card sale del ingrediente que abre su promesa; si el JSON no lo dice, el primero
+    var kPri = (c.principal && c.ing.indexOf(c.principal) > -1) ? c.principal : c.ing[0];
+    var base = (ING[kPri] || {}).color || '#608B71';
+    var tinte = 'linear-gradient(168deg,' + mezclar(base, 46) + ' 0%,' +
+                mezclar(base, 26) + ' 58%,' + mezclar(base, 15) + ' 100%)';
 
     var nombres = c.ing.map(function (k) {
       var i = ING[k] || {};
@@ -242,7 +254,7 @@
       return '<span class="ing"><i style="background:' + col + '"></i>' + esc(i.nombre || k) + '</span>';
     }).join(' · ');
     a.innerHTML =
-      (escena ? '<div class="escena" style="--bandas:' + bandas + ';--w:' + ancho + '%;--solape:-' + solape + '%">' + escena + '</div>' : '') +
+      (escena ? '<div class="escena" style="--tinte:' + tinte + ';--w:' + ancho + '%;--solape:-' + solape + '%">' + escena + '</div>' : '') +
       '<div class="cuerpo"><div class="ct"><h4>' + esc(c.nombre) + '</h4>' +
       '<span class="fmt' + (c.formato === 'Mixto' ? ' mix' : '') + '">' + esc(c.formato) + '</span></div>' +
       '<p class="ings"><b>' + n + ' frascos</b> &middot; ' + nombres + '</p>' +
