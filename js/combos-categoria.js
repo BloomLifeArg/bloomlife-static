@@ -14,11 +14,19 @@
 
   var RUTA = /\/combos-bienestar-integral\/?$/;
   if (!RUTA.test(location.pathname)) return;
-  // en ?page=2 el pathname no cambia: sin esto se pintaría una copia exacta de la página 1
-  if (/[?&]page=/.test(location.search)) return;
+  // En ?page=2 pinta la misma góndola que en la 1, a propósito: la góndola lee su propio JSON y
+  // ya muestra los combos completos, así que paginar no significa nada acá. Antes se retornaba y
+  // la hoja 2 quedaba con el formato viejo y dos combos sueltos.
+
+  // El CSS del tema esconde la grilla nativa desde el <head> para que no parpadee antes que la
+  // góndola; `bl-cc-off` es el interruptor que la devuelve. Todo camino que termine sin pintar
+  // tiene que llamarlo, o la categoría queda vacía.
+  var HTM = document.documentElement;
+  function devolverNativo() {
+    if (HTM.className.indexOf('bl-cc-off') < 0) HTM.className += ' bl-cc-off';
+  }
 
   var DATA = 'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/combos-categoria.json';
-  var money = function (n) { return '$' + Number(n || 0).toLocaleString('es-AR'); };
   // El JSON se lee de main, donde cualquiera con push escribe. Nada de lo que viene de ahí
   // entra crudo al innerHTML: ni en texto ni —sobre todo— dentro de un atributo.
   // mezcla un hex con blanco: pct 46 = 46 % del color. Se hace acá y no con color-mix() para no
@@ -189,7 +197,7 @@
     '.bl-cc .sold:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);flex:none;margin-top:6px}',
     '.bl-cc .cb{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;',
     'padding-top:13px;border-top:1px solid var(--line)}',
-    '.bl-cc .amt{font-size:20px;font-weight:700;color:var(--dark);font-variant-numeric:tabular-nums;line-height:1.1;display:block}',
+    '.bl-cc .dura{font-size:12.5px;font-weight:600;letter-spacing:.04em;color:var(--muted);line-height:1.1;display:block}',
     '.bl-cc .save{display:block;font-size:11.5px;font-weight:600;color:var(--ok);margin-top:3px}',
     '.bl-cc .go{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--sand);',
     'background:var(--dark);border-radius:999px;padding:9px 15px;transition:background .16s;white-space:nowrap}',
@@ -222,7 +230,7 @@
     '.bl-cc .c.ancha .cuerpo{display:flex;flex-direction:column;justify-content:center}',
     '.bl-cc .c.ancha h4{font-size:30px}',
     '.bl-cc .c.ancha .why{font-size:16px!important;min-height:0}',
-    '.bl-cc .c.ancha .amt{font-size:25px}',
+    '.bl-cc .c.ancha .dura{font-size:13.5px}',
     '}',
     '.bl-cc .c.ancha .cuerpo{min-width:0}',
     /* cierre */
@@ -256,7 +264,7 @@
     a.dataset.goals = (c.objetivos || []).join(' ');
     if (c.ing.length >= 5) a.classList.add('ancha');
     a.setAttribute('aria-label', [c.nombre, String(c.formato || '').toLowerCase(),
-      c.ing.length + ' frascos', money(c.precio)].join(', '));
+      c.ing.length + ' frascos'].join(', '));
     var caps = c.caps || [];
     var n = c.ing.length;
     // los frascos del combo, abriéndose desde el centro
@@ -291,7 +299,7 @@
       '<p class="ings"><b>' + n + ' frascos</b> &middot; ' + nombres + '</p>' +
       '<p class="why">' + esc(c.why) + '</p>' +
       (conVentas && c.vendidas ? '<p class="sold">' + (parseInt(c.vendidas, 10) || 0) + ' vendidos en 6 meses</p>' : '') +
-      '<div class="cb"><span class="amt">' + money(c.precio) + '</span>' +
+      '<div class="cb"><span class="dura">Rinde 1 mes</span>' +
       '<span class="go">Ver combo</span></div></div>';
     return a;
   }
@@ -395,7 +403,7 @@
         a.href = '/productos/' + encodeURIComponent(p.handle) + '/';
         a.innerHTML = '<img src="' + esc(p.img) + '" alt="" loading="lazy">' +
                       '<b>' + esc(p.nombre) + '</b><span>' + esc(p.detalle) + ' · x3</span>' +
-                      '<em>' + money(p.precio) + '</em>';
+                      '<em>3 meses</em>';
         row.appendChild(a);
       });
       ci.appendChild(row);
@@ -563,6 +571,7 @@
     } catch (e) {
       if (raiz && raiz.parentNode) raiz.parentNode.removeChild(raiz);
       st.remove();
+      devolverNativo();
       return; // ante cualquier error, la grilla nativa queda intacta
     }
     // No alcanza con que render() no explote: un JSON válido pero vacío pinta un hero y cero
@@ -573,9 +582,12 @@
     if (pintadas < Math.max(1, Math.floor(nativas * 0.8))) {
       raiz.parentNode.removeChild(raiz);
       st.remove();
+      devolverNativo();
       return;
     }
-    // recién ahora se esconde lo nativo
+    // Pintamos: el ocultamiento del <head> ya hizo su trabajo. Se refuerza en línea porque el
+    // failsafe del sello pudo haberse adelantado y devuelto lo nativo mientras cargábamos.
+    HTM.className = HTM.className.replace(/\s*bl-cc-off/g, '');
     host.style.display = 'none';
     [].forEach.call(document.querySelectorAll(
       '.js-pagination, .pagination, .js-category-controls, .category-controls, .category-banner'),
@@ -608,5 +620,5 @@
         arrancar(cfg);
       }
     })
-    .catch(function () { /* sin datos, la página queda como estaba */ });
+    .catch(devolverNativo);   // sin datos no hay góndola: que vuelva la grilla del tema
 })();

@@ -1,7 +1,7 @@
 {
  "hero": {
   "kicker": "Combos",
-  "titulo": "Solos funcionan. Juntos se potencian.",
+  "titulo": "Cada uno funciona. Juntos se potencian.",
   "bajada": "Elegí por lo que querés resolver, o mirá los tres tamaños de ritual. Todos rinden un mes y todos salen menos que comprar los frascos sueltos."
  },
  "objetivos": [
@@ -59,37 +59,32 @@
  "bloques": [
   {
    "k": "top",
-   "titulo": "Los que más se llevan",
-   "chip": "Top 3 · 6 meses",
-   "nota": "62% de las unidades de combo",
+   "titulo": "Nuestros bestsellers",
+   "chip": "Últimos 6 meses",
    "vacio": "Ninguno de los tres más vendidos para ese objetivo."
   },
   {
    "k": "2",
    "titulo": "Empezá por dos",
    "chip": "2 frascos",
-   "nota": "$132.050 · ahorrás $6.950",
    "vacio": "Ningún combo de dos frascos para ese objetivo."
   },
   {
    "k": "3",
    "titulo": "Tu día completo",
    "chip": "3 frascos",
-   "nota": "$198.075 · ahorrás $10.425",
    "vacio": "Ningún combo de tres frascos para ese objetivo."
   },
   {
    "k": "4",
    "titulo": "El sistema entero",
    "chip": "4 y 5 frascos",
-   "nota": "desde $264.100 · ahorrás hasta $17.375",
    "vacio": "Ningún combo grande para ese objetivo."
   }
  ],
  "cierre": {
   "titulo": "¿Ya sabés cuál es el tuyo?",
-  "bajada": "Llevate tres meses del que ya te funciona, en una sola compra.",
-  "precio_txt": "$208.500"
+  "bajada": "Llevate tres meses del que ya te funciona, en una sola compra."
  },
  "combos": [
   {
@@ -100,7 +95,7 @@
     "cor",
     "mln"
    ],
-   "why": "Cuerpo y cabeza para las horas que exigen.",
+   "why": "Cuerpo y mente para las horas que exigen.",
    "objetivos": [
     "energia",
     "foco"
@@ -121,7 +116,7 @@
     "ash",
     "mln"
    ],
-   "why": "Bajar un cambio sin perder la cabeza clara.",
+   "why": "Bajar un cambio sin perder la mente clara.",
    "objetivos": [
     "calma",
     "foco"
@@ -332,28 +327,6 @@
    "principal": "mln"
   },
   {
-   "id": 332298698,
-   "nombre": "Clear Mind",
-   "formato": "Gomitas",
-   "ing": [
-    "mln",
-    "rsh",
-    "ash"
-   ],
-   "why": "La cabeza clara y el sistema nervioso acompañado.",
-   "objetivos": [
-    "foco",
-    "calma"
-   ],
-   "handle": "focusandchill",
-   "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/clear-mind-aff15a6fe3b5fa51d617860672235983-1024-1024.jpg",
-   "precio": 198075,
-   "lista": 208500,
-   "vendidas": 0,
-   "caps": [],
-   "principal": "mln"
-  },
-  {
    "id": 339648634,
    "nombre": "Glow your Mind",
    "formato": "Gomitas",
@@ -384,7 +357,7 @@
     "mln",
     "rsh"
    ],
-   "why": "Piel cuidada, cabeza clara, cuerpo que se repone.",
+   "why": "Piel cuidada, mente clara, cuerpo que se repone.",
    "objetivos": [
     "piel",
     "foco"
@@ -406,7 +379,7 @@
     "cor",
     "ash"
    ],
-   "why": "Piel, energía pareja y una cabeza tranquila.",
+   "why": "Piel, energía pareja y una mente tranquila.",
    "objetivos": [
     "piel",
     "energia"
