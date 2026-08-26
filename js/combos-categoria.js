@@ -86,12 +86,12 @@
     /* al pasar el cursor, el abanico se abre */
     '.bl-cc .c:hover .escena img{transform:translateY(-3px) rotate(var(--rot)) translateX(var(--dx))}',
     /* aparición escalonada */
-    '.bl-cc .c{opacity:0;transform:translateY(14px)}',
+    '.bl-cc .c.pre{opacity:0;transform:translateY(14px)}',
     '.bl-cc .c.dentro{opacity:1;transform:none;transition:opacity .5s ease,transform .5s cubic-bezier(.22,1,.36,1)}',
     '.bl-cc .c.saliendo{opacity:0;transform:scale(.97);transition:opacity .2s ease,transform .2s ease}',
     '.bl-cc .fila img{opacity:0;transform:translateY(10px);animation:blSube .6s cubic-bezier(.22,1,.36,1) forwards}',
     '@keyframes blSube{to{opacity:1;transform:none}}',
-    '@media(prefers-reduced-motion:reduce){.bl-cc .c{opacity:1;transform:none}',
+    '@media(prefers-reduced-motion:reduce){.bl-cc .c.pre{opacity:1;transform:none}',
     '.bl-cc .fila img{opacity:1;transform:none;animation:none}}',
     /* card */
     '.bl-cc .c{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:17px;',
@@ -259,20 +259,31 @@
 
     host.parentNode.insertBefore(raiz, host);
 
-    // las cards aparecen al entrar en viewport, escalonadas por fila
+    // Las cards aparecen al entrar en viewport, escalonadas por fila. Es una mejora, no un
+    // requisito: la clase .pre (que las esconde) se pone SOLO si hay IntersectionObserver, y
+    // un plazo de seguridad revela todo pase lo que pase. Una card invisible es peor que una
+    // card sin animación.
+    var cards = [].slice.call(raiz.querySelectorAll('.c'));
+    var revelar = function (c, i) {
+      c.style.transitionDelay = ((i % 3) * 70) + 'ms';
+      c.classList.add('dentro');
+      c.classList.remove('pre');
+    };
     if ('IntersectionObserver' in window) {
+      cards.forEach(function (c) { c.classList.add('pre'); });
       var io = new IntersectionObserver(function (ents) {
         ents.forEach(function (e) {
           if (!e.isIntersecting) return;
-          var i = [].indexOf.call(e.target.parentNode.children, e.target);
-          e.target.style.transitionDelay = ((i % 3) * 70) + 'ms';
-          e.target.classList.add('dentro');
+          revelar(e.target, [].indexOf.call(e.target.parentNode.children, e.target));
           io.unobserve(e.target);
         });
-      }, { rootMargin: '0px 0px -60px 0px', threshold: 0.06 });
-      [].forEach.call(raiz.querySelectorAll('.c'), function (c) { io.observe(c); });
+      }, { rootMargin: '200px 0px 0px 0px', threshold: 0 });
+      cards.forEach(function (c) { io.observe(c); });
+      setTimeout(function () {
+        cards.forEach(function (c, i) { if (c.classList.contains('pre')) revelar(c, i); });
+      }, 2500);
     } else {
-      [].forEach.call(raiz.querySelectorAll('.c'), function (c) { c.classList.add('dentro'); });
+      cards.forEach(function (c) { c.classList.add('dentro'); });
     }
     // los frascos del hero entran uno detrás de otro
     [].forEach.call(raiz.querySelectorAll('.fila img'), function (im, i) {
@@ -292,7 +303,7 @@
             setTimeout(function () { c.hidden = true; c.classList.remove('saliendo'); }, 190);
           } else if (queda && c.hidden) {
             c.hidden = false;
-            c.classList.remove('dentro');
+            c.classList.remove('dentro', 'pre');
             requestAnimationFrame(function () { c.classList.add('dentro'); });
           }
         });
