@@ -321,11 +321,9 @@
     '.bl-cc .std-it[open] summary:after{content:"\\2013"}',
     '.bl-cc .std-it summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}',
     '.bl-cc .std-cu p{font-size:13.5px!important;color:var(--muted);line-height:1.55;margin:0 0 14px;max-width:52ch}',
-    '.bl-cc .std-foto{margin:0;background:#5C5823;height:330px;overflow:hidden;position:relative}',
-    '.bl-cc .std-foto img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}',
-    '@media(min-width:860px){.bl-cc .std-in{align-items:stretch}',
-    '.bl-cc .std-foto{height:auto;min-height:420px}',
-    '.bl-cc .std-foto img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%}}',
+    '.bl-cc .std-foto{margin:0;overflow:hidden;line-height:0}',
+    '.bl-cc .std-foto img{width:100%;height:auto;display:block}',
+    '@media(min-width:860px){.bl-cc .std-in{align-items:center}}',
 
     /* una tanda de reseñas entre escalones; al filtrar estorba y se va */
     '.bl-cc .prueba.corte{margin:30px -20px 34px;width:auto;padding:34px 20px 36px}',
