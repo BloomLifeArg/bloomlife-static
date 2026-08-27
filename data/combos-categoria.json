@@ -600,17 +600,129 @@
    {
     "cita": "Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.",
     "nombre": "Fany G.",
-    "producto": "Melena de León Gummies"
+    "producto": "Melena de León Gummies",
+    "estrellas": 5
    },
    {
     "cita": "Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.",
     "nombre": "Victoria B.",
-    "producto": "Combo Brain Health Cápsulas"
+    "producto": "Combo Brain Health Cápsulas",
+    "estrellas": 5
    },
    {
     "cita": "A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.",
     "nombre": "María Laura V.",
-    "producto": "Ashwagandha Cápsulas"
+    "producto": "Ashwagandha Gummies",
+    "estrellas": 5
+   },
+   {
+    "cita": "Estoy muy contenta con la forma de tomar. Me siento mucho mejor desde que las consumo, y el gusto es mejor que en otras formas de tomar.",
+    "nombre": "Maria",
+    "producto": "Glory Gummies",
+    "estrellas": 5
+   },
+   {
+    "cita": "Excelente producto, es un antes y un después. Lo recomiendo totalmente. Muchas gracias, ¡mantengan esa excelencia!",
+    "nombre": "Silvia",
+    "producto": "Clarity & Defense",
+    "estrellas": 5
+   },
+   {
+    "cita": "Excelente producto, ayudaron a mi concentración y descanso.",
+    "nombre": "Claudia",
+    "producto": "Bye Bye Anxiety",
+    "estrellas": 5
+   },
+   {
+    "cita": "Me encantó el producto. Recomendable siempre que esté acompañado de buenos hábitos alimentarios, movimiento y descanso reparador.",
+    "nombre": "Maria",
+    "producto": "Bye Bye Anxiety",
+    "estrellas": 5
+   },
+   {
+    "cita": "El producto me pareció muy bien, sobre todo ver resultados.",
+    "nombre": "María",
+    "producto": "Radiance & Mind",
+    "estrellas": 5
+   }
+  ],
+  "cortes": [
+   "2",
+   "3"
+  ],
+  "titulo2": "Y lo siguen diciendo."
+ },
+ "guia": {
+  "kicker": "Cómo se elige",
+  "titulo": "Tres decisiones y listo.",
+  "foto": "https://d1a9qnv764bsoo.cloudfront.net/stores/004/969/223/rte/img_12.jpg",
+  "foto_alt": "Una mano eligiendo entre gomitas Bloom Life sobre una tabla de madera",
+  "pasos": [
+   {
+    "t": "Qué querés resolver",
+    "d": "Foco, calma, dormir, energía, piel. Los botones de arriba dejan sólo los combos que trabajan sobre eso."
+   },
+   {
+    "t": "De cuántos frascos",
+    "d": "Dos para empezar por un lado. Tres para cubrir el día. Cuatro o cinco para el sistema entero."
+   },
+   {
+    "t": "Cuánto dura",
+    "d": "Todos rinden un mes. Un combo no es una compra suelta: es la rutina de treinta días."
+   }
+  ]
+ },
+ "destacado": {
+  "id": 330540927,
+  "kicker": "El combo más completo",
+  "titulo": "Los cinco adaptógenos, en un solo ritual.",
+  "bajada": "Todos los demás combos son un recorte de éste. Glory Gummies es la fórmula entera: cada adaptógeno cubriendo su frente, los cinco a la vez.",
+  "cta": "Ver Glory Gummies",
+  "quienes": [
+   {
+    "k": "mln",
+    "t": "Foco y claridad mental"
+   },
+   {
+    "k": "cor",
+    "t": "Energía y resistencia física"
+   },
+   {
+    "k": "ash",
+    "t": "Calma y equilibrio del cortisol"
+   },
+   {
+    "k": "rsh",
+    "t": "Descanso nocturno y defensas"
+   },
+   {
+    "k": "trm",
+    "t": "Piel y pelo, con biotina"
+   }
+  ]
+ },
+ "estandar": {
+  "kicker": "Nuestro estándar",
+  "titulo": "Lo que hay adentro, y lo que hay detrás.",
+  "bajada": "Cuatro cosas que no se ven en la etiqueta pero cambian lo que estás tomando.",
+  "foto": "https://d1a9qnv764bsoo.cloudfront.net/stores/004/969/223/rte/img_00.jpg",
+  "foto_alt": "Frascos de Bloom Life sostenidos en las manos, sobre fondo verde",
+  "puntos": [
+   {
+    "t": "Producido en Estados Unidos",
+    "d": "Cada frasco se fabrica bajo estándares internacionales de calidad, trazabilidad y pureza: GMP, Non-GMO, Vegan, Gluten Free, Sulfate Free, Cruelty Free y planta registrada ante la FDA."
+   },
+   {
+    "t": "Cuerpo fructífero, no micelio sobre grano",
+    "d": "Usamos la parte del hongo donde están los compuestos activos, no el sustrato en el que creció. Es la diferencia entre un extracto de hongo y un polvo de cereal con nombre de hongo."
+   },
+   {
+    "t": "Extracto concentrado, no hongo molido",
+    "d": "El Reishi va en concentración 8:1 y la Melena de León en cápsulas llega a 20:1: veinte kilos de hongo para obtener uno de extracto."
+   },
+   {
+    "t": "Un mes por frasco, sin letra chica",
+    "d": "Todos rinden treinta días con la dosis indicada. Las gomitas de Melena de León traen treinta porque se toma una por día; el resto trae sesenta porque se toman dos."
    }
   ]
  }

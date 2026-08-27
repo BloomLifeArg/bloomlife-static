@@ -234,6 +234,97 @@
     '}',
     '.bl-cc .c.ancha .cuerpo{min-width:0}',
     /* cierre */
+    /* ── Cómo se elige: la lógica de la página, dicha una vez ── */
+    '.bl-cc .guia{margin:38px 0 6px}',
+    '.bl-cc .guia-in{display:grid;gap:22px;align-items:center;background:var(--card);',
+    'border:1px solid var(--line);border-radius:18px;padding:24px;overflow:hidden}',
+    '@media(min-width:820px){.bl-cc .guia-in{grid-template-columns:1fr 300px;gap:34px;padding:34px 34px 34px 38px}}',
+    '.bl-cc .guia .k{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;',
+    'color:var(--gold-ink);display:block;margin-bottom:9px}',
+    '.bl-cc .guia h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:26px;',
+    'line-height:1.14;color:var(--dark);margin:0 0 20px}',
+    '.bl-cc .pasos{list-style:none;margin:0;padding:0;display:grid;gap:15px;counter-reset:none}',
+    '.bl-cc .pasos li{display:grid;grid-template-columns:30px 1fr;gap:4px 13px;align-items:start}',
+    '.bl-cc .paso-n{grid-column:1;grid-row:1/span 2;align-self:start;width:30px;height:30px;border-radius:50%;flex:none;',
+    'border:1.5px solid var(--gold);color:var(--gold-ink);display:flex;align-items:center;',
+    'justify-content:center;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}',
+    '.bl-cc .pasos b{grid-column:2;grid-row:1;font-size:15.5px;font-weight:700;color:var(--dark);',
+    'letter-spacing:-.01em;line-height:1.3;align-self:center}',
+    '.bl-cc .pasos b + span{grid-column:2;grid-row:2;font-size:13.5px;color:var(--muted);line-height:1.5}',
+    '.bl-cc .guia-foto{margin:0;border-radius:13px;overflow:hidden;background:var(--sand);',
+    'aspect-ratio:3/4;max-height:340px}',
+    '.bl-cc .guia-foto img{width:100%;height:100%;object-fit:cover;display:block;',
+    'transition:transform .7s cubic-bezier(.22,1,.36,1)}',
+    '.bl-cc .guia-in:hover .guia-foto img{transform:scale(1.045)}',
+
+    /* ── El destacado: los cinco adaptógenos, que son Glory ── */
+    '.bl-cc .dest{background:var(--dark);color:#fff;margin:44px -20px 0;padding:44px 20px 40px;',
+    'text-align:center;position:relative;overflow:hidden}',
+    '@media(min-width:760px){.bl-cc .dest{margin:54px 0 0;border-radius:20px;padding:52px 34px 46px}}',
+    '.bl-cc .dest-in{max-width:1000px;margin:0 auto;position:relative;z-index:1}',
+    '.bl-cc .dest .k{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;',
+    'color:var(--gold);display:block;margin-bottom:11px}',
+    '.bl-cc .dest h3{font-family:var(--serif);font-style:italic;font-weight:400;color:#fff;',
+    'font-size:clamp(25px,3.8vw,36px);line-height:1.12;margin:0 auto 14px;max-width:19ch;text-wrap:balance}',
+    '.bl-cc .dest-cab p{font-size:14.5px!important;color:rgba(255,255,255,.72);margin:0 auto;max-width:56ch;line-height:1.55}',
+    '.bl-cc .cinco{list-style:none;margin:32px 0 30px;padding:0;display:grid;gap:16px 8px;',
+    'grid-template-columns:repeat(2,1fr)}',
+    '@media(min-width:680px){.bl-cc .cinco{grid-template-columns:repeat(5,1fr);gap:10px}}',
+    '.bl-cc .cinco li{display:flex;flex-direction:column;align-items:center;gap:7px;position:relative;',
+    'padding:14px 6px 16px;border-radius:13px;transition:background .25s}',
+    '.bl-cc .cinco li:hover{background:rgba(255,255,255,.045)}',
+    '.bl-cc .cinco li:before{content:"";position:absolute;left:50%;bottom:0;width:34px;height:3px;',
+    'margin-left:-17px;border-radius:3px;background:var(--c);opacity:.85;',
+    'transition:width .3s cubic-bezier(.22,1,.36,1)}',
+    '.bl-cc .cinco li:hover:before{width:64px;margin-left:-32px}',
+    '.bl-cc .cinco img{width:100%;max-width:74px;height:88px;object-fit:contain;object-position:bottom;',
+    'display:block;filter:drop-shadow(0 10px 16px rgba(0,0,0,.34));',
+    'transition:transform .4s cubic-bezier(.22,1.12,.36,1)}',
+    '.bl-cc .cinco li:hover img{transform:translateY(-7px)}',
+    '.bl-cc .cinco b{font-size:13px;font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.2}',
+    '.bl-cc .cinco span{font-size:11.5px;color:rgba(255,255,255,.62);line-height:1.35;max-width:16ch}',
+    '.bl-cc .dest-cta{display:inline-block;background:var(--gold);color:#003845;text-decoration:none;',
+    'font-size:12.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;',
+    'border-radius:999px;padding:13px 26px;transition:transform .18s,box-shadow .18s}',
+    '.bl-cc .dest-cta:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(0,0,0,.28)}',
+    '.bl-cc .dest-cta:focus-visible{outline:2px solid #fff;outline-offset:3px}',
+
+    /* ── El estándar: cuatro afirmaciones con respaldo ── */
+    '.bl-cc .std{margin:46px 0 0}',
+    '.bl-cc .std-in{display:grid;gap:0;background:var(--card);border:1px solid var(--line);',
+    'border-radius:18px;overflow:hidden}',
+    '@media(min-width:860px){.bl-cc .std-in{grid-template-columns:1.08fr .92fr}}',
+    '.bl-cc .std-txt{padding:28px 24px 22px}',
+    '@media(min-width:860px){.bl-cc .std-txt{padding:36px 34px 32px}}',
+    '.bl-cc .std .k{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;',
+    'color:var(--gold-ink);display:block;margin-bottom:9px}',
+    '.bl-cc .std h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:26px;',
+    'line-height:1.14;color:var(--dark);margin:0 0 9px;text-wrap:balance}',
+    '.bl-cc .std-baj{font-size:14px!important;color:var(--muted);margin:0 0 20px;max-width:46ch}',
+    '.bl-cc .std-acc{border-top:1px solid var(--line)}',
+    '.bl-cc .std-it{border-bottom:1px solid var(--line)}',
+    '.bl-cc .std-it summary{cursor:pointer;list-style:none;padding:14px 30px 14px 0;position:relative;',
+    'font-size:14.5px;font-weight:700;color:var(--dark);line-height:1.35}',
+    '.bl-cc .std-it summary::-webkit-details-marker{display:none}',
+    '.bl-cc .std-it summary:after{content:"+";position:absolute;right:4px;top:11px;font-size:19px;',
+    'font-weight:400;color:var(--muted);transition:transform .2s}',
+    '.bl-cc .std-it[open] summary:after{content:"\\2013"}',
+    '.bl-cc .std-it summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}',
+    '.bl-cc .std-cu p{font-size:13.5px!important;color:var(--muted);line-height:1.55;margin:0 0 14px;max-width:52ch}',
+    '.bl-cc .std-foto{margin:0;background:var(--sand);height:250px;overflow:hidden;position:relative}',
+    '.bl-cc .std-foto img{width:100%;height:100%;object-fit:cover;object-position:center 42%;display:block}',
+    '@media(min-width:860px){.bl-cc .std-in{align-items:stretch}',
+    '.bl-cc .std-foto{height:auto}',
+    '.bl-cc .std-foto img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%}}',
+
+    /* una tanda de reseñas entre escalones; al filtrar estorba y se va */
+    '.bl-cc .prueba.corte{margin:30px -20px 34px;width:auto;padding:34px 20px 36px}',
+    '@media(min-width:760px){.bl-cc .prueba.corte{margin:38px 0 40px;border-radius:18px;padding:38px 26px 40px}}',
+    '.bl-cc .prueba.corte h3{font-size:23px}',
+    '.bl-cc .prueba.corte .in2{padding:0}',
+    '.bl-cc.filtrado .prueba.corte{display:none}',
+    '.bl-cc .estrellas{letter-spacing:.06em}',
+
     '.bl-cc .cierre{margin:44px 0 0;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}',
     '.bl-cc .cierre h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;line-height:1.15;color:var(--dark);margin:0 0 8px}',
     '.bl-cc .cierre p{font-size:14.5px!important;color:var(--muted);margin:0 0 18px;max-width:62ch}',
@@ -304,6 +395,108 @@
     return a;
   }
 
+  // ── Cómo se elige ────────────────────────────────────────────────────────
+  // La página tiene una lógica (objetivo → tamaño → duración) que hoy el visitante descubre
+  // tanteando los chips. Dicha una vez, arriba, convierte el filtro en una decisión.
+  function guia(g) {
+    if (!g || !g.pasos || !g.pasos.length) return null;
+    var sec = el('section', 'guia');
+    var pasos = g.pasos.map(function (p, i) {
+      return '<li><span class="paso-n">' + (i + 1) + '</span>' +
+             '<b>' + esc(p.t) + '</b><span>' + esc(p.d) + '</span></li>';
+    }).join('');
+    sec.innerHTML =
+      '<div class="guia-in">' +
+        '<div class="guia-txt">' +
+          '<span class="k">' + esc(g.kicker) + '</span>' +
+          '<h3>' + esc(g.titulo) + '</h3>' +
+          '<ol class="pasos">' + pasos + '</ol>' +
+        '</div>' +
+        (g.foto ? '<figure class="guia-foto"><img src="' + esc(g.foto) + '" alt="' +
+                  esc(g.foto_alt || '') + '" loading="lazy" decoding="async"></figure>' : '') +
+      '</div>';
+    return sec;
+  }
+
+  // ── El destacado ─────────────────────────────────────────────────────────
+  // Glory es el único combo con los cinco adaptógenos, así que presentarlo y presentar los
+  // cinco es el mismo gesto: cada frasco entra con su color y con lo que resuelve.
+  function destacado(dz, cfg) {
+    if (!dz || !dz.quienes || !dz.quienes.length) return null;
+    var combo = null;
+    cfg.combos.forEach(function (c) { if (c.id === dz.id) combo = c; });
+    var ING = cfg.ingredientes, FR = cfg.frascos || {};
+    var sec = el('section', 'dest');
+    var fila = dz.quienes.map(function (q, i) {
+      var ing = ING[q.k] || {};
+      var fr = FR[q.k] || {};
+      var img = fr.gom || fr.cap || '';
+      return '<li style="--c:' + esc(ing.color || '#608B71') + ';--i:' + i + '">' +
+             (img ? '<img src="' + esc(img) + '" alt="" loading="lazy" decoding="async">' : '') +
+             '<b>' + esc(ing.nombre || '') + '</b>' +
+             '<span>' + esc(q.t) + '</span></li>';
+    }).join('');
+    sec.innerHTML =
+      '<div class="dest-in">' +
+        '<div class="dest-cab">' +
+          '<span class="k">' + esc(dz.kicker) + '</span>' +
+          '<h3>' + esc(dz.titulo) + '</h3>' +
+          '<p>' + esc(dz.bajada) + '</p>' +
+        '</div>' +
+        '<ul class="cinco">' + fila + '</ul>' +
+        (combo ? '<a class="dest-cta" href="/productos/' + encodeURIComponent(combo.handle) +
+                 '/">' + esc(dz.cta || 'Ver combo') + '</a>' : '') +
+      '</div>';
+    return sec;
+  }
+
+  // ── El estándar ──────────────────────────────────────────────────────────
+  // Acordeón nativo: <details> no necesita JS, funciona con teclado y si el script muriera
+  // igual se lee. Cada punto es una afirmación con respaldo, no una promesa.
+  function estandar(e) {
+    if (!e || !e.puntos || !e.puntos.length) return null;
+    var sec = el('section', 'std');
+    var items = e.puntos.map(function (x, i) {
+      return '<details class="std-it"' + (i === 0 ? ' open' : '') + '>' +
+             '<summary>' + esc(x.t) + '</summary>' +
+             '<div class="std-cu"><p>' + esc(x.d) + '</p></div></details>';
+    }).join('');
+    sec.innerHTML =
+      '<div class="std-in">' +
+        '<div class="std-txt">' +
+          '<span class="k">' + esc(e.kicker) + '</span>' +
+          '<h3>' + esc(e.titulo) + '</h3>' +
+          '<p class="std-baj">' + esc(e.bajada) + '</p>' +
+          '<div class="std-acc">' + items + '</div>' +
+        '</div>' +
+        (e.foto ? '<figure class="std-foto"><img src="' + esc(e.foto) + '" alt="' +
+                  esc(e.foto_alt || '') + '" loading="lazy" decoding="async"></figure>' : '') +
+      '</div>';
+    return sec;
+  }
+
+  // ── Prueba social ────────────────────────────────────────────────────────
+  // Las citas se reparten en tandas para que aparezcan mientras se duda, no cuando ya se
+  // decidió. `estrellas` sale de Revie: una reseña de cuatro se muestra con cuatro.
+  function franjaPrueba(pr, desde, hasta, titulo) {
+    var lote = pr.citas.slice(desde, hasta);
+    if (!lote.length) return null;
+    var sec = el('section', 'prueba');
+    var citas = lote.map(function (q) {
+      var n = Math.max(1, Math.min(5, parseInt(q.estrellas, 10) || 5));
+      var estrellas = '';
+      for (var i = 0; i < 5; i++) estrellas += (i < n ? '★' : '☆');
+      return '<blockquote class="cita"><span class="estrellas" aria-label="' + n +
+             ' de 5 estrellas">' + estrellas + '</span>' +
+             '<p>“' + esc(q.cita) + '”</p><p class="qui"><b>' + esc(q.nombre) + '</b>' +
+             (q.producto ? ' · ' + esc(q.producto) : '') + '</p></blockquote>';
+    }).join('');
+    sec.innerHTML = '<div class="in2"><div class="cab"><h3>' + esc(titulo) + '</h3>' +
+      '<p class="nota2"><b>' + esc(pr.promedio) + '</b> sobre ' + esc(pr.resenas) +
+      ' reseñas verificadas</p></div><div class="citas">' + citas + '</div></div>';
+    return sec;
+  }
+
   function render(cfg, host) {
     var ING = cfg.ingredientes;
     var raiz = el('div', 'bl-cc');
@@ -337,6 +530,9 @@
 
     var wrap = el('div', 'in');
     raiz.appendChild(wrap);
+    var g = guia(cfg.guia);            // cómo se elige, antes de mostrar nada que elegir
+    if (g) wrap.appendChild(g);
+
     var escalera = el('div', 'escalera');
     wrap.appendChild(escalera);
     var resumen = el('p', 'resumen');
@@ -359,6 +555,8 @@
       porEscalon[k].push(c);
     });
 
+    var pr = cfg.prueba || null;
+    var cortes = (pr && pr.cortes) || [];
     cfg.bloques.forEach(function (b) {
       var lista = b.k === 'top' ? top : porEscalon[b.k];
       if (!lista || !lista.length) return;
@@ -368,30 +566,40 @@
         '<div class="rh"><h3>' + esc(b.titulo) + '</h3>' +
         '<span class="qty">' + esc(b.chip) + '</span>' +
         '<span class="nota">' + esc(b.nota) + '</span></div>';
-      var g = el('div', 'grid');
+      var g2 = el('div', 'grid');
       lista.forEach(function (c) {
         // un combo malformado no puede tumbar la página entera: se descarta solo esa card
-        try { g.appendChild(card(c, ING, b.k === 'top', cfg.frascos)); } catch (e) {}
+        try { g2.appendChild(card(c, ING, b.k === 'top', cfg.frascos)); } catch (e) {}
       });
       // el destacado no lleva estado vacío: si no hay match, la sección entera se va
-      if (b.k !== 'top') g.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
-      sec.appendChild(g);
+      if (b.k !== 'top') g2.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
+      sec.appendChild(g2);
       escalera.appendChild(sec);
+
+      // una tanda de reseñas corta el desfile justo donde se está dudando
+      var corte = cortes.indexOf(b.k);
+      if (corte > -1 && pr && pr.citas && pr.citas.length) {
+        var por = Math.ceil(pr.citas.length / (cortes.length + 1));
+        var fr = franjaPrueba(pr, corte * por, (corte + 1) * por,
+                              corte === 0 ? pr.titulo : (pr.titulo2 || pr.titulo));
+        if (fr) { fr.classList.add('corte'); escalera.appendChild(fr); }
+      }
     });
 
-    // prueba social: lo único de la página que no dice la marca de sí misma
-    if (cfg.prueba && cfg.prueba.citas && cfg.prueba.citas.length) {
-      var pr = el('section', 'prueba');
-      var citas = cfg.prueba.citas.map(function (q) {
-        return '<blockquote class="cita"><span class="estrellas" aria-hidden="true">★★★★★</span>' +
-               '<p>“' + esc(q.cita) + '”</p><p class="qui"><b>' + esc(q.nombre) + '</b>' +
-               (q.producto ? ' · ' + esc(q.producto) : '') + '</p></blockquote>';
-      }).join('');
-      pr.innerHTML = '<div class="in2"><div class="cab"><h3>' + esc(cfg.prueba.titulo) + '</h3>' +
-        '<p class="nota2"><b>' + esc(cfg.prueba.promedio) + '</b> sobre ' + esc(cfg.prueba.resenas) +
-        ' reseñas verificadas</p></div><div class="citas">' + citas + '</div></div>';
-      wrap.appendChild(pr);
+    // lo que sobre de citas cierra la sección, más el destacado y el estándar
+    if (pr && pr.citas && pr.citas.length) {
+      var por2 = Math.ceil(pr.citas.length / (cortes.length + 1));
+      var resto = franjaPrueba(pr, cortes.length * por2, pr.citas.length,
+                               pr.titulo2 || pr.titulo);
+      if (resto) wrap.appendChild(resto);
     }
+
+    var dz = destacado(cfg.destacado, cfg);   // Glory: los cinco adaptógenos de una
+    if (dz) wrap.appendChild(dz);
+
+    var st2 = estandar(cfg.estandar);         // qué hay detrás del frasco
+    if (st2) wrap.appendChild(st2);
+
 
     // cierre: los packs de 3 meses
     if (cfg.x3 && cfg.x3.length) {
