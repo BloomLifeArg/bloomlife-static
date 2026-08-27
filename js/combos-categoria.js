@@ -98,6 +98,16 @@
     'font-family:var(--sans);color:var(--ink);line-height:1.6;text-align:left}',
     '.bl-cc *{box-sizing:border-box}',
     '.bl-cc .in{max-width:1180px;margin:0 auto;padding:0 20px}',
+    /* La miga de pan del tema quedaba como una franja beige alta y desconectada entre el
+       header y el hero. Del mismo color que el hero, se lee como el arranque de la portada
+       de la categoría. Este <style> sólo se inyecta en esta ruta, así que no toca otras. */
+    'body.template-category > .container{background:#003845;padding-top:15px;padding-bottom:13px;',
+    'margin-bottom:0;box-shadow:0 0 0 100vmax #003845;clip-path:inset(0 -100vmax)}',
+    'body.template-category > .container *{color:rgba(255,255,255,.62)!important;font-size:11.5px!important;',
+    'letter-spacing:.08em;text-transform:uppercase}',
+    'body.template-category > .container a:hover{color:#CCA352!important}',
+    '.js-category-controls-prev,.js-category-controls-next{display:none}',
+    '[data-store="category-grid-36274689"] > .container{margin-top:0!important}',
     /* hero */
     '.bl-cc .hero{background:var(--dark);color:#fff;padding:48px 20px 42px;text-align:center;',
 'margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);width:100vw}',
@@ -311,10 +321,10 @@
     '.bl-cc .std-it[open] summary:after{content:"\\2013"}',
     '.bl-cc .std-it summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:3px}',
     '.bl-cc .std-cu p{font-size:13.5px!important;color:var(--muted);line-height:1.55;margin:0 0 14px;max-width:52ch}',
-    '.bl-cc .std-foto{margin:0;background:var(--sand);height:250px;overflow:hidden;position:relative}',
-    '.bl-cc .std-foto img{width:100%;height:100%;object-fit:cover;object-position:center 42%;display:block}',
+    '.bl-cc .std-foto{margin:0;background:#5C5823;height:330px;overflow:hidden;position:relative}',
+    '.bl-cc .std-foto img{width:100%;height:100%;object-fit:contain;object-position:center;display:block}',
     '@media(min-width:860px){.bl-cc .std-in{align-items:stretch}',
-    '.bl-cc .std-foto{height:auto}',
+    '.bl-cc .std-foto{height:auto;min-height:420px}',
     '.bl-cc .std-foto img{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%}}',
 
     /* una tanda de reseñas entre escalones; al filtrar estorba y se va */
@@ -548,8 +558,11 @@
                         .sort(function (a, b) { return b.vendidas - a.vendidas; })
                         .slice(0, 3);   // el chip promete tres
     var porEscalon = { '2': [], '3': [], '4': [] };
+    // el combo destacado tiene su propia franja al final: repetirlo como card lo abarata
+    var idDest = (cfg.destacado && cfg.destacado.id) || 0;
     cfg.combos.forEach(function (c) {
       if (!c || !c.ing || !c.ing.length) return;        // sin ingredientes no hay card
+      if (c.id === idDest) return;
       var n = c.ing.length;
       var k = n >= 4 ? '4' : (n <= 2 ? '2' : '3');      // un combo de 1 cae en el primer escalón
       porEscalon[k].push(c);
@@ -795,10 +808,11 @@
     }
     // Pintamos: el ocultamiento del <head> ya hizo su trabajo. Se refuerza en línea porque el
     // failsafe del sello pudo haberse adelantado y devuelto lo nativo mientras cargábamos.
-    HTM.className = HTM.className.replace(/\s*bl-cc-off/g, '');
+    HTM.className = HTM.className.replace(/\s*bl-cc-off/g, '') + ' bl-cc-ok';
     host.style.display = 'none';
     [].forEach.call(document.querySelectorAll(
-      '.js-pagination, .pagination, .js-category-controls, .category-controls, .category-banner'),
+      '.js-pagination, .pagination, .js-category-controls, .js-category-controls-prev,' +
+      '.js-category-controls-next, .category-controls, .category-banner'),
       function (n) { n.style.display = 'none'; });
     // la paginación del tema es un div.row sin clase propia: se la reconoce por su texto ("1 / 2")
     var cont = host.parentElement;
