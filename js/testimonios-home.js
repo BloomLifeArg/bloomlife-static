@@ -54,7 +54,7 @@
      divergen, esto es lo que ve el usuario cuando GitHub no responde. */
   var FALLBACK = {
     promedio: 4.8,
-    resenas: '208 reseñas verificadas',
+    resenas: '214 reseñas verificadas',
     titulo: 'La excelencia, nuestra obsesión',
     bajada: 'La voz de nuestros clientes',
     testimonios: [
