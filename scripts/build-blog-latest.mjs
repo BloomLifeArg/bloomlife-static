@@ -58,12 +58,47 @@ const res = await fetch(SOURCE, {
 });
 if (!res.ok) throw new Error(`El blog respondió ${res.status}`);
 
-const cards = extractPostings(await res.text())
+// Selección manual, si la hay. data/blog-destacados.json fija qué 3 notas se
+// muestran (hoy: las que empujan Cordyceps, Tremella y Reishi). El cron sigue
+// corriendo igual y refresca título, resumen y portada de esas notas — sólo deja
+// de decidir CUÁLES. Si el archivo no existe, o le falta alguno de los slugs en
+// el blog, se cae solo a los más recientes y la sección nunca queda vacía.
+let destacados = [];
+try {
+  const raw = await readFile(new URL('../data/blog-destacados.json', import.meta.url), 'utf8');
+  const cfg = JSON.parse(raw);
+  // Acepta las dos formas: ["slug", ...] o [{slug, titulo}, ...]
+  destacados = (cfg.posts || cfg.slugs || [])
+    .map((d) => (typeof d === 'string' ? { slug: d } : d))
+    .filter((d) => d && d.slug);
+} catch {
+  /* sin selección manual: siguen mandando los más recientes */
+}
+
+const todas = extractPostings(await res.text())
   .map(toCard)
   .filter(Boolean)
   .filter((c) => c.image) // sin portada no entra: la card quedaría rota
-  .sort((a, b) => new Date(b.published_at || 0) - new Date(a.published_at || 0))
-  .slice(0, COUNT);
+  .sort((a, b) => new Date(b.published_at || 0) - new Date(a.published_at || 0));
+
+const elegidas = destacados
+  .map((d) => {
+    const c = todas.find((x) => (x.url || '').includes(d.slug));
+    // Algunas notas tienen keywords cargadas como título en el blog; si el
+    // archivo trae uno escrito a mano, ese manda.
+    return c && d.titulo ? { ...c, title: d.titulo } : c;
+  })
+  .filter(Boolean);
+
+if (destacados.length && elegidas.length < destacados.length) {
+  const faltan = destacados
+    .filter((d) => !todas.some((c) => (c.url || '').includes(d.slug)))
+    .map((d) => d.slug);
+  console.warn(`Aviso: no encontré en el blog ${faltan.join(', ')}. Completo con las más recientes.`);
+}
+
+// Las elegidas primero; el resto completa hasta COUNT por si alguna ya no está.
+const cards = [...elegidas, ...todas.filter((c) => !elegidas.includes(c))].slice(0, COUNT);
 
 // Fallar ruidosamente. Si el parser se rompe porque TN cambió algo, queremos que
 // el workflow falle y avise — no que pise el JSON bueno con una lista vacía y

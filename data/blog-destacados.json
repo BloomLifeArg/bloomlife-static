@@ -1,0 +1,21 @@
+{
+  "_comentario": "Los 3 artículos que muestra la sección 'Del blog' del home. Elegidos a mano para empujar Cordyceps, Tremella y Reishi. Se identifican por un fragmento de su URL. Si este archivo se borra, el cron vuelve solo a los 3 más recientes.",
+  "_titulo_manual": "Dos de estas notas tienen keywords cargadas como título en el blog ('sistema inmunológico, hongos, reishi...'), así que acá se sobreescribe con su H1 real. Cuando se corrija el título en el admin del blog, se puede borrar el campo 'titulo' y el cron lo toma solo.",
+  "_revisado": "2026-08-30",
+  "posts": [
+    {
+      "slug": "que-son-los-adaptogenos-para-que-sirven",
+      "porque": "la única nota que nombra los tres: Cordyceps, Tremella y Reishi"
+    },
+    {
+      "slug": "como-fortalecer-el-sistema-inmunologico-de-forma-natural",
+      "titulo": "Cómo fortalecer el sistema inmunológico de forma natural",
+      "porque": "Cordyceps y Reishi, por el lado de las defensas"
+    },
+    {
+      "slug": "insomnio",
+      "titulo": "Por qué te despertás cansada y qué podés hacer",
+      "porque": "Reishi, por el lado del descanso"
+    }
+  ]
+}
