@@ -226,6 +226,10 @@
     '.bl-cc .prueba .nota2 b{color:var(--gold);font-weight:700}',
     '.bl-cc .citas{display:grid;gap:16px;grid-template-columns:1fr}',
     '@media(min-width:760px){.bl-cc .citas{grid-template-columns:repeat(3,1fr);gap:22px}}',
+    // Si a una banda le tocan menos de tres citas se centran en vez de estirarse: con dos
+    // en una franja de 1180px quedaba media banda vacia.
+    '@media(min-width:760px){.bl-cc .citas.n1{grid-template-columns:minmax(0,560px);justify-content:center}',
+    '.bl-cc .citas.n2{grid-template-columns:repeat(2,minmax(0,360px));justify-content:center}}',
     '.bl-cc .cita{border-left:2px solid rgba(204,163,82,.5);padding:2px 0 2px 16px}',
     '.bl-cc .cita p{font-family:var(--serif);font-size:15px!important;line-height:1.55;',
     'color:rgba(255,255,255,.92);margin:0 0 10px}',
@@ -501,7 +505,7 @@
     }).join('');
     sec.innerHTML = '<div class="in2"><div class="cab"><h3>' + esc(titulo) + '</h3>' +
       '<p class="nota2"><b>' + esc(pr.promedio) + '</b> sobre ' + esc(pr.resenas) +
-      ' reseñas verificadas</p></div><div class="citas">' + citas + '</div></div>';
+      ' reseñas verificadas</p></div><div class="citas n' + lote.length + '">' + citas + '</div></div>';
     return sec;
   }
 
@@ -601,7 +605,7 @@
     if (pr && pr.citas && pr.citas.length) {
       var por2 = Math.ceil(pr.citas.length / (cortes.length + 1));
       var resto = franjaPrueba(pr, cortes.length * por2, pr.citas.length,
-                               pr.titulo2 || pr.titulo);
+                               pr.titulo3 || pr.titulo2 || pr.titulo);
       if (resto) wrap.appendChild(resto);
     }
 
