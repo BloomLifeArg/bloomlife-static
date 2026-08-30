@@ -650,11 +650,28 @@
         "nombre": "Julieta C.",
         "producto": "Bye Bye Anxiety",
         "estrellas": 5
+      },
+      {
+        "cita": "Excelente producto, noto cambios en mi piel. Fácil de consumir y rico.",
+        "nombre": "Agustina U.",
+        "producto": "Tremella Gummies",
+        "estrellas": 5
+      },
+      {
+        "cita": "El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.",
+        "nombre": "Marina C.",
+        "producto": "Ashwagandha Cápsulas",
+        "estrellas": 5
+      },
+      {
+        "cita": "Excelente producto. Lo recomendé a amigos y familiares.",
+        "nombre": "Alejandra D.",
+        "producto": "Melena de León Cápsulas",
+        "estrellas": 5
       }
     ],
     "cortes": [
-      "2",
-      "3"
+      "2"
     ],
     "titulo2": "Y lo siguen diciendo.",
     "titulo3": "Todavía hay más."
