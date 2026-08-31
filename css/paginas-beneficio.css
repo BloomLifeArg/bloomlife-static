@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   El template de páginas de Morelia mete el `content` dentro de
+     <section class="user-content pb-5"><div class="container"><div class="row">
+       <div class="col-md-8">  ← 8 de 12 columnas
+   así que sin esto la página vive en dos tercios del ancho. Mismas reglas que usa
+   la landing /best-sellers en producción. Sólo aplican dentro de estas 5 páginas,
+   porque este CSS viaja en el propio `content`. */
+.user-content{padding:0!important}
+.user-content .container{max-width:100%!important;width:100%!important;padding:0!important}
+.user-content .row{margin:0!important}
+.user-content [class*="col-"]{width:100%!important;max-width:100%!important;
+ flex:0 0 100%!important;padding:0!important;margin:0!important}
+/* el título nativo de la página ("Foco") duplicaría el h1 del hero */
+.page-header[data-store="page-title"]{display:none!important}
+
+/* El loader del seal pinta `.blp{visibility:hidden}` mientras este archivo viaja.
+   Esta línea es la que lo destapa: si el CSS no carga, la página queda en blanco
+   en vez de mostrarse cruda. Es a propósito — ver out/loader-seal.html. */
+.blp{visibility:visible}
+
+.blp{--dark:#003845;--mid:#608B71;--gold:#CCA352;--terra:#C4694F;--sand:#F4F0E8;
+ --w:#fff;--ink:#1A1A1A;--muted:#7A7A7A;--line:rgba(0,56,69,.10);
+ --ui:'Inter','Work Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+ --ed:Georgia,'Times New Roman',serif;
+ font-family:var(--ui);color:var(--ink);-webkit-font-smoothing:antialiased;
+ text-align:left;line-height:1.6}
+
+/* el tema fuerza p{font-size:14px!important}: si TinyMCE mete un <p>, que no rompa */
+.blp p{margin:0;font-size:inherit!important;line-height:inherit}
+.blp *,.blp *::before,.blp *::after{box-sizing:border-box}
+.blp img{max-width:100%;height:auto;display:block}
+.blp a{text-decoration:none}
+
+/* con el wrapper ya neutralizado arriba, una banda es simplemente 100% de ancho:
+   nada de trucos con 100vw, que en Windows suman el ancho de la barra de scroll */
+.blp-band{width:100%}
+.blp-in{max-width:1120px;margin:0 auto;padding:0 32px}
+
+/* ───────── 1. hero ───────── */
+.blp-hero{background:var(--dark);color:var(--w);padding:104px 0 96px}
+.blp-rule{width:44px;height:2px;background:var(--gold);margin-bottom:26px}
+.blp-kicker{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+ color:var(--gold);line-height:1.4}
+.blp-h1{font-family:var(--ed);font-style:italic;font-weight:400;color:var(--w);
+ font-size:clamp(40px,6.4vw,72px);line-height:1.06;letter-spacing:-.01em;
+ margin:22px 0 0;max-width:15ch}
+.blp-hero-sub{font-weight:300;font-size:clamp(16px,1.6vw,19px);line-height:1.7;
+ color:rgba(255,255,255,.72);max-width:46ch;margin-top:24px}
+
+/* ───────── 2. por qué importa ───────── */
+.blp-why{background:var(--sand);padding:96px 0}
+.blp-why-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:start}
+.blp-eyebrow{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+ color:var(--mid);line-height:1.4}
+.blp-h2{font-family:var(--ed);font-weight:400;color:var(--dark);
+ font-size:clamp(27px,3.2vw,40px);line-height:1.2;letter-spacing:-.01em;
+ margin:14px 0 0;max-width:19ch}
+.blp-body{margin-top:26px;display:flex;flex-direction:column;gap:17px}
+.blp-body>div{font-weight:300;font-size:17px;line-height:1.75;color:#3A4144}
+.blp-body>div:first-child{font-size:19px;color:var(--dark);font-weight:400}
+
+.blp-sig{background:var(--w);border:1px solid var(--line);border-radius:20px;
+ padding:30px 30px 12px;margin-top:6px}
+.blp-sig-h{font-family:var(--ed);font-style:italic;font-size:19px;color:var(--dark);
+ padding-bottom:18px;border-bottom:1px solid var(--line)}
+.blp-sig-row{display:grid;grid-template-columns:9px 1fr;gap:14px;align-items:start;
+ padding:16px 0;border-bottom:1px solid var(--line)}
+.blp-sig-row:last-child{border-bottom:0}
+.blp-dot{width:7px;height:7px;border-radius:50%;background:var(--acc);margin-top:7px}
+.blp-sig-t{font-weight:300;font-size:15px;line-height:1.55;color:#3A4144}
+
+/* ───────── 3. los adaptógenos ───────── */
+.blp-prods{background:var(--w);padding:96px 0 104px}
+.blp-prods-head{max-width:640px}
+.blp-prods-sub{font-weight:300;font-size:16px;line-height:1.65;color:var(--muted);margin-top:14px}
+.blp-list{margin-top:46px;display:flex;flex-direction:column;gap:14px}
+
+.blp-card{display:grid;grid-template-columns:8px 150px 1fr auto;align-items:center;gap:0;
+ background:var(--sand);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+ transition:transform .2s ease,box-shadow .2s ease}
+.blp-card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,56,69,.09)}
+.blp-bar{align-self:stretch;background:var(--pc)}
+/* el frasco flota sobre la arena de la card, sin tesela propia: regla 4 del
+   design system ("imágenes de producto siempre sin fondo") */
+.blp-thumb{padding:12px 6px 12px 14px}
+.blp-thumb img{width:100%;aspect-ratio:1/1;object-fit:contain}
+.blp-info{padding:22px 26px}
+.blp-badge{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;
+ text-transform:uppercase;color:#7A5A19;background:rgba(204,163,82,.18);
+ border:1px solid rgba(204,163,82,.45);border-radius:999px;padding:3px 11px;margin-bottom:9px}
+.blp-name{font-family:var(--ed);font-size:23px;line-height:1.25;color:var(--dark)}
+.blp-angle{font-weight:300;font-size:15px;line-height:1.62;color:#4A5154;margin-top:7px;max-width:56ch}
+.blp-act{padding:22px 26px 22px 12px}
+.blp-btn{display:inline-block;white-space:nowrap;font-size:12px;font-weight:600;
+ letter-spacing:.07em;text-transform:uppercase;color:var(--dark);background:transparent;
+ border:1.5px solid var(--dark);border-radius:999px;padding:12px 24px;
+ transition:background .2s ease,color .2s ease,transform .15s ease}
+.blp-btn:hover{background:var(--dark);color:var(--w);transform:translateY(-1px)}
+
+/* ───────── 4. cta final ─────────
+   El brief pedía esta banda en --dark, pero el footer del tema es EXACTAMENTE
+   #003845: en --dark el CTA se funde con el footer y la página no cierra en
+   ningún lado (verificado en el render real, no razonado). --terra es lo que el
+   design system §13.3 ya fija como "Final CTA" para las páginas de conversión.
+   Para volver a --dark: cambiar el background de .blp-final y nada más. */
+.blp-final{background:var(--terra);color:var(--w);padding:92px 0;text-align:center}
+.blp-final .blp-h2{color:var(--w);margin:0 auto;max-width:22ch;font-style:italic}
+.blp-final-sub{font-weight:300;font-size:17px;line-height:1.7;color:rgba(255,255,255,.82);
+ max-width:44ch;margin:18px auto 0}
+.blp-final .blp-btn-w{color:var(--terra)}
+.blp-final-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px}
+.blp-btn-w{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--dark);background:var(--w);border:1.5px solid var(--w);
+ border-radius:999px;padding:15px 30px;transition:transform .15s ease,opacity .2s ease}
+.blp-btn-w:hover{transform:translateY(-1px);opacity:.9}
+.blp-btn-g{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--w);background:transparent;
+ border:1.5px solid rgba(255,255,255,.45);border-radius:999px;padding:15px 30px;
+ transition:border-color .2s ease,transform .15s ease}
+.blp-btn-g:hover{border-color:var(--w);transform:translateY(-1px)}
+
+/* ───────── tokens por página y por producto ─────────
+   La API borra todo style="", así que ni --acc ni --pc pueden viajar inline en el
+   content: van por clase. */
+.blp-foco{--acc:#003845}
+.blp-calma{--acc:#4A6741}
+.blp-energia{--acc:#5B7F94}
+.blp-descanso{--acc:#3D4F5C}
+.blp-piel{--acc:#7A5C6E}
+
+.blp-p-melena{--pc:#003845}
+.blp-p-ashwagandha{--pc:#4A6741}
+.blp-p-cordyceps{--pc:#5B7F94}
+.blp-p-reishi{--pc:#3D4F5C}
+.blp-p-tremella{--pc:#7A5C6E}
+
+/* ───────── responsive ───────── */
+@media (max-width:900px){
+ .blp-why-grid{grid-template-columns:1fr;gap:40px}
+ .blp-h2{max-width:24ch}
+}
+@media (max-width:640px){
+ .blp-in{padding:0 20px}
+ .blp-hero{padding:68px 0 60px}
+ .blp-h1{max-width:none;margin-top:18px}
+ .blp-hero-sub{font-size:16px;margin-top:20px}
+ .blp-why,.blp-prods{padding:60px 0}
+ .blp-body>div{font-size:16px}
+ .blp-body>div:first-child{font-size:17px}
+ .blp-sig{padding:24px 22px 8px}
+ .blp-list{gap:12px;margin-top:34px}
+ .blp-card{grid-template-columns:6px 100px 1fr;row-gap:0}
+ .blp-bar{grid-row:1/3}
+ /* centrado contra el bloque de texto: con align-self:start el frasco quedaba
+    arriba y dejaba un hueco muerto de arena debajo */
+ .blp-thumb{padding:14px 4px 14px 10px;align-self:center}
+ .blp-info{padding:18px 18px 4px}
+ .blp-name{font-size:20px}
+ .blp-angle{font-size:14px}
+ .blp-act{grid-column:2/4;padding:2px 18px 18px 12px}
+ .blp-btn{display:block;text-align:center;padding:13px 20px}
+ .blp-final{padding:60px 0}
+ .blp-final-btns{flex-direction:column;align-items:stretch}
+ .blp-btn-w,.blp-btn-g{text-align:center}
+}
