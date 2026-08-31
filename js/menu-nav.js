@@ -239,12 +239,20 @@
       p.appendChild(ul2);
     }
 
-    var pie = el('div', 'bls__pie');
-    var v1 = el('a', 'bls__vertodo', 'Ver los 8');
-    v1.href = ((meta.adaptogenos && meta.adaptogenos.pie && meta.adaptogenos.pie[0]) || {}).href
-      || 'https://www.bloomlife.co/elegi-tu-suplemento/';
-    pie.appendChild(v1);
-    p.appendChild(pie);
+    /* El pie sale del JSON: si no hay items, no se dibuja. Antes el texto
+       "Ver los 8" estaba escrito acá y solo el href venia de los datos, asi que
+       sacarlo del JSON no lo sacaba de la pantalla. */
+    var itemsPie = (meta.adaptogenos && meta.adaptogenos.pie) || [];
+    if (itemsPie.length) {
+      var pie = el('div', 'bls__pie');
+      itemsPie.forEach(function (it) {
+        if (!it || !it.texto || !it.href) return;
+        var a = el('a', 'bls__vertodo', it.texto);
+        a.href = it.href;
+        pie.appendChild(a);
+      });
+      if (pie.childNodes.length) p.appendChild(pie);
+    }
     return p;
   }
 

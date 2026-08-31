@@ -20,12 +20,7 @@
   "columnas": {
     "adaptogenos": {
       "titulo": "Los adaptógenos",
-      "pie": [
-        {
-          "texto": "También en cápsulas",
-          "href": "https://www.bloomlife.co/tipo-de-adaptogenos/capsulas1/"
-        }
-      ],
+      "pie": [],
       "bajadas": {
         "melena": "Foco para las horas que importan.",
         "ashwagandha": "Calma para tu día a día.",
