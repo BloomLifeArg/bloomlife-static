@@ -224,6 +224,7 @@
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
+    scroll-padding-left: 20px; /* que `start` respete el padding de la fila */
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
@@ -236,7 +237,11 @@
     flex: 0 0 auto;
     width: 66vw;
     max-width: 280px; /* en tablet 66vw serían 500px: una card por pantalla */
-    scroll-snap-align: center;
+    /* `center` hacía que la fila abriera en la segunda card ("Calma") en iOS:
+       para centrar la primera haría falta un scroll negativo, que no existe, y
+       con `mandatory` Safari salta al primer punto de snap que sí puede alcanzar.
+       Con `start` la primera cae en scrollLeft 0, que sí es alcanzable. */
+    scroll-snap-align: start;
   }
 
   /* El último card tiene que poder centrarse: sin esto el snap del final lo
