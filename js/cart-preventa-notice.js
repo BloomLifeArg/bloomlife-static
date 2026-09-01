@@ -1,7 +1,7 @@
 /*
  * Bloom Life — Aviso de preventa en el cart drawer
  * ------------------------------------------------
- * Avisa que Ashwagandha Gummies se despacha a partir del 7 de septiembre de 2026.
+ * Avisa que Ashwagandha Gummies se despacha a partir del 14 de septiembre de 2026.
  *
  * Detección: por product ID, que el drawer de Morelia ya expone en cada línea como
  * `data-store="cart-item-<PRODUCT_ID>"`. Es exacta y sobrevive a renombres del producto.
@@ -9,20 +9,20 @@
  * publicados, entre ellos el Full Day Mix Combo, donde la Ashwagandha es cápsula y el
  * "gummies" lo aporta el Cordyceps.
  *
- * Los combos NO se despachan enteros el 7/9: el único componente demorado es la
+ * Los combos NO se despachan enteros el 14/9: el único componente demorado es la
  * Ashwagandha Gummies. El copy lo dice explícitamente.
  *
- * Se autodesactiva el 7/9/2026 (hora local del visitante).
+ * Se autodesactiva el 14/9/2026 (hora local del visitante).
  */
 (function () {
   'use strict';
 
   /* ── Autoexpiración ──────────────────────────────────────────────────── */
   // Mes 8 = septiembre (los meses de Date van de 0 a 11).
-  var CUTOFF = new Date(2026, 8, 7, 0, 0, 0);
+  var CUTOFF = new Date(2026, 8, 14, 0, 0, 0);
   if (new Date() >= CUTOFF) return;
 
-  var FECHA = '7 de septiembre';
+  var FECHA = '14 de septiembre';
 
   /* ── Qué ítems arrastran la preventa ─────────────────────────────────── */
 
