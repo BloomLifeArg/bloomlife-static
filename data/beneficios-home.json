@@ -11,41 +11,47 @@
       "tagline": "Claridad mental sin niebla.",
       "imagen": "beneficio-foco.jpg",
       "alt": "Una gota de rocío sobre una brizna, con el paisaje enfocado dentro de la gota",
-      "href": "https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/",
-      "color": "#003845"
+      "href": "https://www.bloomlife.co/foco/",
+      "color": "#003845",
+      "href_producto_anterior": "https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/"
     },
     {
       "titulo": "Calma",
       "tagline": "Menos ansiedad y estrés.",
       "imagen": "beneficio-calma.jpg",
       "alt": "Un lago en calma al amanecer, con las montañas reflejadas como en un espejo",
-      "href": "https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/",
-      "color": "#4A6741"
+      "href": "https://www.bloomlife.co/calma/",
+      "color": "#4A6741",
+      "href_producto_anterior": "https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/"
     },
     {
       "titulo": "Energía",
       "tagline": "Estable, sin picos ni caídas.",
       "imagen": "beneficio-energia.jpg",
       "alt": "Espigas a contraluz con el sol bajo entre ellas",
-      "href": "https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/",
-      "color": "#5B7F94"
+      "href": "https://www.bloomlife.co/energia/",
+      "color": "#5B7F94",
+      "href_producto_anterior": "https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/"
     },
     {
       "titulo": "Descanso",
       "tagline": "Recuperate de verdad.",
       "imagen": "beneficio-descanso.jpg",
       "alt": "Un vilano de diente de león entero, suspendido contra la luz del atardecer",
-      "href": "https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/",
-      "color": "#3D4F5C"
+      "href": "https://www.bloomlife.co/descanso/",
+      "color": "#3D4F5C",
+      "href_producto_anterior": "https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/"
     },
     {
       "titulo": "Piel",
       "tagline": "Hidratación desde adentro.",
       "imagen": "beneficio-piel.jpg",
       "alt": "Gotas de rocío sostenidas por una gramínea, a contraluz",
-      "href": "https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/",
-      "color": "#7A5C6E"
+      "href": "https://www.bloomlife.co/piel/",
+      "color": "#7A5C6E",
+      "href_producto_anterior": "https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/"
     }
   ],
-  "_leeme_color": "En 'color' va el color del producto, que pinta el filete debajo de la foto. Sale del design system §12 y de las internas ya publicadas: Melena petróleo, Ashwagandha oliva, Cordyceps celeste (el design system decía terracota y estaba desactualizado; mandó la interna), Reishi pizarra, Tremella malva. Si falta, el filete cae a petróleo."
+  "_leeme_color": "En 'color' va el color del producto, que pinta el filete debajo de la foto. Sale del design system §12 y de las internas ya publicadas: Melena petróleo, Ashwagandha oliva, Cordyceps celeste (el design system decía terracota y estaba desactualizado; mandó la interna), Reishi pizarra, Tremella malva. Si falta, el filete cae a petróleo.",
+  "_leeme_href": "Desde 2026-08-31 los 5 cards van a las paginas de beneficio (/foco/ /calma/ /energia/ /descanso/ /piel/) en vez de a la interna del producto. 'href_producto_anterior' guarda el destino viejo por si hay que volver atras: el JS ignora esa clave. OJO: si alguna de esas paginas no esta publicada en Tienda Nube, el card lleva a un 404."
 }
