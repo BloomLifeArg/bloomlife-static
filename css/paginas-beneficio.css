@@ -45,7 +45,12 @@
  color:var(--gold);line-height:1.4}
 .blp-h1{font-family:var(--ed);font-style:italic;font-weight:400;color:var(--w);
  font-size:clamp(40px,6.4vw,72px);line-height:1.06;letter-spacing:-.01em;
- margin:22px 0 0;max-width:15ch}
+ margin:22px 0 0;max-width:19ch}
+/* La segunda mitad del claim va en dorado, igual que el <em> del carrusel del
+   hero del home: mismo texto y mismo tratamiento en las dos superficies.
+   Va por clase y no con <em> porque el sanitizador de la API de páginas no
+   tiene a <em> entre las etiquetas que deja pasar. */
+.blp-h1 .blp-em{color:var(--gold);font-style:italic}
 .blp-hero-sub{font-weight:300;font-size:clamp(16px,1.6vw,19px);line-height:1.7;
  color:rgba(255,255,255,.72);max-width:46ch;margin-top:24px}
 
