@@ -200,9 +200,19 @@
 
       var grupo = card.querySelector('[data-store="product-item-labels"]');
       if (!grupo) continue;
-      // Ya la pinta LerenTools, o ya la pintamos nosotros.
-      if (grupo.querySelector('.lerentools-preorder-label')) continue;
-      if (grupo.querySelector('.' + CUCARDA_CLASE)) continue;
+
+      // La app pinta async, y a veces DESPUÉS que nosotros. Un guard que sólo
+      // mirara al entrar dejaría las dos cucardas en la misma card (pasó en vivo
+      // el 2026-09-05, en la página 2 del catálogo). Así que la convivencia se
+      // resuelve en los dos sentidos: si aparece la de LerenTools, sacamos la
+      // nuestra. El observador vuelve a llamar acá cuando ella se pinta.
+      var suya = grupo.querySelector('.lerentools-preorder-label');
+      var nuestra = grupo.querySelector('.' + CUCARDA_CLASE);
+      if (suya) {
+        if (nuestra) nuestra.parentNode.removeChild(nuestra);
+        continue;
+      }
+      if (nuestra) continue;
 
       var el = document.createElement('div');
       el.className = 'label ' + CUCARDA_CLASE;
