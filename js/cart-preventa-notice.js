@@ -56,6 +56,29 @@
   var NOTICE_ID = 'bl-preventa-notice';
   var LIST = '.js-ajax-cart-list';
 
+  /* ── Cucarda "Preventa" en las cards del listado ──────────────────────
+   * Reemplaza a la que hoy pinta la app Preventa/Personalizados de LerenTools
+   * (`.lerentools-preorder-label`), para poder darla de baja.
+   *
+   * Vive acá, y no en un archivo aparte, porque la lista de IDs de arriba ya es
+   * la fuente de verdad: duplicarla sería abrir la puerta a que la card y el
+   * aviso del carrito se contradigan. Leyendo de FULL/PARCIAL no puede pasar.
+   *
+   * (Verificado 2026-09-05: la config de LerenTools cubre los mismos 12
+   * publicados, repartidos en las dos páginas del catálogo. No hay diferencia
+   * que corregir — sólo dejamos de depender de una config que vive en la app.)
+   *
+   * Convive con la app: si la cucarda de LerenTools ya está en esa card, no
+   * pintamos, así no salen dos. Cuando se desinstale, esta toma el relevo sola.
+   */
+  var CUCARDA_CLASE = 'bl-preventa-label';
+  var CARD = /^product-item-(\d+)$/;
+  // Calcado del render de LerenTools para que el cambio no se note:
+  // 10px, fondo arena y texto gris, sin radio, pegado al borde del grupo.
+  var CUCARDA_CSS = 'background:#F2F1ED;color:#6A6060;padding:5px 8px;' +
+                    'letter-spacing:1px;display:block;margin:0;border-radius:0;' +
+                    'line-height:1.2;font-weight:400';
+
   /* ── Copy ────────────────────────────────────────────────────────────── */
 
   function mensaje(full, parcial, otros) {
@@ -162,6 +185,35 @@
     }
   }
 
+  /* ── Cucarda en las cards ────────────────────────────────────────────── */
+
+  function enPreventa(id) {
+    return FULL[id] === 1 || PARCIAL[id] === 1;
+  }
+
+  function pintarCucardas() {
+    var cards = document.querySelectorAll('[data-store^="product-item-"]');
+    for (var i = 0; i < cards.length; i++) {
+      var card = cards[i];
+      var m = CARD.exec(card.getAttribute('data-store') || '');
+      if (!m || !enPreventa(m[1])) continue;
+
+      var grupo = card.querySelector('[data-store="product-item-labels"]');
+      if (!grupo) continue;
+      // Ya la pinta LerenTools, o ya la pintamos nosotros.
+      if (grupo.querySelector('.lerentools-preorder-label')) continue;
+      if (grupo.querySelector('.' + CUCARDA_CLASE)) continue;
+
+      var el = document.createElement('div');
+      el.className = 'label ' + CUCARDA_CLASE;
+      el.textContent = 'Preventa';
+      el.style.cssText = CUCARDA_CSS;
+      // El css_code del tema tiene reglas de tamaño globales que la aplastarían.
+      el.style.setProperty('font-size', '10px', 'important');
+      grupo.appendChild(el);
+    }
+  }
+
   /* ── Arranque + observador ───────────────────────────────────────────── */
 
   var pendiente = null;
@@ -194,7 +246,29 @@
     return true;
   }
 
+  // Las cards van por su cuenta: existen en home y listados, donde el drawer del
+  // carrito puede no estar armado todavía. No comparten el observador con el aviso.
+  var pendienteCuc = null;
+  function programarCucardas() {
+    if (pendienteCuc) return;
+    pendienteCuc = setTimeout(function () {
+      pendienteCuc = null;
+      pintarCucardas();
+    }, 120);
+  }
+
+  function iniciarCucardas() {
+    pintarCucardas();
+    // Los listados se rellenan async (filtros, "ver más", carruseles del home).
+    // `pintarCucardas` es idempotente —no repinta lo ya puesto—, así que la
+    // mutación que provoca no realimenta el observador más de una vuelta.
+    new MutationObserver(programarCucardas)
+      .observe(document.body, { childList: true, subtree: true });
+  }
+
   function iniciar() {
+    iniciarCucardas();
+
     if (observar()) return;
     // La lista todavía no existe: esperamos a que el tema arme el drawer.
     var intentos = 0;
