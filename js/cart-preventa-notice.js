@@ -47,7 +47,7 @@
     341313375: 1, // Fresh Flow Combo | Melena de León + Cordyceps + Tremella + Ashwagandha
     349316562: 1, // Glow & Regulate Combo | Tremella y Ashwagandha
     357970722: 1, // Menopause Balance Combo | Ashwagandha + Melena de León + Reishi
-    366155230: 1  // Glow & Energy Combo | Tremella + Ashwagandha + Cordyceps (KIT nativo de TN)
+    366402429: 1  // Glow & Energy Combo | Tremella + Ashwagandha + Cordyceps | Gummies
   };
 
   // Red de seguridad por si TN cambiara el `data-store`: el handle del producto
