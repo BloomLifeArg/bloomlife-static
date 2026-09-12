@@ -209,7 +209,7 @@
           '<div class="blp-eyebrow">Tres canales</div>' +
           '<h2 class="blp-h2">Elegí el tuyo.</h2>' +
           '<div class="bli-channels">' +
-            '<a class="bli-ch" href="' + WA + '" target="_blank" rel="noopener"><span><span class="bli-ch-k">WhatsApp · el más rápido</span><span class="bli-ch-v" style="display:block">+54 9 11 2478-5477</span><span class="bli-ch-t" style="display:block">Pedidos, seguimiento y cambios de dirección.</span></span><span class="bli-ch-a">→</span></a>' +
+            '<a class="bli-ch" href="' + WA + '" target="_blank" rel="noopener"><span><span class="bli-ch-k">WhatsApp · el más rápido</span><span class="bli-ch-v" style="display:block">+54 9 11 2478-5477</span><span class="bli-ch-t" style="display:block">Consultas rápidas, pedidos y cambios de dirección.</span></span><span class="bli-ch-a">→</span></a>' +
             '<a class="bli-ch" href="mailto:' + MAIL + '"><span><span class="bli-ch-k">Mail</span><span class="bli-ch-v" style="display:block">' + MAIL + '</span><span class="bli-ch-t" style="display:block">Cambios, devoluciones y consultas más largas.</span></span><span class="bli-ch-a">→</span></a>' +
             '<a class="bli-ch" href="' + IG + '" target="_blank" rel="noopener"><span><span class="bli-ch-k">Instagram</span><span class="bli-ch-v" style="display:block">@bloomlife.arg</span><span class="bli-ch-t" style="display:block">Novedades, contenido y mensajes directos.</span></span><span class="bli-ch-a">→</span></a>' +
           '</div>' +

@@ -30,6 +30,11 @@
 .bli-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:end}
 .bli-hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
 .bli-hero-cta .blp-btn,.bli-hero-cta .blp-btn-g{font-size:13px;padding:15px 30px}
+/* .blp-btn::after (hoja base) extiende el click a toda la card: es un absoluto que
+   toma el ancestro posicionado más cercano. Fuera de una card no hay ninguno y el
+   pseudo cubría media página → el hover entraba y salía solo ("botón temblando"). */
+.bli-hero-cta .blp-btn,.bli-final-cta .blp-btn,.blp-act-none .blp-btn{position:relative}
+.bli-hero-cta .blp-btn::after,.bli-final-cta .blp-btn::after{display:none}
 .bli-btn-f{background:var(--gold);border-color:var(--gold);color:var(--dark)}
 .bli-btn-f:hover{background:var(--w);border-color:var(--w);color:var(--dark)}
 .bli-stat{justify-self:end;text-align:right;max-width:300px}
@@ -54,6 +59,7 @@
 .bli-tile-n{font-family:var(--ed);font-style:italic;font-size:46px;line-height:1;color:var(--gold);letter-spacing:-.02em}
 .bli-tile-n span{font-family:var(--ui);font-style:normal;font-size:12px;font-weight:600;letter-spacing:.12em;
  text-transform:uppercase;color:var(--muted);margin-left:8px;vertical-align:.5em}
+.bli-tile-n.bli-word{font-size:34px;padding-top:8px}
 .bli-tile-h{font-size:17px;font-weight:600;color:var(--dark);margin-top:16px;line-height:1.35}
 .bli-tile-t{font-weight:300;font-size:15px;line-height:1.62;color:#4A5154;margin-top:8px}
 
