@@ -54,14 +54,16 @@
      divergen, esto es lo que ve el usuario cuando GitHub no responde. */
   var FALLBACK = {
     promedio: 4.8,
-    resenas: '214 reseñas verificadas',
+    resenas: '233 reseñas verificadas',
     titulo: 'La excelencia, nuestra obsesión',
     bajada: 'La voz de nuestros clientes',
     testimonios: [
+      { cita: 'Fan de los honguitos ✨ Gracias a ellos pude bajar mis dosis de ansiolítico y antidepresivos. Me siento mucho mejor y más activa! Probé con otras marcas pero ninguno me funcionó como estos!', nombre: 'Jessica T.', estrellas: 5, producto: 'Cordyceps', url: '/productos/cordyceps-energia-sostenida-gummies/' },
       { cita: 'Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.', nombre: 'Fany G.', estrellas: 5, producto: 'Melena de León Gummies', url: '/productos/melena-de-leon-claridad-mental-gummies/' },
       { cita: 'Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.', nombre: 'Victoria B.', estrellas: 5, producto: 'Combo Brain Health Cápsulas', url: '/productos/combo-brain-health-capsulas-suplementacion-por-3-meses/' },
       { cita: 'A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.', nombre: 'María Laura V.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
       { cita: 'El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.', nombre: 'Marina C.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
+      { cita: 'Un producto espectacular.', nombre: 'Daiana G.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
       { cita: 'Excelente producto, ayudaron a mi concentración y descanso.', nombre: 'Claudia V.', estrellas: 5, producto: 'Melena de León Gummies', url: '/productos/melena-de-leon-claridad-mental-gummies/' },
       { cita: 'Excelente producto, noto cambios en mi piel. Fácil de consumir y rico.', nombre: 'Agustina U.', estrellas: 5, producto: 'Tremella', url: '/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/' },
       { cita: 'Lo empecé a consumir hace 30 días… sí noté la piel más luminosa.', nombre: 'Valeria S.', estrellas: 4, producto: 'Tremella', url: '/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/' },
