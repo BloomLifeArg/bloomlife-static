@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Footer nativo de Morelia con otro vuelo — namespace .blf
+ *
+ * El HTML es el del tema: js/footer.js sólo agrega la clase `blf` al <footer>,
+ * clases de grupo a los bloques (.blf-social, .blf-nav, .blf-news, .blf-contact,
+ * .blf-logos, .blf-seal, .blf-powered, .blf-bottom), un eyebrow, un título
+ * editorial para el newsletter y los íconos/labels de los chips de contacto.
+ * El <form> del newsletter, sus inputs y el nodo del mail de Cloudflare quedan
+ * intactos: acá sólo se los viste.
+ *
+ * Los selectores llevan `footer.blf` adelante para ganarle a las reglas del
+ * tema (`footer .form-control`, `.newsletter form .newsletter-btn`, `.font-small
+ * !important`, `.d-block !important`, etc.) sin depender del orden de carga.
+ *
+ * Fondo: el tema pinta --footer-background (#003845 = --dark). No se toca. */
+
+footer.blf{
+  --blf-gold:#CCA352;
+  --blf-dark:#003845;
+  --blf-w:#fff;
+  --blf-line:rgba(255,255,255,.12);
+  --blf-ui:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --blf-ed:Georgia,'Times New Roman',serif;
+  visibility:visible;                     /* destapa el guard de js/footer.js */
+  position:relative;
+  font-family:var(--blf-ui);
+  -webkit-font-smoothing:antialiased;
+  padding-top:64px!important;
+  border-top:1px solid rgba(204,163,82,.35);   /* 1. filete dorado a lo ancho */
+}
+footer.blf .container{max-width:1140px}
+
+/* ───────── 2. RRSS ───────── */
+footer.blf .blf-social{margin-bottom:40px!important}
+footer.blf .blf-eb{
+  display:block;font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--blf-gold);line-height:1.4;margin-bottom:16px}
+footer.blf .social-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:44px;height:44px;margin:0 6px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);opacity:1;
+  transition:border-color .25s ease,transform .2s ease,background-color .25s ease}
+footer.blf .social-icon svg{width:17px;height:17px;fill:var(--blf-w);vertical-align:0;transition:fill .25s ease}
+footer.blf .social-icon:hover,footer.blf .social-icon:focus{
+  opacity:1;border-color:var(--blf-gold);background-color:rgba(204,163,82,.08);
+  transform:translateY(-2px)}
+footer.blf .social-icon:hover svg,footer.blf .social-icon:focus svg{fill:var(--blf-gold)}
+
+/* ───────── 3. links ───────── */
+footer.blf .blf-nav{margin-bottom:52px!important}
+footer.blf .blf-nav ul{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 30px;padding:0!important}
+footer.blf .footer-menu-item{display:block;margin:0!important}
+footer.blf .footer-menu-link{
+  display:inline-block;font-family:var(--blf-ui);font-size:13px;font-weight:500;
+  letter-spacing:.04em;line-height:1.3;color:rgba(255,255,255,.82);
+  padding-bottom:4px;border-bottom:1px solid transparent;
+  transition:color .25s ease,border-color .25s ease}
+footer.blf .footer-menu-link:hover,footer.blf .footer-menu-link:focus{
+  color:var(--blf-w);border-bottom-color:var(--blf-gold)}
+
+/* ───────── 4. newsletter ───────── */
+footer.blf .blf-news{margin-bottom:48px!important}
+footer.blf .blf-news-t{
+  font-family:var(--blf-ed);font-style:italic;font-weight:400;
+  font-size:22px;line-height:1.3;color:var(--blf-w);letter-spacing:-.005em;
+  max-width:560px;margin:0 auto 18px}
+footer.blf .newsletter{width:100%;max-width:440px}
+footer.blf .newsletter .form-group{margin:0}
+footer.blf .newsletter .form-control{
+  height:50px;padding:0 118px 0 22px;border-radius:999px;
+  font-family:var(--blf-ui);font-size:14px;line-height:48px;
+  color:var(--blf-w);background-color:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.22);box-shadow:none;
+  transition:border-color .25s ease,box-shadow .25s ease,background-color .25s ease}
+footer.blf .newsletter .form-control:hover{border-color:rgba(255,255,255,.4)}
+footer.blf .newsletter .form-control:focus{
+  border-color:var(--blf-gold);background-color:rgba(255,255,255,.1);
+  box-shadow:0 0 0 3px rgba(204,163,82,.18)}
+footer.blf .newsletter .form-control::-webkit-input-placeholder{color:rgba(255,255,255,.62)}
+footer.blf .newsletter .form-control::-moz-placeholder{color:rgba(255,255,255,.62)}
+footer.blf .newsletter .form-control:-ms-input-placeholder{color:rgba(255,255,255,.62)}
+footer.blf .newsletter .form-control::placeholder{color:rgba(255,255,255,.62)}
+/* En iOS el tema le pone .form-control-ios al input (18px, width 133%, scale(.75),
+   margin-bottom -15px) para que Safari no haga zoom al enfocar. Se compensan las
+   medidas ÷ .75 para que el resultado VISUAL sea el mismo pill de 50 px. */
+footer.blf .newsletter .form-control.form-control-ios{
+  height:66.67px;line-height:64px;font-size:18.67px;padding:0 157px 0 29px;
+  border-width:1.33px;margin-bottom:-16.67px}
+footer.blf .newsletter form .newsletter-btn{
+  position:absolute;top:5px;right:5px;height:40px;margin:0;padding:0 20px;
+  border:0;border-radius:999px;background:var(--blf-gold);color:var(--blf-dark);
+  font-family:var(--blf-ui);font-size:11px!important;font-weight:600;
+  letter-spacing:.1em;line-height:40px;text-transform:uppercase;text-decoration:none;
+  cursor:pointer;opacity:1;transition:background-color .25s ease,color .25s ease}
+footer.blf .newsletter form .newsletter-btn:hover,footer.blf .newsletter form .newsletter-btn:focus{
+  background:#D9B66A;color:var(--blf-dark);opacity:1;text-decoration:none}
+/* el tema reemplaza el botón por un spinner mientras envía: que no se rompa */
+footer.blf .newsletter form .newsletter-btn-spinner{margin-right:20px}
+footer.blf .newsletter .alert{margin:12px 0 0;border-radius:12px;font-size:13px;text-align:left}
+
+/* ───────── 5. contacto: tres chips ───────── */
+footer.blf .blf-contact{margin-bottom:0!important}
+footer.blf .blf-contact ul{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:0!important}
+footer.blf .blf-contact li{margin:0!important}
+footer.blf .blf-chip{
+  display:inline-flex!important;align-items:center;text-align:left;
+  min-height:56px;padding:8px 22px 8px 10px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.18);color:var(--blf-w);
+  transition:border-color .25s ease,background-color .25s ease}
+footer.blf .blf-chip:hover,footer.blf .blf-chip:focus{
+  color:var(--blf-w);border-color:rgba(204,163,82,.7);background-color:rgba(255,255,255,.04)}
+footer.blf .blf-ic{
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;
+  width:36px;height:36px;margin-right:12px;border-radius:50%;
+  background:rgba(204,163,82,.12)}
+footer.blf .blf-ic svg{width:15px;height:15px;fill:var(--blf-gold);vertical-align:0}
+footer.blf .blf-txt{display:flex;flex-direction:column;line-height:1.25}
+footer.blf .blf-lab{
+  font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--blf-gold);margin-bottom:3px}
+footer.blf .blf-val{font-size:13px;font-weight:500;letter-spacing:.01em;color:var(--blf-w);white-space:nowrap}
+footer.blf .blf-raw{display:none}
+
+/* ───────── 6. logos, tiendanube, legales ───────── */
+footer.blf .blf-logos{
+  margin:48px 0 0!important;padding-top:36px;border-top:1px solid var(--blf-line)}
+footer.blf .blf-logos img{
+  opacity:.75;filter:saturate(.85);max-height:20px;margin:3px 2px;
+  border-color:rgba(255,255,255,.7);transition:opacity .25s ease}
+footer.blf .blf-logos:hover img{opacity:.92}
+footer.blf .blf-seal .col{padding-top:0!important;padding-bottom:0!important}
+footer.blf .blf-powered{margin:28px 0 14px!important}
+footer.blf .powered-by-logo{width:112px;margin-top:0;opacity:.7;transition:opacity .25s ease}
+footer.blf .powered-by-logo:hover{opacity:1}
+footer.blf .powered-by-logo svg{fill:rgba(255,255,255,.85)}
+
+footer.blf .blf-bottom{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;
+  gap:8px 0;font-size:12px;line-height:1.5;color:rgba(255,255,255,.64)}
+footer.blf .blf-bottom .font-smallest{font-size:12px!important;font-family:var(--blf-ui);color:rgba(255,255,255,.64)}
+footer.blf .blf-bottom .mr-md-2{margin:0!important}
+footer.blf .blf-bottom .claim-link{margin-top:0!important}
+footer.blf .blf-bottom .claim-link>span.mb-2{margin-bottom:0!important}
+footer.blf .blf-bottom a{
+  color:rgba(255,255,255,.82);text-decoration:underline;
+  text-decoration-color:rgba(204,163,82,.6);text-underline-offset:3px;
+  font-weight:500;transition:color .25s ease}
+footer.blf .blf-bottom a:hover,footer.blf .blf-bottom a:focus{color:var(--blf-w);text-decoration-color:var(--blf-gold)}
+/* separadores `·` dorados: el "/" nativo se enmudece y se lo redibuja */
+footer.blf .blf-bottom .claim-link .mx-1{font-size:0;margin:0 10px!important}
+footer.blf .blf-bottom .claim-link .mx-1::before{content:"\00b7";font-size:14px;color:var(--blf-gold);line-height:1}
+footer.blf .blf-bottom .claim-link [data-component="order-cancellation"]{margin-bottom:0!important}
+
+@media (min-width:768px){
+  footer.blf .blf-bottom .claim-link::before{content:"\00b7";color:var(--blf-gold);font-size:14px;margin:0 10px;line-height:1}
+}
+
+/* ───────── mobile ───────── */
+@media (max-width:767px){
+  footer.blf{padding-top:52px!important}
+  footer.blf .blf-social{margin-bottom:36px!important}
+  footer.blf .blf-nav{margin-bottom:44px!important}
+  /* dos columnas al ancho de su contenido; a 390 el container mide 330 px y
+     "Cambios y Devoluciones" + "Preguntas Frecuentes" no entraban por 6 px */
+  footer.blf .blf-nav ul{
+    display:grid;grid-template-columns:auto auto;justify-content:center;
+    gap:16px 18px;margin:0 -10px;text-align:center}
+  footer.blf .footer-menu-link{letter-spacing:.03em}
+  footer.blf .blf-nav li:last-child:nth-child(odd){grid-column:1 / -1}
+  footer.blf .blf-news-t{font-size:20px;padding:0 8px}
+  footer.blf .blf-contact ul{flex-direction:column;align-items:center}
+  footer.blf .blf-contact li{width:100%;max-width:320px}
+  footer.blf .blf-chip{width:100%}
+  footer.blf .blf-logos{margin-top:40px!important;padding-top:30px}
+  footer.blf .blf-bottom{flex-direction:column;gap:12px}
+  footer.blf .blf-bottom .claim-link{padding:0 12px}
+  footer.blf .blf-bottom .claim-link .mx-1{display:none!important}
+  footer.blf .blf-bottom .claim-link [data-component="order-cancellation"]{margin-top:10px!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  footer.blf *,footer.blf *::before{transition:none!important}
+  footer.blf .social-icon:hover,footer.blf .social-icon:focus{transform:none}
+}
