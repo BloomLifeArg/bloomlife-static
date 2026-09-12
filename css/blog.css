@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Bloom Life · Listado del blog — /blog/ (y /blog/?page=N)
+ *
+ * Namespace .bbl. Lo pinta js/blog.js dentro de <section class="blog-page">, que
+ * el seal esconde con #bbl-guard (.blog-page,.page-header{visibility:hidden})
+ * hasta que esta hoja llegó. La línea `.bbl{visibility:visible}` destapa la vista
+ * nueva aunque el guard siguiera puesto: a igual especificidad gana el último y
+ * esta hoja se engancha DESPUÉS del guard en el <head>.
+ *
+ * Nada de esto va al css_code del tema (0 bytes). Convenciones: sin `inset` ni
+ * `aspect-ratio` (top/right/bottom/left y padding-bottom); reduced-motion respetado.
+ * Sistema visual: el de las páginas de beneficio (.blp) y el buscador (.bsq).
+ */
+
+/* ───────── lo nativo, cuando la vista nueva ya está pintada ───────── */
+/* el template mete el listado en <div class="container mb-5">: se libera el ancho
+   para que el hero y el cierre vayan a sangre. La clase la pone el JS. */
+body.bbl-on .bbl-wrap{max-width:none!important;width:100%!important;
+ padding:0!important;margin:0!important}
+body.bbl-on .bbl-wrap .page-header,
+body.bbl-on .bbl-native-pag{display:none!important}
+body.bbl-on .blog-page .bbl{visibility:visible}
+
+/* ───────── tokens ───────── */
+.bbl{--dark:#003845;--mid:#608B71;--gold:#CCA352;--gold-ink:#8A6A2A;--terra:#C4694F;
+ --sand:#F4F0E8;--w:#fff;--ink:#1A1A1A;--muted:#7A7A7A;--line:rgba(0,56,69,.10);
+ --ui:'Inter','Work Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+ --ed:Georgia,'Times New Roman',serif;
+ font-family:var(--ui);color:var(--ink);-webkit-font-smoothing:antialiased;
+ text-align:left;line-height:1.5}
+.bbl *,.bbl *::before,.bbl *::after{box-sizing:border-box}
+/* el tema fuerza p{font-size:14px!important}: acá no hay <p>, pero por si alguno entra */
+.bbl p{margin:0;font-size:inherit!important;line-height:inherit}
+.bbl img{max-width:100%;height:auto;display:block}
+.bbl a{text-decoration:none}
+.bbl-in{max-width:1180px;margin:0 auto;padding:0 32px}
+
+/* ───────── 1. hero compacto ───────── */
+.bbl-hero{background:var(--dark);color:var(--w);padding:64px 0 60px}
+.bbl-rule{width:44px;height:2px;background:var(--gold);margin-bottom:22px}
+.bbl-kicker{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+ color:var(--gold);line-height:1.4}
+.bbl-h1{font-family:var(--ed);font-style:italic;font-weight:400;color:var(--w);
+ font-size:clamp(36px,4.8vw,58px);line-height:1.08;letter-spacing:-.01em;
+ margin:16px 0 0;max-width:20ch;text-align:left;text-transform:none}
+.bbl-h1 .bbl-em{color:var(--gold);font-style:italic}
+.bbl-sub{font-weight:300;font-size:clamp(16px,1.5vw,18px);line-height:1.65;
+ color:rgba(255,255,255,.72);max-width:48ch;margin-top:18px}
+
+/* ───────── 2. listado ───────── */
+.bbl-list{background:var(--sand);padding:56px 0 88px}
+
+/* card base: la tarjeta ENTERA es el link (un solo <a>), hijos en span/bloque */
+.bbl-c,.bbl-feat{display:flex;flex-direction:column;background:var(--w);
+ border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;
+ color:var(--ink);min-width:0;transition:transform .2s ease,box-shadow .2s ease}
+.bbl-c:hover,.bbl-feat:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,56,69,.09)}
+.bbl-c:focus-visible,.bbl-feat:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+/* 3:2 con padding-bottom (sin aspect-ratio) */
+.bbl-img{display:block;position:relative;width:100%;padding-bottom:66.667%;
+ background:#E9E3D8;overflow:hidden}
+.bbl-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;
+ transition:transform .5s ease}
+.bbl-c:hover .bbl-img img,.bbl-feat:hover .bbl-img img{transform:scale(1.03)}
+.bbl-body{display:flex;flex-direction:column;flex:1 1 auto;padding:22px 24px 24px;min-width:0}
+.bbl-date{display:block;font-size:11px;font-weight:600;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold-ink);line-height:1.4}
+.bbl-t{display:block;font-family:var(--ed);font-style:normal;font-weight:400;font-size:22px;
+ line-height:1.25;color:var(--dark);letter-spacing:-.005em;margin-top:10px;
+ text-transform:none}
+.bbl-x{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden;
+ font-weight:300;font-size:15px;line-height:1.6;color:#4A5154;margin-top:10px}
+.bbl-more{display:block;margin-top:auto;padding-top:18px;font-size:12px;font-weight:600;
+ letter-spacing:.07em;text-transform:uppercase;color:var(--dark);line-height:1.2}
+.bbl-more i{font-style:normal;display:inline-block;transition:transform .2s ease}
+.bbl-c:hover .bbl-more i,.bbl-feat:hover .bbl-more i{transform:translateX(4px)}
+
+/* destacada: imagen a la izquierda, texto a la derecha */
+.bbl-feat{display:grid;grid-template-columns:1.12fr .88fr;align-items:stretch}
+.bbl-feat .bbl-img{padding-bottom:0;height:100%;min-height:340px}
+.bbl-feat .bbl-body{padding:38px 40px 36px;justify-content:center}
+.bbl-feat .bbl-t{font-size:30px;line-height:1.18;margin-top:12px}
+.bbl-feat .bbl-x{font-size:16px;-webkit-line-clamp:4;margin-top:14px}
+.bbl-feat .bbl-more{margin-top:26px;padding-top:0}
+
+/* separador editorial entre la destacada y la grilla */
+.bbl-sep{display:flex;align-items:center;gap:18px;font-family:var(--ed);font-style:italic;
+ font-weight:400;font-size:22px;line-height:1.2;color:var(--dark);margin:52px 0 22px;
+ text-align:left;text-transform:none;letter-spacing:0}
+.bbl-sep::after{content:"";flex:1 1 0;height:1px;background:var(--line)}
+
+.bbl-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:0}
+
+/* ───────── paginación propia (pastillas), sólo si no se juntaron las páginas ───────── */
+.bbl-pag{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:8px;margin-top:52px}
+.bbl-pg{display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;
+ padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--w);
+ font-size:13px;font-weight:600;color:var(--dark);line-height:1;
+ transition:background .2s ease,color .2s ease,border-color .2s ease}
+.bbl-pg:hover{border-color:var(--dark)}
+.bbl-pg.on{background:var(--dark);border-color:var(--dark);color:var(--w)}
+.bbl-pg.off{opacity:.35;pointer-events:none}
+.bbl-pg:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ───────── 3. cierre ───────── */
+.bbl-final{background:var(--terra);color:var(--w);padding:80px 0}
+.bbl-h2{font-family:var(--ed);font-style:italic;font-weight:400;color:var(--w);
+ font-size:clamp(28px,3.4vw,42px);line-height:1.15;letter-spacing:-.01em;margin:0;
+ max-width:22ch;text-align:left;text-transform:none}
+.bbl-final-sub{font-weight:300;font-size:17px;line-height:1.7;color:rgba(255,255,255,.84);
+ max-width:52ch;margin-top:16px}
+.bbl-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.bbl-btn-g{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--w);background:transparent;
+ border:1.5px solid rgba(255,255,255,.55);border-radius:999px;padding:15px 30px;line-height:1.2;
+ transition:border-color .2s ease,background .2s ease,color .2s ease,transform .15s ease}
+.bbl-btn-g:hover{border-color:var(--w);background:var(--w);color:var(--terra);transform:translateY(-1px)}
+.bbl-btn-g:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ───────── entrada escalonada ───────── */
+@keyframes bbl-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bbl-grid .bbl-c{animation:bbl-in .4s ease both;animation-fill-mode:backwards}
+.bbl-grid .bbl-c:nth-child(2){animation-delay:45ms}
+.bbl-grid .bbl-c:nth-child(3){animation-delay:90ms}
+.bbl-grid .bbl-c:nth-child(4){animation-delay:135ms}
+.bbl-grid .bbl-c:nth-child(5){animation-delay:180ms}
+.bbl-grid .bbl-c:nth-child(6){animation-delay:225ms}
+@media (prefers-reduced-motion:reduce){
+ .bbl-grid .bbl-c{animation:none}
+ .bbl-c,.bbl-feat,.bbl-img img,.bbl-more i,.bbl-pg,.bbl-btn-g{transition:none}
+ .bbl-c:hover,.bbl-feat:hover,.bbl-btn-g:hover{transform:none}
+ .bbl-c:hover .bbl-img img,.bbl-feat:hover .bbl-img img{transform:none}
+ .bbl-c:hover .bbl-more i,.bbl-feat:hover .bbl-more i{transform:none}
+}
+
+/* ───────── responsive ───────── */
+@media (max-width:1023px){
+ .bbl-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+ /* a 768 la columna de texto de la destacada quedaba en ~310px y el título en 4 líneas */
+ .bbl-feat{grid-template-columns:1fr 1fr}
+ .bbl-feat .bbl-body{padding:30px 30px 28px}
+ .bbl-feat .bbl-t{font-size:26px}
+ .bbl-feat .bbl-x{font-size:15px}
+}
+@media (max-width:767px){
+ .bbl-feat{display:flex;flex-direction:column}
+ .bbl-feat .bbl-img{padding-bottom:66.667%;height:auto;min-height:0}
+ .bbl-feat .bbl-body{padding:24px 24px 24px}
+ .bbl-feat .bbl-t{font-size:25px}
+ .bbl-feat .bbl-more{margin-top:20px}
+}
+@media (max-width:640px){
+ .bbl-in{padding:0 20px}
+ .bbl-hero{padding:48px 0 44px}
+ .bbl-h1{max-width:none;margin-top:14px}
+ .bbl-sub{font-size:16px;margin-top:16px}
+ .bbl-list{padding:36px 0 64px}
+ .bbl-grid{grid-template-columns:1fr;gap:16px}
+ .bbl-sep{font-size:20px;margin:40px 0 18px}
+ .bbl-body{padding:20px 20px 22px}
+ .bbl-t{font-size:21px}
+ .bbl-x{font-size:14.5px}
+ .bbl-pag{margin-top:40px}
+ .bbl-final{padding:60px 0}
+ .bbl-final-sub{font-size:16px}
+ .bbl-btns{flex-direction:column;align-items:stretch;gap:12px;margin-top:28px}
+ .bbl-btn-g{text-align:center}
+}
