@@ -1,0 +1,272 @@
+/* Páginas institucionales — /suscripciones/ /preguntas-frecuentes/
+ * /politica-de-devolucion/ /contacto/
+ *
+ * Se carga DESPUÉS de css/paginas-beneficio.css y se apoya en ella: tokens
+ * (--dark, --gold, …), .blp, .blp-band, .blp-in, .blp-hero, .blp-h1, .blp-h2,
+ * .blp-eyebrow, .blp-card, .blp-btn, .blp-btn-g, .blp-final, .blp-next.
+ * Acá van solo los componentes que esas cinco páginas no tenían: tiles,
+ * pasos, letra chica, acordeón + buscador de FAQ, columnas sí/no, tabla,
+ * canales de contacto y el formulario nativo restilado.
+ *
+ * Mismas reglas que la hoja base: nada en css_code, cero `inset`/`aspect-ratio`,
+ * y el markup de las páginas es pelado (la API borra style="" y data-*), así que
+ * todo va por clase. Prefijo .bli- (institucional).
+ */
+
+/* ───────── bandas y cabeceras de sección ───────── */
+.bli-white{background:var(--w);padding:96px 0}
+.bli-sand{background:var(--sand);padding:96px 0}
+.bli-head{max-width:680px}
+.bli-sub{font-weight:300;font-size:17px;line-height:1.7;color:#4A5154;margin-top:16px;max-width:60ch}
+.bli-sub a,.bli-prose a,.bli-qa a,.bli-fine-t a,.bli-step-t a,.bli-tile-t a{color:var(--dark);
+ border-bottom:1px solid var(--gold);transition:color .2s ease}
+.bli-sub a:hover,.bli-prose a:hover,.bli-qa a:hover,.bli-fine-t a:hover,.bli-step-t a:hover{color:var(--mid)}
+.bli-more{margin-top:34px}
+.bli-more a{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--dark);
+ border-bottom:1.5px solid var(--gold);padding-bottom:3px}
+.bli-more a:hover{color:var(--mid)}
+
+/* ───────── hero: variantes ───────── */
+.bli-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:end}
+.bli-hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+.bli-hero-cta .blp-btn,.bli-hero-cta .blp-btn-g{font-size:13px;padding:15px 30px}
+.bli-btn-f{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+.bli-btn-f:hover{background:var(--w);border-color:var(--w);color:var(--dark)}
+.bli-stat{justify-self:end;text-align:right;max-width:300px}
+.bli-stat-n{font-family:var(--ed);font-style:italic;font-size:clamp(84px,9vw,132px);line-height:.9;color:var(--gold);
+ letter-spacing:-.03em}
+.bli-stat-n span{font-size:.36em;letter-spacing:0;vertical-align:.7em;margin-left:.1em}
+.bli-stat-t{font-weight:300;font-size:16px;line-height:1.6;color:rgba(255,255,255,.72);margin-top:14px}
+/* hero claro: para páginas de tranquilizar (devoluciones), no de vender */
+.blp-hero.bli-hero-light{background:var(--sand);color:var(--dark);padding:92px 0 84px}
+.bli-hero-light .blp-h1{color:var(--dark)}
+.bli-hero-light .blp-hero-sub{color:#3A4144}
+.bli-hero-light .blp-kicker{color:#8A6A2A}
+/* hero compacto (FAQ) */
+.blp-hero.bli-hero-compact{padding:80px 0 64px}
+.bli-hero-compact .blp-h1{font-size:clamp(36px,5.4vw,60px)}
+
+/* ───────── tiles (números grandes) ───────── */
+.bli-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:46px}
+.bli-tiles.bli-3{grid-template-columns:repeat(3,1fr)}
+.bli-tile{border:1px solid var(--line);border-radius:18px;padding:30px 28px 28px;background:var(--w)}
+.bli-white .bli-tile{background:var(--sand)}
+.bli-tile-n{font-family:var(--ed);font-style:italic;font-size:46px;line-height:1;color:var(--gold);letter-spacing:-.02em}
+.bli-tile-n span{font-family:var(--ui);font-style:normal;font-size:12px;font-weight:600;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--muted);margin-left:8px;vertical-align:.5em}
+.bli-tile-h{font-size:17px;font-weight:600;color:var(--dark);margin-top:16px;line-height:1.35}
+.bli-tile-t{font-weight:300;font-size:15px;line-height:1.62;color:#4A5154;margin-top:8px}
+
+/* ───────── pasos numerados ───────── */
+.bli-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0 36px;margin-top:48px;border-top:1px solid var(--line)}
+.bli-steps.bli-3{grid-template-columns:repeat(3,1fr)}
+.bli-step{padding:28px 0 0;position:relative}
+.bli-step::before{content:"";position:absolute;top:-1px;left:0;width:44px;height:2px;background:var(--gold)}
+.bli-step-n{font-size:11px;font-weight:600;letter-spacing:.16em;color:#8A6A2A}
+.bli-step-h{font-family:var(--ed);font-size:23px;line-height:1.25;color:var(--dark);margin-top:12px}
+.bli-step-t{font-weight:300;font-size:15px;line-height:1.65;color:#4A5154;margin-top:10px}
+
+/* ───────── letra chica ───────── */
+.bli-fine{display:grid;grid-template-columns:1fr 1fr;gap:0 48px;margin-top:40px}
+.bli-fine-row{display:grid;grid-template-columns:9px 1fr;gap:16px;align-items:start;padding:18px 0;
+ border-bottom:1px solid var(--line)}
+.bli-fine-row .blp-dot{background:var(--gold)}
+.bli-fine-h{font-weight:600;font-size:15.5px;color:var(--dark);line-height:1.4}
+.bli-fine-t{font-weight:300;font-size:15px;color:#4A5154;line-height:1.6;margin-top:4px}
+
+/* ───────── cards de producto: ajustes ─────────
+   .blp-card viene de la hoja base (barra | frasco | info | botón). Acá solo
+   el badge de formato en gris para que no compita con "Más afín" dorado. */
+.bli-badge-fmt{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+ color:#6B6B6B;border:1px solid var(--line);border-radius:999px;padding:3px 11px;margin-bottom:10px}
+
+/* ───────── FAQ: acordeón ─────────
+   Sin JS todo queda ABIERTO y legible (progresivo). Con JS (.bli-js en la raíz)
+   se pliega y cada pregunta abre/cierra al click. */
+.bli-faq{margin-top:34px;border-top:1px solid var(--line)}
+.bli-q{border-bottom:1px solid var(--line)}
+.bli-qh{font-family:var(--ui);font-weight:500;font-size:17.5px;line-height:1.4;color:var(--dark);
+ margin:0;padding:20px 48px 20px 0;position:relative;transition:color .2s ease}
+/* el JS mete un <button> adentro del h3: hereda todo y ocupa la fila entera */
+.bli-qb{display:block;width:100%;margin:0;padding:0;border:0;background:none;font:inherit;color:inherit;
+ text-align:left;cursor:pointer;-webkit-appearance:none;appearance:none}
+.bli-qb:focus{outline:none}
+.bli-qb:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
+.bli-js .bli-qh{cursor:pointer}
+.bli-js .bli-qh::after{content:"";position:absolute;right:8px;top:50%;width:9px;height:9px;
+ border-right:1.5px solid var(--dark);border-bottom:1.5px solid var(--dark);
+ transform:translateY(-70%) rotate(45deg);transition:transform .25s ease}
+.bli-js .bli-q.open .bli-qh::after{transform:translateY(-20%) rotate(-135deg)}
+.bli-js .bli-qh:hover,.bli-js .bli-q.open .bli-qh{color:var(--mid)}
+.bli-qa{font-weight:300;font-size:16px;line-height:1.7;color:#3A4144;padding:0 0 24px;max-width:72ch}
+.bli-qa>div+div{margin-top:10px}
+.bli-qa ul{margin:8px 0 0;padding:0 0 0 18px}
+.bli-qa li{margin:4px 0}
+.bli-qa b{color:var(--dark);font-weight:600}
+.bli-js .bli-q:not(.open) .bli-qa{display:none}
+.bli-qh mark,.bli-qb mark{background:rgba(204,163,82,.28);color:inherit;padding:0 2px;border-radius:3px}
+.bli-q.hide,.bli-sec.hide,.bli-nav.hide{display:none}
+
+/* ───────── FAQ: buscador (el input lo crea el JS; la API borra <input>) ───────── */
+.bli-search{position:relative;max-width:560px;margin-top:34px;min-height:56px}
+.bli-search input{width:100%;height:56px;border-radius:999px;border:1.5px solid rgba(255,255,255,.28);
+ background:rgba(255,255,255,.08);color:var(--w);font:400 16px var(--ui);padding:0 22px 0 52px;
+ outline:none;-webkit-appearance:none;appearance:none;transition:border-color .2s ease,background .2s ease}
+.bli-search input::placeholder{color:rgba(255,255,255,.55)}
+.bli-search input:focus{border-color:var(--gold);background:rgba(255,255,255,.13)}
+.bli-search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.bli-search-ic{position:absolute;left:21px;top:19px;width:14px;height:14px;border-radius:50%;
+ border:2px solid rgba(255,255,255,.65);pointer-events:none}
+.bli-search-ic::after{content:"";position:absolute;width:2px;height:7px;background:rgba(255,255,255,.65);
+ right:-4px;bottom:-6px;transform:rotate(-45deg);border-radius:2px}
+.bli-count{font-size:13px;color:rgba(255,255,255,.62);margin-top:12px;min-height:18px}
+.bli-empty{display:none;padding:70px 0 40px;text-align:center}
+.bli-empty.show{display:block}
+.bli-empty-h{font-family:var(--ed);font-style:italic;font-size:26px;color:var(--dark)}
+.bli-empty-t{font-weight:300;font-size:16px;color:var(--muted);margin-top:10px}
+
+/* ───────── FAQ: chips de sección (sticky) ───────── */
+.bli-nav{background:var(--w);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.bli-nav .blp-in{display:flex;gap:8px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.bli-chip{display:inline-block;white-space:nowrap;font-size:11.5px;font-weight:600;letter-spacing:.06em;
+ text-transform:uppercase;color:var(--dark);border:1.5px solid var(--line);border-radius:999px;padding:12px 16px;
+ transition:background .2s ease,color .2s ease,border-color .2s ease}
+.bli-chip:hover{border-color:var(--dark)}
+.bli-chip.on{background:var(--dark);border-color:var(--dark);color:var(--w)}
+
+/* ───────── FAQ: secciones ───────── */
+.bli-secs{background:var(--w);padding:24px 0 96px}
+.bli-sec{padding-top:64px;scroll-margin-top:96px}
+.bli-sec-h{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline}
+.bli-sec-n{font-family:var(--ed);font-style:italic;font-size:22px;color:var(--gold)}
+.bli-sec .blp-h2{font-size:clamp(25px,2.6vw,32px)}
+
+/* ───────── columnas sí / no ───────── */
+.bli-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:44px}
+.bli-col{border:1px solid var(--line);border-radius:18px;padding:30px 30px 20px;background:var(--w)}
+.bli-sand .bli-col{background:var(--w)}
+.bli-white .bli-col{background:var(--sand)}
+.bli-col-h{font-family:var(--ed);font-style:italic;font-size:23px;color:var(--dark)}
+.bli-col ul{list-style:none;margin:16px 0 0;padding:0}
+.bli-col li{position:relative;padding:13px 0 13px 30px;border-top:1px solid var(--line);
+ font-weight:300;font-size:15.5px;line-height:1.55;color:#3A4144}
+.bli-col li::before{position:absolute;left:0;top:12px;font-weight:700;font-size:15px}
+.bli-ok li::before{content:"✓";color:var(--mid)}
+.bli-no li::before{content:"✕";color:var(--terra)}
+
+/* ───────── tabla ───────── */
+.bli-table{width:100%;border-collapse:collapse;margin-top:38px;font-size:15.5px}
+.bli-table td{padding:20px 24px 20px 0;border-top:1px solid var(--line);vertical-align:top;
+ font-weight:300;color:#3A4144;line-height:1.6}
+.bli-table td:first-child{font-weight:600;color:var(--dark);width:42%}
+.bli-table tr:last-child td{border-bottom:1px solid var(--line)}
+.bli-table b{color:var(--dark);font-weight:600}
+.bli-table small{display:block;font-weight:300;font-size:13.5px;color:#4A5154;margin-top:4px;line-height:1.45}
+
+/* ───────── prosa ───────── */
+.bli-prose{max-width:70ch;margin-top:24px;display:flex;flex-direction:column;gap:14px}
+.bli-prose>div{font-weight:300;font-size:16.5px;line-height:1.72;color:#3A4144}
+.bli-prose b{color:var(--dark);font-weight:600}
+.bli-2col{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+
+/* ───────── contacto ───────── */
+.bli-grid2{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:start}
+.bli-channels{display:flex;flex-direction:column;gap:14px;margin-top:34px}
+.bli-ch{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;background:var(--w);
+ border:1px solid var(--line);border-radius:18px;padding:22px 24px;
+ transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.bli-ch:hover{transform:translateY(-2px);border-color:var(--mid);box-shadow:0 10px 28px rgba(0,56,69,.09)}
+.bli-ch-k{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8A6A2A}
+.bli-ch-v{font-family:var(--ed);font-size:22px;line-height:1.25;color:var(--dark);margin-top:6px}
+.bli-ch-t{font-weight:300;font-size:14px;color:#6B6B6B;margin-top:4px}
+.bli-ch-a{font-size:22px;color:var(--dark);transition:transform .2s ease}
+.bli-ch:hover .bli-ch-a{transform:translateX(4px)}
+.bli-formcard{background:var(--w);border:1px solid var(--line);border-radius:22px;padding:38px}
+.bli-form-h{font-family:var(--ed);font-size:27px;line-height:1.2;color:var(--dark)}
+.bli-form-t{font-weight:300;font-size:15px;color:var(--muted);margin:8px 0 28px}
+/* el <form> es el nativo del tema, movido entero: se restilan sus clases, no se toca su interior */
+.bli-formcard .form-group{margin:0 0 18px}
+.bli-formcard .form-label{display:block;font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.12em;
+ text-transform:uppercase;color:var(--dark);margin:0 0 8px}
+.bli-formcard .form-control{display:block;width:100%;height:auto;border:1.5px solid var(--line);border-radius:14px;
+ background:var(--sand);padding:14px 16px;font-family:var(--ui);font-size:16px;font-weight:400;color:var(--ink);
+ box-shadow:none;outline:none;transition:border-color .2s ease,background .2s ease}
+.bli-formcard .form-control::placeholder{color:#9A9A9A}
+.bli-formcard .form-control:focus{border-color:var(--mid);background:var(--w)}
+.bli-formcard textarea.form-control{min-height:150px;resize:vertical}
+.bli-formcard .btn{display:block;width:100%;height:auto;border:0;border-radius:999px;background:var(--dark);
+ color:var(--w);font-family:var(--ui);font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+ padding:17px 24px;cursor:pointer;transition:background .2s ease,transform .15s ease}
+.bli-formcard .btn:hover{background:var(--mid);transform:translateY(-1px)}
+.bli-formcard .winnie-pooh{display:none}
+/* el tema inyecta el reCAPTCHA/Turnstile como hijo del form, entre el mensaje y Enviar */
+.bli-formcard .g-recaptcha,.bli-formcard .cf-turnstile{margin:4px 0 18px}
+.bli-formcard .alert{border-radius:14px;margin-top:18px;font-family:var(--ui);font-size:15px}
+.bli-form-note{font-weight:300;font-size:13px;color:var(--muted);margin-top:14px;line-height:1.5}
+
+/* lista de enlaces "quizá ya está respondido" */
+.bli-links{margin-top:34px;border-top:1px solid var(--line)}
+.bli-links a{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 0;
+ border-bottom:1px solid var(--line);font-size:17px;font-weight:400;color:var(--dark);transition:color .2s ease}
+.bli-links a span:last-child{color:var(--gold);transition:transform .2s ease}
+.bli-links a:hover{color:var(--mid)}
+.bli-links a:hover span:last-child{transform:translateX(4px)}
+
+/* cinco páginas de beneficio en el cierre */
+.blp-next.bli-next5{grid-template-columns:repeat(5,1fr)}
+.bli-final-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
+
+/* ───────── tokens por página ───────── */
+.blp-sus{--acc:#CCA352}
+.blp-faq{--acc:#003845}
+.blp-dev{--acc:#608B71}
+.blp-con{--acc:#003845}
+
+/* ───────── responsive ───────── */
+@media (max-width:900px){
+ .bli-hero-grid{grid-template-columns:1fr;gap:34px}
+ .bli-stat{justify-self:start;text-align:left}
+ .bli-tiles,.bli-steps,.bli-tiles.bli-3,.bli-steps.bli-3{grid-template-columns:1fr 1fr}
+ .bli-steps{gap:0 28px}
+ .bli-grid2,.bli-2col{grid-template-columns:1fr;gap:40px}
+ .blp-next.bli-next5{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+ .bli-white,.bli-sand{padding:60px 0}
+ .blp-hero.bli-hero-light{padding:64px 0 56px}
+ .blp-hero.bli-hero-compact{padding:60px 0 48px}
+ .bli-hero-cta{margin-top:28px}
+ .bli-hero-cta .blp-btn,.bli-hero-cta .blp-btn-g{display:block;width:100%;text-align:center}
+ .bli-stat-n{font-size:84px}
+ .bli-tiles,.bli-steps,.bli-fine,.bli-cols,.bli-tiles.bli-3,.bli-steps.bli-3{grid-template-columns:1fr}
+ .bli-tiles{gap:12px;margin-top:34px}
+ .bli-tile{padding:24px 22px 22px}
+ .bli-tile-n{font-size:40px}
+ .bli-steps{margin-top:36px;border-top:0}
+ .bli-step{border-top:1px solid var(--line);padding:24px 0 0}
+ .bli-step+.bli-step{margin-top:22px}
+ .bli-fine{margin-top:30px}
+ .bli-qh{font-size:16.5px;padding:18px 40px 18px 0}
+ .bli-qa{font-size:15.5px}
+ .bli-search{margin-top:28px}
+ .bli-nav .blp-in{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-right:40px}
+ .bli-nav{position:sticky}
+ .bli-nav::after{content:"";position:absolute;top:0;right:0;bottom:0;width:36px;pointer-events:none;
+  background:linear-gradient(to right,rgba(255,255,255,0),var(--w))}
+ .bli-nav .blp-in::-webkit-scrollbar{display:none}
+ .bli-secs{padding:8px 0 64px}
+ .bli-sec{padding-top:52px;scroll-margin-top:80px}
+ .bli-col{padding:24px 22px 14px}
+ .bli-table td{display:block;width:100%!important;padding:6px 0 0}
+ .bli-table td:first-child{padding-top:18px}
+ .bli-table td:last-child{border-top:0;padding-bottom:18px}
+ .bli-table tr:last-child td:first-child{border-bottom:0}
+ .bli-channels{margin-top:26px}
+ .bli-formcard{padding:26px 20px}
+ .bli-links a{font-size:16px;padding:16px 0}
+ .blp-next.bli-next5{grid-template-columns:1fr}
+ .bli-final-cta .blp-btn-g{display:block;width:100%;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+ .bli-ch,.bli-ch-a,.bli-links a span:last-child{transition:none}
+}
