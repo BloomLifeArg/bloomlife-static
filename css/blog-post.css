@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Bloom Life · Nota individual del blog — /blog/posts/<slug>
+ *
+ * Namespace .bbp. Lo pinta js/blog-post.js dentro de <div class="blog-post-page">,
+ * que el seal esconde con #bbp-guard (.blog-post-page,.page-header{visibility:hidden})
+ * hasta que esta hoja llegó. La línea `.bbp{visibility:visible}` destapa la vista
+ * nueva aunque el guard siguiera puesto: a igual especificidad gana el último y
+ * esta hoja se engancha DESPUÉS del guard en el <head>.
+ *
+ * El contenido editorial (.post-content, HTML de TinyMCE) NO se reescribe: el JS
+ * mueve el nodo intacto adentro de .bbp-body y acá se lo tipografía. Las clases
+ * que trae (Tailwind del export de Claude: font-claude-response-body, text-[1.125rem],
+ * list-disc pl-8…; y utilidades Bootstrap del tema: mt-3, my-3, px-4…) se
+ * neutralizan por etiqueta. El tema fuerza p{font-size:14px!important} desde
+ * css_code: se le gana con !important dentro del namespace.
+ *
+ * Nada de esto va al css_code del tema (0 bytes). Convenciones: sin `inset` ni
+ * `aspect-ratio`; reduced-motion respetado. Autosuficiente: css/blog.css no se
+ * carga en las notas, por eso las cards de "Seguí leyendo" y el cierre --terra
+ * se repiten acá con prefijo propio.
+ */
+
+/* ───────── lo nativo, cuando la vista nueva ya está pintada ───────── */
+/* el template mete la nota en <div class="container container-narrow"> (680px):
+   se libera el ancho para que las bandas vayan a sangre. La clase la pone el JS. */
+body.bbp-on .bbp-wrap{max-width:none!important;width:100%!important;
+ padding:0!important;margin:0!important}
+body.bbp-on .bbp-wrap .page-header,
+body.bbp-on .blog-post-page>[data-bbp-native],
+body.bbp-on .blog-post-page .post-date{display:none!important}
+body.bbp-on .blog-post-page{padding-bottom:0!important;margin-bottom:0!important}
+body.bbp-on .blog-post-page .bbp{visibility:visible}
+
+/* ───────── tokens ───────── */
+.bbp{--dark:#003845;--mid:#608B71;--gold:#CCA352;--gold-ink:#8A6A2A;--terra:#C4694F;
+ --sand:#F4F0E8;--w:#fff;--ink:#1A1A1A;--body:#2A3B40;--muted:#5B6A6E;--line:rgba(0,56,69,.10);
+ --ui:'Inter','Work Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+ --ed:Georgia,'Times New Roman',serif;
+ font-family:var(--ui);color:var(--ink);-webkit-font-smoothing:antialiased;
+ text-align:left;line-height:1.5;background:var(--w)}
+.bbp *,.bbp *::before,.bbp *::after{box-sizing:border-box}
+.bbp a{text-decoration:none}
+.bbp-in{max-width:728px;margin:0 auto;padding:0 24px}
+.bbp-in-wide{max-width:1180px;margin:0 auto;padding:0 32px}
+
+/* ───────── 1. hero editorial claro ───────── */
+.bbp-hero{background:var(--sand);padding:44px 0 56px}
+.bbp-has-cover .bbp-hero{padding-bottom:132px}   /* la portada monta 84px sobre la arena */
+.bbp-back{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;
+ letter-spacing:.07em;text-transform:uppercase;color:var(--dark);line-height:1.2;
+ transition:color .2s ease}
+.bbp-back i{font-style:normal;display:inline-block;transition:transform .2s ease}
+.bbp-back:hover{color:var(--gold-ink)}
+.bbp-back:hover i{transform:translateX(-4px)}
+.bbp-back:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.bbp-kicker{margin-top:34px;font-size:11px;font-weight:600;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold-ink);line-height:1.5}
+.bbp-kicker .bbp-dot{margin:0 9px;color:var(--gold)}
+.bbp .bbp-h1{font-family:var(--ed);font-style:normal;font-weight:400;color:var(--dark);
+ font-size:clamp(34px,4.6vw,56px);line-height:1.08;letter-spacing:-.012em;
+ margin:16px 0 0;max-width:22ch;text-align:left;text-transform:none}
+.bbp-meta{display:flex;align-items:center;gap:10px;margin-top:24px;font-size:14px;
+ font-weight:400;color:var(--muted);line-height:1.4}
+.bbp-meta::before{content:"";width:22px;height:2px;background:var(--gold);flex:0 0 auto}
+
+/* ───────── 2. portada ───────── */
+.bbp-cover{display:flow-root;position:relative;z-index:2;background:transparent}
+.bbp-cover-in{max-width:960px;margin:-84px auto 0;padding:0 32px}
+.bbp .bbp-cover-img{display:block;width:100%;max-width:100%;height:auto;
+ border-radius:18px;box-shadow:0 22px 56px rgba(0,56,69,.14);opacity:1;
+ margin:0;background:#E9E3D8}
+
+/* ───────── 3. cuerpo: columna de lectura de 680px ───────── */
+.bbp-art{background:var(--w);padding:64px 0 72px}
+.bbp-has-cover .bbp-art{padding-top:60px}
+.bbp-body{max-width:728px;margin:0 auto;padding:0 24px}
+
+/* el nodo movido: tipografía por etiqueta, sin depender de sus clases */
+.bbp .post-content{font-family:var(--ui);font-weight:300;font-size:18px;line-height:1.75;
+ color:var(--body);margin:0!important;padding:0!important;text-align:left}
+/* wrappers del export (div.flex, div.grid, div.group, Bootstrap px-4…): planos */
+.bbp .post-content div{display:block!important;padding:0!important;margin:0!important;
+ max-width:none!important;width:auto!important;height:auto!important;
+ opacity:1!important;transform:none!important;position:static!important;
+ grid-gap:0!important;gap:0!important;background:transparent!important;
+ border:0!important;font:inherit!important;color:inherit!important}
+.bbp .post-content>br,.bbp .post-content div>br{display:none}
+
+.bbp .post-content p{font-family:var(--ui)!important;font-weight:300;
+ font-size:18px!important;line-height:1.75!important;color:var(--body);
+ margin:0 0 26px!important;padding:0!important;text-align:left}
+.bbp .post-content p.bbp-lede{font-size:20px!important;line-height:1.65!important;
+ color:var(--dark);margin-bottom:30px!important}
+.bbp .post-content p.bbp-blank{display:none!important}
+.bbp .post-content .bbp-first{margin-top:0!important}
+
+.bbp .post-content h1,.bbp .post-content h2,.bbp .post-content h3,
+.bbp .post-content h4,.bbp .post-content h5,.bbp .post-content h6{
+ font-family:var(--ed)!important;font-style:normal;font-weight:400!important;color:var(--dark)!important;
+ letter-spacing:-.008em;text-transform:none!important;text-align:left;padding:0!important}
+.bbp .post-content h1,.bbp .post-content h2{font-size:30px!important;line-height:1.2!important;
+ margin:56px 0 18px!important}
+.bbp .post-content h3{font-size:23px!important;line-height:1.28!important;margin:42px 0 14px!important}
+.bbp .post-content h4,.bbp .post-content h5,.bbp .post-content h6{font-size:19px!important;
+ line-height:1.35!important;margin:34px 0 12px!important}
+/* notas que usan h3 como título de sección (sin h2): el h3 toma el tamaño de h2 y el h4 el de h3 */
+.bbp-h3top .post-content h3{font-size:30px!important;line-height:1.2!important;margin:56px 0 18px!important}
+.bbp-h3top .post-content h4{font-size:23px!important;line-height:1.28!important;margin:42px 0 14px!important}
+.bbp .post-content h2+h3,.bbp .post-content h3+h4,.bbp .post-content h2+h4{margin-top:8px!important}
+
+.bbp .post-content strong,.bbp .post-content b{font-weight:600;color:var(--dark)}
+.bbp .post-content em,.bbp .post-content i{font-style:italic}
+.bbp .post-content a{color:var(--dark);text-decoration:underline;
+ -webkit-text-decoration-color:var(--gold);text-decoration-color:var(--gold);
+ text-decoration-thickness:1.5px;text-underline-offset:3px;transition:color .2s ease}
+.bbp .post-content a:hover{color:var(--gold-ink);-webkit-text-decoration-color:var(--gold-ink);
+ text-decoration-color:var(--gold-ink)}
+.bbp .post-content a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+.bbp .post-content ul,.bbp .post-content ol{display:block!important;margin:0 0 28px!important;
+ padding:0 0 0 26px!important;list-style-position:outside;font-size:18px;line-height:1.7}
+.bbp .post-content ul{list-style-type:disc}
+.bbp .post-content ol{list-style-type:decimal}
+.bbp .post-content li{display:list-item!important;font-size:18px;line-height:1.7;
+ margin:0 0 10px!important;padding:0 0 0 4px!important;color:var(--body);font-weight:300}
+.bbp .post-content li::marker{color:var(--gold)}
+.bbp .post-content ol li::marker{color:var(--gold-ink);font-weight:600;font-size:16px}
+.bbp .post-content li p{margin:0!important}
+.bbp .post-content li ul,.bbp .post-content li ol{margin:10px 0 0!important}
+
+/* los <hr> del export separan secciones: se vuelven un filete corto dorado */
+.bbp .post-content hr{display:block;border:0!important;height:2px;width:44px;
+ background:var(--gold);margin:52px 0 44px!important;padding:0!important;opacity:1}
+.bbp .post-content hr+h1,.bbp .post-content hr+h2,.bbp .post-content hr+h3,
+.bbp .post-content hr+h4{margin-top:0!important}
+
+.bbp .post-content blockquote{margin:38px 0!important;padding:6px 0 6px 26px!important;
+ border:0!important;border-left:3px solid var(--gold)!important;background:transparent;
+ font-family:var(--ed);font-style:italic;font-weight:400;font-size:22px;line-height:1.45;
+ color:var(--dark)}
+.bbp .post-content blockquote p{font-family:var(--ed)!important;font-style:italic;
+ font-size:22px!important;line-height:1.45!important;color:var(--dark);margin:0 0 12px!important}
+.bbp .post-content blockquote p:last-child{margin-bottom:0!important}
+.bbp .post-content blockquote cite{display:block;margin-top:10px;font-family:var(--ui);
+ font-style:normal;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+ color:var(--gold-ink)}
+
+.bbp .post-content img{display:block;max-width:100%;width:auto;height:auto;
+ border-radius:14px;margin:34px auto!important}
+.bbp .post-content figure{margin:34px 0!important;padding:0!important}
+.bbp .post-content figure img{margin:0 auto!important}
+.bbp .post-content figcaption{margin-top:10px;font-size:13px;line-height:1.5;color:var(--muted);
+ text-align:center}
+.bbp .post-content iframe,.bbp .post-content video{display:block;max-width:100%;margin:34px auto!important;
+ border-radius:14px}
+
+.bbp .post-content table{display:block;overflow-x:auto;width:100%;max-width:100%;
+ border-collapse:collapse;border-spacing:0;font-size:15px;line-height:1.5;margin:34px 0!important;
+ -webkit-overflow-scrolling:touch}
+.bbp .post-content th,.bbp .post-content td{padding:11px 14px;border-bottom:1px solid var(--line);
+ text-align:left;vertical-align:top;font-weight:300;color:var(--body);min-width:120px}
+.bbp .post-content th{font-weight:600;color:var(--dark);background:var(--sand)}
+.bbp .post-content tr:last-child td{border-bottom:0}
+
+.bbp .post-content code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
+ background:var(--sand);padding:2px 6px;border-radius:5px}
+.bbp .post-content pre{background:var(--sand);padding:18px 20px;border-radius:12px;
+ overflow-x:auto;font-size:14px;line-height:1.6;margin:0 0 26px!important}
+.bbp .post-content pre code{background:transparent;padding:0}
+
+/* cierre de la nota: vuelta al listado */
+.bbp-end{max-width:728px;margin:52px auto 0;padding:30px 24px 0}
+.bbp-end-in{border-top:1px solid var(--line);padding-top:28px;display:flex;
+ justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.bbp-end-date{font-size:13px;color:var(--muted)}
+
+/* ───────── 4. "Seguí leyendo": otras notas ───────── */
+.bbp-more{background:var(--sand);padding:72px 0 84px}
+.bbp-more-h{display:flex;align-items:center;gap:18px;font-family:var(--ed);font-style:italic;
+ font-weight:400;font-size:26px;line-height:1.2;color:var(--dark);margin:0 0 26px;
+ text-align:left;text-transform:none;letter-spacing:0}
+.bbp-more-h::after{content:"";flex:1 1 0;height:1px;background:var(--line)}
+.bbp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin:0}
+
+/* card: la tarjeta ENTERA es el link (un solo <a>), hijos en span/bloque */
+.bbp-c{display:flex;flex-direction:column;background:var(--w);border:1px solid var(--line);
+ border-radius:16px;overflow:hidden;position:relative;color:var(--ink);min-width:0;
+ transition:transform .2s ease,box-shadow .2s ease}
+.bbp-c:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,56,69,.09)}
+.bbp-c:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+/* 3:2 con padding-bottom (sin aspect-ratio) */
+.bbp-img{display:block;position:relative;width:100%;padding-bottom:66.667%;
+ background:#E9E3D8;overflow:hidden}
+.bbp-img img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;
+ max-width:100%;display:block;transition:transform .5s ease}
+.bbp-c:hover .bbp-img img{transform:scale(1.03)}
+.bbp-cbody{display:flex;flex-direction:column;flex:1 1 auto;padding:22px 24px 24px;min-width:0}
+.bbp-date{display:block;font-size:11px;font-weight:600;letter-spacing:.14em;
+ text-transform:uppercase;color:var(--gold-ink);line-height:1.4}
+.bbp-t{display:block;font-family:var(--ed);font-style:normal;font-weight:400;font-size:22px;
+ line-height:1.25;color:var(--dark);letter-spacing:-.005em;margin-top:10px;text-transform:none}
+.bbp-cmore{display:block;margin-top:auto;padding-top:18px;font-size:12px;font-weight:600;
+ letter-spacing:.07em;text-transform:uppercase;color:var(--dark);line-height:1.2}
+.bbp-cmore i{font-style:normal;display:inline-block;transition:transform .2s ease}
+.bbp-c:hover .bbp-cmore i{transform:translateX(4px)}
+
+/* ───────── 5. cierre --terra ───────── */
+.bbp-final{background:var(--terra);color:var(--w);padding:80px 0}
+.bbp .bbp-h2{font-family:var(--ed);font-style:italic;font-weight:400;color:var(--w);
+ font-size:clamp(28px,3.4vw,42px);line-height:1.15;letter-spacing:-.01em;margin:0;
+ max-width:22ch;text-align:left;text-transform:none}
+.bbp-final-sub{font-weight:300;font-size:17px;line-height:1.7;color:rgba(255,255,255,.84);
+ max-width:52ch;margin-top:16px}
+.bbp-btns{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px}
+.bbp-btn-g{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.07em;
+ text-transform:uppercase;color:var(--w);background:transparent;
+ border:1.5px solid rgba(255,255,255,.55);border-radius:999px;padding:15px 30px;line-height:1.2;
+ transition:border-color .2s ease,background .2s ease,color .2s ease,transform .15s ease}
+.bbp-btn-g:hover{border-color:var(--w);background:var(--w);color:var(--terra);transform:translateY(-1px)}
+.bbp-btn-g:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+/* ───────── movimiento ───────── */
+@keyframes bbp-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.bbp-grid .bbp-c{animation:bbp-in .4s ease both;animation-fill-mode:backwards}
+.bbp-grid .bbp-c:nth-child(2){animation-delay:45ms}
+.bbp-grid .bbp-c:nth-child(3){animation-delay:90ms}
+@media (prefers-reduced-motion:reduce){
+ .bbp-grid .bbp-c{animation:none}
+ .bbp-c,.bbp-img img,.bbp-cmore i,.bbp-btn-g,.bbp-back,.bbp-back i,.bbp .post-content a{transition:none}
+ .bbp-c:hover,.bbp-btn-g:hover{transform:none}
+ .bbp-c:hover .bbp-img img,.bbp-c:hover .bbp-cmore i,.bbp-back:hover i{transform:none}
+}
+
+/* ───────── responsive ───────── */
+@media (max-width:1023px){
+ .bbp-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+}
+@media (max-width:767px){
+ .bbp-in,.bbp-body,.bbp-end{padding-left:20px;padding-right:20px}
+ .bbp-hero{padding:32px 0 40px}
+ .bbp-has-cover .bbp-hero{padding-bottom:40px}     /* la portada va a sangre, sin montarse */
+ .bbp-kicker{margin-top:26px}
+ .bbp .bbp-h1{font-size:34px;line-height:1.1;max-width:none}
+ .bbp-meta{margin-top:18px}
+ .bbp-cover-in{max-width:none;margin:0;padding:0}
+ .bbp .bbp-cover-img{border-radius:0;box-shadow:none}
+ .bbp-art{padding:40px 0 56px}
+ .bbp-has-cover .bbp-art{padding-top:36px}
+ .bbp .post-content{font-size:17px}
+ .bbp .post-content p{font-size:17px!important;line-height:1.7!important;margin-bottom:22px!important}
+ .bbp .post-content p.bbp-lede{font-size:19px!important;line-height:1.6!important}
+ .bbp .post-content h1,.bbp .post-content h2,.bbp-h3top .post-content h3{font-size:26px!important;
+  margin:44px 0 14px!important}
+ .bbp .post-content h3,.bbp-h3top .post-content h4{font-size:21px!important;margin:34px 0 12px!important}
+ .bbp .post-content h4,.bbp .post-content h5,.bbp .post-content h6{font-size:18px!important}
+ .bbp .post-content ul,.bbp .post-content ol{padding-left:22px!important;font-size:17px}
+ .bbp .post-content li{font-size:17px}
+ .bbp .post-content blockquote{font-size:20px;padding-left:20px!important}
+ .bbp .post-content blockquote p{font-size:20px!important}
+ .bbp .post-content hr{margin:40px 0 34px!important}
+ .bbp .post-content img,.bbp .post-content figure{border-radius:10px}
+ .bbp-end{margin-top:40px;padding-top:0}
+ .bbp-more{padding:52px 0 60px}
+ .bbp-more-h{font-size:22px;margin-bottom:18px}
+ .bbp-in-wide{padding:0 20px}
+ .bbp-final{padding:60px 0}
+ .bbp-final-sub{font-size:16px}
+ .bbp-btns{flex-direction:column;align-items:stretch;gap:12px;margin-top:28px}
+ .bbp-btn-g{text-align:center}
+}
+@media (max-width:640px){
+ .bbp-grid{grid-template-columns:1fr;gap:16px}
+ .bbp-cbody{padding:20px 20px 22px}
+ .bbp-t{font-size:21px}
+}

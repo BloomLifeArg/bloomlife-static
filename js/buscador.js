@@ -1,8 +1,18 @@
-/* Bloom Life · Resultados de búsqueda (/search/?q=…)
+/* Bloom Life · Resultados de búsqueda (/search/?q=…) y páginas de categoría
  *
  * Reemplaza la grilla nativa de Tienda Nube por cards del sistema de las páginas
  * de beneficio (barra de color | frasco | info | CTA), ordena por relevancia
  * client-side y junta las páginas de la paginación nativa en una sola lista.
+ *
+ * Dos modos, mismo componente nativo (.js-product-table > .js-item-product):
+ *  - 'search': /search/…  → relevancia + separador "También te puede interesar".
+ *  - 'cat':    body.template-category (/productos/, /tu-objetivo/…, /tipo-de-adaptogenos/…,
+ *              /elegi-tu-suplemento/…) → orden NATIVO (el que ordena el admin), encabezado
+ *              con el nombre de la categoría, la miga madre como eyebrow y la descripción
+ *              nativa como bajada. Los controles nativos de filtro/orden
+ *              (.js-category-controls) quedan visibles y funcionando: no se tocan.
+ *              EXCLUIDA la góndola de combos (/elegi-tu-suplemento/combos-bienestar-integral/):
+ *              esa la pinta js/combos-categoria.js y no hay que pisarla.
  *
  * El seal pinta el guard `#bls-guard` (.js-product-table{visibility:hidden}) antes
  * del primer paint y carga este archivo. Acá se engancha la hoja real y se destapa
@@ -43,7 +53,11 @@
     if (window.localStorage && localStorage.getItem('bls-off') === '1') { guardOff(); return; }
   } catch (e) { /* storage bloqueado: seguimos */ }
 
-  if (!/^\/search\//.test(location.pathname)) { guardOff(); return; }
+  /* modo: 'search' en /search/, 'cat' en cualquier otra ruta (el body.template-category se
+     confirma en start()); la góndola de combos queda afuera siempre */
+  var MODO = /^\/search\//.test(location.pathname) ? 'search'
+    : (/combos-bienestar-integral/.test(location.pathname) ? '' : 'cat');
+  if (!MODO) { guardOff(); return; }
 
   /* ───────── datos fijos ───────── */
   var ING = {
@@ -335,12 +349,19 @@
 
   function pintar(ctx) {
     var grid = ctx.grid, q = ctx.q, prods = ctx.prods;
-    var toks = tokens(q), qn = norm(q);
-    prods.forEach(function (p, i) { p.idx = i; puntuar(p, toks, qn); });
-    var hits = prods.filter(function (p) { return p.hit; });
-    var resto = prods.filter(function (p) { return !p.hit; });
-    if (!hits.length) { hits = prods.slice(); resto = []; }
-    hits.sort(function (a, b) { return (b.score - a.score) || (a.idx - b.idx); });
+    var hits, resto = [];
+    prods.forEach(function (p, i) { p.idx = i; });
+    if (ctx.modo === 'cat') {
+      /* categoría: el orden nativo es el que ordena el admin, no se toca */
+      hits = prods.slice();
+    } else {
+      var toks = tokens(q), qn = norm(q);
+      prods.forEach(function (p) { puntuar(p, toks, qn); });
+      hits = prods.filter(function (p) { return p.hit; });
+      resto = prods.filter(function (p) { return !p.hit; });
+      if (!hits.length) { hits = prods.slice(); resto = []; }
+      hits.sort(function (a, b) { return (b.score - a.score) || (a.idx - b.idx); });
+    }
     hits = hits.filter(function (p) { return p.available; }).concat(hits.filter(function (p) { return !p.available; }));
 
     /* los ld+json se conservan: SEO */
@@ -367,9 +388,19 @@
     if (!ctx.completo) cuenta += ' en esta página';
     var head = d.createElement('div');
     head.className = 'bsq bsq-head';
-    head.innerHTML = '<span class="bsq-eyebrow">Resultados</span>' +
-      '<h1 class="bsq-h1">Resultados para <em>“' + esc(q) + '”</em></h1>' +
-      '<div class="bsq-count">' + esc(cuenta) + '</div>';
+    if (ctx.modo === 'cat') {
+      var tc = ctx.cat;
+      head.innerHTML = '<span class="bsq-eyebrow">' + esc(tc.eyebrow) + '</span>' +
+        '<h1 class="bsq-h1">' + esc(tc.titulo) + '</h1>' +
+        (tc.tagline ? '<div class="bsq-tagline">' + esc(tc.tagline) + '</div>' : '') +
+        (tc.lead ? '<div class="bsq-lead">' + esc(tc.lead) + '</div>' : '') +
+        '<div class="bsq-count">' + esc(cuenta) + '</div>';
+      tc.nativos.forEach(function (el) { el.className += ' bsq-native-off'; });
+    } else {
+      head.innerHTML = '<span class="bsq-eyebrow">Resultados</span>' +
+        '<h1 class="bsq-h1">Resultados para <em>“' + esc(q) + '”</em></h1>' +
+        '<div class="bsq-count">' + esc(cuenta) + '</div>';
+    }
     var titulo = d.querySelector('[data-store="page-title"]');
     var h2s = d.querySelectorAll('h2');
     for (var k = 0; k < h2s.length; k++) {
@@ -382,13 +413,60 @@
       if (ctx.completo) ctx.pag.className += ' bsq-native-pag-off';
       else ctx.pag.className += ' bsq-native-pag';
     }
-    d.body.className += ' bsq-on';
+    d.body.className += ' bsq-on' + (ctx.modo === 'cat' ? ' bsq-cat' : '');
+  }
+
+  /* ───────── 4b. encabezado de categoría: todo sale del DOM nativo ─────────
+   * h1 de [data-store="page-title"] → título (y, si trae " | …", la parte de después
+   * como tagline); la miga madre → eyebrow; el <p> de descripción que el tema pone
+   * después del banner, en el mismo .container → bajada. Los nodos nativos que se
+   * reemplazan van en `nativos` para ocultarlos recién cuando se pinta. */
+  function tituloCategoria() {
+    var t = d.querySelector('[data-store="page-title"]');
+    var h1 = t ? t.querySelector('h1') : null;
+    var limpiar = function (s) { return String(s || '').replace(/\s+/g, ' ').replace(/^ | $/g, ''); };
+    var nombre = h1 ? limpiar(h1.textContent) : '';
+    var out = { eyebrow: 'Categoría', titulo: nombre || 'Productos', tagline: '', lead: '', nativos: [] };
+    if (/^\/productos\/(page\/\d+\/?)?$/.test(location.pathname)) {
+      out.eyebrow = 'Catálogo';
+      out.titulo = 'Todos los productos';
+    } else if (nombre.indexOf('|') >= 0) {
+      var seg = nombre.split('|');
+      out.titulo = limpiar(seg.shift());
+      out.tagline = limpiar(seg.join('|'));
+    }
+    /* "TREMELLA" en versalitas con Georgia itálica grita: si el nombre viene TODO en
+       mayúsculas se capitaliza ("Tremella"); si tiene minúsculas queda tal cual */
+    if (out.titulo && out.titulo === out.titulo.toUpperCase() && out.titulo !== out.titulo.toLowerCase()) {
+      out.titulo = out.titulo.toLowerCase().replace(/(^|[\s\-\/(])([a-záéíóúñü])/g, function (m, a, b) {
+        return a + b.toUpperCase();
+      }).replace(/\b(De|Del|La|El|Y|Para|Con)\b/g, function (m) { return m.toLowerCase(); });
+    }
+    if (out.eyebrow === 'Categoría' && t) {
+      var crumbs = t.querySelectorAll('.breadcrumbs a.crumb');
+      if (crumbs.length > 1) {
+        var madre = limpiar(crumbs[crumbs.length - 1].textContent);
+        if (madre && madre.length <= 40) out.eyebrow = madre;
+      }
+    }
+    if (t && t.parentNode) {
+      var hijos = t.parentNode.children;
+      for (var i = 0; i < hijos.length; i++) {
+        if (hijos[i].tagName === 'P') {
+          var lead = limpiar(hijos[i].textContent);
+          if (lead) { out.lead = lead; out.nativos.push(hijos[i]); }
+          break;
+        }
+      }
+    }
+    return out;
   }
 
   /* ───────── 5. arranque ───────── */
   function start() {
     var body = d.body;
-    if (!body || !/(^|\s)template-search(\s|$)/.test(body.className)) { guardOff(); return; }
+    var tpl = MODO === 'cat' ? 'template-category' : 'template-search';
+    if (!body || !(new RegExp('(^|\\s)' + tpl + '(\\s|$)')).test(body.className)) { guardOff(); return; }
     var grid = d.querySelector('.js-product-table');
     var nativas = grid ? grid.querySelectorAll('.js-item-product[data-product-id]') : [];
     if (!grid || !nativas.length) { guardOff(); return; }   // sin resultados: lo nativo
@@ -402,13 +480,18 @@
     d.head.appendChild(l);
     setTimeout(guardOff, 4000);
 
-    var prods = [], vistos = {};
-    var sumar = function (el) {
+    /* las cards se juntan POR PÁGINA y se concatenan en orden de página: si se aterriza
+       en /page/2/, los productos de la 1 van primero (en categoría el orden es el nativo) */
+    var porPagina = {}, vistos = {};
+    var sumar = function (el, n) {
       var p = leerCard(el);
       if (!p.id || vistos[p.id] || !p.url) return;
-      vistos[p.id] = 1; prods.push(p);
+      vistos[p.id] = 1;
+      (porPagina[n] = porPagina[n] || []).push(p);
     };
-    for (var i = 0; i < nativas.length; i++) sumar(nativas[i]);
+    var actual = (/\/page\/(\d+)\/?$/.exec(location.pathname) || [0, 1])[1];
+    actual = parseInt(actual, 10) || 1;
+    for (var i = 0; i < nativas.length; i++) sumar(nativas[i], actual);
 
     /* paginación nativa: el .row sin clase propia que sigue a la grilla */
     var pag = null, sib = grid.nextElementSibling;
@@ -416,9 +499,7 @@
       if (/(^|\s)row(\s|$)/.test(sib.className) && /justify-content-center/.test(sib.className)) { pag = sib; break; }
       sib = sib.nextElementSibling;
     }
-    var links = pag ? pag.querySelectorAll('a[href*="/search/page/"]') : [];
-    var actual = (/\/search\/page\/(\d+)/.exec(location.pathname) || [0, 1])[1];
-    actual = parseInt(actual, 10) || 1;
+    var links = pag ? pag.querySelectorAll('a[href]') : [];
     var totalPag = 1;
     if (pag) {
       var spans = pag.querySelectorAll('span');
@@ -429,12 +510,22 @@
       }
       if (nums.length >= 2) totalPag = nums[nums.length - 1];
     }
-    var urls = [];
-    if (links.length && totalPag > 1) {
-      var ejemplo = links[0].getAttribute('href');
+    /* la URL de cada página sale del primer link nativo con href (trae ?q= en /search/ y
+       el ?sort_by= si el usuario ordenó): página 1 = la ruta base, las demás base + page/N/ */
+    var urls = [], paginas = [];
+    var ejemplo = null;
+    for (var li = 0; li < links.length; li++) {
+      var hv = links[li].getAttribute('href');
+      if (hv && hv !== '#' && !/^javascript:/i.test(hv)) { ejemplo = hv; break; }
+    }
+    if (ejemplo && totalPag > 1) {
+      var qs = ejemplo.indexOf('?') >= 0 ? ejemplo.slice(ejemplo.indexOf('?')).split('#')[0] : '';
+      var ruta = ejemplo.split('?')[0].split('#')[0].replace(/^https?:\/\/[^\/]+/, '').replace(/\/page\/\d+\/?$/, '/');
+      if (!/\/$/.test(ruta)) ruta += '/';
       for (var n = 1; n <= totalPag && urls.length < MAX_PAGINAS; n++) {
         if (n === actual) continue;
-        urls.push(ejemplo.replace(/\/search\/page\/\d+\//, '/search/page/' + n + '/'));
+        urls.push((n === 1 ? ruta : ruta + 'page/' + n + '/') + qs);
+        paginas.push(n);
       }
     }
 
@@ -450,19 +541,24 @@
 
     var terminar = function (cfg, htmls) {
       var completo = true;
-      (htmls || []).forEach(function (h) {
+      (htmls || []).forEach(function (h, j) {
         if (!h) { completo = false; return; }
         try {
           var doc = new DOMParser().parseFromString(h, 'text/html');
           var cards = doc.querySelectorAll('.js-product-table .js-item-product[data-product-id]');
-          for (var i = 0; i < cards.length; i++) sumar(cards[i]);
+          for (var i = 0; i < cards.length; i++) sumar(cards[i], paginas[j]);
         } catch (e) { completo = false; }
       });
       if (urls.length > (totalPag - 1)) completo = false;   // nunca pasa, defensivo
       if (totalPag - 1 > MAX_PAGINAS) completo = false;     // quedaron páginas sin traer
+      var prods = [];
+      Object.keys(porPagina).map(Number).sort(function (a, b) { return a - b; }).forEach(function (n) {
+        prods = prods.concat(porPagina[n]);
+      });
       prods.forEach(function (p) { enriquecer(p, cfg); });
       try {
-        pintar({ grid: grid, q: param('q'), prods: prods, pag: pag, completo: completo });
+        pintar({ grid: grid, q: param('q'), prods: prods, pag: pag, completo: completo,
+          modo: MODO, cat: MODO === 'cat' ? tituloCategoria() : null });
       } catch (e) {
         guardOff();
         if (window.console && console.error) console.error('[bsq] render', e);
