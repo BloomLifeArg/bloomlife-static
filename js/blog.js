@@ -55,6 +55,8 @@
   };
 
   function guardOff() {
+    // el css_code esconde lo nativo desde el <head> hasta que alguien pone html.bl-ok
+    if (document.documentElement.className.indexOf('bl-ok') < 0) document.documentElement.className += ' bl-ok';
     var g = d.getElementById('bbl-guard');
     if (g && g.parentNode) g.parentNode.removeChild(g);
   }
@@ -86,7 +88,10 @@
   };
   var fecha = function (iso) {
     if (!iso) return '';
-    var t = new Date(iso);
+    // "AAAA-MM-DD" (data/blog-fechas.json) se parsea como fecha LOCAL: new Date('2026-03-06')
+    // sería medianoche UTC y en Argentina mostraría el 5
+    var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+    var t = dm ? new Date(+dm[1], +dm[2] - 1, +dm[3]) : new Date(iso);
     if (isNaN(t.getTime())) return '';
     return t.getDate() + ' ' + MESES[t.getMonth()] + ' ' + t.getFullYear();
   };
@@ -287,7 +292,7 @@
     var urls = [];
     if (juntar) for (var n = 2; n <= total; n++) urls.push('/blog/?page=' + n);
 
-    var terminar = function (htmls) {
+    var terminar = function (htmls, F) {
       var completo = juntar;
       (htmls || []).forEach(function (h) {
         if (!h) { completo = false; return; }
@@ -300,6 +305,9 @@
           for (var i = 0; i < cards.length; i++) sumar(cards[i], ld2);
         } catch (e) { completo = false; }
       });
+      // fecha ORIGINAL de cada nota (data/blog-fechas.json, mismo commit): el JSON-LD
+      // trae la de la última republicación, que en 10 notas es 2026-09-06
+      if (F) posts.forEach(function (p) { var k = pathDe(p.url); if (F[k]) p.fecha = F[k]; });
       try {
         pintar({ sec: sec, posts: posts, pag: pag, actual: actual, total: total,
           pagPropia: total > 1 && !completo });
@@ -312,10 +320,13 @@
       revelar();
     };
 
-    if (!urls.length) { terminar([]); return; }
-    Promise.all(urls.map(function (u) {
+    if (!puedeFetch) { terminar([], null); return; }
+    var fechasP = conTimeout(fetch(base + '/data/blog-fechas.json').then(function (r) { return r.ok ? r.json() : null; }), TIMEOUT_FETCH)
+      .then(null, function () { return null; });
+    var pagsP = !urls.length ? Promise.resolve([]) : Promise.all(urls.map(function (u) {
       return conTimeout(fetch(u, { credentials: 'same-origin' }).then(function (r) { return r.ok ? r.text() : null; }), TIMEOUT_FETCH);
-    })).then(terminar, function () { terminar([]); });
+    })).then(null, function () { return []; });
+    Promise.all([pagsP, fechasP]).then(function (rs) { terminar(rs[0], rs[1]); }, function () { terminar([], null); });
   }
 
   if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', start);

@@ -14,6 +14,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/build-blog-latest.mjs'
+      - 'scripts/build-blog-fechas.mjs'
       - '.github/workflows/blog-latest.yml'
 
 # Evita que dos corridas se pisen commiteando a la vez.
@@ -41,14 +42,20 @@ jobs:
       - name: Generar data/blog-latest.json
         run: node scripts/build-blog-latest.mjs
 
+      # Fecha ORIGINAL de cada nota (el JSON-LD del listado trae la de la última
+      # republicación). La consume js/blog.js. Si falla, no tira el job: el JSON
+      # anterior sigue valiendo y blog.js cae al JSON-LD.
+      - name: Generar data/blog-fechas.json
+        run: node scripts/build-blog-fechas.mjs || echo "blog-fechas falló, se conserva el anterior"
+
       - name: Commitear si cambió
         run: |
-          if [[ -z "$(git status --porcelain data/blog-latest.json)" ]]; then
+          if [[ -z "$(git status --porcelain data/blog-latest.json data/blog-fechas.json)" ]]; then
             echo "Sin cambios."
             exit 0
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/blog-latest.json
+          git add data/blog-latest.json data/blog-fechas.json
           git commit -m "chore: actualizar posts del blog [skip ci]"
           git push

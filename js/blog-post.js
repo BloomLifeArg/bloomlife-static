@@ -64,6 +64,8 @@
   };
 
   function guardOff() {
+    // el css_code esconde lo nativo desde el <head> hasta que alguien pone html.bl-ok
+    if (document.documentElement.className.indexOf('bl-ok') < 0) document.documentElement.className += ' bl-ok';
     var g = d.getElementById('bbp-guard');
     if (g && g.parentNode) g.parentNode.removeChild(g);
   }
@@ -95,7 +97,10 @@
   };
   var aFecha = function (v) {
     if (!v) return null;
-    var t = v instanceof Date ? v : new Date(v);
+    // "AAAA-MM-DD" se parsea como fecha LOCAL (new Date('2026-03-06') sería UTC y en
+    // Argentina caería en el 5)
+    var dm = typeof v === 'string' && /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+    var t = v instanceof Date ? v : dm ? new Date(+dm[1], +dm[2] - 1, +dm[3]) : new Date(v);
     return isNaN(t.getTime()) ? null : t;
   };
   var fechaLarga = function (t) {           // "4 de agosto de 2026"
@@ -217,12 +222,20 @@
         '<div class="bbp-grid">' + sel.map(cardHTML).join('') + '</div>' +
         '</div></section>';
     };
-    conTimeout(fetch('/blog/', { credentials: 'same-origin' })
-      .then(function (r) { return r.ok ? r.text() : null; }), TIMEOUT_FETCH)
-      .then(function (html) {
-        var posts = [];
+    // fecha ORIGINAL de cada nota (data/blog-fechas.json del mismo commit); el JSON-LD
+    // del listado trae la de la última republicación
+    var fechasP = conTimeout(fetch(base + '/data/blog-fechas.json').then(function (r) { return r.ok ? r.json() : null; }), TIMEOUT_FETCH)
+      .then(null, function () { return null; });
+    var conFechas = function (posts, F) {
+      if (F) posts.forEach(function (p) { var k = pathDe(p.url); if (F[k]) p.fecha = F[k]; });
+      return posts;
+    };
+    Promise.all([conTimeout(fetch('/blog/', { credentials: 'same-origin' })
+      .then(function (r) { return r.ok ? r.text() : null; }), TIMEOUT_FETCH), fechasP])
+      .then(function (rs) {
+        var html = rs[0], F = rs[1], posts = [];
         if (html) { try { posts = leerListado(html); } catch (e) { posts = []; } }
-        if (posts.length) { pintarMas(posts); return; }
+        if (posts.length) { pintarMas(conFechas(posts, F)); return; }
         return conTimeout(fetch(JSON_FALLBACK, { cache: 'no-store' })
           .then(function (r) { return r.ok ? r.json() : null; }), TIMEOUT_FETCH)
           .then(function (o) { try { pintarMas(leerJson(o)); } catch (e) { /* sin banda */ } });

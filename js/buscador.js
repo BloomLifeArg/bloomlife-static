@@ -45,6 +45,8 @@
     : 'https://cdn.jsdelivr.net/gh/BloomLifeArg/bloomlife-static@main';
 
   function guardOff() {
+    // el css_code esconde lo nativo desde el <head> hasta que alguien pone html.bl-ok
+    if (document.documentElement.className.indexOf('bl-ok') < 0) document.documentElement.className += ' bl-ok';
     var g = d.getElementById('bls-guard');
     if (g && g.parentNode) g.parentNode.removeChild(g);
   }

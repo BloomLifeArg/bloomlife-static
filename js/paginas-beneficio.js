@@ -39,6 +39,8 @@
   var reveal = function () {
     if (listo) return;
     listo = true;
+    // el css_code esconde .blp desde el <head> hasta que alguien pone html.bl-ok
+    if (d.documentElement.className.indexOf('bl-ok') < 0) d.documentElement.className += ' bl-ok';
     var g = d.getElementById('blp-guard');
     if (g) g.remove();
   };
