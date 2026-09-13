@@ -109,6 +109,17 @@
         if (!has(k, '.blf-eb')) k.insertBefore(el('span', 'blf-eb', 'Seguinos'), k.firstChild);
       } else if (has(k, '.footer-menu-link')) {
         addClass(k, 'blf-nav');
+        // "Wellness Blog" sale de la botonera: más abajo el chip "¡Visitá nuestro Blog!" ya
+        // lo impulsa (pedido de Sergio 2026-09-12). El ítem sigue existiendo en el menú del
+        // admin; se saca acá porque el editor de menús no persiste la eliminación por automatización.
+        var links = k.querySelectorAll('.footer-menu-link');
+        for (var q = 0; q < links.length; q++) {
+          var hrefL = (links[q].getAttribute('href') || '').replace(/^https?:\/\/[^\/]+/, '');
+          if (/^\/blog\/?$/.test(hrefL) && /blog/i.test(links[q].textContent)) {
+            var li = links[q].closest ? links[q].closest('li') : links[q].parentNode;
+            if (li && li.parentNode) li.parentNode.removeChild(li);
+          }
+        }
       } else if (has(k, '.js-newsletter')) {
         addClass(k, 'blf-news');
         if (!has(k, '.blf-news-t')) {
