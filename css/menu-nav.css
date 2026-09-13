@@ -41,6 +41,8 @@
   background: var(--bls-petroleo); transform: scaleX(0); transition: transform .2s ease;
 }
 .bls__n1:hover::after, .bls__n1[aria-expanded="true"]::after { transform: scaleX(1); }
+/* El tema pinta los <a> del header en gris (header-foreground): los destinos del nivel 1 van del mismo negro que los botones. */
+.bls a.bls__n1 { color: var(--bls-texto); }
 .bls__n1:focus-visible { outline: 2px solid var(--bls-oro); outline-offset: 3px; }
 
 /* ── el panel: angosto, flotante, anclado a SU disparador ─────────────────── */
