@@ -99,6 +99,14 @@ html.blh-open { overflow: hidden; }
 }
 .blh-chip:hover { border-color: var(--blh-petroleo); }
 
+.blh-atajos { display: flex; flex-direction: column; gap: 2px; }
+.blh-atajo {
+  display: flex; align-items: center; gap: 10px; padding: 9px 8px; border-radius: 10px;
+  font: 500 13.5px/1.35 Inter, system-ui, sans-serif; color: var(--blh-petroleo); text-decoration: none;
+}
+.blh-atajo:hover, .blh-atajo:focus-visible { background: #fff; outline: none; }
+.blh-atajo .blh-ic { width: 15px; height: 15px; color: var(--blh-oro); margin-left: auto; flex: 0 0 auto; }
+
 .blh-todo {
   display: flex; align-items: center; gap: 10px; margin: 18px 6px 0; padding: 14px 0 0;
   border-top: 1px solid var(--blh-linea); font: 500 14px/1.3 Inter, system-ui, sans-serif;

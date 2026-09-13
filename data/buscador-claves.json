@@ -1,0 +1,334 @@
+{
+ "_leeme": "Palabras clave del buscador del header (js/header.js). Editar ESTE archivo y commitear alcanza: se lee fresco al abrir el buscador (cache 5 min de raw.githubusercontent), sin tocar el admin. La clave de cada bloque es el ULTIMO tramo de la URL del item (handle del producto, del combo o de la pagina de beneficio). Las palabras se comparan sin tildes ni mayusculas, y alcanza con que lo tipeado este CONTENIDO en la palabra (ansi -> ansiedad).",
+ "productos": {
+  "melena-de-leon-claridad-mental-gummies": [
+   "memoria",
+   "concentración",
+   "foco",
+   "claridad mental",
+   "niebla mental",
+   "estudio",
+   "estudiar",
+   "productividad",
+   "atención",
+   "cerebro",
+   "nootrópico",
+   "lion's mane",
+   "hongo",
+   "gummies",
+   "gomitas"
+  ],
+  "melena-de-leon-claridad-mental-capsulas": [
+   "memoria",
+   "concentración",
+   "foco",
+   "claridad mental",
+   "niebla mental",
+   "estudio",
+   "estudiar",
+   "productividad",
+   "atención",
+   "cerebro",
+   "nootrópico",
+   "lion's mane",
+   "hongo",
+   "cápsulas",
+   "capsulas",
+   "sin azúcar"
+  ],
+  "ashwagandha-equilibrio-hormonal-gummies": [
+   "ansiedad",
+   "estrés",
+   "stress",
+   "cortisol",
+   "calma",
+   "nervios",
+   "relax",
+   "relajación",
+   "equilibrio hormonal",
+   "hormonas",
+   "irritabilidad",
+   "withania",
+   "adaptógeno",
+   "gummies",
+   "gomitas"
+  ],
+  "ashwagandha-equilibrio-hormonal-capsulas": [
+   "ansiedad",
+   "estrés",
+   "stress",
+   "cortisol",
+   "calma",
+   "nervios",
+   "relax",
+   "relajación",
+   "equilibrio hormonal",
+   "hormonas",
+   "irritabilidad",
+   "withania",
+   "adaptógeno",
+   "cápsulas",
+   "capsulas",
+   "sin azúcar"
+  ],
+  "cordyceps-energia-sostenida-gummies": [
+   "energía",
+   "cansancio",
+   "fatiga",
+   "agotamiento",
+   "rendimiento",
+   "deporte",
+   "entrenamiento",
+   "gym",
+   "resistencia",
+   "vitalidad",
+   "libido",
+   "oxigenación",
+   "hongo",
+   "gummies",
+   "gomitas"
+  ],
+  "reishi-descanso-profundo-gummies-kjqoe": [
+   "sueño",
+   "dormir",
+   "insomnio",
+   "descanso",
+   "noche",
+   "relajación",
+   "inmunidad",
+   "defensas",
+   "sistema inmune",
+   "hongo",
+   "gummies",
+   "gomitas"
+  ],
+  "tremella-hongo-de-la-belleza-gummies-1n9ff": [
+   "piel",
+   "pelo",
+   "cabello",
+   "uñas",
+   "hidratación",
+   "colágeno",
+   "biotina",
+   "belleza",
+   "brillo",
+   "antioxidante",
+   "arrugas",
+   "hongo",
+   "gummies",
+   "gomitas"
+  ]
+ },
+ "combos": {
+  "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q": [
+   "ansiedad",
+   "estrés",
+   "cortisol",
+   "calma",
+   "foco",
+   "nervios",
+   "gummies"
+  ],
+  "combo-bye-bye-anxiety-suplementacion-por-1-mes": [
+   "ansiedad",
+   "estrés",
+   "cortisol",
+   "calma",
+   "foco",
+   "nervios",
+   "cápsulas",
+   "capsulas"
+  ],
+  "combo-performance-gummies-suplementacion-por-1-mes": [
+   "rendimiento",
+   "deporte",
+   "entrenamiento",
+   "energía",
+   "foco",
+   "gym",
+   "resistencia"
+  ],
+  "glorygummies": [
+   "todos",
+   "completo",
+   "los cinco",
+   "rutina",
+   "energía",
+   "foco",
+   "calma",
+   "sueño",
+   "piel"
+  ],
+  "fulldaygummies2": [
+   "energía",
+   "foco",
+   "calma",
+   "rutina",
+   "día completo",
+   "todo el día"
+  ],
+  "full-day-gummies-melena-de-leon-cordyceps-reishi": [
+   "energía",
+   "foco",
+   "sueño",
+   "rutina",
+   "día completo",
+   "todo el día"
+  ],
+  "glowyourmindgummies": [
+   "piel",
+   "foco",
+   "belleza",
+   "memoria",
+   "calma"
+  ],
+  "deepsleep": [
+   "sueño",
+   "dormir",
+   "insomnio",
+   "descanso",
+   "noche",
+   "ansiedad"
+  ],
+  "comboclarityanddefense": [
+   "foco",
+   "inmunidad",
+   "defensas",
+   "memoria"
+  ],
+  "focusandchill": [
+   "foco",
+   "calma",
+   "sueño",
+   "claridad"
+  ],
+  "fulldaymix": [
+   "energía",
+   "foco",
+   "calma",
+   "cápsulas",
+   "rutina"
+  ]
+ },
+ "objetivos": {
+  "foco": [
+   "memoria",
+   "concentración",
+   "claridad",
+   "niebla mental",
+   "estudio",
+   "atención",
+   "productividad"
+  ],
+  "calma": [
+   "ansiedad",
+   "estrés",
+   "cortisol",
+   "nervios",
+   "relax",
+   "hormonal"
+  ],
+  "energia": [
+   "cansancio",
+   "fatiga",
+   "agotamiento",
+   "rendimiento",
+   "deporte",
+   "vitalidad"
+  ],
+  "descanso": [
+   "sueño",
+   "dormir",
+   "insomnio",
+   "noche",
+   "relajación"
+  ],
+  "piel": [
+   "pelo",
+   "cabello",
+   "uñas",
+   "colágeno",
+   "biotina",
+   "belleza",
+   "hidratación"
+  ]
+ },
+ "atajos": [
+  {
+   "texto": "Suscripción mensual: 10% OFF en cada envío",
+   "href": "https://www.bloomlife.co/suscripciones/",
+   "claves": [
+    "suscripción",
+    "suscribirme",
+    "descuento",
+    "10%",
+    "mensual",
+    "envío gratis"
+   ]
+  },
+  {
+   "texto": "Mi suscripción: cambiar dirección, saltear un envío, frecuencia o baja",
+   "href": "https://www.bloomlife.co/mi-suscripcion/",
+   "claves": [
+    "mi suscripción",
+    "cancelar",
+    "baja",
+    "dirección",
+    "saltear",
+    "pausar",
+    "frecuencia"
+   ]
+  },
+  {
+   "texto": "Envíos: tiempos y costos por zona",
+   "href": "https://www.bloomlife.co/preguntas-frecuentes/#envios",
+   "claves": [
+    "envío",
+    "envios",
+    "cuánto tarda",
+    "correo",
+    "seguimiento",
+    "tracking",
+    "costo de envío"
+   ]
+  },
+  {
+   "texto": "Cambios y devoluciones",
+   "href": "https://www.bloomlife.co/politica-de-devolucion/",
+   "claves": [
+    "devolución",
+    "devolver",
+    "cambio",
+    "reembolso",
+    "garantía"
+   ]
+  },
+  {
+   "texto": "Preguntas frecuentes",
+   "href": "https://www.bloomlife.co/preguntas-frecuentes/",
+   "claves": [
+    "cómo tomar",
+    "dosis",
+    "cuándo tomar",
+    "embarazo",
+    "efectos",
+    "contraindicaciones",
+    "seguridad",
+    "cuotas",
+    "pago"
+   ]
+  },
+  {
+   "texto": "¿Qué suplemento es para vos? Test guiado de 1 minuto",
+   "href": "https://www.bloomlife.co/que-suplemento-es-para-vos/",
+   "claves": [
+    "cuál",
+    "recomendación",
+    "empezar",
+    "no sé",
+    "ayuda",
+    "asesoría"
+   ]
+  }
+ ]
+}

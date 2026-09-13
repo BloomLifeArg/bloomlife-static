@@ -11,8 +11,12 @@
  *    .js-cart-widget-amount lo sigue actualizando el tema; acá sólo se lo viste.
  * 2. BÚSQUEDA: el click en la lupa abre un panel propio (.blh-s) en lugar del
  *    modal #nav-search del tema. Con el campo vacío muestra sugerencias
- *    (productos, combos, objetivos) y la puerta al finder; al tipear filtra
- *    localmente y Enter manda a /search/?q= (que ya pinta el buscador propio).
+ *    (productos, cápsulas, los 4 combos más vendidos, objetivos) y la puerta al
+ *    finder; al tipear filtra localmente por nombre, bajada y PALABRAS CLAVE
+ *    (data/buscador-claves.json: ansiedad, cortisol, memoria…; editable sin
+ *    publish) y suma atajos (envíos, suscripción, FAQ). Enter manda a
+ *    /search/?q= (que ya pinta el buscador propio). Los combos salen de
+ *    data/buscador-combos.json (top ventas) y, si falla, de los del megamenú.
  *    Si este archivo no llega, la lupa sigue abriendo el modal del tema.
  */
 (function () {
@@ -22,6 +26,36 @@
     : 'https://cdn.jsdelivr.net/gh/BloomLifeArg/bloomlife-static@main';
   var FINDER = 'https://www.bloomlife.co/que-suplemento-es-para-vos/';
   var SEARCH = '/search/';
+  var RAW = 'https://raw.githubusercontent.com/BloomLifeArg/bloomlife-static/main/data/';
+  var claves = null, combosTop = null, pedido = false;
+
+  function traer(a) {
+    var c = typeof AbortController === 'function' ? new AbortController() : null;
+    var t = setTimeout(function () { if (c) c.abort(); }, 3000);
+    return fetch(RAW + a, c ? { signal: c.signal } : undefined)
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function (j) { clearTimeout(t); return j; }, function () { clearTimeout(t); return null; });
+  }
+  function pedirDatos() {
+    if (pedido) return; pedido = true;
+    Promise.all([traer('buscador-claves.json'), traer('buscador-combos.json')]).then(function (r) {
+      claves = r[0] || null;
+      combosTop = (r[1] && r[1].items && r[1].items.length) ? r[1].items.map(function (i) {
+        return { nombre: i.nombre, bajada: i.bajada, href: i.href, img: i.imagen };
+      }) : null;
+      if (abierto) pintar();
+    });
+  }
+  // la clave de cada item en buscador-claves.json es el último tramo de su URL
+  function llave(href) {
+    var m = /\/([^\/?#]+)\/?(?:[?#].*)?$/.exec(href || '');
+    return m ? m[1].toLowerCase() : '';
+  }
+  function clavesDe(tipo, it) {
+    var t = claves && claves[tipo];
+    var k = t && t[llave(it.href)];
+    return k ? ' ' + k.join(' ') : '';
+  }
 
   var IC = {
     search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/>',
@@ -82,15 +116,42 @@
   function datos() {
     var b = window.blsData || {};
     return {
-      productos: (b.adaptogenos || []).concat(b.capsulas || []),
-      combos: b.combos || [],
-      objetivos: b.objetivos || []
+      gummies: b.adaptogenos || [],
+      capsulas: b.capsulas || [],
+      // en resultados, gummies y cápsulas del mismo adaptógeno se llaman igual: la cápsula lleva su formato en el nombre
+      productos: (b.adaptogenos || []).concat((b.capsulas || []).map(function (c) {
+        return { nombre: c.nombre + ' · Cápsulas', bajada: c.bajada, href: c.href, img: c.img };
+      })),
+      combos: combosTop || b.combos || [],
+      objetivos: b.objetivos || [],
+      atajos: (claves && claves.atajos) || []
     };
   }
   function buscar(q) {
     var n = norm(q), D = datos();
-    var f = function (it) { return norm(it.nombre + ' ' + (it.bajada || '')).indexOf(n) > -1; };
-    return { productos: D.productos.filter(f), combos: D.combos.filter(f), objetivos: D.objetivos.filter(f) };
+    var f = function (tipo) {
+      return function (it) { return norm(it.nombre + ' ' + (it.bajada || '') + clavesDe(tipo, it)).indexOf(n) > -1; };
+    };
+    // combos: los top del buscador + los del megamenú que no estén repetidos, para que "sueño" también traiga Deep Sleep
+    var vistos = {}, combos = [];
+    D.combos.concat((window.blsData && window.blsData.combos) || []).forEach(function (c) {
+      var k = llave(c.href); if (vistos[k]) return; vistos[k] = 1; combos.push(c);
+    });
+    return {
+      productos: D.productos.filter(f('productos')),
+      combos: combos.filter(f('combos')),
+      objetivos: D.objetivos.filter(f('objetivos')),
+      atajos: D.atajos.filter(function (a) { return norm(a.texto + ' ' + (a.claves || []).join(' ')).indexOf(n) > -1; })
+    };
+  }
+  function atajos(items) {
+    var w = el('div', 'blh-atajos');
+    items.forEach(function (a) {
+      var x = el('a', 'blh-atajo'); x.href = a.href;
+      x.appendChild(el('span', null, esc(a.texto))); x.appendChild(svg('arrow'));
+      w.appendChild(x);
+    });
+    return w;
   }
 
   /* ── 3. overlay ──────────────────────────────────────────────────────── */
@@ -143,16 +204,18 @@
     var q = (input.value || '').replace(/^\s+|\s+$/g, '');
     var D = datos();
     if (q.length < 2) {
-      if (D.productos.length) cuerpo.appendChild(seccion('Suplementos', lista(D.productos.slice(0, 5), false)));
-      if (D.combos.length) cuerpo.appendChild(seccion('Combos', lista(D.combos.slice(0, 3), true)));
+      if (D.gummies.length) cuerpo.appendChild(seccion('Gummies', lista(D.gummies.slice(0, 5), false)));
+      if (D.capsulas.length) cuerpo.appendChild(seccion('Cápsulas', lista(D.capsulas, true)));
+      if (D.combos.length) cuerpo.appendChild(seccion(combosTop ? 'Combos más elegidos' : 'Combos', lista(D.combos.slice(0, 4), true)));
       if (D.objetivos.length) cuerpo.appendChild(seccion('Por objetivo', chips(D.objetivos)));
       cuerpo.appendChild(finderCTA());
       return;
     }
-    var R = buscar(q), n = R.productos.length + R.combos.length + R.objetivos.length;
+    var R = buscar(q), n = R.productos.length + R.combos.length + R.objetivos.length + R.atajos.length;
     if (R.productos.length) cuerpo.appendChild(seccion('Suplementos', lista(R.productos, false)));
     if (R.combos.length) cuerpo.appendChild(seccion('Combos', lista(R.combos, true)));
     if (R.objetivos.length) cuerpo.appendChild(seccion('Por objetivo', chips(R.objetivos)));
+    if (R.atajos.length) cuerpo.appendChild(seccion('Atajos', atajos(R.atajos)));
     var todo = el('a', 'blh-todo');
     todo.href = SEARCH + '?q=' + encodeURIComponent(q);
     todo.innerHTML = '<span>' + (n ? 'Ver todos los resultados para ' : 'No lo encontramos acá. Buscar ') + '<em>«' + esc(q) + '»</em> en el catálogo</span>';
@@ -203,6 +266,7 @@
     raiz.setAttribute('aria-hidden', abierto ? 'false' : 'true');
     d.documentElement.classList.toggle('blh-open', abierto);
     if (abierto) {
+      pedirDatos();
       pintar();
       setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); } }, 30);
     } else if (disparador) {

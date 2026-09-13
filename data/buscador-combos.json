@@ -1,0 +1,34 @@
+{
+ "_leeme": "Los 4 combos que muestra el buscador del header (js/header.js) con el campo vacío: los mas vendidos por unidades en pedidos pagos de los ultimos 120 dias (relevado 2026-09-13 con la API: Bye Bye Anxiety Capsulas 472, Bye Bye Anxiety Gummies 192, High Performance 184, Glory 82). Editar y commitear alcanza; si el archivo falla, header.js usa los combos del megamenu.",
+ "actualizado": "2026-09-13",
+ "items": [
+  {
+   "handle": "combo-bye-bye-anxiety-suplementacion-por-1-mes",
+   "nombre": "Bye Bye Anxiety · Cápsulas",
+   "bajada": "Ashwagandha y Melena de León, en cápsulas.",
+   "href": "https://www.bloomlife.co/productos/combo-bye-bye-anxiety-suplementacion-por-1-mes/",
+   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e578516853d9ca5cb817853805215691-320-0.jpg"
+  },
+  {
+   "handle": "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q",
+   "nombre": "Bye Bye Anxiety",
+   "bajada": "Ashwagandha y Melena de León.",
+   "href": "https://www.bloomlife.co/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/",
+   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add5a37476bac282d617853803647110-320-0.jpg"
+  },
+  {
+   "handle": "combo-performance-gummies-suplementacion-por-1-mes",
+   "nombre": "High Performance",
+   "bajada": "Melena de León y Cordyceps.",
+   "href": "https://www.bloomlife.co/productos/combo-performance-gummies-suplementacion-por-1-mes/",
+   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add7452d4a1df21fb917853805473765-320-0.jpg"
+  },
+  {
+   "handle": "glorygummies",
+   "nombre": "Glory Gummies",
+   "bajada": "Los cinco adaptógenos, juntos.",
+   "href": "https://www.bloomlife.co/productos/glorygummies/",
+   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e3bc1500f11ff5c9f417853803206380-320-0.jpg"
+  }
+ ]
+}
