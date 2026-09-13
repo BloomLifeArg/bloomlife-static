@@ -206,6 +206,7 @@
   background: var(--bls-arena); color: var(--bls-petroleo); text-decoration: none;
   font: 600 14px/1.2 Dosis, system-ui, sans-serif;
 }
+.bls__drawer .bls__mfinder span { color: var(--bls-petroleo); } /* el tema aclara los <a> del header */
 .bls__mfinder small { font: 500 12px/1.2 Dosis, system-ui, sans-serif; color: var(--bls-mudo); }
 .bls__mfinder::after { content: '\2192'; margin-left: auto; color: var(--bls-oro); font-weight: 700; }
 
