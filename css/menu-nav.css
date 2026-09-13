@@ -25,14 +25,14 @@
   --bls-mudo: #6B6B6B;
 }
 
-.bls { position: static; font-family: Dosis, system-ui, sans-serif; }
+.bls { position: static; font-family: Inter, system-ui, sans-serif; }
 
 .bls__barra { display: flex; align-items: center; gap: 26px; margin: 0; padding: 0; list-style: none; }
 .bls__barra > li { margin: 0; position: relative; }
 
 .bls__n1 {
   display: inline-block; padding: 7px 0; border: 0; background: none;
-  font: 600 15px/1 Dosis, system-ui, sans-serif; color: var(--bls-texto);
+  font: 500 14px/1 Inter, system-ui, sans-serif; letter-spacing: .01em; color: var(--bls-texto);
   text-decoration: none; cursor: pointer; white-space: nowrap; position: relative;
 }
 
@@ -90,7 +90,7 @@
 .bls__foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 .bls__txt { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.bls__nombre { font: 600 16px/1.2 Dosis, system-ui, sans-serif; color: var(--bls-texto); }
+.bls__nombre { font: 600 15px/1.2 Inter, system-ui, sans-serif; letter-spacing: -.01em; color: var(--bls-texto); }
 .bls__bajada { font: 400 12.5px/1.4 Georgia, serif; color: var(--bls-mudo); }
 
 /* El badge del combo va donde Seed pone su pill de "Save 25%": arriba del
@@ -102,7 +102,7 @@
   padding: 2px 8px;
   border-radius: 999px;
   background: var(--bls-petroleo);
-  font: 700 9.5px/1.5 Dosis, system-ui, sans-serif;
+  font: 700 9.5px/1.5 Inter, system-ui, sans-serif;
   letter-spacing: .1em; text-transform: uppercase; color: #fff;
 }
 
@@ -112,7 +112,7 @@
 
 .bls__label {
   margin: 14px 0 5px 8px;
-  font: 700 10px/1 Dosis, system-ui, sans-serif;
+  font: 700 10px/1 Inter, system-ui, sans-serif;
   letter-spacing: .15em; text-transform: uppercase; color: var(--bls-mudo);
 }
 
@@ -128,7 +128,7 @@
 .bls__chip {
   padding: 5px 11px; border-radius: 999px;
   border: 1px solid var(--bls-linea);
-  font: 600 12.5px/1 Dosis, system-ui, sans-serif;
+  font: 600 12.5px/1 Inter, system-ui, sans-serif;
   color: var(--bls-petroleo); text-decoration: none;
   transition: background .15s ease, border-color .15s ease;
 }
@@ -141,7 +141,7 @@
 }
 
 .bls__vertodo {
-  font: 600 13px/1 Dosis, system-ui, sans-serif;
+  font: 600 13px/1 Inter, system-ui, sans-serif;
   color: var(--bls-petroleo); text-decoration: none;
   border-bottom: 1px solid rgba(0, 56, 69, .3);
 }
@@ -155,12 +155,12 @@
   color: #fff; text-decoration: none;
 }
 .bls__susc-kicker {
-  display: block; font: 700 9.5px/1 Dosis, system-ui, sans-serif;
+  display: block; font: 700 9.5px/1 Inter, system-ui, sans-serif;
   letter-spacing: .15em; text-transform: uppercase; color: var(--bls-oro);
 }
-.bls__susc-tit { display: block; margin-top: 5px; font: 600 15.5px/1.25 Dosis, system-ui, sans-serif; color: #fff; }
+.bls__susc-tit { display: block; margin-top: 5px; font: 600 15.5px/1.25 Inter, system-ui, sans-serif; color: #fff; }
 .bls__susc-baj { display: block; margin-top: 4px; font: 400 12px/1.45 Georgia, serif; color: rgba(255,255,255,.82); }
-.bls__susc-cta { display: block; margin-top: 8px; font: 600 12.5px/1 Dosis, system-ui, sans-serif; color: #fff; border-bottom: 1px solid var(--bls-oro); width: fit-content; padding-bottom: 2px; }
+.bls__susc-cta { display: block; margin-top: 8px; font: 600 12.5px/1 Inter, system-ui, sans-serif; color: #fff; border-bottom: 1px solid var(--bls-oro); width: fit-content; padding-bottom: 2px; }
 .bls__susc-cta::after { content: ' →'; }
 
 /* ── mobile: el mismo contenido, en drawer ────────────────────────────────── */
@@ -194,7 +194,7 @@
 
 .bls__tab {
   flex: 0 0 auto; padding: 8px 13px; border: 0; border-radius: 999px;
-  background: none; font: 600 14px/1 Dosis, system-ui, sans-serif;
+  background: none; font: 500 13.5px/1 Inter, system-ui, sans-serif;
   color: var(--bls-mudo); cursor: pointer; white-space: nowrap;
 }
 .bls__tab.is-active { background: var(--bls-arena); color: var(--bls-texto); }
@@ -204,10 +204,10 @@
   flex: 0 0 auto; display: flex; align-items: baseline; gap: 8px;
   margin: 8px 10px 2px; padding: 11px 14px; border-radius: 12px;
   background: var(--bls-arena); color: var(--bls-petroleo); text-decoration: none;
-  font: 600 14px/1.2 Dosis, system-ui, sans-serif;
+  font: 600 14px/1.2 Inter, system-ui, sans-serif;
 }
 .bls__drawer .bls__mfinder span { color: var(--bls-petroleo); } /* el tema aclara los <a> del header */
-.bls__mfinder small { font: 500 12px/1.2 Dosis, system-ui, sans-serif; color: var(--bls-mudo); }
+.bls__mfinder small { font: 500 12px/1.2 Inter, system-ui, sans-serif; color: var(--bls-mudo); }
 .bls__mfinder::after { content: '\2192'; margin-left: auto; color: var(--bls-oro); font-weight: 700; }
 
 .bls__mcont { flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; padding: 4px 8px 8px; }
@@ -231,7 +231,7 @@
 }
 .bls__dir a {
   display: block; padding: 12px 8px;
-  font: 600 15px/1 Dosis, system-ui, sans-serif; color: var(--bls-texto); text-decoration: none;
+  font: 500 14px/1 Inter, system-ui, sans-serif; color: var(--bls-texto); text-decoration: none;
 }
 
 @media (max-width: 767.98px) {

@@ -130,11 +130,11 @@
   var HOVERABLE = !(window.matchMedia && window.matchMedia('(hover: none)').matches);
 
   var CRITICO =
-    '.bls{font-family:Dosis,system-ui,sans-serif}' +
+    '.bls{font-family:Inter,system-ui,sans-serif}' +
     '.bls__barra{display:flex;align-items:center;gap:26px;margin:0;padding:0;list-style:none}' +
     '.bls__barra>li{position:relative}' +
     '.bls__n1{display:inline-block;padding:7px 0;border:0;background:none;' +
-    'font:600 15px/1 Dosis,system-ui,sans-serif;color:#1A1A1A;text-decoration:none;' +
+    'font:500 14px/1 Inter,system-ui,sans-serif;letter-spacing:.01em;color:#1A1A1A;text-decoration:none;' +
     'cursor:pointer;white-space:nowrap;position:relative}' +
     '.bls__panel,.bls__drawer{visibility:hidden}' +
     '.bls__burger{display:none;width:40px;height:40px;border:0;background:none;padding:10px 8px;cursor:pointer}' +
