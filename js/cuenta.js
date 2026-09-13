@@ -99,7 +99,9 @@
       if (i.v.indexOf(v) > -1) { a.className = 'is-active'; a.setAttribute('aria-current', 'page'); }
       n.appendChild(a);
     });
-    var s = el('a', 'bac-nav__salir', 'Cerrar sesión'); s.href = '/account/logout/';
+    var s = el('a', 'bac-nav__salir', 'Cerrar sesión');
+    var nativo = d.querySelector('.account-page a[href*="logout"]');   // el botón gris del tema, que el CSS oculta
+    s.href = nativo ? nativo.getAttribute('href') : '/account/logout/';
     n.appendChild(s);
     cont.insertBefore(n, cont.firstChild);
   }

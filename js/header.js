@@ -302,7 +302,10 @@
   /* ── 4. scroll: compactar y esconder/mostrar ─────────────────────────── */
   function scrollHeader() {
     var head = d.querySelector('.js-head-main'); if (!head) return;
-    var COMPACT_Y = 72, HIDE_Y = 360, DELTA = 8;
+    /* Decisión de Sergio (2026-09-13): el header acompaña SIEMPRE el scroll; ya compacto ocupa 60/52 px
+       (<7 % del viewport, dentro de lo que Baymard considera aceptable para un sticky). HIDE_Y=Infinity
+       apaga el ocultar-al-bajar sin sacar la lógica, por si algún día se quiere volver a probar. */
+    var COMPACT_Y = 72, HIDE_Y = Infinity, DELTA = 8;
     var ultimo = window.pageYOffset || 0, oculto = false, compacto = false, pedido = false;
     var abiertoAlgo = function () {
       return abierto || !!d.querySelector('.bls__li.is-open, .bls__drawer.is-open, body.move-right, #nav-hamburger[style*="display: block"]');
