@@ -99,7 +99,7 @@ body.bac.bac-sesion .account-page .card-header { background: transparent; border
    Se respeta el padding-right para que la fecha no quede debajo de la flecha, y la flecha va en oro. */
 body.bac.bac-sesion .account-page .card-collapse { height: 56px; }
 body.bac.bac-sesion .account-page .card-collapse.active { height: auto; }
-body.bac.bac-sesion .account-page .card-header.card-header-collapse { padding: 17px 56px 17px 20px !important; min-height: 56px; }
+body.bac.bac-sesion .account-page .card-header.card-header-collapse { padding: 17px 68px 17px 20px !important; min-height: 56px; }
 body.bac.bac-sesion .account-page .card-collapse-toggle { top: 9px; right: 12px; color: var(--gold); }
 body.bac.bac-sesion .account-page .card-collapse-toggle svg { width: 14px; height: 14px; fill: var(--gold); }
 body.bac.bac-sesion .account-page .card-header .text-right, body.bac.bac-sesion .account-page .card-header .float-right { white-space: nowrap; }
