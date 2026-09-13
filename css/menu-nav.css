@@ -199,6 +199,16 @@
 }
 .bls__tab.is-active { background: var(--bls-arena); color: var(--bls-texto); }
 
+/* Puerta al finder en el drawer: un renglón arena, flecha dorada, sin foto. */
+.bls__mfinder {
+  flex: 0 0 auto; display: flex; align-items: baseline; gap: 8px;
+  margin: 8px 10px 2px; padding: 11px 14px; border-radius: 12px;
+  background: var(--bls-arena); color: var(--bls-petroleo); text-decoration: none;
+  font: 600 14px/1.2 Dosis, system-ui, sans-serif;
+}
+.bls__mfinder small { font: 500 12px/1.2 Dosis, system-ui, sans-serif; color: var(--bls-mudo); }
+.bls__mfinder::after { content: '\2192'; margin-left: auto; color: var(--bls-oro); font-weight: 700; }
+
 .bls__mcont { flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain; padding: 4px 8px 8px; }
 .bls__mpanel { display: block; }
 

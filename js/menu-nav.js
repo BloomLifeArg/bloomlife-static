@@ -441,6 +441,18 @@
     barra.appendChild(c);
 
     d.appendChild(barra);
+
+    /* La puerta guiada, UNA línea arriba del contenido (2026-09-13). No es la
+       tira al pie que Sergio sacó: es el primer renglón para quien abre el menú
+       sin saber qué elegir. Sale de NIVEL1 (misma URL que la entrada desktop). */
+    var fin = NIVEL1.filter(function (i) { return !i.panel && /para vos/i.test(i.texto); })[0];
+    if (fin) {
+      var fa = el('a', 'bls__mfinder');
+      fa.href = fin.href;
+      fa.innerHTML = '<span>' + fin.texto + '</span><small>Test guiado de 1 minuto</small>';
+      d.appendChild(fa);
+    }
+
     pintarSeccionMobile(cont, (conPanel[mActiva] || {}).panel);
     d.appendChild(cont);
 
