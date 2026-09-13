@@ -135,6 +135,18 @@
   cursor: pointer;
 }
 
+/* segundo CTA del hero: ghost, al lado del terracota, lleva al finder guiado */
+.ha2 {
+  background: transparent;
+  color: #F4F0E8;
+  border: 1px solid rgba(244,240,232,0.55);
+  margin-left: 10px;
+}
+.ha2:hover { border-color: #F4F0E8; }
+@media (max-width: 640px) {
+  .ha2 { margin-left: 0; margin-top: 10px; }
+}
+
 .hn {
   position: absolute;
   top: 28px;
