@@ -101,8 +101,8 @@
   function mensaje() {
     var p = producto();
     return p
-      ? 'Hola Bloom Life 👋 Estoy viendo ' + p + ' y quiero que me ayuden a elegir mi adaptógeno.'
-      : 'Hola Bloom Life 👋 Quiero que me ayuden a elegir mi adaptógeno.';
+      ? 'Hola Bloom Life 👋 Estoy viendo ' + p + ' y quiero que me ayuden a elegir mi suplemento.'
+      : 'Hola Bloom Life 👋 Quiero que me ayuden a elegir mi suplemento.';
   }
 
   function icono() {
@@ -122,7 +122,7 @@
     a.href = 'https://wa.me/' + TEL + '?text=' + encodeURIComponent(mensaje());
     a.target = '_blank';
     a.rel = 'noopener';
-    a.setAttribute('aria-label', 'Asesoría Bloom por WhatsApp: te ayudamos a elegir tu adaptógeno');
+    a.setAttribute('aria-label', 'Asesoría Bloom por WhatsApp: te ayudamos a elegir tu suplemento');
 
     var eb = el('span', 'blw-eb');
     eb.appendChild(el('span', 'blw-l', 'Asesoría'));

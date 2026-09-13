@@ -161,13 +161,12 @@ footer.blf .blf-bottom .claim-link [data-component="order-cancellation"]{margin-
   footer.blf{padding-top:52px!important}
   footer.blf .blf-social{margin-bottom:36px!important}
   footer.blf .blf-nav{margin-bottom:44px!important}
-  /* dos columnas al ancho de su contenido; a 390 el container mide 330 px y
-     "Cambios y Devoluciones" + "Preguntas Frecuentes" no entraban por 6 px */
-  footer.blf .blf-nav ul{
-    display:grid;grid-template-columns:auto auto;justify-content:center;
-    gap:16px 18px;margin:0 -10px;text-align:center}
-  footer.blf .footer-menu-link{letter-spacing:.03em}
-  footer.blf .blf-nav li:last-child:nth-child(odd){grid-column:1 / -1}
+  /* una sola columna centrada: dos columnas con largos tan distintos ("Contacto" vs
+     "Cambios y Devoluciones") quedaban como palabras sueltas sin ritmo */
+  footer.blf .blf-nav ul{display:block;margin:0;text-align:center}
+  footer.blf .blf-nav li{display:block;margin:0}
+  footer.blf .blf-nav li+li{margin-top:14px}
+  footer.blf .footer-menu-link{letter-spacing:.04em;font-size:14px}
   footer.blf .blf-news-t{font-size:20px;padding:0 8px}
   footer.blf .blf-contact ul{flex-direction:column;align-items:center}
   footer.blf .blf-contact li{width:100%;max-width:320px}

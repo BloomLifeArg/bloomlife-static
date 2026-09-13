@@ -329,6 +329,8 @@
     Promise.all([pagsP, fechasP]).then(function (rs) { terminar(rs[0], rs[1]); }, function () { terminar([], null); });
   }
 
-  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', start);
-  else start();
+  // El sello corre en el footer: si el nodo objetivo ya está parseado no hace falta esperar
+  // al DOMContentLoaded, que el JS del tema y las apps atrasan varios segundos en mobile.
+  if (d.readyState !== 'loading' || d.querySelector('.blog-page')) start();
+  else d.addEventListener('DOMContentLoaded', start);
 })();
