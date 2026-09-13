@@ -2,19 +2,26 @@
  *
  * Lo carga js/paginas-beneficio.js junto con css/mi-suscripcion.css, solo en
  * ese path. La página del CMS trae un markup pelado (.blp .blp-misus): hero,
- * cuatro tarjetas-acción (<a href="#pedir">), un contenedor .bms-form con el
+ * cinco tarjetas-acción (<a href="#pedir">), un contenedor .bms-form con el
  * texto de respaldo sin JS, pasos, letra chica, FAQ y cierre.
  *
  * Este archivo hace tres cosas, todas progresivas:
  *  1. Arma el formulario DENTRO de .bms-form con controles reales (la API de
  *     páginas borra <form>/<input>/<button>/<select>, así que nacen acá):
- *     gestión (4 radios como segmentado), número de pedido, mail, el campo
+ *     gestión (5 radios como segmentado), número de pedido, mail, el campo
  *     que pide cada gestión, mensaje adicional. Valida en línea y arma el
  *     mensaje: los dos botones son <a> cuyo href se recalcula en cada cambio
  *     (wa.me/…?text=… y mailto:…?subject=…&body=…), así lo que se ve es lo que
  *     viaja y no hay window.open que un bloqueador pueda frenar.
  *  2. Las tarjetas-acción preseleccionan la gestión y llevan el foco al
- *     formulario. #direccion / #pausa / #frecuencia / #baja en la URL también.
+ *     formulario. #direccion / #saltear / #frecuencia / #producto / #baja en la
+ *     URL también (#pausa sigue andando: era el nombre viejo de saltear).
+ *
+ * QUÉ SE PUEDE PEDIR — verificado 2026-09-13 en el admin de TN (Clientes →
+ * Gestionar suscripción): editar producto y cantidad, frecuencia de envío (las
+ * que tenga el plan: 30/45), datos de entrega, saltear el próximo pedido (máx.
+ * 2 seguidos) y cancelar. NO existe pausar, ni mover la fecha del próximo cobro,
+ * ni cambiar el medio de pago: el formulario no los ofrece.
  *  3. Acordeón del FAQ (.bli-q), igual que paginas-institucionales.js, porque
  *     ese archivo no entra en este path.
  *
@@ -38,16 +45,18 @@
 
   /* ══════════════ 1. TABLAS ══════════════ */
   var G = {
-    direccion:  { t: 'Cambiar la dirección',            corto: 'Dirección',          asunto: 'Cambio de dirección' },
-    pausa:      { t: 'Pausar un envío',                 corto: 'Pausa',              asunto: 'Pausar un envío' },
-    frecuencia: { t: 'Cambiar la fecha o la frecuencia', corto: 'Fecha y frecuencia', asunto: 'Cambio de fecha o frecuencia' },
-    baja:       { t: 'Dar de baja',                     corto: 'Baja',               asunto: 'Baja de la suscripción' }
+    direccion:  { t: 'Cambiar la dirección',              corto: 'Dirección',   asunto: 'Cambio de dirección' },
+    saltear:    { t: 'Saltear el próximo envío',          corto: 'Saltear',     asunto: 'Saltear el próximo envío' },
+    frecuencia: { t: 'Cambiar la frecuencia',             corto: 'Frecuencia',  asunto: 'Cambio de frecuencia' },
+    producto:   { t: 'Cambiar el producto o la cantidad', corto: 'Producto',    asunto: 'Cambio de producto o cantidad' },
+    baja:       { t: 'Dar de baja',                       corto: 'Baja',        asunto: 'Baja de la suscripción' }
   };
-  var ORDEN = ['direccion', 'pausa', 'frecuencia', 'baja'];
+  var ORDEN = ['direccion', 'saltear', 'frecuencia', 'producto', 'baja'];
+  var ALIAS = { pausa: 'saltear', fecha: 'frecuencia' };   // nombres viejos en el hash de la URL
+  // Las frecuencias las define el plan de cada producto en TN (hoy 30 y 45 días). Sin 15.
   var FREC = [
     { v: '30', t: 'Cada 30 días' },
-    { v: '45', t: 'Cada 45 días' },
-    { v: '15', t: 'Cada 15 días (solo en algunos productos)' }
+    { v: '45', t: 'Cada 45 días' }
   ];
 
   /* ══════════════ 2. UTILIDADES ══════════════ */
@@ -75,15 +84,6 @@
     } catch (e) {}
   }
   function foco(e) { try { e.focus({ preventScroll: true }); } catch (x) { try { e.focus(); } catch (z) {} } }
-  function hoyISO() {
-    var t = new Date(), m = t.getMonth() + 1, dd = t.getDate();
-    return t.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (dd < 10 ? '0' : '') + dd;
-  }
-  // 2026-10-12 → 12/10/2026 (el <input type=date> devuelve ISO; la persona del equipo lee dd/mm)
-  function fechaLinda(iso) {
-    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
-    return m ? m[3] + '/' + m[2] + '/' + m[1] : (iso || '');
-  }
   function offsetHead() {
     var head = d.querySelector('.js-head-main') || d.querySelector('header');
     if (!head) return 0;
@@ -95,11 +95,12 @@
   var estado = {
     g: 'direccion', pedido: '', mail: '',
     dir: '',
-    pausaTipo: 'proximo', pausaFecha: '',
-    frecTipo: 'frecuencia', frec: '', frecFecha: '',
+    saltN: '1',
+    frec: '',
+    prodTipo: 'cantidad', cant: '', prodNuevo: '',
     motivo: '', msg: ''
   };
-  var CAMPOS = ['g', 'pedido', 'mail', 'dir', 'pausaTipo', 'pausaFecha', 'frecTipo', 'frec', 'frecFecha', 'motivo', 'msg'];
+  var CAMPOS = ['g', 'pedido', 'mail', 'dir', 'saltN', 'frec', 'prodTipo', 'cant', 'prodNuevo', 'motivo', 'msg'];
 
   function guardar() {
     try { localStorage.setItem(KEY, JSON.stringify(estado)); } catch (e) {}
@@ -112,9 +113,10 @@
         k = CAMPOS[i];
         if (typeof o[k] === 'string') { estado[k] = o[k]; if (o[k]) hubo = true; }
       }
+      if (ALIAS[estado.g]) estado.g = ALIAS[estado.g];      // borrador guardado con la versión anterior
       if (!G[estado.g]) estado.g = 'direccion';
-      if (estado.pausaTipo !== 'fecha') estado.pausaTipo = 'proximo';
-      if (estado.frecTipo !== 'fecha') estado.frecTipo = 'frecuencia';
+      if (estado.saltN !== '2') estado.saltN = '1';
+      if (estado.prodTipo !== 'producto') estado.prodTipo = 'cantidad';
       return hubo;
     } catch (e) { return false; }
   }
@@ -141,10 +143,10 @@
     if (!trim(s.mail)) e.mail = 'Necesitamos el mail con el que compraste.';
     else if (!mailOk(s.mail)) e.mail = 'Ese mail no parece completo. Revisá que tenga el @ y el dominio.';
     if (s.g === 'direccion' && trim(s.dir).length < 8) e.dir = 'Escribí la dirección completa: calle y número, piso y depto si hay, localidad, código postal y provincia.';
-    if (s.g === 'pausa' && s.pausaTipo === 'fecha' && !s.pausaFecha) e.pausaFecha = 'Decinos hasta qué fecha pausamos.';
-    if (s.g === 'frecuencia') {
-      if (s.frecTipo === 'frecuencia' && !s.frec) e.frec = 'Elegí la nueva frecuencia.';
-      if (s.frecTipo === 'fecha' && !s.frecFecha) e.frecFecha = 'Decinos la nueva fecha del próximo envío.';
+    if (s.g === 'frecuencia' && !s.frec) e.frec = 'Elegí la nueva frecuencia.';
+    if (s.g === 'producto') {
+      if (s.prodTipo === 'cantidad' && !/^[1-9]$/.test(trim(s.cant))) e.cant = 'Decinos la nueva cantidad por envío, de 1 a 9.';
+      if (s.prodTipo === 'producto' && trim(s.prodNuevo).length < 3) e.prodNuevo = 'Decinos a qué producto querés pasar (nombre y formato, por ejemplo Reishi Gummies).';
     }
     return e;
   }
@@ -158,16 +160,17 @@
     L.push('Pedido: #' + pedidoNorm(s.pedido));
     L.push('Mail de la compra: ' + trim(s.mail));
     if (s.g === 'direccion') L.push('Nueva dirección: ' + trim(s.dir));
-    if (s.g === 'pausa') {
-      L.push('Pausar: ' + (s.pausaTipo === 'fecha' ? 'hasta el ' + fechaLinda(s.pausaFecha) : 'el próximo envío (uno solo)'));
+    if (s.g === 'saltear') {
+      L.push('Saltear: ' + (s.saltN === '2' ? 'los próximos 2 envíos (el máximo seguido)' : 'el próximo envío (uno solo)'));
     }
     if (s.g === 'frecuencia') {
-      if (s.frecTipo === 'fecha') L.push('Nueva fecha del próximo envío: ' + fechaLinda(s.frecFecha));
-      else {
-        var f = null, i;
-        for (i = 0; i < FREC.length; i++) if (FREC[i].v === s.frec) f = FREC[i];
-        L.push('Nueva frecuencia: ' + (f ? f.t.replace(/ \(.*\)$/, '').toLowerCase() : ''));
-      }
+      var f = null, i;
+      for (i = 0; i < FREC.length; i++) if (FREC[i].v === s.frec) f = FREC[i];
+      L.push('Nueva frecuencia: ' + (f ? f.t.toLowerCase() : ''));
+    }
+    if (s.g === 'producto') {
+      if (s.prodTipo === 'producto') L.push('Pasar a: ' + trim(s.prodNuevo));
+      else L.push('Nueva cantidad por envío: ' + trim(s.cant));
     }
     if (s.g === 'baja') {
       L.push('Motivo: ' + (trim(s.motivo) || 'prefiero no decirlo'));
@@ -235,7 +238,7 @@
     fs.appendChild(lg);
     opts.items.forEach(function (o, i) {
       var lab = el('label', 'bms-radio' + (estado[k] === o.v ? ' on' : ''));
-      var r = el('input'); r.type = 'radio'; r.name = name; r.value = o.v; r.id = name + '-r-' + o.v;   // '-r-' para no chocar con el id del campo de fecha (bms-pausa-fecha)
+      var r = el('input'); r.type = 'radio'; r.name = name; r.value = o.v; r.id = name + '-r-' + o.v;   // '-r-' para no chocar con los ids de los campos
       r.checked = estado[k] === o.v;
       r.addEventListener('change', function () {
         if (!r.checked) return;
@@ -259,7 +262,7 @@
   // el campo (o los campos) que pide cada gestión; se rearma al cambiar la gestión
   function pintarCond() {
     cond.innerHTML = '';
-    campos.dir = campos.pausaFecha = campos.frec = campos.frecFecha = campos.motivo = null;
+    campos.dir = campos.frec = campos.cant = campos.prodNuevo = campos.motivo = null;
     var g = estado.g;
     if (g === 'direccion') {
       cond.appendChild(campo('bms-dir', 'Nueva dirección completa',
@@ -267,66 +270,59 @@
         'Con código postal y alguna referencia si el timbre no tiene nombre.'));
       campos.dir = campos['bms-dir'];
     }
-    if (g === 'pausa') {
-      var wp = el('div', 'bms-field');
-      wp.appendChild(el('div', 'bms-label', 'Qué querés pausar'));
-      var sub = el('div', 'bms-sub-field');
-      var pintaSub = function () {
-        sub.innerHTML = '';
-        campos.pausaFecha = null;
-        if (estado.pausaTipo === 'fecha') {
-          sub.appendChild(campo('bms-pausa-fecha', 'Pausar hasta el',
-            input('date', 'pausaFecha', null, { min: hoyISO() }),
-            'Retomamos los envíos a partir de esa fecha.'));
-          campos.pausaFecha = campos['bms-pausa-fecha'];
-        }
-      };
-      wp.appendChild(radioLista('bms-pausa', 'pausaTipo', {
-        legend: 'Qué querés pausar',
+    if (g === 'saltear') {
+      var ws = el('div', 'bms-field');
+      ws.appendChild(el('div', 'bms-label', 'Cuántos envíos'));
+      ws.appendChild(radioLista('bms-salt', 'saltN', {
+        legend: 'Cuántos envíos salteamos',
         items: [
-          { v: 'proximo', t: 'Saltar el próximo envío', d: 'Uno solo. El siguiente sale como siempre.' },
-          { v: 'fecha', t: 'Pausar hasta una fecha', d: 'Vos nos decís cuándo retomar.' }
+          { v: '1', t: 'Solo el próximo', d: 'El siguiente sale como siempre, un ciclo después.' },
+          { v: '2', t: 'Los próximos dos', d: 'Es el máximo seguido que permite el sistema. La suscripción sigue activa.' }
         ]
-      }, function () { pintaSub(); }));   // sin robar el foco: el campo aparece a continuación en el orden de Tab
-      wp.appendChild(sub);
-      pintaSub();
-      cond.appendChild(wp);
+      }));
+      cond.appendChild(ws);
     }
     if (g === 'frecuencia') {
-      var wf = el('div', 'bms-field');
-      wf.appendChild(el('div', 'bms-label', 'Qué querés cambiar'));
-      var subf = el('div', 'bms-sub-field');
-      var pintaSubf = function () {
-        subf.innerHTML = '';
-        campos.frec = campos.frecFecha = null;
-        if (estado.frecTipo === 'fecha') {
-          subf.appendChild(campo('bms-frec-fecha', 'Nueva fecha del próximo envío',
-            input('date', 'frecFecha', null, { min: hoyISO() }),
-            'De ahí en adelante, la suscripción sigue con ese ritmo.'));
-          campos.frecFecha = campos['bms-frec-fecha'];
+      var sel = el('select');
+      sel.name = 'frec';
+      var o0 = el('option', null, 'Elegí una frecuencia'); o0.value = ''; sel.appendChild(o0);
+      FREC.forEach(function (f) {
+        var o = el('option', null, esc(f.t)); o.value = f.v; if (estado.frec === f.v) o.selected = true; sel.appendChild(o);
+      });
+      sel.addEventListener('change', function () { estado.frec = sel.value; marcar('frec'); cambio(); });
+      cond.appendChild(campo('bms-frec', 'Nueva frecuencia', sel,
+        'Aplica desde el próximo cobro. Las frecuencias las define el plan de tu producto: si la que elegís no está en el tuyo, te lo decimos antes de tocar nada.'));
+      campos.frec = campos['bms-frec'];
+    }
+    if (g === 'producto') {
+      var wq = el('div', 'bms-field');
+      wq.appendChild(el('div', 'bms-label', 'Qué querés cambiar'));
+      var subq = el('div', 'bms-sub-field');
+      var pintaSubq = function () {
+        subq.innerHTML = '';
+        campos.cant = campos.prodNuevo = null;
+        if (estado.prodTipo === 'producto') {
+          subq.appendChild(campo('bms-prod', 'A qué producto pasás',
+            input('text', 'prodNuevo', 'Por ejemplo: Reishi Gummies', { autocomplete: 'off' }),
+            'Nombre y formato (gummies o cápsulas). Se mantiene el 10% y el precio nuevo aplica desde el próximo cobro.'));
+          campos.prodNuevo = campos['bms-prod'];
         } else {
-          var sel = el('select');
-          sel.name = 'frec';
-          var o0 = el('option', null, 'Elegí una frecuencia'); o0.value = ''; sel.appendChild(o0);
-          FREC.forEach(function (f) {
-            var o = el('option', null, esc(f.t)); o.value = f.v; if (estado.frec === f.v) o.selected = true; sel.appendChild(o);
-          });
-          sel.addEventListener('change', function () { estado.frec = sel.value; marcar('frec'); cambio(); });
-          subf.appendChild(campo('bms-frec', 'Nueva frecuencia', sel,
-            'La de 15 días no está en todos los productos: si no aplica al tuyo, te avisamos.'));
-          campos.frec = campos['bms-frec'];
+          subq.appendChild(campo('bms-cant', 'Nueva cantidad por envío',
+            input('text', 'cant', '2', { inputmode: 'numeric', autocomplete: 'off', maxlength: '1' }),
+            'Frascos por envío. El total se recalcula con el mismo 10%.'));
+          campos.cant = campos['bms-cant'];
         }
       };
-      wf.appendChild(radioLista('bms-frectipo', 'frecTipo', {
+      wq.appendChild(radioLista('bms-prodtipo', 'prodTipo', {
         legend: 'Qué querés cambiar',
         items: [
-          { v: 'frecuencia', t: 'La frecuencia', d: 'Cada cuánto llega el frasco.' },
-          { v: 'fecha', t: 'La fecha del próximo envío', d: 'Movés el día, y el ritmo sigue desde ahí.' }
+          { v: 'cantidad', t: 'La cantidad', d: 'Más o menos frascos del mismo producto en cada envío.' },
+          { v: 'producto', t: 'El producto', d: 'Pasás a otro suplemento sin cerrar la suscripción.' }
         ]
-      }, function () { pintaSubf(); }));
-      wf.appendChild(subf);
-      pintaSubf();
-      cond.appendChild(wf);
+      }, function () { pintaSubq(); }));   // sin robar el foco: el campo aparece a continuación en el orden de Tab
+      wq.appendChild(subq);
+      pintaSubq();
+      cond.appendChild(wq);
     }
     if (g === 'baja') {
       cond.appendChild(campo('bms-motivo', 'Motivo',
@@ -341,7 +337,7 @@
   }
 
   function idDe(k) {
-    return { pedido: 'bms-pedido', mail: 'bms-mail', dir: 'bms-dir', pausaFecha: 'bms-pausa-fecha', frec: 'bms-frec', frecFecha: 'bms-frec-fecha' }[k];
+    return { pedido: 'bms-pedido', mail: 'bms-mail', dir: 'bms-dir', frec: 'bms-frec', cant: 'bms-cant', prodNuevo: 'bms-prod' }[k];
   }
   function marcar(k) {
     var c = campos[idDe(k)];
@@ -352,7 +348,7 @@
     if (e) c.c.setAttribute('aria-invalid', 'true'); else c.c.removeAttribute('aria-invalid');
   }
   function marcarTodo() {
-    ['pedido', 'mail', 'dir', 'pausaFecha', 'frec', 'frecFecha'].forEach(marcar);
+    ['pedido', 'mail', 'dir', 'frec', 'cant', 'prodNuevo'].forEach(marcar);
   }
 
   function actualizar() {
@@ -452,7 +448,7 @@
     var clr = el('button', 'bms-clear', 'Limpiar el formulario'); clr.type = 'button';
     clr.addEventListener('click', function () {
       CAMPOS.forEach(function (k) { if (k !== 'g') estado[k] = ''; });
-      estado.pausaTipo = 'proximo'; estado.frecTipo = 'frecuencia';
+      estado.saltN = '1'; estado.prodTipo = 'cantidad';
       intentado = false; tocado = {};
       borrar();
       armar();
@@ -514,8 +510,9 @@
     asegurarCss();
     try { acordeon(); } catch (e) {}
     cargar();
-    // #direccion / #pausa / #frecuencia / #baja: link directo con la gestión elegida
+    // #direccion / #saltear / #frecuencia / #producto / #baja: link directo con la gestión elegida
     var hg = (location.hash || '').replace(/^#/, '');
+    if (ALIAS[hg]) hg = ALIAS[hg];
     if (G[hg]) estado.g = hg;
     armar();
     Array.prototype.forEach.call(d.querySelectorAll('.bms-act'), function (a) {
