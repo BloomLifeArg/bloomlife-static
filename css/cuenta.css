@@ -1,0 +1,124 @@
+/* Mi cuenta — /account/* (.bac). Lo carga js/cuenta.js sobre los templates NATIVOS de Morelia
+   (login, registro, reset, nueva contraseña, pedidos, detalle de pedido, direcciones, datos).
+   Los <form> son del tema y no se tocan: acá se los viste. Tokens = los de las páginas .blp. */
+body.bac {
+  --dark: #003845; --mid: #608B71; --gold: #CCA352; --gold-ink: #7E5F2A; --terra: #C4694F; --sand: #F4F0E8;
+  --w: #fff; --ink: #1A1A1A; --muted: #7A7A7A; --line: rgba(0,56,69,.10);
+  --ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ed: Georgia, 'Times New Roman', serif;
+}
+body.bac .account-page, body.bac .page-header { visibility: visible; }
+
+/* ── cabecera de página ─────────────────────────────────────────────────── */
+body.bac .page-header, body.bac .page-header.text-center { padding: 34px 0 6px !important; text-align: left !important; }
+body.bac .page-header .breadcrumbs { margin: 0 0 14px; font: 500 11px/1 var(--ui); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+body.bac .page-header .breadcrumbs .crumb { color: var(--muted); text-decoration: none; }
+body.bac .page-header .breadcrumbs .crumb.active { color: var(--gold-ink); }
+body.bac .page-header .breadcrumbs .separator { margin: 0 8px; color: var(--gold); }
+body.bac .page-header h1 { font: italic 400 34px/1.15 var(--ed); color: var(--dark); margin: 0; letter-spacing: -.01em; }
+body.bac .bac-sub { margin: 10px 0 0; max-width: 560px; font: 300 15.5px/1.55 var(--ui); color: #4A5154; }
+body.bac .account-page { font-family: var(--ui); color: var(--ink); padding: 22px 0 64px; margin-bottom: 0 !important; }
+
+/* ── formularios (login / registro / reset / nueva contraseña / datos / dirección) ── */
+body.bac .account-page h2.h6 { font: 300 15.5px/1.55 var(--ui); color: #4A5154; text-align: left !important; margin: 0 0 22px !important; }
+body.bac .account-page .form-label { display: block; margin: 0 0 8px; font: 600 11px/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; color: #3B4A4E; }
+body.bac .account-page .form-group { margin-bottom: 18px; position: relative; }
+body.bac .account-page .form-control {
+  display: block; width: 100%; height: auto; border: 1.5px solid var(--line); border-radius: 14px; background: var(--sand);
+  padding: 14px 16px; font: 400 16px/1.4 var(--ui); color: var(--ink); box-shadow: none; transition: border-color .15s ease, background .15s ease;
+}
+body.bac .account-page .form-control::placeholder { color: #9A9A9A; }
+body.bac .account-page .form-control:focus { border-color: var(--mid); background: var(--w); outline: none; box-shadow: 0 0 0 3px rgba(96,139,113,.15); }
+body.bac .account-page select.form-control { -webkit-appearance: none; appearance: none; padding-right: 44px;
+  background-image: linear-gradient(45deg, transparent 50%, var(--dark) 50%), linear-gradient(135deg, var(--dark) 50%, transparent 50%);
+  background-position: calc(100% - 22px) 24px, calc(100% - 16px) 24px; background-size: 6px 6px; background-repeat: no-repeat; }
+body.bac .account-page .password-toggle { top: 42px; right: 6px; padding: 6px 12px; transform: none; font: 600 11px/1 var(--ui); letter-spacing: .08em; text-transform: uppercase; color: var(--gold-ink); }
+body.bac .account-page .password-toggle:hover { color: var(--dark); }
+body.bac .account-page .btn-primary, body.bac .account-page .btn.btn-primary {
+  display: inline-block; width: auto; min-width: 220px; border: 1.5px solid var(--dark); border-radius: 999px; background: var(--dark); color: var(--w);
+  padding: 16px 30px; font: 600 13px/1 var(--ui); letter-spacing: .07em; text-transform: uppercase; cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+body.bac .account-page .btn-primary.btn-block { width: 100%; }
+body.bac .account-page .btn-primary:hover { background: #004d5e; border-color: #004d5e; color: var(--w); transform: translateY(-1px); }
+body.bac .account-page .btn-primary:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+body.bac .account-page .btn-link, body.bac .account-page a.btn-link { position: static; transform: none; font: 500 13.5px/1.4 var(--ui); color: var(--dark); text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 1px; }
+body.bac .account-page .btn-link:hover { color: var(--mid); }
+body.bac .account-page .font-small { font: 300 14px/1.5 var(--ui); color: #4A5154; }
+body.bac .account-page .text-right.mt-2 { text-align: right; margin-top: 10px !important; }
+body.bac .account-page .alert { border: 0; border-radius: 12px; padding: 12px 16px; font: 400 14px/1.5 var(--ui); }
+body.bac .account-page .alert-danger { background: #F7E5DF; color: #7E3A28; }
+body.bac .account-page .alert-success { background: #E3EFE7; color: #2F6B4F; }
+body.bac .account-page .g-recaptcha { margin: 6px 0 18px; }
+
+/* La tarjeta del formulario y el panel lateral (login / registro / reset) */
+body.bac.bac-form .account-page .row.justify-content-center { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; align-items: start; margin: 0; }
+body.bac.bac-form .account-page .col-md-6 { flex: none; max-width: none; width: auto; padding: 32px 34px 30px; background: var(--w); border: 1.5px solid var(--line); border-radius: 20px; }
+body.bac.bac-form .account-page .col-md-6 .btn-primary { margin-top: 6px; }
+body.bac.bac-form .account-page .mt-2.mb-2.text-center { text-align: left !important; margin-top: 18px !important; }
+.bac-aside { padding: 30px 30px 28px; border-radius: 20px; background: var(--dark); color: var(--w); }
+.bac-aside__k { font: 600 11px/1 var(--ui); letter-spacing: .15em; text-transform: uppercase; color: var(--gold); }
+.bac-aside__t { margin: 12px 0 0; font: italic 400 24px/1.25 var(--ed); color: var(--w); }
+.bac-aside__l { list-style: none; margin: 22px 0 0; padding: 0; }
+.bac-aside__l li { position: relative; padding: 0 0 0 22px; margin-top: 12px; font: 300 14.5px/1.55 var(--ui); color: rgba(255,255,255,.86); }
+.bac-aside__l li::before { content: ''; position: absolute; left: 0; top: 8px; width: 9px; height: 9px; border-radius: 999px; background: var(--gold); }
+.bac-aside__l li b { font-weight: 600; color: var(--w); }
+.bac-aside__cta { display: inline-block; margin-top: 24px; padding: 12px 20px; border: 1.5px solid rgba(255,255,255,.45); border-radius: 999px; font: 600 12px/1 var(--ui); letter-spacing: .07em; text-transform: uppercase; color: var(--w); text-decoration: none; transition: background .18s ease, border-color .18s ease; }
+.bac-aside__cta:hover { background: var(--w); border-color: var(--w); color: var(--dark); }
+.bac-aside__nota { margin: 22px 0 0; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.18); font: 300 13px/1.5 var(--ui); color: rgba(255,255,255,.7); }
+.bac-aside__nota a { color: var(--w); border-bottom: 1px solid var(--gold); text-decoration: none; }
+
+/* ── con sesión: navegación de la cuenta ────────────────────────────────── */
+.bac-nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 26px; }
+.bac-nav a { padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--w); font: 500 13px/1 var(--ui); color: var(--dark); text-decoration: none; transition: border-color .15s ease, background .15s ease; }
+.bac-nav a:hover { border-color: var(--dark); }
+.bac-nav a.is-active { background: var(--dark); border-color: var(--dark); color: var(--w); }
+.bac-nav a.bac-nav__salir { margin-left: auto; color: var(--muted); border-color: transparent; background: transparent; }
+.bac-nav a.bac-nav__salir:hover { color: var(--terra); border-color: transparent; }
+
+/* Bloques "Mis datos" / "Mis direcciones" / títulos de sección */
+body.bac.bac-sesion .account-page .text-center { text-align: left !important; }
+body.bac.bac-sesion .account-page h4.h5, body.bac.bac-sesion .account-page span.h5 { display: block; font: 600 11px/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); margin: 0 0 12px !important; }
+body.bac.bac-sesion .account-page hr.divider { display: none; }
+body.bac.bac-sesion .account-page .col-md-4 > p { padding: 22px 24px; background: var(--w); border: 1.5px solid var(--line); border-radius: 18px; font: 400 14.5px/1.7 var(--ui); color: var(--ink); margin: 0 0 26px !important; }
+body.bac.bac-sesion .account-page .col-md-4 > p strong { font-weight: 600; color: #3B4A4E; }
+body.bac.bac-sesion .account-page .col-md-4 > p .btn-link { display: inline-block; margin-top: 6px; }
+
+/* Tarjetas de pedidos */
+body.bac.bac-sesion .account-page .card { border: 1.5px solid var(--line); border-radius: 18px; background: var(--w); overflow: hidden; margin-bottom: 18px; box-shadow: none; }
+body.bac.bac-sesion .account-page .card-header { background: transparent; border-bottom: 1px solid var(--line); padding: 16px 20px; font: 400 13px/1.3 var(--ui); color: var(--muted); }
+body.bac.bac-sesion .account-page .card-header .btn-link { font-weight: 600; font-size: 15px; color: var(--dark); }
+body.bac.bac-sesion .account-page .card-body { padding: 18px 20px; font: 400 14px/1.6 var(--ui); }
+body.bac.bac-sesion .account-page .card-body p { margin: 0 0 6px; color: #4A5154; }
+body.bac.bac-sesion .account-page .card-body strong { font-weight: 600; color: var(--ink); }
+body.bac.bac-sesion .account-page .card-body strong.paid, body.bac.bac-sesion .account-page .card-body strong.pending, body.bac.bac-sesion .account-page .card-body strong.authorized,
+body.bac.bac-sesion .account-page .card-body strong.voided, body.bac.bac-sesion .account-page .card-body strong.refunded, body.bac.bac-sesion .account-page .card-body strong.abandoned {
+  display: inline-block; padding: 3px 10px; border-radius: 999px; font: 600 11.5px/1.4 var(--ui); letter-spacing: .04em; }
+body.bac.bac-sesion .account-page .card-body strong.paid, body.bac.bac-sesion .account-page .card-body strong.authorized { background: #E3EFE7; color: #2F6B4F; }
+body.bac.bac-sesion .account-page .card-body strong.pending { background: #F6ECD6; color: var(--gold-ink); }
+body.bac.bac-sesion .account-page .card-body strong.voided, body.bac.bac-sesion .account-page .card-body strong.refunded, body.bac.bac-sesion .account-page .card-body strong.abandoned { background: #F7E5DF; color: #7E3A28; }
+body.bac.bac-sesion .account-page .card-img-square-container { border-radius: 12px; overflow: hidden; background: var(--sand); }
+body.bac.bac-sesion .account-page .card-img-pill { background: var(--dark); color: var(--w); font: 600 10px/1.4 var(--ui); letter-spacing: .06em; text-transform: uppercase; }
+body.bac.bac-sesion .account-page .card-footer { background: var(--sand); border-top: 1px solid var(--line); padding: 14px 20px; }
+body.bac.bac-sesion .account-page .card-footer .btn-primary { min-width: 0; width: 100%; padding: 13px 20px; font-size: 12px; }
+body.bac.bac-sesion .account-page .order-detail .card-header { font: 600 11px/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; color: var(--gold-ink); }
+body.bac.bac-sesion .account-page .order-detail .card-body p { margin: 0; }
+body.bac.bac-sesion .account-page .h3 { font: italic 400 26px/1.2 var(--ed); color: var(--dark); }
+body.bac.bac-sesion .account-page .h5 { font: 400 15px/1.4 var(--ui); }
+
+/* Direcciones */
+body.bac.bac-sesion .account-page .btn-small { min-width: 0; padding: 12px 20px; font-size: 12px; }
+
+/* ── responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 991.98px) {
+  body.bac.bac-form .account-page .row.justify-content-center { grid-template-columns: 1fr; gap: 18px; }
+}
+@media (max-width: 767.98px) {
+  body.bac .page-header { padding: 24px 0 4px !important; }
+  body.bac .page-header h1 { font-size: 28px; }
+  body.bac .account-page { padding: 16px 0 48px; }
+  body.bac.bac-form .account-page .col-md-6 { padding: 24px 20px 22px; border-radius: 16px; }
+  .bac-aside { padding: 24px 22px 22px; }
+  body.bac .account-page .btn-primary { width: 100%; }
+  .bac-nav a.bac-nav__salir { margin-left: 0; }
+}
