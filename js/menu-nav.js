@@ -527,14 +527,40 @@
   }
 
   function arrancar() {
-    estiloCritico(); cargarCSS(); montar();
+    estiloCritico(); cargarCSS(); montar(); cargarHeader();
     Promise.all([traer('menu-nav.json'), traer('menu-adaptogenos.json'),
                  traer('combos-menu.json'), traer('beneficios-home.json'),
                  traer('blog-latest.json')])
       .then(function (r) {
         datos = { nav: r[0], adaptogenos: r[1], combos: r[2], beneficios: r[3], blog: r[4] };
         if (!document.getElementById(ID)) montar(); else refrescar();
+        compartir();
       });
+  }
+
+  /* Los mismos datos, ya normalizados, para js/header.js (overlay de búsqueda):
+     un solo fetch de los JSON y una sola fuente de nombres/bajadas/fotos. */
+  function compartir() {
+    var a = (datos && datos.adaptogenos && datos.adaptogenos.items) || {};
+    var meta = (datos && datos.nav && datos.nav.columnas) || {};
+    var bajCaps = (meta.adaptogenos && meta.adaptogenos.bajadas_caps) || {};
+    window.blsData = {
+      adaptogenos: adaptogenos(),
+      capsulas: CAPS.filter(function (c) { return a[c.k]; }).map(function (c) {
+        return { nombre: a[c.k].nombre, bajada: bajCaps[c.k] || c.bajada, href: c.href, img: resolver('../img/menu/' + a[c.k].archivo) };
+      }),
+      combos: combos(),
+      objetivos: objetivos()
+    };
+    try { document.dispatchEvent(new CustomEvent('bls:datos')); } catch (e) {}
+  }
+
+  /* Fase 2 del header (íconos + overlay de búsqueda), del mismo commit. */
+  function cargarHeader() {
+    if (document.querySelector('script[data-blh]')) return;
+    var h = resolver('header.js'); if (!h) return;
+    var s = document.createElement('script'); s.src = h; s.async = true; s.setAttribute('data-blh', '');
+    document.head.appendChild(s);
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', arrancar);
