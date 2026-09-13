@@ -35,6 +35,7 @@
   var INST = /^\/(suscripciones|preguntas-frecuentes|politica-de-devolucion|contacto)\/?$/
     .test(location.pathname);
   var FINDER = /^\/que-suplemento-es-para-vos\/?$/.test(location.pathname);
+  var MISUS = /^\/mi-suscripcion\/?$/.test(location.pathname);
 
   var pend = 0, listo = false;
   var reveal = function () {
@@ -75,6 +76,18 @@
     fj.src = base + '/js/finder.js';
     fj.onerror = uno;
     d.head.appendChild(fj);
+  }
+  if (MISUS) {
+    // Mi suscripción: formulario de gestiones sobre markup pelado, misma cadena que el finder.
+    // Necesita las dos hojas institucionales (hero claro, grid2, pasos, letra chica, acordeón).
+    css('paginas-institucionales.css');
+    css('mi-suscripcion.css');
+    pend++;
+    window.blpDone = uno;
+    var ms = d.createElement('script');
+    ms.src = base + '/js/mi-suscripcion.js';
+    ms.onerror = uno;
+    d.head.appendChild(ms);
   }
   setTimeout(reveal, 4000);
 })();
