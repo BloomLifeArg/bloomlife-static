@@ -72,6 +72,8 @@
     { texto: 'Shop', panel: 'shop' },
     { texto: 'Combos', panel: 'combos' },
     { texto: 'Beneficios', panel: 'beneficios' },
+    // finder guiado: la puerta para quien entra sin saber qué elegir (2026-09-13)
+    { texto: '¿Cuál es para vos?', href: 'https://www.bloomlife.co/que-suplemento-es-para-vos/' },
     { texto: 'Suscripción mensual', href: 'https://www.bloomlife.co/suscripciones/' },
     { texto: 'Blog', panel: 'blog' }
   ];
