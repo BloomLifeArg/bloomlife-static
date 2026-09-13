@@ -388,6 +388,8 @@
     var total = prods.length;
     var cuenta = total + (total === 1 ? ' producto' : ' productos');
     if (!ctx.completo) cuenta += ' en esta página';
+    var previo = d.querySelector('.bsq-head');
+    if (previo && previo.parentNode) previo.parentNode.removeChild(previo);   // re-render progresivo
     var head = d.createElement('div');
     head.className = 'bsq bsq-head';
     if (ctx.modo === 'cat') {
@@ -412,10 +414,12 @@
     else grid.parentNode.insertBefore(head, grid);
 
     if (ctx.pag) {
-      if (ctx.completo) ctx.pag.className += ' bsq-native-pag-off';
-      else ctx.pag.className += ' bsq-native-pag';
+      ctx.pag.className = ctx.pag.className.replace(/\s*bsq-native-pag(-off)?/g, '');
+      ctx.pag.className += ctx.completo ? ' bsq-native-pag-off' : ' bsq-native-pag';
     }
-    d.body.className += ' bsq-on' + (ctx.modo === 'cat' ? ' bsq-cat' : '');
+    if (!/(^|\s)bsq-on(\s|$)/.test(d.body.className)) {
+      d.body.className += ' bsq-on' + (ctx.modo === 'cat' ? ' bsq-cat' : '');
+    }
   }
 
   /* ───────── 4b. encabezado de categoría: todo sale del DOM nativo ─────────
@@ -541,6 +545,16 @@
         }))
       : Promise.resolve([]);
 
+    var render = function (cfg, completo) {
+      var prods = [];
+      Object.keys(porPagina).map(Number).sort(function (a, b) { return a - b; }).forEach(function (n) {
+        prods = prods.concat(porPagina[n]);
+      });
+      prods.forEach(function (p) { enriquecer(p, cfg); });
+      pintar({ grid: grid, q: param('q'), prods: prods, pag: pag, completo: completo,
+        modo: MODO, cat: MODO === 'cat' ? tituloCategoria() : null });
+    };
+    var pintado = false;
     var terminar = function (cfg, htmls) {
       var completo = true;
       (htmls || []).forEach(function (h, j) {
@@ -553,14 +567,10 @@
       });
       if (urls.length > (totalPag - 1)) completo = false;   // nunca pasa, defensivo
       if (totalPag - 1 > MAX_PAGINAS) completo = false;     // quedaron páginas sin traer
-      var prods = [];
-      Object.keys(porPagina).map(Number).sort(function (a, b) { return a - b; }).forEach(function (n) {
-        prods = prods.concat(porPagina[n]);
-      });
-      prods.forEach(function (p) { enriquecer(p, cfg); });
+      if (pintado && !urls.length) return;                   // ya se pintó todo lo que había
       try {
-        pintar({ grid: grid, q: param('q'), prods: prods, pag: pag, completo: completo,
-          modo: MODO, cat: MODO === 'cat' ? tituloCategoria() : null });
+        render(cfg, completo);
+        pintado = true;
       } catch (e) {
         guardOff();
         if (window.console && console.error) console.error('[bsq] render', e);
@@ -571,6 +581,14 @@
     };
 
     if (!window.Promise) { terminar(null, []); return; }
+    // Render PROGRESIVO: en cuanto llega el JSON se pinta la página actual (en mobile lento
+    // las páginas extra tardaban segundos y la grilla quedaba oculta mientras tanto); cuando
+    // llegan las otras páginas se vuelve a pintar con todas.
+    pJson.then(function (cfg) {
+      if (pintado) return;
+      try { render(cfg, urls.length === 0); pintado = true; estado.listo = true; revelar(); }
+      catch (e) { guardOff(); if (window.console && console.error) console.error('[bsq] render', e); }
+    }, function () {});
     Promise.all([pJson, pPags]).then(function (r) { terminar(r[0], r[1]); }, function () { terminar(null, []); });
   }
 
