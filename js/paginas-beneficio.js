@@ -34,6 +34,7 @@
 
   var INST = /^\/(suscripciones|preguntas-frecuentes|politica-de-devolucion|contacto)\/?$/
     .test(location.pathname);
+  var FINDER = /^\/que-suplemento-es-para-vos\/?$/.test(location.pathname);
 
   var pend = 0, listo = false;
   var reveal = function () {
@@ -64,6 +65,16 @@
     s.src = base + '/js/paginas-institucionales.js';
     s.onerror = uno;
     d.head.appendChild(s);
+  }
+  if (FINDER) {
+    // finder guiado "¿Qué suplemento es para vos?": misma cadena que las institucionales
+    css('finder.css');
+    pend++;
+    window.blpDone = uno;
+    var fj = d.createElement('script');
+    fj.src = base + '/js/finder.js';
+    fj.onerror = uno;
+    d.head.appendChild(fj);
   }
   setTimeout(reveal, 4000);
 })();
