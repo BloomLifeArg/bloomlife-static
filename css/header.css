@@ -23,6 +23,29 @@
 }
 @media (max-width: 767.98px) { .head-main.blh-on .blh-badge { top: 2px; right: -6px; } }
 
+/* ── scroll: compactar y esconder (Fase 3) ─────────────────────────────── */
+/* El tema, al scrollear, sube el header 32 px (.adbar-hidden → top:-32px) y agranda el logo por estilo
+   inline (.compress). Acá se toma el control: top fijo en 0, logo con !important, y la barra de avisos
+   se pliega por max-height. La fila baja de 72→60 (desktop) y 56→52 (mobile). */
+.head-main.blh-scroll { top: 0 !important; transition: transform .28s cubic-bezier(.4,0,.2,1), box-shadow .2s ease; will-change: transform; }
+.head-main.blh-scroll .section-adbar { max-height: 32px; transition: max-height .26s ease, padding .26s ease; }
+.head-main.blh-scroll .head-logo-row > .row { transition: min-height .26s ease; }
+.head-main.blh-scroll .logo-img { transition: max-height .26s ease; }
+.head-main.blh-scroll .logo-img-medium { max-height: 44px !important; }
+.head-main.blh-compact .section-adbar { max-height: 0; min-height: 0; padding: 0; overflow: hidden; }
+.head-main.blh-compact { box-shadow: 0 1px 0 var(--blh-linea), 0 10px 30px -18px rgba(0, 56, 69, .25); }
+.head-main.blh-compact .head-logo-row > .row { min-height: 52px; }
+.head-main.blh-compact .logo-img-medium { max-height: 36px !important; }
+.head-main.blh-hide { transform: translateY(-100%); box-shadow: none; }
+@media (min-width: 768px) {
+  .head-main.blh-scroll .logo-img-medium { max-height: 56px !important; }
+  .head-main.blh-compact .head-logo-row > .row { min-height: 60px; }
+  .head-main.blh-compact .logo-img-medium { max-height: 42px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .head-main.blh-scroll, .head-main.blh-scroll .section-adbar, .head-main.blh-scroll .head-logo-row > .row, .head-main.blh-scroll .logo-img { transition: none; }
+}
+
 /* ── overlay ────────────────────────────────────────────────────────────── */
 .blh-velo {
   position: fixed; inset: 0; z-index: 1199; background: rgba(0, 56, 69, .5);

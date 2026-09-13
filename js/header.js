@@ -18,6 +18,13 @@
  *    /search/?q= (que ya pinta el buscador propio). Los combos salen de
  *    data/buscador-combos.json (top ventas) y, si falla, de los del megamenú.
  *    Si este archivo no llega, la lupa sigue abriendo el modal del tema.
+ * 3. SCROLL (Fase 3): pasado el primer tramo, el header se compacta (la barra
+ *    de avisos se pliega, la fila del logo baja a 60/52 px, aparece un filete)
+ *    y al seguir bajando se esconde; al subir vuelve enseguida. El tema hacía
+ *    lo suyo con .compress/.adbar-hidden (subía el header 32 px y agrandaba el
+ *    logo por estilo inline); acá se neutraliza eso por CSS (!important) y se
+ *    maneja con .blh-compact / .blh-hide. Nunca se esconde con el megamenú, el
+ *    drawer o el buscador abiertos.
  */
 (function () {
   var d = document;
@@ -292,10 +299,40 @@
     });
   }
 
+  /* ── 4. scroll: compactar y esconder/mostrar ─────────────────────────── */
+  function scrollHeader() {
+    var head = d.querySelector('.js-head-main'); if (!head) return;
+    var COMPACT_Y = 72, HIDE_Y = 360, DELTA = 8;
+    var ultimo = window.pageYOffset || 0, oculto = false, compacto = false, pedido = false;
+    var abiertoAlgo = function () {
+      return abierto || !!d.querySelector('.bls__li.is-open, .bls__drawer.is-open, body.move-right, #nav-hamburger[style*="display: block"]');
+    };
+    var aplicar = function () {
+      pedido = false;
+      var y = Math.max(0, window.pageYOffset || 0);
+      var dy = y - ultimo;
+      var c = y > COMPACT_Y;
+      if (c !== compacto) { compacto = c; head.classList.toggle('blh-compact', c); }
+      if (abiertoAlgo()) { if (oculto) { oculto = false; head.classList.remove('blh-hide'); } ultimo = y; return; }
+      if (y <= HIDE_Y || dy < -DELTA) { if (oculto) { oculto = false; head.classList.remove('blh-hide'); } }
+      else if (dy > DELTA) { if (!oculto) { oculto = true; head.classList.add('blh-hide'); } }
+      if (Math.abs(dy) > DELTA || y <= HIDE_Y) ultimo = y;
+    };
+    window.addEventListener('scroll', function () {
+      if (pedido) return; pedido = true;
+      (window.requestAnimationFrame || setTimeout)(aplicar);
+    }, { passive: true });
+    // si se abre algo con el header escondido, que reaparezca (foco/teclado incluidos)
+    d.addEventListener('focusin', function (e) { if (oculto && head.contains(e.target)) { oculto = false; head.classList.remove('blh-hide'); } });
+    head.classList.add('blh-scroll');
+    aplicar();
+  }
+
   function init() {
     css();
     iconos();
     engancharLupa();
+    scrollHeader();
   }
   if (d.querySelector('.js-head-main')) init();
   else d.addEventListener('DOMContentLoaded', init);
