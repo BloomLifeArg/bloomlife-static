@@ -166,3 +166,20 @@ html.blh-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .blh-velo, .blh-s__panel, .blh-it__arrow, .blh-it, .blh-chip { transition: none; }
 }
+
+
+/* ---------------------------------------------------------------------------
+   Aviso de cookies (.blh-ck-out)
+   El banner nativo mide 67 px y se queda ahí hasta que alguien toca "Entendido":
+   en mobile es el 8% del primer viewport, en todas las páginas. El JS lo acepta al
+   primer scroll (que es lo que declara su propio texto) y esto le da la salida suave.
+   Achicar la tipografía se probó y no movía la altura: la da el texto en dos líneas.
+   --------------------------------------------------------------------------- */
+.js-notification-cookie-banner { box-shadow: 0 -6px 18px -12px rgba(0, 40, 48, .35); }
+.blh-ck-out {
+  transition: opacity .25s ease, transform .25s ease;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .blh-ck-out { transition: none; } }

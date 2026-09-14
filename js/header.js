@@ -331,11 +331,36 @@
     aplicar();
   }
 
+
+  /* Aviso de cookies: el banner nativo se come 67 px del primer viewport y en el home
+     tapa el segundo CTA del hero. Se acepta solo cuando el visitante scrollea, que es
+     literalmente lo que dice su texto. Se usa el link nativo (.js-acknowledge-cookies)
+     para que el tema persista la preferencia como corresponde. */
+  function cookiesAlScroll() {
+    var banner = d.querySelector('.js-notification-cookie-banner');
+    if (!banner) return;
+    var link = banner.querySelector('.js-acknowledge-cookies');
+    if (!link) return;
+    var y0 = w.pageYOffset || 0, listo = false;
+    function cerrar() {
+      if (listo) return;
+      listo = true;
+      w.removeEventListener('scroll', onScroll);
+      banner.classList.add('blh-ck-out');
+      setTimeout(function () { try { link.click(); } catch (e) {} }, 260);
+    }
+    function onScroll() {
+      if (Math.abs((w.pageYOffset || 0) - y0) > 380) cerrar();
+    }
+    w.addEventListener('scroll', onScroll, { passive: true });
+  }
+
   function init() {
     css();
     iconos();
     engancharLupa();
     scrollHeader();
+    cookiesAlScroll();
   }
   if (d.querySelector('.js-head-main')) init();
   else d.addEventListener('DOMContentLoaded', init);
