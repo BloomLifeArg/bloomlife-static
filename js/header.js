@@ -341,18 +341,18 @@
     if (!banner) return;
     var link = banner.querySelector('.js-acknowledge-cookies');
     if (!link) return;
-    var y0 = w.pageYOffset || 0, listo = false;
+    var y0 = window.pageYOffset || 0, listo = false;
     function cerrar() {
       if (listo) return;
       listo = true;
-      w.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', onScroll);
       banner.classList.add('blh-ck-out');
       setTimeout(function () { try { link.click(); } catch (e) {} }, 260);
     }
     function onScroll() {
-      if (Math.abs((w.pageYOffset || 0) - y0) > 380) cerrar();
+      if (Math.abs((window.pageYOffset || 0) - y0) > 380) cerrar();
     }
-    w.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 
   function init() {
