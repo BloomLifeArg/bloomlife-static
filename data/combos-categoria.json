@@ -216,6 +216,27 @@
       "principal": "trm"
     },
     {
+      "id": 367680829,
+      "nombre": "Beauty & Focus",
+      "formato": "Gomitas",
+      "ing": [
+        "trm",
+        "mln"
+      ],
+      "why": "Para la piel y para la cabeza, el mismo mes.",
+      "objetivos": [
+        "piel",
+        "foco"
+      ],
+      "handle": "combo-beauty-focus-tremella-melena-de-leon-gummies",
+      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beauty-focus-perfil-1600-7bf2091058703fdfc017895147614983-1024-1024.jpg",
+      "precio": 132050,
+      "lista": 139000,
+      "vendidas": 0,
+      "caps": [],
+      "principal": "trm"
+    },
+    {
       "id": 341180946,
       "nombre": "Glow & Go",
       "formato": "Gomitas",
