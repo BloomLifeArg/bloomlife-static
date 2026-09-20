@@ -569,21 +569,26 @@
 
     // los tres más vendidos: ya no tienen bloque propio (repetía las mismas tres cards que
     // abrían "Empezá por dos"); abren su escalón, en orden de ventas y marcados
-    var topIds = cfg.combos.filter(function (c) { return c && c.vendidas > 0; })
-                           .sort(function (a, b) { return b.vendidas - a.vendidas; })
-                           .slice(0, 3)
-                           .map(function (c) { return c.id; });
-    var esTop = function (c) { return topIds.indexOf(c.id) > -1; };
     var porEscalon = { '2': [], '3': [], '4': [] };
     // el combo destacado tiene su propia franja al final: repetirlo como card lo abarata
     var idDest = (cfg.destacado && cfg.destacado.id) || 0;
+    var enEscalera = [];
     cfg.combos.forEach(function (c) {
       if (!c || !c.ing || !c.ing.length) return;        // sin ingredientes no hay card
       if (c.id === idDest) return;
       var n = c.ing.length;
       var k = n >= 4 ? '4' : (n <= 2 ? '2' : '3');      // un combo de 1 cae en el primer escalón
       porEscalon[k].push(c);
+      enEscalera.push(c);
     });
+    // el top se calcula sobre lo que de verdad entra a la escalera: si se calculara sobre todos y el
+    // destacado (que no lleva card) entrara al top, se prometerían tres cintas y saldrían dos
+    var topIds = enEscalera.filter(function (c) { return c.vendidas > 0; })
+                           .sort(function (a, b) { return b.vendidas - a.vendidas; })
+                           .slice(0, 3)
+                           .map(function (c) { return c.id; });
+    var esTop = function (c) { return topIds.indexOf(c.id) > -1; };
+    var NOTA_TOP = 'Los más vendidos, primero.';        // sólo en el escalón que los tiene
 
     var pr = cfg.prueba || null;
     var cortes = (pr && pr.cortes) || [];
@@ -592,14 +597,14 @@
       var lista = porEscalon[b.k];
       if (!lista || !lista.length) return;
       // los más vendidos primero (por ventas), el resto en el orden del JSON
-      lista = lista.filter(esTop).sort(function (a, b) { return b.vendidas - a.vendidas; })
-                   .concat(lista.filter(function (c) { return !esTop(c); }));
+      var tops = lista.filter(esTop).sort(function (a, b) { return b.vendidas - a.vendidas; });
+      lista = tops.concat(lista.filter(function (c) { return !esTop(c); }));
       var sec = el('section', 'rung');
       sec.dataset.k = b.k;
       sec.innerHTML =
         '<div class="rh"><h3>' + esc(b.titulo) + '</h3>' +
         '<span class="qty">' + esc(b.chip) + '</span>' +
-        '<span class="nota">' + esc(b.nota) + '</span></div>';
+        '<span class="nota">' + esc(tops.length ? NOTA_TOP : (b.nota || '')) + '</span></div>';
       var g2 = el('div', 'grid');
       lista.forEach(function (c) {
         // un combo malformado no puede tumbar la página entera: se descarta solo esa card
@@ -821,8 +826,9 @@
     // Antes contaba sólo cards, y le alcanzaba porque los tres más vendidos salían dos veces;
     // sin ese duplicado quedaba en 19 contra 25 nativos y el guard tiraba la góndola.
     var pintadas = raiz.querySelectorAll('.c, .dest-cta, .x3').length;
+    var cardsCombo = raiz.querySelectorAll('.c').length;   // los x3 y el destacado solos no alcanzan: sin cards no hay góndola
     var nativas = document.querySelectorAll('.js-item-product').length;
-    if (pintadas < Math.max(1, Math.floor(nativas * 0.8))) {
+    if (cardsCombo < 1 || pintadas < Math.max(1, Math.floor(nativas * 0.8))) {
       raiz.parentNode.removeChild(raiz);
       st.remove();
       devolverNativo();

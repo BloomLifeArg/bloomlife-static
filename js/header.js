@@ -19,8 +19,9 @@
  *    data/buscador-combos.json (top ventas) y, si falla, de los del megamenú.
  *    Si este archivo no llega, la lupa sigue abriendo el modal del tema.
  * 3. SCROLL (Fase 3): pasado el primer tramo, el header se compacta (la fila
- *    del logo baja a 60/52 px, aparece un filete; la barra de avisos se queda:
- *    acompaña todo el scroll, pedido de Sergio 2026-09-20). El ocultar-al-bajar
+ *    del logo baja a 60/52 px, aparece un filete; la barra de avisos de 32 px
+ *    se queda, así que el header compacto mide 92/84 px: acompaña todo el
+ *    scroll, pedido de Sergio 2026-09-20). El ocultar-al-bajar
  *    está apagado (HIDE_Y=Infinity). El tema hacía
  *    lo suyo con .compress/.adbar-hidden (subía el header 32 px y agrandaba el
  *    logo por estilo inline); acá se neutraliza eso por CSS (!important) y se

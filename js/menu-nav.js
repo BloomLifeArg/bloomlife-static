@@ -107,6 +107,9 @@
      cuelga del header, así que SALTA 41px hacia arriba mientras el cursor se
      queda donde estaba: se dispara mouseleave y el panel se cierra justo cuando
      el usuario quería leerlo. Reportado por Sergio y reproducido.
+     (Desde la Fase 3 de header.js el compacto es propio —top:0 fijo, y desde el
+     2026-09-20 la adbar se queda— así que ese salto ya no ocurre; la gracia
+     queda como red de seguridad, es inofensiva.)
 
      Un período de gracia solo no alcanza —el puntero queda genuinamente afuera y
      no vuelve a entrar—, así que mientras haya scroll reciente el mouseleave NO
