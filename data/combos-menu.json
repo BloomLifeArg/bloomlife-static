@@ -3,25 +3,21 @@
  "_fuente": "Módulo nativo del home data-store=\"home-products-new\" (los 8 destacados del editor de TN), filtrado por interna premium.",
  "_del_home": [
   "radiance-mind-combo-1y7mt",
-  "glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq",
-  "ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws",
   "glow-go-combo-tremella-y-cordyceps-gummies-134yf",
   "combo-beauty-balance-tremella-reishi-wb97u",
   "full-day-gummies-melena-de-leon-cordyceps-reishi",
   "deepsleep",
-  "glorygummies"
+  "glorygummies",
+  "menopausebalancegummies",
+  "fulldaygummies2"
  ],
  "_descartados": [],
- "_rellenados_del_ranking": [
-  "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q",
-  "combo-performance-gummies-suplementacion-por-1-mes"
- ],
+ "_rellenados_del_ranking": [],
  "_sin_copy": [
   "radiance-mind-combo-1y7mt",
-  "glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq",
-  "ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws",
   "glow-go-combo-tremella-y-cordyceps-gummies-134yf",
-  "combo-beauty-balance-tremella-reishi-wb97u"
+  "combo-beauty-balance-tremella-reishi-wb97u",
+  "fulldaygummies2"
  ],
  "items": [
   {
@@ -49,20 +45,12 @@
    "origen": "home"
   },
   {
-   "handle": "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q",
-   "nombre": "Bye Bye Anxiety",
-   "bajada": "Ashwagandha y Melena de León.",
-   "href": "https://www.bloomlife.co/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/",
-   "imagen": "http://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add5a37476bac282d617853803647110-640-0.webp",
-   "origen": "relleno"
-  },
-  {
-   "handle": "combo-performance-gummies-suplementacion-por-1-mes",
-   "nombre": "High Performance",
-   "bajada": "Melena de León y Cordyceps.",
-   "href": "https://www.bloomlife.co/productos/combo-performance-gummies-suplementacion-por-1-mes/",
-   "imagen": "http://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add7452d4a1df21fb917853805473765-640-0.webp",
-   "origen": "relleno"
+   "handle": "menopausebalancegummies",
+   "nombre": "Menopause Balance",
+   "bajada": "Ashwagandha, Melena de León y Reishi.",
+   "href": "https://www.bloomlife.co/productos/menopausebalancegummies/",
+   "imagen": "http://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-8bc5bd64ef9e630dbd17853801947475-640-0.webp",
+   "origen": "home"
   }
  ]
 }
