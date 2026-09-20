@@ -58,17 +58,10 @@
   },
   "bloques": [
     {
-      "k": "top",
-      "titulo": "Nuestros bestsellers",
-      "chip": "Últimos 6 meses",
-      "vacio": "Ninguno de los tres más vendidos para ese objetivo."
-    },
-    {
       "k": "2",
       "titulo": "Empezá por dos",
       "chip": "2 frascos",
-      "vacio": "Ningún combo de dos frascos para ese objetivo.",
-      "nota": "Los tres más vendidos, primero."
+      "vacio": "Ningún combo de dos frascos para ese objetivo."
     },
     {
       "k": "3",
