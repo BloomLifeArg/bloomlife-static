@@ -154,7 +154,6 @@
     'border:1px solid var(--gold);border-radius:999px;padding:3px 10px;white-space:nowrap}',
     '.bl-cc .rh .nota{font-size:13.5px!important;color:var(--muted);font-variant-numeric:tabular-nums}',
     '@media(min-width:760px){.bl-cc .rh .nota{margin-left:auto;font-size:14px}}',
-    '.bl-cc .rung[data-k="top"] .nota{color:var(--gold-ink);font-weight:600}',
     '.bl-cc .grid{display:grid;gap:14px;grid-template-columns:1fr}',
     '@media(min-width:600px){.bl-cc .grid{grid-template-columns:1fr 1fr}}',
     '@media(min-width:960px){.bl-cc .grid{grid-template-columns:repeat(3,1fr)}}',
@@ -170,6 +169,13 @@
     'filter:drop-shadow(0 9px 14px rgba(0,56,69,.22));',
     'transition:transform .36s cubic-bezier(.22,1.1,.36,1)}',
     '.bl-cc .escena img+img{margin-left:var(--solape)}',
+    /* cinta "Más vendido": sobre la escena, arriba a la izquierda, sin mover el resto de la card */
+    '.bl-cc .cinta{position:absolute;top:10px;left:10px;z-index:3;display:inline-flex;align-items:center;gap:6px;',
+    'font-size:10px!important;font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1;',
+    'color:#fff;background:var(--dark);border-radius:999px;padding:6px 10px 6px 8px;',
+    'box-shadow:0 4px 12px -6px rgba(0,56,69,.5)}',
+    '.bl-cc .cinta:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);flex:none}',
+    '@media(min-width:600px){.bl-cc .c.ancha .cinta{top:12px;left:12px}}',
     '@media(min-width:600px){.bl-cc .escena{height:172px}}',
     /* al pasar el cursor, el abanico se abre */
     '.bl-cc .c:hover .escena img{transform:translateY(-4px) translateX(var(--dx))}',
@@ -361,13 +367,18 @@
     return e;
   }
 
-  function card(c, ING, conVentas, FR) {
+  // `bestseller`: la card lleva la cinta "Más vendido" sobre la escena y la línea de unidades.
+  // Antes los tres más vendidos tenían un bloque propio arriba y volvían a aparecer en su
+  // escalón: la misma card dos veces (Sergio, 2026-09-20: "queda redundante"). Ahora abren su
+  // escalón, marcados, y aparecen una sola vez.
+  function card(c, ING, bestseller, FR) {
     var a = el('a', 'c');
     a.href = '/productos/' + encodeURIComponent(c.handle) + '/';
     a.dataset.goals = (c.objetivos || []).join(' ');
     if (c.ing.length >= 5) a.classList.add('ancha');
+    if (bestseller) a.classList.add('bs');
     a.setAttribute('aria-label', [c.nombre, String(c.formato || '').toLowerCase(),
-      c.ing.length + ' frascos'].join(', '));
+      c.ing.length + ' frascos'].concat(bestseller ? ['más vendido'] : []).join(', '));
     var caps = c.caps || [];
     var n = c.ing.length;
     // los frascos del combo, abriéndose desde el centro
@@ -396,12 +407,13 @@
       return '<span class="ing"><i style="background:' + col + '"></i>' + esc(i.nombre || k) + '</span>';
     }).join(' · ');
     a.innerHTML =
-      (escena ? '<div class="escena" style="--tinte:' + tinte + ';--w:' + ancho + '%;--solape:-' + solape + '%">' + escena + '</div>' : '') +
+      (escena ? '<div class="escena" style="--tinte:' + tinte + ';--w:' + ancho + '%;--solape:-' + solape + '%">' +
+        (bestseller ? '<span class="cinta">Más vendido</span>' : '') + escena + '</div>' : '') +
       '<div class="cuerpo"><div class="ct"><h4>' + esc(c.nombre) + '</h4>' +
       '<span class="fmt' + (c.formato === 'Mixto' ? ' mix' : '') + '">' + esc(c.formato) + '</span></div>' +
       '<p class="ings"><b>' + n + ' frascos</b> &middot; ' + nombres + '</p>' +
       '<p class="why">' + esc(c.why) + '</p>' +
-      (conVentas && c.vendidas ? '<p class="sold">' + (parseInt(c.vendidas, 10) || 0) + ' vendidos en 6 meses</p>' : '') +
+      (bestseller && c.vendidas ? '<p class="sold">' + (parseInt(c.vendidas, 10) || 0) + ' vendidos en 6 meses</p>' : '') +
       '<div class="cb"><span class="dura">Rinde 1 mes</span>' +
       '<span class="go">Ver combo</span></div></div>';
     return a;
@@ -555,10 +567,13 @@
     aviso.setAttribute('aria-live', 'polite');
     wrap.appendChild(aviso);
 
-    // los tres más vendidos, en orden
-    var top = cfg.combos.filter(function (c) { return c.vendidas > 0; })
-                        .sort(function (a, b) { return b.vendidas - a.vendidas; })
-                        .slice(0, 3);   // el chip promete tres
+    // los tres más vendidos: ya no tienen bloque propio (repetía las mismas tres cards que
+    // abrían "Empezá por dos"); abren su escalón, en orden de ventas y marcados
+    var topIds = cfg.combos.filter(function (c) { return c && c.vendidas > 0; })
+                           .sort(function (a, b) { return b.vendidas - a.vendidas; })
+                           .slice(0, 3)
+                           .map(function (c) { return c.id; });
+    var esTop = function (c) { return topIds.indexOf(c.id) > -1; };
     var porEscalon = { '2': [], '3': [], '4': [] };
     // el combo destacado tiene su propia franja al final: repetirlo como card lo abarata
     var idDest = (cfg.destacado && cfg.destacado.id) || 0;
@@ -573,8 +588,12 @@
     var pr = cfg.prueba || null;
     var cortes = (pr && pr.cortes) || [];
     cfg.bloques.forEach(function (b) {
-      var lista = b.k === 'top' ? top : porEscalon[b.k];
+      if (b.k === 'top') return;               // un JSON viejo puede traerlo todavía: se ignora
+      var lista = porEscalon[b.k];
       if (!lista || !lista.length) return;
+      // los más vendidos primero (por ventas), el resto en el orden del JSON
+      lista = lista.filter(esTop).sort(function (a, b) { return b.vendidas - a.vendidas; })
+                   .concat(lista.filter(function (c) { return !esTop(c); }));
       var sec = el('section', 'rung');
       sec.dataset.k = b.k;
       sec.innerHTML =
@@ -584,10 +603,9 @@
       var g2 = el('div', 'grid');
       lista.forEach(function (c) {
         // un combo malformado no puede tumbar la página entera: se descarta solo esa card
-        try { g2.appendChild(card(c, ING, b.k === 'top', cfg.frascos)); } catch (e) {}
+        try { g2.appendChild(card(c, ING, esTop(c), cfg.frascos)); } catch (e) {}
       });
-      // el destacado no lleva estado vacío: si no hay match, la sección entera se va
-      if (b.k !== 'top') g2.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
+      g2.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
       sec.appendChild(g2);
       escalera.appendChild(sec);
 
@@ -750,11 +768,10 @@
         var total = 0;
         [].forEach.call(raiz.querySelectorAll('.rung'), function (sec) {
           var vivos = [].filter.call(sec.querySelectorAll('.c'), queda).length;
-          if (sec.dataset.k !== 'top') total += vivos;
+          total += vivos;
           var v = sec.querySelector('.vacio');
           if (v) v.hidden = true;
-          // el destacado no aparece dentro de un filtro: duplicaría cards y el conteo mentiría
-          sec.hidden = (vivos === 0) || (g !== 'all' && sec.dataset.k === 'top');
+          sec.hidden = (vivos === 0);
         });
 
         // Con un objetivo elegido la escalera pierde sentido: es un criterio de navegación, no
@@ -800,7 +817,10 @@
     // No alcanza con que render() no explote: un JSON válido pero vacío pinta un hero y cero
     // cards, y esconder lo nativo dejaría la categoría sin un solo producto. Se compara contra
     // lo que el tema ya tenía y, si no llegamos, se desarma todo y gana la grilla nativa.
-    var pintadas = raiz.querySelectorAll('.c').length;
+    // Se cuentan todos los productos que la góndola linkea: cards, el destacado y los packs x3.
+    // Antes contaba sólo cards, y le alcanzaba porque los tres más vendidos salían dos veces;
+    // sin ese duplicado quedaba en 19 contra 25 nativos y el guard tiraba la góndola.
+    var pintadas = raiz.querySelectorAll('.c, .dest-cta, .x3').length;
     var nativas = document.querySelectorAll('.js-item-product').length;
     if (pintadas < Math.max(1, Math.floor(nativas * 0.8))) {
       raiz.parentNode.removeChild(raiz);

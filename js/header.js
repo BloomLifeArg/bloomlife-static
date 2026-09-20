@@ -18,9 +18,10 @@
  *    /search/?q= (que ya pinta el buscador propio). Los combos salen de
  *    data/buscador-combos.json (top ventas) y, si falla, de los del megamenú.
  *    Si este archivo no llega, la lupa sigue abriendo el modal del tema.
- * 3. SCROLL (Fase 3): pasado el primer tramo, el header se compacta (la barra
- *    de avisos se pliega, la fila del logo baja a 60/52 px, aparece un filete)
- *    y al seguir bajando se esconde; al subir vuelve enseguida. El tema hacía
+ * 3. SCROLL (Fase 3): pasado el primer tramo, el header se compacta (la fila
+ *    del logo baja a 60/52 px, aparece un filete; la barra de avisos se queda:
+ *    acompaña todo el scroll, pedido de Sergio 2026-09-20). El ocultar-al-bajar
+ *    está apagado (HIDE_Y=Infinity). El tema hacía
  *    lo suyo con .compress/.adbar-hidden (subía el header 32 px y agrandaba el
  *    logo por estilo inline); acá se neutraliza eso por CSS (!important) y se
  *    maneja con .blh-compact / .blh-hide. Nunca se esconde con el megamenú, el
