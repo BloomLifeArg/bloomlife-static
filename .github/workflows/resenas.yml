@@ -1,0 +1,59 @@
+name: Actualizar conteo de reseñas
+
+# Mantiene al día el total y el promedio de reseñas en todo lo que se sirve desde
+# este repo: data/resenas.json, la sección "Testimonios" del home y la góndola de
+# combos. Sin secrets: lee el caché público de Revie.
+#
+# Los números de las FICHAS de producto no se tocan acá — viven en el campo
+# Descripción de Tienda Nube y los sincroniza scripts/sync_ratings.py del repo
+# principal, que necesita el token de la API.
+#
+# Para refrescar al toque en vez de esperar al cron: pestaña Actions ->
+# "Actualizar conteo de reseñas" -> Run workflow.
+
+on:
+  schedule:
+    - cron: '20 9 * * *' # todos los días 9:20 UTC (6:20 en Argentina)
+  workflow_dispatch: # botón manual
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build-resenas.mjs'
+      - '.github/workflows/resenas.yml'
+
+# Evita que dos corridas se pisen commiteando a la vez.
+concurrency:
+  group: resenas
+  cancel-in-progress: false
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # necesario para commitear los JSON
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # El script falla a propósito si Revie devuelve 0 reseñas o si el conteo
+      # cae más de un 10%: preferimos un mail de GitHub avisando, antes que
+      # publicar un número que haga ver a la marca peor de lo que es.
+      - name: Generar data/resenas.json y sincronizar los JSON del home
+        run: node scripts/build-resenas.mjs
+
+      - name: Commitear si cambió
+        run: |
+          archivos="data/resenas.json data/testimonios-home.json data/combos-categoria.json"
+          if [[ -z "$(git status --porcelain $archivos)" ]]; then
+            echo "Sin cambios."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $archivos
+          git commit -m "chore: actualizar conteo de reseñas [skip ci]"
+          git push
