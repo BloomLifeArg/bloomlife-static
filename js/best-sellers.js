@@ -142,4 +142,11 @@ document.addEventListener('DOMContentLoaded', initLanding);
 } else {
 initLanding();
 }
+
+/*BL-TRACKING: tracking en em (escala con el tamano). El original lo tenia en px fijos,
+  asi el titular mas grande quedaba el mas suelto. Tambien da la familia a los h4,
+  que no tenian regla propia y heredaban Work Sans del tema.*/
+var s3=document.createElement('style');
+s3.textContent='.user-content .hero h1,.user-content .bba-title,.user-content .sub-title,.user-content .final h2,.user-content .reviews-num{letter-spacing:-.035em}.user-content .pain-title,.user-content .benefit-title,.user-content .objt-title,.user-content .fullday-title,.user-content .why-title,.user-content .certs-title,.user-content .sec-title,.user-content .sub-col-price{letter-spacing:-.03em}.user-content .evento-title{letter-spacing:-.025em}.user-content .hero-claim{letter-spacing:-.02em}.user-content .pain-q,.user-content .day-product,.user-content .fullday-cta-text h3,.user-content .why-item h4{letter-spacing:-.015em}.user-content .pcard-name,.user-content .mini-name,.user-content .objt-card-name,.user-content .objt-row-name,.user-content .rcard-quote{letter-spacing:-.01em}.user-content h4{font-family:Bricolage Grotesque,system-ui,sans-serif;font-optical-sizing:auto;letter-spacing:-.015em}';
+document.head.appendChild(s3);
 })();
