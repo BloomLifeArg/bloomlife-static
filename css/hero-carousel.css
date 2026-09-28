@@ -100,6 +100,9 @@
    Vegan, Sin gluten, Sulfate Free, FDA), una sola imagen del CDN de TN */
 .bh-se{grid-area:se;justify-self:end;align-self:center;margin:0;line-height:0}
 .bh-se img{display:block;height:28px;width:auto;max-width:none;opacity:.92}
+/* la burbuja de WhatsApp (84px + 24px al borde) cae sobre la punta derecha de la franja:
+   los sellos terminan 16px antes de ella */
+@media (min-width:1200px){.bh-se{margin-right:calc(124px - clamp(24px,4.2vw,60px))}}
 
 /* tablet: la franja no entra en una fila; beneficios arriba y sellos abajo, centrados */
 @media (min-width:768px) and (max-width:1199px){
