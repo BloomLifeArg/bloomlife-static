@@ -1,240 +1,154 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 
-/* Hero carousel editorial full-bleed. Namespace: .h / .hs / .hm / .hc / .hk / .ht / .hv / .ha / .hn / .hb
-   (nombres cortos a propósito: cada byte de más acá sale del presupuesto de custom_seal_code,
-   que es donde vive el JS que arma este markup). */
+/* Hero de la home: "Gummies para tu bienestar." (reemplaza al carrusel de 5 slides, 2026-09).
+   El markup lo arma un script inline del custom_seal_code; este archivo lo carga el @import
+   del css_code. Vive afuera del css_code, asi que el minificador de TN no lo toca: aca SI
+   se pueden usar clamp(), inset, aspect-ratio y container queries.
 
-.h {
-  width: 100%;
-  /* svh = alto del viewport CON la barra de direcciones visible: es un valor
-     estable, no se recalcula cuando la barra se oculta al scrollear. Con vh a
-     secas, en mobile el hero cambiaba de alto durante el scroll (medido: 743 ->
-     792 px) y eso reacomodaba el documento entero — la pagina "bailaba".
-     La linea con vh queda arriba como fallback: el navegador que no entiende
-     svh la usa y se comporta como hasta hoy. */
-  height: 90vh;
-  height: 90svh;
-  min-height: 560px;
-  max-height: 900px;
-  position: relative;
-  overflow: hidden;
-  background: #003845;
+   Fotos: desktop BloomLife-174 (los 4 frascos), mobile BloomLife-152 (Melena de Leon y
+   Ashwagandha, los mas vendidos). La foto se dimensiona para que los frascos entren ENTEROS
+   en el hueco que queda entre el texto y los beneficios (.bh-z, container de tamanio):
+   si el hueco es chico la foto se achica, y lo que falta a los costados o arriba lo cubre la
+   misma pared desenfocada (.bh::before). Las fracciones salen de medir cada foto:
+     174 (entera, alto = 1,4972 x ancho): frascos de 49,5% a 74% del alto, o sea arranque a
+         0,741 x ancho y altura de 0,367 x ancho; centro en x 56%.
+     152 (entera, alto = 1,4972 x ancho): frascos de 15% a 64,5%, arranque a 0,2246 x ancho y
+         altura de 0,741 x ancho; centro en x 55,5%. */
+
+.bh{
+  --bh-hdr:104px;
+  --bh-ink:#F7F6F2;--bh-soft:#DDE4D4;--bh-dark:#17241B;--bh-star:#F4C54A;
+  position:relative;overflow:hidden;isolation:isolate;
+  /* Desktop: el hero pasa un poco el pliegue (100svh - header + 110px) para que los frascos
+     tengan lugar; el texto y los botones quedan siempre arriba del pliegue. */
+  height:96vh;
+  height:clamp(640px, calc(100svh - var(--bh-hdr) + 110px), 1000px);
+  background:#56613A;
+  font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-optical-sizing:auto;color:var(--bh-ink);
+  -webkit-font-smoothing:antialiased;
+}
+.bh::before{
+  content:'';position:absolute;inset:-60px;z-index:-2;
+  background:#56613A url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCABIADADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDOjFTqtVkbNWozXmmo4JT1HFJuo3U0xDWHNJignmkzQBnxNVuN+KpxjmrScUMET5pc00U4CkgGk0maVhSYqrAUozzVlcVSjarCvQwLINSKarq1SoaQDmphpxNMY00wM5amU1EgqQCgCZTUyGoFFSoeaQE2MionFTBhimtg0hmalSL1oopoROOlOGKKKTGO3cU0tRRSA//Z) center/cover no-repeat;
+  filter:blur(26px) brightness(.9);
+}
+.bh *{box-sizing:border-box}
+/* capas: pared desenfocada (-2) < foto (0, .bh-z es contexto propio por container-type) <
+   degradés y franja (1) < texto y botones (2). .bh-c no apila, para que sus hijos compitan
+   con .bh-sh en el mismo contexto. */
+.bh-r,.bh-t,.bh-p,.bh-a,.bh-ch,.bh-se{position:relative;z-index:2}
+
+/* ---------- foto ---------- */
+.bh-z{grid-area:z;position:relative;container-type:size;min-height:0}
+.bh-ph{position:absolute;inset:0;pointer-events:none}
+.bh-im{
+  /* frascos de alto = hueco - 12px: el borde de abajo queda apenas detras de la franja */
+  --w:min(100vw, calc((100cqh - 12px) * 2.72));
+  position:absolute;max-width:none;display:block;
+  width:var(--w);height:calc(var(--w) * 1.4972);
+  left:calc(50% - var(--w) * .56);
+  top:calc(22px - var(--w) * .741);
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,#000 0,#000 84%,transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,#000 0,#000 84%,transparent 100%);
+  mask-composite:intersect;
+}
+.bh-sh{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to bottom,rgba(40,48,24,.5) 0%,rgba(40,48,24,.22) 26%,rgba(40,48,24,0) 42%)}
+
+/* ---------- contenido ---------- */
+.bh-c{
+  position:relative;height:100%;
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-rows:auto auto auto auto minmax(0,1fr) auto;
+  grid-template-areas:"r r" "t t" "p p" "a a" "z z" "ch se";
+  justify-items:center;text-align:center;
+  padding:clamp(34px,5vh,54px) clamp(24px,4.2vw,60px) 0;
+}
+.bh-r{grid-area:r;display:flex;align-items:center;gap:12px;font-size:14.5px;color:var(--bh-soft);margin-bottom:18px}
+.bh-st{display:flex;gap:2px}
+.bh-st svg{width:20px;height:20px;display:block}
+.bh-n b{font-weight:650;color:var(--bh-ink)}
+.bh-t{grid-area:t;margin:0;font-family:inherit;font-weight:250;
+  font-size:clamp(52px,5.4vw,78px);letter-spacing:-.042em;line-height:.96;color:var(--bh-ink);text-wrap:balance}
+.bh-t br,.bh-m{display:none}
+.bh-p{grid-area:p;margin:18px 0 0;font-size:clamp(17px,1.36vw,19.5px);line-height:1.5;color:var(--bh-soft);max-width:640px}
+.bh-a{grid-area:a;display:flex;gap:14px 26px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:24px}
+.bh-b{background:var(--bh-ink);color:var(--bh-dark);font-size:15.5px;font-weight:600;padding:17px 34px;border-radius:999px;
+  text-decoration:none;line-height:1.2;transition:transform .2s ease,background-color .2s ease}
+.bh-b:hover{background:#fff;color:var(--bh-dark);transform:translateY(-1px)}
+.bh-s{color:var(--bh-ink);font-size:15.5px;font-weight:500;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:3px;line-height:1.2}
+.bh-s:hover{color:#fff}
+.bh-b:focus-visible,.bh-s:focus-visible,.bh-ch a:focus-visible{outline:2px solid var(--bh-ink);outline-offset:3px}
+
+/* franja inferior: beneficios a la izquierda, sellos a la derecha */
+.bh-c::after{content:'';grid-row:6;grid-column:1/-1;align-self:stretch;justify-self:stretch;
+  margin:0 calc(-1 * clamp(24px,4.2vw,60px));z-index:1;
+  background:linear-gradient(to top,rgba(30,38,20,.74),rgba(30,38,20,.38))}
+.bh-ch{grid-area:ch;justify-self:start;display:flex;gap:8px;flex-wrap:wrap;padding:18px 0 20px}
+.bh-ch a{font-size:12.5px;font-weight:500;color:var(--bh-ink);border:1px solid rgba(247,246,242,.42);border-radius:999px;
+  padding:7px 15px;text-decoration:none;line-height:1.2;white-space:nowrap;transition:background-color .2s ease,border-color .2s ease}
+.bh-ch a:hover{background:rgba(247,246,242,.14);border-color:rgba(247,246,242,.7);color:var(--bh-ink)}
+.bh-se{grid-area:se;justify-self:end;align-self:center;display:flex;gap:22px;margin:0;white-space:nowrap;
+  font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,246,242,.82)}
+.bh-se span+span::before{content:none}
+
+/* tablet: la franja no entra en una fila; beneficios arriba y sellos abajo, centrados */
+@media (min-width:768px) and (max-width:1199px){
+  .bh-c{grid-template-columns:1fr;grid-template-rows:auto auto auto auto minmax(0,1fr) auto auto;
+    grid-template-areas:"r" "t" "p" "a" "z" "ch" "se"}
+  .bh-c::after{grid-row:6/8}
+  .bh-ch{justify-self:center;justify-content:center;flex-wrap:nowrap;padding:16px 0 10px}
+  .bh-se{justify-self:center;padding-bottom:16px}
 }
 
-.hs {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity 1.2s ease;
-}
-
-.hs.active {
-  opacity: 1;
-}
-
-.hs::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1;
-  background: linear-gradient(to top, rgba(0,20,30,0.85) 0%, rgba(0,20,30,0.35) 55%, rgba(0,20,30,0.10) 100%);
-}
-
-.hm {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.hs:nth-of-type(1) .hm {
-  object-position: center 60%;
-}
-
-.hs:nth-of-type(2) .hm {
-  object-position: right center;
-}
-
-.hs:nth-of-type(3) .hm {
-  object-position: center 30%;
-}
-
-.hs:nth-of-type(4) .hm {
-  object-position: center 30%;
-}
-
-.hs:nth-of-type(5) .hm {
-  object-position: center 25%;
-}
-
-.hc {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 0 56px 52px;
-  max-width: 600px;
-  z-index: 2;
-}
-
-.hk {
-  font-family: Inter, sans-serif;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(204,163,82,0.85);
-  margin-bottom: 14px;
-  font-weight: 400;
-}
-
-.ht {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 48px;
-  line-height: 1.15;
-  font-style: italic;
-  font-weight: 300;
-  color: #F4F0E8;
-  margin: 0 0 10px;
-}
-
-.ht em {
-  color: #CCA352;
-  font-style: italic;
-}
-
-.hv {
-  font-family: Inter, sans-serif;
-  font-size: 12px;
-  color: rgba(244,240,232,0.5);
-  margin: 14px 0 22px;
-  letter-spacing: 0.02em;
-}
-
-.ha {
-  font-family: Inter, sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #F4F0E8;
-  background: #C4694F;
-  padding: 12px 24px;
-  border-radius: 24px;
-  display: inline-block;
-  text-decoration: none;
-  font-weight: 400;
-  border: none;
-  cursor: pointer;
-}
-
-/* segundo CTA del hero: ghost, al lado del terracota, lleva al finder guiado */
-.ha2 {
-  background: transparent;
-  color: #F4F0E8;
-  border: 1px solid rgba(244,240,232,0.55);
-  margin-left: 10px;
-}
-.ha2:hover { border-color: #F4F0E8; }
-@media (max-width: 640px) {
-  .ha2 { margin-left: 0; margin-top: 10px; }
-}
-
-.hn {
-  position: absolute;
-  top: 28px;
-  right: 52px;
-  z-index: 10;
-  font-family: Inter, sans-serif;
-  font-size: 11px;
-  color: rgba(244,240,232,0.45);
-  letter-spacing: 0.08em;
-}
-
-.hb {
-  position: absolute;
-  bottom: 52px;
-  z-index: 10;
-  width: 28px;
-  height: 1.5px;
-  background: rgba(244,240,232,0.2);
-  border: none;
-  padding: 0;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.hb:nth-of-type(1) { right: 204px; }
-.hb:nth-of-type(2) { right: 166px; }
-.hb:nth-of-type(3) { right: 128px; }
-.hb:nth-of-type(4) { right: 90px; }
-.hb:nth-of-type(5) { right: 52px; }
-
-.hb.active {
-  background: rgba(244,240,232,0.2);
-}
-
-.hb.active::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background: #CCA352;
-  transform: scaleX(0);
-  transform-origin: left;
-  animation: bl-progress 4.5s linear forwards;
-}
-
-@keyframes bl-progress {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-
-@media (max-width: 768px) {
-  .h {
-    height: 88vh;
-    height: 88svh;
-    min-height: 480px;
+/* ---------- mobile ---------- */
+@media (max-width:767px){
+  /* Mobile: el alto lo da el contenido. El hueco de la foto se calcula para que en el
+     primer pantallazo (100svh - header) entren texto, frascos, beneficios y el boton
+     principal; "Shop Now" y los sellos pueden quedar justo debajo del pliegue.
+     194px = bloque de texto, 104px = beneficios + boton. */
+  .bh{--bh-hdr:88px;height:auto}
+  .bh::before{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCABIADADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDKxTgKXFKBmvPuaWFBxSnGKTGKRjxTTEJxQabTutMB22nqtO4pwrFMoY44qPbUzUyruIZtoCilJpKaYEgpwNNpamwxTzTDTs000mAw0gzmnGm1SEPzS0ynA0ALSE0UhoAYTSE0402mA+tDT9Pa7OBRRRBXYF+TQJVGaoXOnSQ8kUUVrKCQFB1xUdFFYsD/2Q==)}
+  .bh-sh{background:linear-gradient(to bottom,rgba(40,48,24,.55) 0%,rgba(40,48,24,.2) 30%,rgba(40,48,24,0) 45%,rgba(40,48,24,0) 66%,rgba(30,38,20,.8) 100%)}
+  .bh-c{height:auto;grid-template-columns:1fr;
+    grid-template-rows:auto auto auto max(170px, calc(100svh - var(--bh-hdr) - 298px)) auto auto auto;
+    grid-template-areas:"r" "t" "p" "z" "ch" "a" "se";justify-items:stretch;text-align:left;padding:22px 24px 22px}
+  .bh-c::after{content:none}
+  .bh-r{gap:10px;font-size:13px;margin-bottom:12px}
+  .bh-st svg{width:18px;height:18px}
+  .bh-t{font-size:clamp(38px,11.3vw,48px);letter-spacing:-.04em;line-height:.98}
+  .bh-t br,.bh-m{display:inline}
+  .bh-d{display:none}
+  .bh-p{margin-top:12px;font-size:15.5px;line-height:1.45;max-width:none}
+  .bh-im{
+    --w:min(118vw, calc((100cqh + 14px) / .741));
+    height:calc(var(--w) * 1.4972);
+    left:calc(50% - var(--w) * .555);
+    top:calc(10px - var(--w) * .2246);
+    /* se funde con la pared arriba, abajo y a los costados (en pantallas bajas la foto
+       queda mas angosta que el celular y el borde se veria) */
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 13%,#000 90%,transparent 100%),linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to bottom,transparent 0,#000 13%,#000 90%,transparent 100%),linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+    mask-composite:intersect;
   }
-
-  .hc {
-    padding: 0 24px 36px;
-  }
-
-  .ht {
-    font-size: 30px;
-  }
-
-  .hn {
-    top: 20px;
-    right: 24px;
-  }
-
-  .hb:nth-of-type(1) { right: 176px; }
-  .hb:nth-of-type(2) { right: 138px; }
-  .hb:nth-of-type(3) { right: 100px; }
-  .hb:nth-of-type(4) { right: 62px; }
-  .hb:nth-of-type(5) { right: 24px; }
-
-  .hb {
-    bottom: 10px;
-  }
-
-  .hk {
-    font-size: 9px;
-  }
-
-  .hs:nth-of-type(1) .hm { object-position: 68% 55%; }
-  .hs:nth-of-type(2) .hm { object-position: 78% center; }
-  .hs:nth-of-type(3) .hm { object-position: 80% center; }
-  .hs:nth-of-type(4) .hm { object-position: 30% 45%; }
-  .hs:nth-of-type(5) .hm { object-position: 60% 40%; }
+  .bh-ch{justify-self:stretch;flex-wrap:nowrap;justify-content:space-between;gap:6px;padding:0}
+  .bh-ch a{flex:1 1 auto;text-align:center;font-size:12px;padding:7px 0}
+  .bh-a{flex-direction:column;align-items:stretch;gap:12px;margin-top:12px}
+  .bh-b{text-align:center;padding:17px}
+  .bh-s{align-self:center;border-bottom-color:rgba(247,246,242,.55);padding-bottom:4px;font-size:15px}
+  .bh-se{justify-self:stretch;flex-wrap:wrap;justify-content:center;gap:0 6px;margin-top:14px;
+    font-size:10.5px;letter-spacing:.13em;color:rgba(247,246,242,.78);text-align:center;line-height:1.9}
+  .bh-se span+span::before{content:'\00B7';margin-right:6px}
 }
+/* Burbuja de WhatsApp (js/whatsapp.js): en pantallas angostas cae encima de los beneficios y
+   del boton principal, que ocupa todo el ancho. Mientras el boton del hero esta a la vista
+   (clase html.bh-on, la pone el script BL-HERO) se esconde; aparece al scrollear. Le gana
+   al guard de whatsapp.js (#blw:not(.blw-in), tambien !important) por especificidad. */
+@media (max-width:767px){
+  html.bh-on #blw.blw{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+}
+@media (prefers-reduced-motion:reduce){.bh-b,.bh-ch a{transition:none}}
