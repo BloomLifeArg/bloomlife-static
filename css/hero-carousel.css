@@ -19,10 +19,10 @@
   --bh-hdr:104px;
   --bh-ink:#F7F6F2;--bh-soft:#DDE4D4;--bh-dark:#17241B;--bh-star:#F4C54A;
   position:relative;overflow:hidden;isolation:isolate;
-  /* Desktop: el hero pasa un poco el pliegue (100svh - header + 110px) para que los frascos
-     tengan lugar; el texto y los botones quedan siempre arriba del pliegue. */
-  height:96vh;
-  height:clamp(640px, calc(100svh - var(--bh-hdr) + 110px), 1000px);
+  /* Desktop: el hero entra entero en la primera pantalla (100svh - header), franja de
+     beneficios incluida; la foto se achica lo necesario. */
+  height:86vh;
+  height:clamp(560px, calc(100svh - var(--bh-hdr)), 1000px);
   background:#56613A;
   font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif;
   font-optical-sizing:auto;color:var(--bh-ink);
@@ -46,12 +46,15 @@
   /* frascos de alto = hueco - 12px: el borde de abajo queda apenas detras de la franja */
   --w:min(100vw, calc((100cqh - 12px) * 2.72));
   position:absolute;max-width:none;display:block;
-  width:var(--w);height:calc(var(--w) * 1.4972);
-  left:calc(50% - var(--w) * .56);
+  /* La imagen es la foto extendida (hero-gummies-d-ext): la pared sigue 0,65 x ancho de foto
+     a cada lado, reconstruida con el color y la textura de la propia foto. --w sigue siendo el
+     ancho de la FOTO; la imagen mide 2,3 x --w. Sin franja visible donde termina la foto. */
+  width:calc(var(--w) * 2.3);height:calc(var(--w) * 1.4972);
+  left:calc(50% - var(--w) * 1.21);
   top:calc(22px - var(--w) * .741);
-  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,#000 0,#000 84%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%),linear-gradient(to bottom,#000 0,#000 84%,transparent 100%);
   -webkit-mask-composite:source-in;
-  mask-image:linear-gradient(to right,transparent 0,#000 9%,#000 91%,transparent 100%),linear-gradient(to bottom,#000 0,#000 84%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0,#000 5%,#000 95%,transparent 100%),linear-gradient(to bottom,#000 0,#000 84%,transparent 100%);
   mask-composite:intersect;
 }
 .bh-sh{position:absolute;inset:0;z-index:1;pointer-events:none;
@@ -65,21 +68,23 @@
   grid-template-rows:auto auto auto auto minmax(0,1fr) auto;
   grid-template-areas:"r r" "t t" "p p" "a a" "z z" "ch se";
   justify-items:center;text-align:center;
-  padding:clamp(34px,5vh,54px) clamp(24px,4.2vw,60px) 0;
+  padding:clamp(26px,4vh,46px) clamp(24px,4.2vw,60px) 0;
 }
-.bh-r{grid-area:r;display:flex;align-items:center;gap:12px;font-size:14.5px;color:var(--bh-soft);margin-bottom:18px}
+.bh-r{grid-area:r;display:flex;align-items:center;gap:12px;font-size:14.5px;color:var(--bh-soft);margin-bottom:14px}
 .bh-st{display:flex;gap:2px}
 .bh-st svg{width:20px;height:20px;display:block}
 .bh-n b{font-weight:650;color:var(--bh-ink)}
 .bh-t{grid-area:t;margin:0;font-family:inherit;font-weight:250;
-  font-size:clamp(52px,5.4vw,78px);letter-spacing:-.042em;line-height:.96;color:var(--bh-ink);text-wrap:balance}
+  font-size:clamp(48px,4.9vw,74px);letter-spacing:-.042em;line-height:.96;color:var(--bh-ink);text-wrap:balance}
 .bh-t br,.bh-m{display:none}
-.bh-p{grid-area:p;margin:18px 0 0;font-size:clamp(17px,1.36vw,19.5px);line-height:1.5;color:var(--bh-soft);max-width:640px}
-.bh-a{grid-area:a;display:flex;gap:14px 26px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:24px}
-.bh-b{background:var(--bh-ink);color:var(--bh-dark);font-size:15.5px;font-weight:600;padding:17px 34px;border-radius:999px;
+/* bajada: una oracion por renglon; si una no entra, se reparte parejo (sin palabra suelta) */
+.bh-p span{display:block;text-wrap:balance}
+.bh-p{grid-area:p;margin:14px 0 0;font-size:clamp(17px,1.36vw,19.5px);line-height:1.5;color:var(--bh-soft);max-width:640px}
+.bh-a{grid-area:a;display:flex;gap:14px 26px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.bh-b{background:var(--bh-ink);color:var(--bh-dark);font-size:14.5px;font-weight:600;padding:14px 28px;border-radius:999px;
   text-decoration:none;line-height:1.2;transition:transform .2s ease,background-color .2s ease}
 .bh-b:hover{background:#fff;color:var(--bh-dark);transform:translateY(-1px)}
-.bh-s{color:var(--bh-ink);font-size:15.5px;font-weight:500;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:3px;line-height:1.2}
+.bh-s{color:var(--bh-ink);font-size:14.5px;font-weight:500;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:3px;line-height:1.2}
 .bh-s:hover{color:#fff}
 .bh-b:focus-visible,.bh-s:focus-visible,.bh-ch a:focus-visible{outline:2px solid var(--bh-ink);outline-offset:3px}
 
@@ -87,13 +92,14 @@
 .bh-c::after{content:'';grid-row:6;grid-column:1/-1;align-self:stretch;justify-self:stretch;
   margin:0 calc(-1 * clamp(24px,4.2vw,60px));z-index:1;
   background:linear-gradient(to top,rgba(30,38,20,.74),rgba(30,38,20,.38))}
-.bh-ch{grid-area:ch;justify-self:start;display:flex;gap:8px;flex-wrap:wrap;padding:18px 0 20px}
+.bh-ch{grid-area:ch;justify-self:start;display:flex;gap:8px;flex-wrap:wrap;padding:16px 0 18px}
 .bh-ch a{font-size:12.5px;font-weight:500;color:var(--bh-ink);border:1px solid rgba(247,246,242,.42);border-radius:999px;
   padding:7px 15px;text-decoration:none;line-height:1.2;white-space:nowrap;transition:background-color .2s ease,border-color .2s ease}
 .bh-ch a:hover{background:rgba(247,246,242,.14);border-color:rgba(247,246,242,.7);color:var(--bh-ink)}
-.bh-se{grid-area:se;justify-self:end;align-self:center;display:flex;gap:22px;margin:0;white-space:nowrap;
-  font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(247,246,242,.82)}
-.bh-se span+span::before{content:none}
+/* sellos: la misma fila de 8 que usan las fichas (Made in USA, GMP, Cruelty Free, Non GMO,
+   Vegan, Sin gluten, Sulfate Free, FDA), una sola imagen del CDN de TN */
+.bh-se{grid-area:se;justify-self:end;align-self:center;margin:0;line-height:0}
+.bh-se img{display:block;height:28px;width:auto;max-width:none;opacity:.92}
 
 /* tablet: la franja no entra en una fila; beneficios arriba y sellos abajo, centrados */
 @media (min-width:768px) and (max-width:1199px){
@@ -101,20 +107,20 @@
     grid-template-areas:"r" "t" "p" "a" "z" "ch" "se"}
   .bh-c::after{grid-row:6/8}
   .bh-ch{justify-self:center;justify-content:center;flex-wrap:nowrap;padding:16px 0 10px}
-  .bh-se{justify-self:center;padding-bottom:16px}
+  .bh-se{justify-self:center;padding-bottom:14px}
 }
 
 /* ---------- mobile ---------- */
 @media (max-width:767px){
-  /* Mobile: el alto lo da el contenido. El hueco de la foto se calcula para que en el
-     primer pantallazo (100svh - header) entren texto, frascos, beneficios y el boton
-     principal, Shop Now (en la misma fila) y los sellos. 365px = todo lo que no es foto
-     (texto, beneficios, botones, sellos y padding), medido a 390x664. */
+  /* Mobile: el hero mide lo mismo que la primera pantalla (100svh - header) y la foto usa el
+     espacio que queda libre (fila 1fr). Asi entra todo sin scrollear aunque la bajada ocupe
+     2 o 3 lineas segun el ancho. Si el contenido no entra (pantallas muy bajas como el
+     iPhone SE), la foto baja hasta 150px y recien ahi el hero crece. */
   .bh{--bh-hdr:88px;height:auto}
   .bh::before{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCABIADADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDKxTgKXFKBmvPuaWFBxSnGKTGKRjxTTEJxQabTutMB22nqtO4pwrFMoY44qPbUzUyruIZtoCilJpKaYEgpwNNpamwxTzTDTs000mAw0gzmnGm1SEPzS0ynA0ALSE0UhoAYTSE0402mA+tDT9Pa7OBRRRBXYF+TQJVGaoXOnSQ8kUUVrKCQFB1xUdFFYsD/2Q==)}
   .bh-sh{background:linear-gradient(to bottom,rgba(40,48,24,.55) 0%,rgba(40,48,24,.2) 30%,rgba(40,48,24,0) 45%,rgba(40,48,24,0) 66%,rgba(30,38,20,.8) 100%)}
-  .bh-c{height:auto;grid-template-columns:1fr;
-    grid-template-rows:auto auto auto max(150px, calc(100svh - var(--bh-hdr) - 365px)) auto auto auto;
+  .bh-c{height:auto;min-height:calc(100vh - var(--bh-hdr));min-height:calc(100svh - var(--bh-hdr));grid-template-columns:1fr;
+    grid-template-rows:auto auto auto minmax(150px,1fr) auto auto auto;
     grid-template-areas:"r" "t" "p" "z" "ch" "a" "se";justify-items:stretch;text-align:left;padding:22px 24px 14px}
   .bh-c::after{content:none}
   .bh-r{gap:10px;font-size:13px;margin-bottom:12px}
@@ -125,32 +131,24 @@
   .bh-p{margin-top:12px;font-size:15.5px;line-height:1.45;max-width:none}
   .bh-im{
     --w:min(118vw, calc((100cqh + 14px) / .741));
-    height:calc(var(--w) * 1.4972);
-    left:calc(50% - var(--w) * .555);
-    top:calc(10px - var(--w) * .2246);
-    /* se funde con la pared arriba, abajo y a los costados (en pantallas bajas la foto
-       queda mas angosta que el celular y el borde se veria) */
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 13%,#000 90%,transparent 100%),linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+    /* foto extendida (hero-gummies-m-ext): pared reconstruida 0,40 x ancho a cada lado y
+       0,45 x alto arriba. La imagen mide 1,8 x --w de ancho y 2,1709 x --w de alto. */
+    width:calc(var(--w) * 1.8);height:calc(var(--w) * 2.1709);
+    left:calc(50% - var(--w) * .955);
+    top:calc(10px - var(--w) * .8983);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 8%,#000 93%,transparent 100%),linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);
     -webkit-mask-composite:source-in;
-    mask-image:linear-gradient(to bottom,transparent 0,#000 13%,#000 90%,transparent 100%),linear-gradient(to right,transparent 0,#000 7%,#000 93%,transparent 100%);
+    mask-image:linear-gradient(to bottom,transparent 0,#000 8%,#000 93%,transparent 100%),linear-gradient(to right,transparent 0,#000 4%,#000 96%,transparent 100%);
     mask-composite:intersect;
   }
   .bh-ch{justify-self:stretch;flex-wrap:nowrap;justify-content:space-between;gap:6px;padding:0}
   .bh-ch a{flex:1 1 auto;text-align:center;font-size:12px;padding:7px 0}
   /* "Shop Now" en la misma fila que el boton principal: los dos quedan arriba del pliegue */
-  .bh-a{flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:18px;margin-top:12px}
-  .bh-b{flex:1 1 auto;text-align:center;padding:17px 16px;font-size:15px;white-space:nowrap}
-  .bh-s{flex:none;white-space:nowrap;border-bottom-color:rgba(247,246,242,.55);padding-bottom:4px;font-size:15px}
-  .bh-se{justify-self:stretch;flex-wrap:wrap;justify-content:center;gap:0 6px;margin-top:12px;
-    font-size:10.5px;letter-spacing:.13em;color:rgba(247,246,242,.78);text-align:center;line-height:1.9}
-  /* dos lineas fijas: "Sin gluten · Producidos en EE.UU." / "Certificacion internacional"
-     (si cortaba solo, la segunda linea arrancaba con un punto suelto) */
-  .bh-se span:nth-child(2)::before{content:'\00B7';margin-right:6px}
-  .bh-se span:nth-child(3){flex-basis:100%}
-  .bh-se span{white-space:nowrap}
-}
-@media (max-width:380px){
-  .bh-se{font-size:10px;letter-spacing:.08em}
+  .bh-a{flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-start;gap:24px;margin-top:12px}
+  .bh-b{flex:none;text-align:center;padding:13px 24px;font-size:14px;white-space:nowrap}
+  .bh-s{flex:none;white-space:nowrap;border-bottom-color:rgba(247,246,242,.55);padding-bottom:4px;font-size:14px}
+  .bh-se{justify-self:stretch;margin-top:14px}
+  .bh-se img{width:78%;height:auto;max-width:300px;margin:0 auto}
 }
 /* Burbuja de WhatsApp (js/whatsapp.js): en pantallas angostas cae encima de los beneficios y
    del boton principal, que ocupa todo el ancho. Mientras el boton del hero esta a la vista
