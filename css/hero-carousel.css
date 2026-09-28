@@ -146,6 +146,10 @@
      (si cortaba solo, la segunda linea arrancaba con un punto suelto) */
   .bh-se span:nth-child(2)::before{content:'\00B7';margin-right:6px}
   .bh-se span:nth-child(3){flex-basis:100%}
+  .bh-se span{white-space:nowrap}
+}
+@media (max-width:380px){
+  .bh-se{font-size:10px;letter-spacing:.08em}
 }
 /* Burbuja de WhatsApp (js/whatsapp.js): en pantallas angostas cae encima de los beneficios y
    del boton principal, que ocupa todo el ancho. Mientras el boton del hero esta a la vista
