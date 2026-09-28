@@ -108,14 +108,14 @@
 @media (max-width:767px){
   /* Mobile: el alto lo da el contenido. El hueco de la foto se calcula para que en el
      primer pantallazo (100svh - header) entren texto, frascos, beneficios y el boton
-     principal; "Shop Now" y los sellos pueden quedar justo debajo del pliegue.
-     194px = bloque de texto, 104px = beneficios + boton. */
+     principal, Shop Now (en la misma fila) y los sellos. 365px = todo lo que no es foto
+     (texto, beneficios, botones, sellos y padding), medido a 390x664. */
   .bh{--bh-hdr:88px;height:auto}
   .bh::before{background-image:url(data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCABIADADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDKxTgKXFKBmvPuaWFBxSnGKTGKRjxTTEJxQabTutMB22nqtO4pwrFMoY44qPbUzUyruIZtoCilJpKaYEgpwNNpamwxTzTDTs000mAw0gzmnGm1SEPzS0ynA0ALSE0UhoAYTSE0402mA+tDT9Pa7OBRRRBXYF+TQJVGaoXOnSQ8kUUVrKCQFB1xUdFFYsD/2Q==)}
   .bh-sh{background:linear-gradient(to bottom,rgba(40,48,24,.55) 0%,rgba(40,48,24,.2) 30%,rgba(40,48,24,0) 45%,rgba(40,48,24,0) 66%,rgba(30,38,20,.8) 100%)}
   .bh-c{height:auto;grid-template-columns:1fr;
-    grid-template-rows:auto auto auto max(170px, calc(100svh - var(--bh-hdr) - 298px)) auto auto auto;
-    grid-template-areas:"r" "t" "p" "z" "ch" "a" "se";justify-items:stretch;text-align:left;padding:22px 24px 22px}
+    grid-template-rows:auto auto auto max(150px, calc(100svh - var(--bh-hdr) - 365px)) auto auto auto;
+    grid-template-areas:"r" "t" "p" "z" "ch" "a" "se";justify-items:stretch;text-align:left;padding:22px 24px 14px}
   .bh-c::after{content:none}
   .bh-r{gap:10px;font-size:13px;margin-bottom:12px}
   .bh-st svg{width:18px;height:18px}
@@ -137,10 +137,11 @@
   }
   .bh-ch{justify-self:stretch;flex-wrap:nowrap;justify-content:space-between;gap:6px;padding:0}
   .bh-ch a{flex:1 1 auto;text-align:center;font-size:12px;padding:7px 0}
-  .bh-a{flex-direction:column;align-items:stretch;gap:12px;margin-top:12px}
-  .bh-b{text-align:center;padding:17px}
-  .bh-s{align-self:center;border-bottom-color:rgba(247,246,242,.55);padding-bottom:4px;font-size:15px}
-  .bh-se{justify-self:stretch;flex-wrap:wrap;justify-content:center;gap:0 6px;margin-top:14px;
+  /* "Shop Now" en la misma fila que el boton principal: los dos quedan arriba del pliegue */
+  .bh-a{flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:space-between;gap:18px;margin-top:12px}
+  .bh-b{flex:1 1 auto;text-align:center;padding:17px 16px;font-size:15px;white-space:nowrap}
+  .bh-s{flex:none;white-space:nowrap;border-bottom-color:rgba(247,246,242,.55);padding-bottom:4px;font-size:15px}
+  .bh-se{justify-self:stretch;flex-wrap:wrap;justify-content:center;gap:0 6px;margin-top:12px;
     font-size:10.5px;letter-spacing:.13em;color:rgba(247,246,242,.78);text-align:center;line-height:1.9}
   /* dos lineas fijas: "Sin gluten · Producidos en EE.UU." / "Certificacion internacional"
      (si cortaba solo, la segunda linea arrancaba con un punto suelto) */
