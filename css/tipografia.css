@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+
+/* Tipografia de toda la web: Bricolage Grotesque (2026-09).
+   Reemplaza a Inter, Georgia, Public Sans, Work Sans y Dosis. Lo carga un @import del
+   css_code (vive afuera, el minificador de TN no lo toca). Para volver atras alcanza con
+   sacar esa linea del css_code.
+
+   Por que el :not(#bl-f): varias hojas del sitio fijan la fuente con !important y clases
+   (titulos en Georgia, cuerpo del blog en Inter). El :not() con un id que no existe suma
+   especificidad de id sin afectar a que elementos aplica, asi esta regla les gana.
+
+   Bricolage no tiene cursiva: font-synthesis-style:none evita que el navegador la simule
+   deformando las letras (los titulos que eran Georgia italica quedan rectos). */
+
+html body,html body *:not(#bl-f):not(svg):not(svg *),html body *:not(#bl-f)::before,html body *:not(#bl-f)::after{
+  font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif!important;
+  font-optical-sizing:auto;font-synthesis-style:none;
+}
+
+/* Jerarquia, como el hero: titulos grandes livianos y cerrados, titulos medios en 400,
+   precios en 500 con numeros de ancho fijo. */
+html body :is(h1,h2,.h1-huge,.tagline,div.cap,.js-banner-title,.blp-em,.bbl-em,.bl-ben-title,.section-title):not(#bl-f),
+html body :is(h1,h2):not(#bl-f) *{font-weight:300!important;letter-spacing:-.03em!important;line-height:1.04}
+/* los titulos nativos chicos de TN (h1.h4 del carrito y de la gondola, 12-18px) van firmes */
+html body :is(h1,h2,h3,h4,h5,h6,div,span,p).h4:not(#bl-f),html body :is(.h5,.h6):not(#bl-f){font-weight:600!important;letter-spacing:-.01em!important}
+html body .bh-t:not(#bl-f){font-weight:250!important;letter-spacing:-.042em!important;line-height:.96}
+html body :is(h3,h4,.name,.hphrase,.bbl-t,.bbp-t,.blp-name,.blp-nx-n,.bl-ben-name,.blf-news-t,.bfn-opt-h,.fh):not(#bl-f){font-weight:400!important;letter-spacing:-.015em!important}
+html body :is(.price,.pp,.oprice,.rev-score,.js-price-display,.item-price):not(#bl-f){font-weight:500!important;font-variant-numeric:tabular-nums;letter-spacing:-.01em!important}
