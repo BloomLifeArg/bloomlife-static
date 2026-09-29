@@ -55,6 +55,7 @@
 .blw *{box-sizing:border-box}
 
 .blw-l{display:block;white-space:nowrap}
+.blw-dt{display:none}
 
 .blw-eb{
   display:block;
@@ -73,6 +74,30 @@
   display:block;
   font-size:11px;font-weight:400;letter-spacing:0;
   color:var(--blw-ink);line-height:1.4;
+}
+
+/* ───── desktop: pastilla chica y liviana (2026-09) ─────
+   Antes medía 84×215 con eyebrow, disco de 44 y dos líneas de bajada: competía con el
+   contenido. Ahora es un disco chico con la etiqueta en una sola línea al costado. */
+@media (min-width:641px){
+  .blw{
+    width:auto;padding:5px 13px 5px 5px;
+    flex-direction:row;align-items:center;gap:8px;
+    border-radius:999px;border-color:rgba(0,56,69,.08);
+    box-shadow:0 4px 14px rgba(0,56,69,.08);
+  }
+  .blw.blw-in:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,56,69,.12)}
+  .blw-eb{display:none}
+  .blw-disc{width:30px;height:30px;margin:0;flex:none}
+  .blw-disc svg{width:15px;height:15px}
+  .blw-sub{font-size:11.5px;font-weight:500;letter-spacing:0;line-height:1;color:var(--blw-dark);white-space:nowrap}
+  .blw-sub .blw-l{display:none}
+  .blw-sub .blw-dt{display:inline}
+}
+@media (min-width:641px) and (max-width:1023px){
+  /* tablet: solo el disco, la etiqueta pisaba los beneficios del hero */
+  .blw{padding:5px}
+  .blw-sub{display:none}
 }
 
 /* ───── mobile: disco + etiqueta ───── */

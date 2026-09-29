@@ -132,6 +132,8 @@
     var sub = el('span', 'blw-sub');
     sub.appendChild(el('span', 'blw-l', 'Te ayudamos'));
     sub.appendChild(el('span', 'blw-l blw-l2', 'a elegir'));
+    // desktop: una sola línea con otro texto (la pastilla compacta de css/whatsapp.css)
+    sub.appendChild(el('span', 'blw-dt', 'Estamos para ayudarte'));
 
     a.appendChild(eb);
     a.appendChild(disc);
