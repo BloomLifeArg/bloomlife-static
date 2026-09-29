@@ -90,4 +90,16 @@
     d.head.appendChild(ms);
   }
   setTimeout(reveal, 4000);
+
+  // Hero con foto (.blp-hf): mientras se ve, html.bh-on esconde la burbuja de WhatsApp en
+  // mobile (la regla vive en css/hero-carousel.css, que carga todo el sitio; la home la
+  // activa desde BL-HERO). En celulares la burbuja caía encima de la bajada del hero.
+  var ocultarBurbuja = function () {
+    var hf = d.querySelector('.blp-hf'), R = d.documentElement;
+    if (!hf || !window.IntersectionObserver) return;
+    new IntersectionObserver(function (e) { R.classList.toggle('bh-on', e[0].isIntersecting); },
+      { rootMargin: '0px 0px -35% 0px' }).observe(hf);
+  };
+  if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', ocultarBurbuja);
+  else ocultarBurbuja();
 })();

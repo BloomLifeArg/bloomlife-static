@@ -29,15 +29,15 @@
   // Pregunta 1. `ing` es el adaptógeno que cubre el objetivo; `cobj` la clave
   // con la que combos-categoria.json etiqueta ese objetivo en sus combos.
   var OBJ = {
-    foco:     { corto: 'foco', t: 'Foco y claridad',       d: 'Concentrarte sin releer tres veces lo mismo.',          ing: 'mln', cobj: 'foco',    art: 'el foco',
+    foco:     { corto: 'foco', t: 'Foco y claridad',       d: 'Concentrarte y pensar con claridad.',          ing: 'mln', cobj: 'foco',    art: 'el foco',
                 frase: 'apoya los factores que el cerebro usa para regenerarse y conectar: la base de una mente despierta.' },
-    calma:    { corto: 'calma', t: 'Calma y menos estrés',  d: 'Bajar un cambio cuando la cabeza no para.',             ing: 'ash', cobj: 'calma',   art: 'la calma',
+    calma:    { corto: 'calma', t: 'Calma y menos estrés',  d: 'Bajar un cambio cuando la mente no para.',             ing: 'ash', cobj: 'calma',   art: 'la calma',
                 frase: 'se asocia con una respuesta más equilibrada del cuerpo frente al estrés sostenido.' },
     energia:  { corto: 'energía', t: 'Energía sostenida',     d: 'Llegar a la tarde sin el tercer café.',                 ing: 'cor', cobj: 'energia', art: 'la energía',
                 frase: 'se asocia con un mejor aprovechamiento del oxígeno y con la producción de energía en las células.' },
-    dormir:   { corto: 'dormir mejor', t: 'Dormir mejor',          d: 'Descansar de verdad, no solo cumplir horas.',           ing: 'rsh', cobj: 'dormir',  art: 'el descanso',
+    dormir:   { corto: 'dormir mejor', t: 'Dormir mejor',          d: 'Descansar de verdad, no solo dormir horas.',           ing: 'rsh', cobj: 'dormir',  art: 'el descanso',
                 frase: 'se asocia con un descanso más profundo, no solo con más horas.' },
-    piel:     { corto: 'piel', t: 'Piel e hidratación',    d: 'Que se note desde adentro, con constancia.',            ing: 'trm', cobj: 'piel',    art: 'la piel',
+    piel:     { corto: 'piel', t: 'Piel e hidratación',    d: 'Piel hidratada, desde adentro.',            ing: 'trm', cobj: 'piel',    art: 'la piel',
                 frase: 'retiene agua como pocos ingredientes: hidratación que trabaja desde adentro.' },
     defensas: { corto: 'defensas', t: 'Defensas',              d: 'Acompañar al cuerpo cuando le pedís de más.',           ing: 'rsh', cobj: 'dormir',  art: 'las defensas',
                 frase: 'acompaña al sistema inmune, sobre todo cuando venís exigiéndole demasiado al cuerpo.' }
@@ -78,8 +78,8 @@
 
   // Pregunta 2.
   var FMT = {
-    gum: { t: 'Gummies',    d: 'Dos gomitas al día, ricas y sin agua. Nuestro diferencial.', en: 'en gummies' },
-    cap: { t: 'Cápsulas',   d: 'Un vaso de agua y listo. Melena de León y Ashwagandha.',      en: 'en cápsulas' },
+    gum: { t: 'Gummies',    d: 'Ricas y fáciles de tomar, sin agua. Nuestro formato estrella.', en: 'en gummies' },
+    cap: { t: 'Cápsulas',   d: 'Con un vaso de agua. Disponibles en Melena de León y Ashwagandha.',      en: 'en cápsulas' },
     any: { t: 'Me da igual', d: 'Te recomendamos el formato que mejor cubra lo que buscás.', en: 'en el formato que mejor cubra' }
   };
   var FMT_ORDEN = ['gum', 'cap', 'any'];
@@ -87,10 +87,10 @@
   // Pregunta 3. `comp` es el adaptógeno que suma cuando el momento difícil no
   // coincide con la ventana del que ya cubre el objetivo.
   var MOM = {
-    manana: { t: 'Mañana',       d: 'Arrancar cuesta, y la cabeza tarda en prenderse.',        comp: 'cor', la: 'la mañana' },
-    tarde:  { t: 'Tarde',        d: 'Después de almorzar se apaga todo.',                       comp: 'ash', la: 'la tarde' },
-    noche:  { t: 'Noche',        d: 'Llegás acelerado y apagar la cabeza es lo difícil.',       comp: 'rsh', la: 'la noche' },
-    dia:    { t: 'Todo el día',  d: 'Un poco de todo, todo el tiempo.',                          comp: null,  la: 'el día entero' }
+    manana: { t: 'Mañana',       d: 'Te cuesta arrancar y la mente tarda en despertarse.',        comp: 'cor', la: 'la mañana' },
+    tarde:  { t: 'Tarde',        d: 'Después de almorzar se te va la energía.',                       comp: 'ash', la: 'la tarde' },
+    noche:  { t: 'Noche',        d: 'Llegás acelerado y te cuesta desconectar.',       comp: 'rsh', la: 'la noche' },
+    dia:    { t: 'Todo el día',  d: 'Un poco de todo, a cualquier hora.',                          comp: null,  la: 'el día entero' }
   };
   var MOM_ORDEN = ['manana', 'tarde', 'noche', 'dia'];
 
@@ -432,7 +432,7 @@
   }
 
   function paso1(s) {
-    var w = cabecera(1, '¿Qué querés lograr?', 'Elegí hasta dos. Si son más, empezá por los que más te pesan hoy.');
+    var w = cabecera(1, '¿Qué querés mejorar?', 'Elegí hasta dos. Si son más, empezá por lo que más te pesa hoy.');
     var grid = el('div', 'bfn-opts'); grid.setAttribute('role', 'group'); grid.setAttribute('aria-labelledby', 'bfn-q');
     OBJ_ORDEN.forEach(function (k) {
       grid.appendChild(opcion(null, k, OBJ[k].t, OBJ[k].d, 'checkbox', has(s.r, k), ING[OBJ[k].ing].pc));
@@ -484,8 +484,8 @@
       return w;
     };
   }
-  var paso2 = pasoSimple(2, '¿Cómo preferís tomarlo?', 'Los dos formatos llevan el mismo extracto. Es una cuestión de gesto.', FMT_ORDEN, FMT, 'f', false);
-  var paso3 = pasoSimple(3, '¿Cuándo te cuesta más el día?', 'Nos ayuda a decidir si te alcanza con uno o te conviene un combo, y cuál.', MOM_ORDEN, MOM, 'm', true);
+  var paso2 = pasoSimple(2, '¿Cómo preferís tomarlo?', 'Los dos formatos tienen el mismo extracto. Elegí el que te resulte más cómodo.', FMT_ORDEN, FMT, 'f', false);
+  var paso3 = pasoSimple(3, '¿En qué momento del día te cuesta más?', 'Así sabemos si te alcanza con uno o te conviene un combo.', MOM_ORDEN, MOM, 'm', true);
 
   function frascos(p) {
     var f = el('div', 'bfn-frascos bfn-n' + p.imgs.length);

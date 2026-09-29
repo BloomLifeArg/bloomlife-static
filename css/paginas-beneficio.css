@@ -54,6 +54,44 @@
 .blp-hero-sub{font-weight:300;font-size:clamp(16px,1.6vw,19px);line-height:1.7;
  color:rgba(255,255,255,.72);max-width:46ch;margin-top:24px}
 
+/* ───────── 1b. hero con foto (.blp-hf) — suscripciones y finder, 2026-09 ─────────
+   Texto a la izquierda sobre el petróleo y la foto a la derecha, a sangre hasta el borde.
+   En mobile la foto va arriba, cuadrada, y el texto abajo. Solo aplica si el hero trae la
+   clase .blp-hf: las páginas de beneficio siguen con el hero tipográfico. */
+.blp-hero.blp-hf{position:relative;overflow:hidden;padding:0}
+.blp-hf .blp-in{position:relative;z-index:1;min-height:clamp(540px,64vh,660px);
+ display:flex;align-items:center;padding-top:88px;padding-bottom:88px}
+.blp-hf-txt{max-width:50%}
+.blp-hf .blp-h1{max-width:13ch}
+.blp-hf-fig{position:absolute;top:0;right:0;bottom:0;width:47%;margin:0;overflow:hidden}
+/* la imagen va absoluta dentro de la caja: Safari no resuelve height:100% dentro de una
+   caja con aspect-ratio y la dejaba con su alto natural, desbordada detrás del texto */
+.blp-hf-fig img{position:absolute;top:0;left:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none}
+.blp-hf-fig::before{content:'';position:absolute;top:0;bottom:0;left:0;width:34%;z-index:1;
+ background:linear-gradient(to right,var(--dark) 0,rgba(0,56,69,.55) 38%,rgba(0,56,69,0) 100%)}
+.blp-sus .blp-hf-fig img{object-position:30% 58%}
+.blp-finder .blp-hf-fig img{object-position:50% 46%}
+.blp-hf-badge{position:absolute;right:28px;bottom:28px;z-index:2;background:rgba(0,56,69,.9);
+ border-radius:16px;padding:14px 18px 13px;color:var(--w);text-align:left;
+ -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.blp-hf-badge-n{color:var(--gold);font-size:40px;font-weight:300;line-height:1;letter-spacing:-.03em}
+.blp-hf-badge-n span{font-size:.42em;font-weight:500;letter-spacing:.02em;margin-left:.15em;vertical-align:.9em}
+.blp-hf-badge-t{font-size:12.5px;line-height:1.35;color:rgba(255,255,255,.82);margin-top:6px}
+@media (max-width:900px){
+ .blp-hf{display:flex;flex-direction:column}
+ .blp-hf-fig{position:relative;width:100%;height:auto;aspect-ratio:5/4;max-height:46vh}
+ .blp-sus .blp-hf-fig img{object-position:40% 64%}
+ .blp-finder .blp-hf-fig img{object-position:50% 40%}
+ .blp-hf-fig::before{top:auto;left:0;right:0;bottom:0;width:auto;height:38%;
+  background:linear-gradient(to top,var(--dark) 0,rgba(0,56,69,0) 100%)}
+ .blp-hf .blp-in{min-height:0;display:block;padding-top:8px;padding-bottom:60px;margin-top:-28px}
+ .blp-hf-txt{max-width:none}
+ .blp-hf .blp-h1{max-width:none}
+ .blp-hf-badge{right:16px;bottom:auto;top:16px;padding:10px 14px 9px;border-radius:12px}
+ .blp-hf-badge-n{font-size:30px}
+ .blp-hf-badge-t{font-size:11.5px}
+}
+
 /* ───────── 2. por qué importa ───────── */
 .blp-why{background:var(--sand);padding:96px 0}
 .blp-why-grid{display:grid;grid-template-columns:1.12fr .88fr;gap:64px;align-items:start}
