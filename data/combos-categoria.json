@@ -504,6 +504,31 @@
       "principal": "mln"
     },
     {
+      "id": 370942354,
+      "nombre": "Ultimate Glow Balance",
+      "formato": "Gomitas",
+      "ing": [
+        "mln",
+        "trm",
+        "ash",
+        "rsh"
+      ],
+      "why": "Mente, calma, descanso y piel, todo en gomitas.",
+      "objetivos": [
+        "foco",
+        "calma",
+        "dormir",
+        "piel"
+      ],
+      "handle": "combo-ultimate-glow-balance-gummies",
+      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-glow-balance-perfil-1600-1ad8d7b9e091c6451917907818273865-1024-1024.jpg",
+      "precio": 264100,
+      "lista": 278000,
+      "vendidas": 0,
+      "caps": [],
+      "principal": "trm"
+    },
+    {
       "id": 330540927,
       "nombre": "Glory Gummies",
       "formato": "Gomitas",
