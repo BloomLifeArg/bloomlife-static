@@ -86,7 +86,9 @@ const elegidas = destacados
     const c = todas.find((x) => (x.url || '').includes(d.slug));
     // Algunas notas tienen keywords cargadas como título en el blog; si el
     // archivo trae uno escrito a mano, ese manda.
-    return c && d.titulo ? { ...c, title: d.titulo } : c;
+    // Lo mismo con 'resumen' para la bajada (ej.: una meta description que dice "cabeza").
+    if (!c) return c;
+    return { ...c, ...(d.titulo ? { title: d.titulo } : {}), ...(d.resumen ? { summary: d.resumen } : {}) };
   })
   .filter(Boolean);
 

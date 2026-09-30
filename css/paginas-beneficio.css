@@ -66,11 +66,11 @@
 .blp-hf-fig{position:absolute;top:0;right:0;bottom:0;width:47%;margin:0;overflow:hidden}
 /* la imagen va absoluta dentro de la caja: Safari no resuelve height:100% dentro de una
    caja con aspect-ratio y la dejaba con su alto natural, desbordada detrás del texto */
-.blp-hf-fig img{position:absolute;top:0;left:0;display:block;width:100%;height:100%;object-fit:cover;max-width:none}
+.blp .blp-hf-fig img{position:absolute;top:0;left:0;display:block;width:100%;height:100%!important;object-fit:cover;max-width:none}
 .blp-hf-fig::before{content:'';position:absolute;top:0;bottom:0;left:0;width:34%;z-index:1;
  background:linear-gradient(to right,var(--dark) 0,rgba(0,56,69,.55) 38%,rgba(0,56,69,0) 100%)}
 .blp-sus .blp-hf-fig img{object-position:30% 58%}
-.blp-finder .blp-hf-fig img{object-position:50% 46%}
+.blp-finder .blp-hf-fig img{object-position:50% 46%}.blp-foco .blp-hf-fig img{object-position:50% 76%}.blp-calma .blp-hf-fig img{object-position:50% 78%}.blp-energia .blp-hf-fig img{object-position:50% 71%}.blp-descanso .blp-hf-fig img{object-position:50% 71%}.blp-piel .blp-hf-fig img{object-position:50% 76%}
 .blp-hf-badge{position:absolute;right:28px;bottom:28px;z-index:2;background:rgba(0,56,69,.9);
  border-radius:16px;padding:14px 18px 13px;color:var(--w);text-align:left;
  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
@@ -81,7 +81,7 @@
  .blp-hf{display:flex;flex-direction:column}
  .blp-hf-fig{position:relative;width:100%;height:auto;aspect-ratio:5/4;max-height:46vh}
  .blp-sus .blp-hf-fig img{object-position:40% 64%}
- .blp-finder .blp-hf-fig img{object-position:50% 40%}
+ .blp-finder .blp-hf-fig img{object-position:50% 40%}.blp-foco .blp-hf-fig img{object-position:50% 76%}.blp-calma .blp-hf-fig img{object-position:50% 78%}.blp-energia .blp-hf-fig img{object-position:50% 71%}.blp-descanso .blp-hf-fig img{object-position:50% 71%}.blp-piel .blp-hf-fig img{object-position:50% 76%}
  .blp-hf-fig::before{top:auto;left:0;right:0;bottom:0;width:auto;height:38%;
   background:linear-gradient(to top,var(--dark) 0,rgba(0,56,69,0) 100%)}
  .blp-hf .blp-in{min-height:0;display:block;padding-top:8px;padding-bottom:60px;margin-top:-28px}

@@ -1,21 +1,21 @@
 {
-  "_comentario": "Los 3 artículos que muestra la sección 'Del blog' del home. Elegidos a mano para empujar Cordyceps, Tremella y Reishi. Se identifican por un fragmento de su URL. Si este archivo se borra, el cron vuelve solo a los 3 más recientes.",
+  "_comentario": "Los 3 artículos que muestra la sección 'Del blog' del home. Elegidos a mano. Rotación del 2026-09-29 (pedido de Sergio): las 3 notas más nuevas que todavía no se habían mostrado. Antes estaban: qué son los adaptógenos, sistema inmunológico e insomnio. Se identifican por un fragmento de su URL. Si este archivo se borra, el cron vuelve solo a los 3 más recientes. El cron solo lee la página 1 del blog: una nota de la página 2 no se encuentra.",
   "_titulo_manual": "Dos de estas notas tienen keywords cargadas como título en el blog ('sistema inmunológico, hongos, reishi...'), así que acá se sobreescribe con su H1 real. Cuando se corrija el título en el admin del blog, se puede borrar el campo 'titulo' y el cron lo toma solo.",
-  "_revisado": "2026-08-30",
+  "_revisado": "2026-09-29",
   "posts": [
     {
-      "slug": "que-son-los-adaptogenos-para-que-sirven",
-      "porque": "la única nota que nombra los tres: Cordyceps, Tremella y Reishi"
+      "slug": "niebla-mental-concentracion-melena-de-leon",
+      "resumen": "¿Mente nublada, te cuesta concentrarte? Qué causa la niebla mental, qué hábitos ayudan y cómo acompaña la Melena de León.",
+      "porque": "Melena de León, el más vendido, por el lado del foco"
     },
     {
-      "slug": "como-fortalecer-el-sistema-inmunologico-de-forma-natural",
-      "titulo": "Cómo fortalecer el sistema inmunológico de forma natural",
-      "porque": "Cordyceps y Reishi, por el lado de las defensas"
+      "slug": "cortisol-alto-estres-cronico-ashwagandha",
+      "porque": "Ashwagandha, el otro más vendido, por el lado del estrés"
     },
     {
-      "slug": "insomnio",
-      "titulo": "Por qué te despertás cansada y qué podés hacer",
-      "porque": "Reishi, por el lado del descanso"
+      "slug": "kaizen-mejora-continua-adaptogenos",
+      "porque": "hábitos: la rutina diaria que sostiene la suscripción"
     }
-  ]
+  ],
+  "_resumen_manual": "'resumen' pisa la meta description de la nota en la card. Se usa en la de niebla mental porque la original dice 'cabeza' y en la web se dice 'mente'. Si se corrige la meta description en el blog, se puede borrar."
 }

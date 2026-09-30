@@ -12,8 +12,16 @@
    Bricolage no tiene cursiva: font-synthesis-style:none evita que el navegador la simule
    deformando las letras (los titulos que eran Georgia italica quedan rectos). */
 
+/* Estrellas de texto (★ ☆) con la forma de la estrella del hero de la home (2026-09-29).
+   'BL Estrellas' trae SOLO esos dos glifos (fonts/bl-estrellas.woff, la arma
+   scripts/build-estrellas-font.py) y va primera en el stack: por el unicode-range el
+   navegador la usa solo para las estrellas y el resto sigue en Bricolage. Asi cambian
+   todas sin tocar las 34 descripciones de producto, la gondola, /best-sellers/ ni Revie,
+   y conservan cuantas son llenas y vacias. Va embebida para que no se vea la vieja un instante. */
+@font-face{font-family:'BL Estrellas';src:url(data:font/woff;base64,d09GRgABAAAAAAMIAAoAAAAAA6gAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABZAAAAC8AAABgquRqoWNtYXAAAAGgAAAALgAAADQADCZZZ2x5ZgAAAdgAAAC0AAABMCR0pbRoZWFkAAAA9AAAADYAAAA2MF1r9WhoZWEAAAEsAAAAHgAAACQGbgL3aG10eAAAAZQAAAAKAAAACgV4AABsb2NhAAAB0AAAAAgAAAAIAEQAmG1heHAAAAFMAAAAFwAAACAABgA0bmFtZQAAAowAAABcAAAAb1IflElwb3N0AAAC6AAAACAAAAA3QmrFQAABAAAAAQAAZJ6Zc18PPPUAAQPoAAAAAObiFDYAAAAA5uIUNgAc/70DaALsAAAAAwACAAAAAAAAeJxjYGRgYFb4bwEkWxgYGCyYfRiAIiiACQBAfgJtAAB4nGNgZGBgYGYwYmBiAAEIiQQABcIAOwB4nGNgZvrPOIGBlYGFgSjgAGfZAwEDgxqrGhuzwn8LBgZmBYYTaIoVGBgABScFlwAB9AAAA4QAAAAAAAB4nGNgYGBiYGBgBmIRIMkIplkYFIA0CxAC+Wps//8DSdb//2/+AcszAABRAAaIAAAAAAAAAEQAmHicY2BkkPm/lzmD6Q2DOgMDo5m5mbiYPJOYuBg7Gzs7mGRTVwdiNXU1c3MwaWZuzjiVUwgIONOfCfPyMDLyLVdn4eYSFhY8d05QWJiLm0V9OR8jIw+v8DOmM0LsQCB0SZGZn19YhHfxc2EBQVYWzpwcThZWQQHh54t5RYT5+ZkVGRiYkNxhSLRLxNnF2c3F1c3V1Yl2k+3hXsV16xR7D4cT7bpg2c7DMTGHO2U3MgAAJuE3x3icLYgxCoAwEAQnURBBbGws7e19gJAuVX6QIthclcT/ewnuwjKzwMiFocWw9G2xTGoDZpz12dl+tqyctz9cqTmJxBLS80rM3HgOHIVKJiHaqBaUH95u+QMbOw9GeJxjYGLAD5gZGBiZGJlZiksSizhBRHlGZkkqACsMBa8=) format('woff');unicode-range:U+2605-2606;font-display:block}
+
 html body,html body *:not(#bl-f):not(svg):not(svg *),html body *:not(#bl-f)::before,html body *:not(#bl-f)::after{
-  font-family:'Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif!important;
+  font-family:'BL Estrellas','Bricolage Grotesque',system-ui,-apple-system,'Segoe UI',sans-serif!important;
   font-optical-sizing:auto;font-synthesis-style:none;
 }
 
@@ -26,3 +34,10 @@ html body :is(h1,h2,h3,h4,h5,h6,div,span,p).h4:not(#bl-f),html body :is(.h5,.h6)
 html body .bh-t:not(#bl-f){font-weight:250!important;letter-spacing:-.042em!important;line-height:.96}
 html body :is(h3,h4,.name,.hphrase,.bbl-t,.bbp-t,.blp-name,.blp-nx-n,.bl-ben-name,.blf-news-t,.bfn-opt-h,.fh):not(#bl-f){font-weight:400!important;letter-spacing:-.015em!important}
 html body :is(.price,.pp,.oprice,.rev-score,.js-price-display,.item-price):not(#bl-f){font-weight:500!important;font-variant-numeric:tabular-nums;letter-spacing:-.01em!important}
+
+/* Color de las estrellas de rating: el amarillo del hero (#F4C54A) en toda la web.
+   Revie carga su CSS despues y usa !important: por eso el :not(#bl-f) tambien aca. */
+html body .rev-stars:not(#bl-f),html body .rev-card .s:not(#bl-f),html body .bl-bb .rating .stars:not(#bl-f),
+html body .mh-stars:not(#bl-f),html body .bl-cc .estrellas:not(#bl-f),html body .bl-stars:not(#bl-f),
+html body .reviews-score .stars:not(#bl-f),html body .rcard-stars:not(#bl-f),
+html body [data-starlist]:not(#bl-f)::before,html body [data-starlist]:not(#bl-f)::after{color:#F4C54A!important}

@@ -58,20 +58,21 @@
     titulo: 'La excelencia, nuestra obsesión',
     bajada: 'La voz de nuestros clientes',
     testimonios: [
-      { cita: 'Fan de los honguitos ✨ Gracias a ellos pude bajar mis dosis de ansiolítico y antidepresivos. Me siento mucho mejor y más activa! Probé con otras marcas pero ninguno me funcionó como estos!', nombre: 'Jessica T.', estrellas: 5, producto: 'Cordyceps', url: '/productos/cordyceps-energia-sostenida-gummies/' },
-      { cita: 'Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.', nombre: 'Fany G.', estrellas: 5, producto: 'Melena de León Gummies', url: '/productos/melena-de-leon-claridad-mental-gummies/' },
+      { cita: 'Desde que tomo las cápsulas de Ashwagandha combinadas con las gummies de Reishi, mi descanso nocturno ha mejorado sustancialmente. Mis métricas de sueño, tomadas por un reloj smart, pasaron de mostrar “se necesita atención” a “muy bueno” o “excelente”.', nombre: 'Verónica H.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
+      { cita: 'A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.', nombre: 'María Laura V.', estrellas: 5, producto: 'Ashwagandha Gummies', url: '/productos/ashwagandha-equilibrio-hormonal-gummies/' },
+      { cita: 'Sufro de insomnio recurrente… Sinceramente, desde que empecé a tomar Reishi mejoró bastante mi descanso.', nombre: 'Nancy G.', estrellas: 4, producto: 'Reishi', url: '/productos/reishi-descanso-profundo-gummies-kjqoe/' },
       { cita: 'Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.', nombre: 'Victoria B.', estrellas: 5, producto: 'Combo Brain Health Cápsulas', url: '/productos/combo-brain-health-capsulas-suplementacion-por-3-meses/' },
-      { cita: 'A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.', nombre: 'María Laura V.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
-      { cita: 'El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.', nombre: 'Marina C.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
-      { cita: 'Un producto espectacular.', nombre: 'Daiana G.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
-      { cita: 'Excelente producto, ayudaron a mi concentración y descanso.', nombre: 'Claudia V.', estrellas: 5, producto: 'Melena de León Gummies', url: '/productos/melena-de-leon-claridad-mental-gummies/' },
+      { cita: '¡Excelente! Piel más hidratada e iluminada ✨', nombre: 'María Belén N.', estrellas: 5, producto: 'Tremella', url: '/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/' },
+      { cita: 'Excelente producto, ayudaron a mi concentración y descanso.', nombre: 'Claudia V.', estrellas: 5, producto: 'Combo Bye Bye Anxiety Cápsulas', url: '/productos/combo-bye-bye-anxiety-suplementacion-por-1-mes/' },
+      { cita: 'Excelente producto, me siento más equilibrada, menos ansiosa. Lo recomiendo totalmente. Es más, le compré a mi hija que es estudiante y también está muy contenta con el producto.', nombre: 'Gabriela D.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
+      { cita: 'Estoy muy contenta con la forma de tomar. Me siento mucho mejor desde que las consumo y el gusto es mejor que en otras formas de tomar.', nombre: 'María Celeste R.', estrellas: 5, producto: 'Combo Glory Gummies', url: '/productos/glorygummies/' },
       { cita: 'Excelente producto, noto cambios en mi piel. Fácil de consumir y rico.', nombre: 'Agustina U.', estrellas: 5, producto: 'Tremella', url: '/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/' },
-      { cita: 'Lo empecé a consumir hace 30 días… sí noté la piel más luminosa.', nombre: 'Valeria S.', estrellas: 4, producto: 'Tremella', url: '/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/' },
-      { cita: 'Me encantó el producto, recomendable siempre que esté acompañado de buenos hábitos alimentarios, movimiento y descanso reparador.', nombre: 'María Paula B.', estrellas: 5, producto: 'Combo Bye Bye Anxiety Gummies', url: '/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/' },
+      { cita: 'Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.', nombre: 'Fany G.', estrellas: 5, producto: 'Melena de León Gummies', url: '/productos/melena-de-leon-claridad-mental-gummies/' },
+      { cita: 'El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.', nombre: 'Marina C.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' },
       { cita: 'Excelente producto, es un antes y un después. Lo recomiendo totalmente, mantengan esa excelencia.', nombre: 'Silvia B.', estrellas: 5, producto: 'Combo Clarity & Defense', url: '/productos/comboclarityanddefense/' },
-      { cita: 'Excelente atención al cliente vía WhatsApp. Me armaron un combo a pedido y siempre se mostraron súper predispuestos y amables.', nombre: 'Mercedes S.', estrellas: 5, producto: 'Combo Glow & Regulate', url: '/productos/glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0/' },
+      { cita: 'Me encantó el producto, recomendable siempre que esté acompañado de buenos hábitos alimentarios, movimiento y descanso reparador.', nombre: 'María Paula B.', estrellas: 5, producto: 'Combo Bye Bye Anxiety Gummies', url: '/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/' },
       { cita: 'Muy recomendable. Todavía lo estoy testeando. Tendría que hacer refill, ya se me están acabando.', nombre: 'Gabriela C.', estrellas: 5, producto: 'Cordyceps', url: '/productos/cordyceps-energia-sostenida-gummies/' },
-      { cita: 'Me encanta el producto, me cambió la vida.', nombre: 'Nanete B.', estrellas: 5, producto: 'Ashwagandha Cápsulas', url: '/productos/ashwagandha-equilibrio-hormonal-capsulas/' }
+      { cita: 'Excelente atención al cliente vía WhatsApp. Me armaron un combo a pedido y siempre se mostraron súper predispuestos y amables.', nombre: 'Mercedes S.', estrellas: 5, producto: 'Combo Glow & Regulate', url: '/productos/glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0/' }
     ]
   };
 
@@ -80,18 +81,19 @@
      una, hay que cambiar las dos. */
   var CARD_DESK = 340;
   var GAP_DESK = 24;
-  var TILE = 15; // ancho de cada estrella de card, en px (ver STAR/@background-size)
+  var TILE = 16.5; // ancho de cada estrella de card con su aire, en px (ver .bl-tst-cstars background-size)
 
-  /* Una sola estrella, en un tile de 30x24 para que el repeat-x deje 6px de aire
-     entre estrella y estrella. Se repite con background-repeat en vez de dibujar
-     N nodos. El color va horneado (#CCA352): currentColor no funciona dentro de
-     un SVG cargado por url() en background-image; por eso la opacidad tambien va
-     horneada y la funcion recibe el valor. */
+  /* Una sola estrella, la MISMA del hero de la home (css/hero-carousel.css, .bh-st):
+     path de 24x24 con trazo redondeado de 2.4 del mismo color, #F4C54A (Sergio,
+     2026-09-29: todas las estrellas de la web con esa estetica). El tile mide 26.4x24
+     para que el repeat-x deje el aire del hero (2px cada 20px). El color va horneado:
+     currentColor no funciona dentro de un SVG cargado por url() en background-image;
+     por eso la opacidad tambien va horneada y la funcion recibe el valor. */
   function star(op) {
     return (
-      "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 24'%3E%3Cpath fill='%23CCA352' fill-opacity='" +
-      op +
-      "' d='M15 1.5l3.09 6.63 7.16.9-5.27 4.96 1.36 7.11L15 17.6l-6.34 3.5 1.36-7.11L4.75 9.03l7.16-.9z'/%3E%3C/svg%3E\")"
+      "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26.4 24'%3E%3Cpath fill='%23F4C54A' stroke='%23F4C54A' stroke-width='2.4' stroke-linejoin='round' fill-opacity='" +
+      op + "' stroke-opacity='" + op +
+      "' d='M12 2.8l2.75 5.6 6.15.9-4.45 4.35 1.05 6.15L12 16.9l-5.5 2.9 1.05-6.15L3.1 9.3l6.15-.9z'/%3E%3C/svg%3E\")"
     );
   }
 
@@ -114,8 +116,8 @@
        encima una capa de estrellas llenas recortada por width (4,5/5 = 90%).
        Asi media estrella es media estrella de verdad, y no 5 llenas diciendo
        que el promedio es 5. El width lo calcula el JS desde el JSON. */
-    '.bl-tst-stars{position:relative;width:90px;height:15px;margin:0 auto 14px;background-image:' + STAR_OFF + ';background-repeat:repeat-x;background-size:18px 14.4px;background-position:left center}' +
-    '.bl-tst-stars-fill{position:absolute;top:0;left:0;height:100%;background-image:' + STAR + ';background-repeat:repeat-x;background-size:18px 14.4px;background-position:left center}' +
+    '.bl-tst-stars{position:relative;width:110px;height:20px;margin:0 auto 14px;background-image:' + STAR_OFF + ';background-repeat:repeat-x;background-size:22px 20px;background-position:left center}' +
+    '.bl-tst-stars-fill{position:absolute;top:0;left:0;height:100%;background-image:' + STAR + ';background-repeat:repeat-x;background-size:22px 20px;background-position:left center}' +
     '.bl-tst-count{font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:.16em;color:rgba(244,240,232,.55);margin:0 0 12px}' +
     '.bl-tst-h{font-family:Georgia,serif;font-style:italic;font-weight:400;font-size:26px;line-height:1.25;color:#F4F0E8;margin:0}' +
     /* Bajada: Inter, no Georgia, para que contraste con el titulo y no compita
@@ -143,7 +145,7 @@
     '.bl-tst-foot{margin-top:auto}' +
     '.bl-tst-rule{display:block;width:32px;height:1px;background:rgba(244,240,232,.14);border:0;margin:20px 0}' +
     '.bl-tst-name{font-family:Inter,system-ui,-apple-system,sans-serif;font-style:normal;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:#CCA352;margin:0}' +
-    '.bl-tst-cstars{height:12px;margin:8px 0 0;background-image:' + STAR + ';background-repeat:repeat-x;background-size:15px 12px;background-position:left center}' +
+    '.bl-tst-cstars{height:15px;margin:8px 0 0;background-image:' + STAR + ';background-repeat:repeat-x;background-size:16.5px 15px;background-position:left center}' +
     /* El producto es un chip. Cuando el JSON trae `url` es un <a> y se puede
        clickear: es el camino mas corto entre "me convencio este testimonio" y
        la interna. Cuando no la trae es un <span> con el mismo aspecto pero sin

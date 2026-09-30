@@ -84,6 +84,12 @@
         val.appendChild(d.createTextNode(f));
       }
     }
+    // El texto del admin ("¡Visitá nuestro Blog!") repetía la etiqueta "Blog" de arriba
+    // (Sergio, 2026-09-29): se reemplaza por lo que se encuentra ahí.
+    if (kind === 'blog') {
+      while (val.firstChild) val.removeChild(val.firstChild);
+      val.appendChild(d.createTextNode('Notas de bienestar'));
+    }
     txt.appendChild(val);
     if (ic) a.appendChild(ic);
     a.appendChild(txt);
@@ -109,7 +115,7 @@
         if (!has(k, '.blf-eb')) k.insertBefore(el('span', 'blf-eb', 'Seguinos'), k.firstChild);
       } else if (has(k, '.footer-menu-link')) {
         addClass(k, 'blf-nav');
-        // "Wellness Blog" sale de la botonera: más abajo el chip "¡Visitá nuestro Blog!" ya
+        // "Wellness Blog" sale de la botonera: más abajo el chip del blog ya
         // lo impulsa (pedido de Sergio 2026-09-12). El ítem sigue existiendo en el menú del
         // admin; se saca acá porque el editor de menús no persiste la eliminación por automatización.
         var links = k.querySelectorAll('.footer-menu-link');

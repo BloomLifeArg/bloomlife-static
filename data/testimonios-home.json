@@ -5,25 +5,11 @@
   "bajada": "La voz de nuestros clientes",
   "testimonios": [
     {
-      "cita": "Fan de los honguitos ✨ Gracias a ellos pude bajar mis dosis de ansiolítico y antidepresivos. Me siento mucho mejor y más activa! Probé con otras marcas pero ninguno me funcionó como estos!",
-      "nombre": "Jessica T.",
+      "cita": "Desde que tomo las cápsulas de Ashwagandha combinadas con las gummies de Reishi, mi descanso nocturno ha mejorado sustancialmente. Mis métricas de sueño, tomadas por un reloj smart, pasaron de mostrar “se necesita atención” a “muy bueno” o “excelente”.",
+      "nombre": "Verónica H.",
       "estrellas": 5,
-      "producto": "Cordyceps",
-      "url": "/productos/cordyceps-energia-sostenida-gummies/"
-    },
-    {
-      "cita": "Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.",
-      "nombre": "Fany G.",
-      "estrellas": 5,
-      "producto": "Melena de León Gummies",
-      "url": "/productos/melena-de-leon-claridad-mental-gummies/"
-    },
-    {
-      "cita": "Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.",
-      "nombre": "Victoria B.",
-      "estrellas": 5,
-      "producto": "Combo Brain Health Cápsulas",
-      "url": "/productos/combo-brain-health-capsulas-suplementacion-por-3-meses/"
+      "producto": "Ashwagandha Cápsulas",
+      "url": "/productos/ashwagandha-equilibrio-hormonal-capsulas/"
     },
     {
       "cita": "A mí me dio resultado a los 15 días de consumirlo. Y eso que me dijeron que tarda 3 meses. Así que lo sigo comprando porque el bienestar no tiene precio.",
@@ -33,25 +19,46 @@
       "url": "/productos/ashwagandha-equilibrio-hormonal-gummies/"
     },
     {
-      "cita": "El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.",
-      "nombre": "Marina C.",
-      "estrellas": 5,
-      "producto": "Ashwagandha Cápsulas",
-      "url": "/productos/ashwagandha-equilibrio-hormonal-capsulas/"
+      "cita": "Sufro de insomnio recurrente… Sinceramente, desde que empecé a tomar Reishi mejoró bastante mi descanso.",
+      "nombre": "Nancy G.",
+      "estrellas": 4,
+      "producto": "Reishi",
+      "url": "/productos/reishi-descanso-profundo-gummies-kjqoe/"
     },
     {
-      "cita": "Un producto espectacular.",
-      "nombre": "Daiana G.",
+      "cita": "Lo consumo hace más de 4 meses y siento que me hace muy bien. Súper fácil de tomar, lo elegí entre otras tantas opciones y no me arrepiento.",
+      "nombre": "Victoria B.",
       "estrellas": 5,
-      "producto": "Ashwagandha Cápsulas",
-      "url": "/productos/ashwagandha-equilibrio-hormonal-capsulas/"
+      "producto": "Combo Brain Health Cápsulas",
+      "url": "/productos/combo-brain-health-capsulas-suplementacion-por-3-meses/"
+    },
+    {
+      "cita": "¡Excelente! Piel más hidratada e iluminada ✨",
+      "nombre": "María Belén N.",
+      "estrellas": 5,
+      "producto": "Tremella",
+      "url": "/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/"
     },
     {
       "cita": "Excelente producto, ayudaron a mi concentración y descanso.",
       "nombre": "Claudia V.",
       "estrellas": 5,
-      "producto": "Bye Bye Anxiety Gummies",
-      "url": "/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/"
+      "producto": "Combo Bye Bye Anxiety Cápsulas",
+      "url": "/productos/combo-bye-bye-anxiety-suplementacion-por-1-mes/"
+    },
+    {
+      "cita": "Excelente producto, me siento más equilibrada, menos ansiosa. Lo recomiendo totalmente. Es más, le compré a mi hija que es estudiante y también está muy contenta con el producto.",
+      "nombre": "Gabriela D.",
+      "estrellas": 5,
+      "producto": "Ashwagandha Cápsulas",
+      "url": "/productos/ashwagandha-equilibrio-hormonal-capsulas/"
+    },
+    {
+      "cita": "Estoy muy contenta con la forma de tomar. Me siento mucho mejor desde que las consumo y el gusto es mejor que en otras formas de tomar.",
+      "nombre": "María Celeste R.",
+      "estrellas": 5,
+      "producto": "Combo Glory Gummies",
+      "url": "/productos/glorygummies/"
     },
     {
       "cita": "Excelente producto, noto cambios en mi piel. Fácil de consumir y rico.",
@@ -61,18 +68,18 @@
       "url": "/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/"
     },
     {
-      "cita": "Lo empecé a consumir hace 30 días… sí noté la piel más luminosa.",
-      "nombre": "Valeria S.",
-      "estrellas": 4,
-      "producto": "Tremella",
-      "url": "/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/"
+      "cita": "Amo bloom life. Me da confianza. Sé que consumo algo que me hace bien, que es sano y que ayuda a mi bienestar.",
+      "nombre": "Fany G.",
+      "estrellas": 5,
+      "producto": "Melena de León Gummies",
+      "url": "/productos/melena-de-leon-claridad-mental-gummies/"
     },
     {
-      "cita": "Me encantó el producto, recomendable siempre que esté acompañado de buenos hábitos alimentarios, movimiento y descanso reparador.",
-      "nombre": "María Paula B.",
+      "cita": "El producto es excelente, me está ayudando mucho a descansar bien. Lo súper recomiendo.",
+      "nombre": "Marina C.",
       "estrellas": 5,
-      "producto": "Combo Bye Bye Anxiety Gummies",
-      "url": "/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/"
+      "producto": "Ashwagandha Cápsulas",
+      "url": "/productos/ashwagandha-equilibrio-hormonal-capsulas/"
     },
     {
       "cita": "Excelente producto, es un antes y un después. Lo recomiendo totalmente, mantengan esa excelencia.",
@@ -82,11 +89,11 @@
       "url": "/productos/comboclarityanddefense/"
     },
     {
-      "cita": "Excelente atención al cliente vía WhatsApp. Me armaron un combo a pedido y siempre se mostraron súper predispuestos y amables.",
-      "nombre": "Mercedes S.",
+      "cita": "Me encantó el producto, recomendable siempre que esté acompañado de buenos hábitos alimentarios, movimiento y descanso reparador.",
+      "nombre": "María Paula B.",
       "estrellas": 5,
-      "producto": "Combo Glow & Regulate",
-      "url": "/productos/glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0/"
+      "producto": "Combo Bye Bye Anxiety Gummies",
+      "url": "/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/"
     },
     {
       "cita": "Muy recomendable. Todavía lo estoy testeando. Tendría que hacer refill, ya se me están acabando.",
@@ -96,11 +103,11 @@
       "url": "/productos/cordyceps-energia-sostenida-gummies/"
     },
     {
-      "cita": "Me encanta el producto, me cambió la vida.",
-      "nombre": "Nanete B.",
+      "cita": "Excelente atención al cliente vía WhatsApp. Me armaron un combo a pedido y siempre se mostraron súper predispuestos y amables.",
+      "nombre": "Mercedes S.",
       "estrellas": 5,
-      "producto": "Ashwagandha Cápsulas",
-      "url": "/productos/ashwagandha-equilibrio-hormonal-capsulas/"
+      "producto": "Combo Glow & Regulate",
+      "url": "/productos/glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0/"
     }
   ]
 }
