@@ -19,8 +19,9 @@
  * combos.
  *
  * Fotos: WebP 480/800 en img/combos-home/combo-<id>-<ancho>.webp, al lado de
- * este script (mismo commit). Un combo nuevo sin WebP puede traer "img" con una
- * URL completa en el JSON.
+ * este script (mismo commit). Un combo nuevo sin WebP TIENE que traer "img" con
+ * una URL https completa en el JSON; si no, el JSON se descarta (ver CON_FOTO).
+ * url, cta_url e img se exigen https: el JSON sale en vivo sin publicar.
  *
  * Ver ESTADO_COMBOS_HOME.md en el repo del proyecto.
  */
@@ -88,10 +89,21 @@
     return typeof v === 'string' && /^#[0-9a-f]{3,8}$/i.test(v) ? v : '#9CC3A9';
   }
 
+  /* Ids con WebP en img/combos-home/ de este mismo commit. Un combo que no esté
+     acá tiene que traer "img" (URL completa) en el JSON: si no, la foto daría
+     404, porque el JSON se lee de main y las fotos del commit pinneado. */
+  var CON_FOTO = {};
+  FALLBACK.combos.forEach(function (c) {
+    CON_FOTO[c.id] = 1;
+  });
+  function https(v) {
+    return !!txt(v) && /^https:\/\//.test(v.trim());
+  }
+
   /* Un JSON a medias es peor que uno ausente: ante la duda, FALLBACK. */
   function valido(d) {
     if (!d || typeof d !== 'object') return false;
-    if (!txt(d.eyebrow) || !txt(d.titulo) || !txt(d.cta) || !txt(d.cta_url)) {
+    if (!txt(d.eyebrow) || !txt(d.titulo) || !txt(d.cta) || !https(d.cta_url)) {
       return false;
     }
     if (!Array.isArray(d.combos)) return false;
@@ -99,11 +111,11 @@
     return d.combos.every(function (c) {
       return (
         c &&
-        (typeof c.id === 'number' || txt(c.img)) &&
+        (c.img === undefined ? CON_FOTO[c.id] === 1 : https(c.img)) &&
         txt(c.nombre) &&
         txt(c.titulo) &&
         txt(c.ing) &&
-        txt(c.url)
+        https(c.url)
       );
     });
   }
@@ -203,6 +215,9 @@
 
   function arrancar() {
     if (!document.querySelector(ANCLA)) return;
+    /* El CSS se pide ya, en paralelo con el JSON: si se pidiera recién al
+       dibujar, las cards se verían un instante sin estilo. */
+    cargarCSS();
     traer()
       .then(dibujar)
       .catch(function () {

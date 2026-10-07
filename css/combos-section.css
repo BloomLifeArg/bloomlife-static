@@ -17,10 +17,11 @@
   --fg: #f7f6f2;
   --tile: #efebe0;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --gx: clamp(20px, 4vw, 64px);
   background: var(--bg);
   color: var(--fg);
   box-sizing: border-box;
-  padding: clamp(56px, 7vw, 104px) clamp(20px, 4vw, 64px);
+  padding: clamp(56px, 7vw, 104px) var(--gx);
 }
 .bl-cmb *,
 .bl-cmb *::before,
@@ -176,6 +177,7 @@
   z-index: 2;
   border-radius: 16px;
 }
+.bl-cmb a.bl-cmb-link:focus,
 .bl-cmb a.bl-cmb-link:focus-visible {
   outline: 2px solid #9cc3a9;
   outline-offset: 4px;
@@ -263,10 +265,13 @@
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scroll-padding-inline: 20px;
+    scroll-padding-inline: var(--gx);
     gap: 14px;
-    margin: 0 -20px;
-    padding: 0 20px 6px;
+    /* A sangre hasta el borde de la pantalla: el margen negativo es el mismo
+       padding lateral de la sección. Los 6px de arriba evitan que el scroll
+       corte el contorno de foco (outline-offset 4px). */
+    margin: -6px calc(-1 * var(--gx)) 0;
+    padding: 6px 0 6px var(--gx);
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
@@ -276,6 +281,13 @@
   .bl-cmb li.bl-cmb-card {
     flex: 0 0 76%;
     scroll-snap-align: start;
+  }
+  /* El aire final va en un espaciador y no en padding-right: Safari ignora el
+     padding final de un contenedor flex con scroll. gap (14) + espaciador =
+     el mismo padding lateral de la sección, en todos los navegadores. */
+  .bl-cmb ul.bl-cmb-grid::after {
+    content: '';
+    flex: 0 0 calc(var(--gx) - 14px);
   }
   .bl-cmb-foot {
     flex-direction: column;
