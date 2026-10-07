@@ -1,0 +1,293 @@
+/* Sección "Combos" del home (v6). Namespace propio: .bl-cmb
+ *
+ * El markup lo arma js/combos-home.js en el lugar de la sección nativa
+ * "Productos nuevos" (section[data-store="home-products-new"]), que el script
+ * oculta después de insertar esta. Estilo: el de las "shop cards" del tema
+ * Ipanema, en petróleo (#003845, el mismo de "También en cápsulas" y de la
+ * barra de arriba) y en Bricolage, la única familia de la web.
+ *
+ * La tipografía la pone css/tipografia.css (stack global). Ojo: ese archivo
+ * fuerza en todo h3 font-weight:400 y letter-spacing:-.015em con !important;
+ * el título de las cards está pensado para ese peso.
+ *
+ * Archivo externo servido por jsDelivr: el minificador de TN no lo toca. */
+
+.bl-cmb {
+  --bg: #003845;
+  --fg: #f7f6f2;
+  --tile: #efebe0;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  background: var(--bg);
+  color: var(--fg);
+  box-sizing: border-box;
+  padding: clamp(56px, 7vw, 104px) clamp(20px, 4vw, 64px);
+}
+.bl-cmb *,
+.bl-cmb *::before,
+.bl-cmb *::after {
+  box-sizing: inherit;
+}
+.bl-cmb-in {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ---------- Encabezado: título a la izquierda, bajada a la derecha ---------- */
+
+.bl-cmb-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: end;
+  margin-bottom: clamp(28px, 3.5vw, 48px);
+}
+.bl-cmb-eye {
+  display: block;
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9cc3a9;
+}
+.bl-cmb h2.bl-cmb-t {
+  margin: 0;
+  padding: 0;
+  font-size: clamp(34px, 3.6vw, 52px);
+  font-weight: 300;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-transform: none;
+  text-align: left;
+  color: var(--fg);
+  max-width: 14ch;
+}
+.bl-cmb p.bl-cmb-aside {
+  margin: 0;
+  padding: 0;
+  justify-self: end;
+  max-width: 40ch;
+  font-size: clamp(16px, 1.25vw, 19px);
+  font-weight: 300;
+  line-height: 1.5;
+  text-align: left;
+  color: rgba(247, 246, 242, 0.72);
+}
+
+/* ---------- Grilla: 4 x 2 en desktop ---------- */
+
+.bl-cmb ul.bl-cmb-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 24px) clamp(14px, 1.6vw, 22px);
+}
+.bl-cmb li.bl-cmb-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bl-cmb-tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--tile);
+}
+.bl-cmb-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 0.9s var(--ease);
+}
+/* Glory: cinco frascos en la foto, se ven chicos al lado de los de 2 y 3. */
+.bl-cmb-tile--zoom img {
+  transform: scale(1.12);
+}
+
+.bl-cmb-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 22px 2px 0;
+}
+/* El filete del color del adaptógeno principal, encima del título. */
+.bl-cmb h3.bl-cmb-n {
+  position: relative;
+  margin: 0;
+  padding: 14px 0 0;
+  font-size: clamp(19px, 1.45vw, 23px);
+  line-height: 1.18;
+  text-transform: none;
+  text-align: left;
+  color: var(--fg);
+  text-wrap: balance;
+}
+.bl-cmb-n::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--c);
+  transition: width 0.6s var(--ease);
+}
+.bl-cmb-meta {
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.45;
+  color: rgba(247, 246, 242, 0.62);
+}
+/* margin-top:auto alinea los "Shop Now" de una fila aunque los títulos ocupen
+   una o dos líneas. */
+.bl-cmb-cta {
+  align-self: flex-start;
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fg);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+.bl-cmb-cta i {
+  font-style: normal;
+  transition: transform 0.35s var(--ease);
+}
+.bl-cmb a.bl-cmb-link {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: 16px;
+}
+.bl-cmb a.bl-cmb-link:focus-visible {
+  outline: 2px solid #9cc3a9;
+  outline-offset: 4px;
+}
+
+/* Hover sólo donde hay mouse: en el celular el zoom quedaba pegado al tocar. */
+@media (hover: hover) {
+  .bl-cmb-card:hover .bl-cmb-tile img {
+    transform: scale(1.045);
+  }
+  .bl-cmb-card:hover .bl-cmb-tile--zoom img {
+    transform: scale(1.16);
+  }
+  .bl-cmb-card:hover .bl-cmb-n::before {
+    width: 64px;
+  }
+  .bl-cmb-card:hover .bl-cmb-cta i {
+    transform: translateX(4px);
+  }
+}
+
+/* ---------- Pie: nota de suscripción + botón a la góndola ---------- */
+
+.bl-cmb-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+  margin-top: clamp(32px, 3.5vw, 48px);
+  padding-top: 24px;
+  border-top: 1px solid rgba(247, 246, 242, 0.16);
+}
+.bl-cmb p.bl-cmb-note {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 300;
+  color: rgba(247, 246, 242, 0.72);
+}
+.bl-cmb a.bl-cmb-all {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border-radius: 100px;
+  background: var(--fg);
+  color: #003845;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  text-transform: none;
+  letter-spacing: 0;
+  transition: transform 0.35s var(--ease), background 0.35s;
+}
+.bl-cmb a.bl-cmb-all:hover {
+  background: #fff;
+  color: #003845;
+  transform: translateY(-2px);
+}
+
+/* ---------- Tablet: 3 columnas ---------- */
+
+@media (max-width: 1100px) {
+  .bl-cmb ul.bl-cmb-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Mobile: fila deslizable con snap, asoma la card siguiente ---------- */
+
+@media (max-width: 767px) {
+  .bl-cmb-head {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .bl-cmb p.bl-cmb-aside {
+    justify-self: start;
+  }
+  .bl-cmb-eye {
+    margin-bottom: 14px;
+  }
+  .bl-cmb ul.bl-cmb-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 20px;
+    gap: 14px;
+    margin: 0 -20px;
+    padding: 0 20px 6px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bl-cmb ul.bl-cmb-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .bl-cmb li.bl-cmb-card {
+    flex: 0 0 76%;
+    scroll-snap-align: start;
+  }
+  .bl-cmb-foot {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-cmb-tile img,
+  .bl-cmb-n::before,
+  .bl-cmb-cta i,
+  .bl-cmb a.bl-cmb-all {
+    transition: none;
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "eyebrow": "Combos",
+  "titulo": "Un combo para cada momento.",
+  "bajada": "Adaptógenos en gummies que se potencian entre sí para ir directo a lo que buscás.",
+  "nota": "Suscribite y ahorrá 10% todos los meses.",
+  "cta": "Ver todos los combos",
+  "cta_url": "https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/",
+  "combos": [
+    {
+      "id": 294593106,
+      "nombre": "Full Day Stack",
+      "titulo": "Tu día completo, de la mañana a la noche",
+      "ing": "Melena de León + Cordyceps + Reishi",
+      "color": "#A85713",
+      "url": "https://www.bloomlife.co/productos/full-day-gummies-melena-de-leon-cordyceps-reishi/"
+    },
+    {
+      "id": 342427990,
+      "nombre": "Radiance & Mind",
+      "titulo": "Brillo por fuera, claridad por dentro",
+      "ing": "Tremella + Melena de León + Reishi",
+      "color": "#8A6F9C",
+      "url": "https://www.bloomlife.co/productos/radiance-mind-combo-1y7mt/"
+    },
+    {
+      "id": 294585978,
+      "nombre": "Deep Sleep",
+      "titulo": "Noches de descanso profundo",
+      "ing": "Ashwagandha + Reishi",
+      "color": "#6E9E88",
+      "url": "https://www.bloomlife.co/productos/deepsleep/"
+    },
+    {
+      "id": 341180946,
+      "nombre": "Glow & Go",
+      "titulo": "Verte bien y rendir todo el día",
+      "ing": "Tremella + Cordyceps",
+      "color": "#3E7C9C",
+      "url": "https://www.bloomlife.co/productos/glow-go-combo-tremella-y-cordyceps-gummies-134yf/"
+    },
+    {
+      "id": 357970722,
+      "nombre": "Menopause Balance",
+      "titulo": "Calma y buen descanso en cada etapa",
+      "ing": "Ashwagandha + Melena de León + Reishi",
+      "color": "#6E7A2C",
+      "url": "https://www.bloomlife.co/productos/menopausebalancegummies/"
+    },
+    {
+      "id": 330540800,
+      "nombre": "Beauty & Balance",
+      "titulo": "Piel luminosa, mente en calma",
+      "ing": "Tremella + Reishi",
+      "color": "#8A6F9C",
+      "url": "https://www.bloomlife.co/productos/combo-beauty-balance-tremella-reishi-wb97u/"
+    },
+    {
+      "id": 325250064,
+      "nombre": "All Day Stack",
+      "titulo": "Foco y energía de día, calma a la tarde",
+      "ing": "Melena de León + Cordyceps + Ashwagandha",
+      "color": "#A85713",
+      "url": "https://www.bloomlife.co/productos/fulldaygummies2/"
+    },
+    {
+      "id": 330540927,
+      "nombre": "Glory Gummies",
+      "titulo": "Los cinco adaptógenos, en una rutina",
+      "ing": "Los 5 adaptógenos",
+      "color": "#6E9E88",
+      "url": "https://www.bloomlife.co/productos/glorygummies/",
+      "zoom": true
+    }
+  ]
+}
