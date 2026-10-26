@@ -50,9 +50,13 @@ async function main() {
   // El conteo y el promedio de la cabecera son los que Revie publica; se
   // recalculan igual desde los items para no depender de un campo que podría
   // quedar viejo, y se comparan.
-  const total = items.length;
+  // OJO: la lista de Revie viene CORTADA en 250 (desde ~2026-10-13 el conteo quedó clavado en
+  // 250 mientras la tienda ya tenía 273). El total es el `reviewCount` que publica Revie; el
+  // promedio sale de los items que sí vienen (con 268 de 273 visibles daba 4,84 y aun con las
+  // faltantes en 1 estrella seguiría en 4,8).
+  const total = Math.max(Number(datos.reviewCount) || 0, items.length);
   const suma = items.reduce((a, x) => a + (Number(x.stars) || 0), 0);
-  const promedio = suma / total;
+  const promedio = suma / items.length;
 
   // Por producto, agrupado por productId: el nombre cambió con el tiempo, el id no.
   const porProducto = {};
