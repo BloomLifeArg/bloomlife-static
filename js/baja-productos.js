@@ -156,10 +156,11 @@
   }
 
   var CSS =
-    '.bl-agotado{margin:18px 0 6px;padding:16px 18px;border-radius:14px;background:#F4F0E8;border:1px solid rgba(0,56,69,.14);color:#003845}' +
-    '.bl-agotado .bl-ag-pill{display:inline-block;padding:4px 12px;border-radius:999px;background:#003845;color:#fff;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}' +
-    '.bl-agotado p{margin:10px 0 6px;font-size:15px;line-height:1.4;color:#003845}' +
-    '.bl-agotado a{font-size:14px;font-weight:500;color:#003845;text-decoration:underline;text-underline-offset:3px}';
+    // Con !important: el buy box de las internas resetea padding/margin de sus hijos.
+    'html body .bl-agotado{display:block!important;margin:18px 0 6px!important;padding:16px 18px 18px!important;border-radius:14px!important;background:#F4F0E8!important;border:1px solid rgba(0,56,69,.14)!important;color:#003845}' +
+    'html body .bl-agotado .bl-ag-pill{display:inline-block!important;padding:5px 12px!important;border-radius:999px!important;background:#003845!important;color:#fff!important;font-size:12px!important;font-weight:600;letter-spacing:.08em;text-transform:uppercase;line-height:1.2}' +
+    'html body .bl-agotado p{margin:12px 0 8px!important;padding:0!important;font-size:15px!important;line-height:1.45!important;color:#003845!important}' +
+    'html body .bl-agotado a{display:inline-block;font-size:14px!important;font-weight:500;color:#003845!important;text-decoration:underline;text-underline-offset:3px}';
   function estilos() {
     if (document.getElementById('bl-baja-js-css')) return;
     var s = document.createElement('style');
