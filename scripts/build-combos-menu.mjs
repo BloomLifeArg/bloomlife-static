@@ -105,10 +105,18 @@ async function inspeccionar(handle) {
 const main = async () => {
   const copy = JSON.parse(await readFile(join(RAIZ, 'data', 'combos-copy.json'), 'utf8'));
 
-  const seccion = recortarSeccion(await traer(HOME));
-  const delHome = handlesDelHome(seccion);
+  // Desde 2026-10-18 los combos del home son la sección propia #bl-cmb, que lee
+  // data/combos-home.json (el módulo nativo quedó oculto y ya no es lo que se ve).
+  // La fuente es ese JSON, en su orden. Y nunca entra un producto dado de baja
+  // (data/productos-baja.json: baja de Cordyceps, 2026-10).
+  const baja = new Set(JSON.parse(await readFile(join(RAIZ, 'data', 'productos-baja.json'), 'utf8')).productos.map(p => p.handle));
+  const home = JSON.parse(await readFile(join(RAIZ, 'data', 'combos-home.json'), 'utf8'));
+  const delHome = (home.combos || [])
+    .map(c => ({ handle: (String(c.url || '').match(/\/productos\/([^"/?#]+)/) || [])[1], nombre_tn: c.nombre }))
+    .filter(d => d.handle && !baja.has(d.handle));
+  copy.ranking = copy.ranking.filter(h => !baja.has(h));
   if (delHome.length < MIN_HOME) {
-    throw new Error(`El home devolvió ${delHome.length} combos (mínimo ${MIN_HOME}). El parser está roto o cambió el markup del módulo: NO se pisa el JSON bueno.`);
+    throw new Error(`combos-home.json trae ${delHome.length} combos utilizables (mínimo ${MIN_HOME}): NO se pisa el JSON bueno.`);
   }
 
   const info = new Map();
@@ -152,8 +160,8 @@ const main = async () => {
   }
 
   const salida = {
-    _leeme: 'GENERADO AUTOMÁTICAMENTE por scripts/build-combos-menu.mjs. No editar a mano: se sobrescribe cada hora. Para cambiar QUÉ combos aparecen, cambiá los destacados del home en el editor de Tienda Nube. Para cambiar el TEXTO, editá data/combos-copy.json.',
-    _fuente: 'Módulo nativo del home data-store="home-products-new" (los 8 destacados del editor de TN), filtrado por interna premium.',
+    _leeme: 'GENERADO AUTOMÁTICAMENTE por scripts/build-combos-menu.mjs. No editar a mano: se sobrescribe cada hora. Para cambiar QUÉ combos aparecen, cambiá data/combos-home.json (los combos del home). Para cambiar el TEXTO, editá data/combos-copy.json. Los de data/productos-baja.json nunca entran.',
+    _fuente: 'data/combos-home.json (los combos del home), sin los de data/productos-baja.json, filtrado por interna premium.',
     _del_home: delHome.map(d => d.handle),
     _descartados: descartados,
     _rellenados_del_ranking: rellenados,

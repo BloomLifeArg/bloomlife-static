@@ -111,15 +111,6 @@
           'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/'
       },
       {
-        titulo: 'Energía',
-        color: '#5B7F94',
-        tagline: 'Estable, sin picos ni caídas.',
-        imagen: 'beneficio-energia.jpg',
-        alt: 'Espigas a contraluz con el sol bajo entre ellas',
-        href:
-          'https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/'
-      },
-      {
         titulo: 'Descanso',
         color: '#3D4F5C',
         tagline: 'Recuperate de verdad.',
@@ -315,7 +306,7 @@
       esc(d.bajada) +
       '</div>' +
       '</div>' +
-      '<div class="bl-ben-row">' +
+      '<div class="bl-ben-row" style="--n:' + d.cards.length + '">' +
       d.cards.map(cardHTML).join('') +
       '</div>';
 

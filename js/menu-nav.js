@@ -92,11 +92,10 @@
   var HREFS = {
     melena: 'https://www.bloomlife.co/productos/melena-de-leon-claridad-mental-gummies/',
     ashwagandha: 'https://www.bloomlife.co/productos/ashwagandha-equilibrio-hormonal-gummies/',
-    cordyceps: 'https://www.bloomlife.co/productos/cordyceps-energia-sostenida-gummies/',
     reishi: 'https://www.bloomlife.co/productos/reishi-descanso-profundo-gummies-kjqoe/',
     tremella: 'https://www.bloomlife.co/productos/tremella-hongo-de-la-belleza-gummies-1n9ff/'
   };
-  var ORDEN = ['melena', 'ashwagandha', 'cordyceps', 'reishi', 'tremella'];
+  var ORDEN = ['melena', 'ashwagandha', 'reishi', 'tremella'];  // baja de un adaptógeno (2026-10)
 
   var datos = null;
   var abierta = null; /* índice del panel abierto, o null */

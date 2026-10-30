@@ -22,10 +22,6 @@
       "t": "Dormir"
     },
     {
-      "k": "energia",
-      "t": "Energía"
-    },
-    {
       "k": "piel",
       "t": "Piel y pelo"
     },
@@ -46,10 +42,6 @@
     "ash": {
       "nombre": "Ashwagandha",
       "color": "#6E7A2C"
-    },
-    "cor": {
-      "nombre": "Cordyceps",
-      "color": "#3E7C9C"
     },
     "rsh": {
       "nombre": "Reishi",
@@ -81,27 +73,6 @@
     "bajada": "Llevate tres meses del que ya te funciona, en una sola compra."
   },
   "combos": [
-    {
-      "id": 270150341,
-      "nombre": "High Performance",
-      "formato": "Gomitas",
-      "ing": [
-        "cor",
-        "mln"
-      ],
-      "why": "Cuerpo y mente para las horas que exigen.",
-      "objetivos": [
-        "energia",
-        "foco"
-      ],
-      "handle": "combo-performance-gummies-suplementacion-por-1-mes",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add7452d4a1df21fb917853805473765-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
-      "vendidas": 163,
-      "caps": [],
-      "principal": "cor"
-    },
     {
       "id": 279852999,
       "nombre": "Bye Bye Anxiety",
@@ -231,27 +202,6 @@
       "principal": "trm"
     },
     {
-      "id": 341180946,
-      "nombre": "Glow & Go",
-      "formato": "Gomitas",
-      "ing": [
-        "trm",
-        "cor"
-      ],
-      "why": "Verte bien sin quedarte sin energía.",
-      "objetivos": [
-        "piel",
-        "energia"
-      ],
-      "handle": "glow-go-combo-tremella-y-cordyceps-gummies-134yf",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-go-perfil-washi-1600-e356179032e2cd014217860595427166-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
-      "vendidas": 0,
-      "caps": [],
-      "principal": "trm"
-    },
-    {
       "id": 349316562,
       "nombre": "Glow & Regulate",
       "formato": "Gomitas",
@@ -271,75 +221,6 @@
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
-    },
-    {
-      "id": 294593106,
-      "nombre": "Full Day Stack",
-      "formato": "Gomitas",
-      "ing": [
-        "mln",
-        "cor",
-        "rsh"
-      ],
-      "why": "Foco, energía y descanso: el arco entero del día.",
-      "objetivos": [
-        "dia",
-        "dormir"
-      ],
-      "handle": "full-day-gummies-melena-de-leon-cordyceps-reishi",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-186c29075b156566dc17853804164501-1024-1024.jpg",
-      "precio": 198075,
-      "lista": 208500,
-      "vendidas": 0,
-      "caps": [],
-      "principal": "mln"
-    },
-    {
-      "id": 325250064,
-      "nombre": "All Day Stack",
-      "formato": "Gomitas",
-      "ing": [
-        "mln",
-        "cor",
-        "ash"
-      ],
-      "why": "El día completo, cerrando con calma en vez de sueño.",
-      "objetivos": [
-        "dia",
-        "calma"
-      ],
-      "handle": "fulldaygummies2",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/fullday2-01-perfil-27aef611e53a49157817857080223984-1024-1024.jpg",
-      "precio": 198075,
-      "lista": 208500,
-      "vendidas": 0,
-      "caps": [],
-      "principal": "mln"
-    },
-    {
-      "id": 331475056,
-      "nombre": "All Day Mix",
-      "formato": "Mixto",
-      "ing": [
-        "mln",
-        "cor",
-        "ash"
-      ],
-      "why": "El mismo día completo, para quien prefiere la cápsula.",
-      "objetivos": [
-        "dia",
-        "foco"
-      ],
-      "handle": "fulldaymix",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/full-day-mix-c9c0207ab4693bc85017860676810708-1024-1024.jpg",
-      "precio": 198075,
-      "lista": 208500,
-      "vendidas": 0,
-      "caps": [
-        "mln",
-        "ash"
-      ],
-      "principal": "mln"
     },
     {
       "id": 339648634,
@@ -386,30 +267,6 @@
       "principal": "trm"
     },
     {
-      "id": 357970572,
-      "nombre": "Glow & Energy",
-      "formato": "Mixto",
-      "ing": [
-        "trm",
-        "cor",
-        "ash"
-      ],
-      "why": "Piel, energía pareja y una mente tranquila.",
-      "objetivos": [
-        "piel",
-        "energia"
-      ],
-      "handle": "glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-energy-perfil-washi-1600-3a81a05451b0c35d1517860216770120-1024-1024.jpg",
-      "precio": 198075,
-      "lista": 208500,
-      "vendidas": 0,
-      "caps": [
-        "ash"
-      ],
-      "principal": "trm"
-    },
-    {
       "id": 357970722,
       "nombre": "Menopause Balance",
       "formato": "Gomitas",
@@ -430,52 +287,6 @@
       "vendidas": 0,
       "caps": [],
       "principal": "ash"
-    },
-    {
-      "id": 294595560,
-      "nombre": "Ultimate Balance",
-      "formato": "Gomitas",
-      "ing": [
-        "mln",
-        "cor",
-        "ash",
-        "rsh"
-      ],
-      "why": "Los cuatro tramos del día, sin huecos.",
-      "objetivos": [
-        "dia",
-        "dormir"
-      ],
-      "handle": "combo-gloria-adaptogena-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-ubwy1",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-balance-8e81c359240507365117860672530306-1024-1024.jpg",
-      "precio": 264100,
-      "lista": 278000,
-      "vendidas": 0,
-      "caps": [],
-      "principal": "mln"
-    },
-    {
-      "id": 341313375,
-      "nombre": "Fresh Flow",
-      "formato": "Gomitas",
-      "ing": [
-        "mln",
-        "cor",
-        "trm",
-        "ash"
-      ],
-      "why": "Mente, cuerpo, piel y calma a la vez.",
-      "objetivos": [
-        "dia",
-        "piel"
-      ],
-      "handle": "fresh-flow-combo-1km44",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/fresh-flow-dee11673b84b89275817860672041093-1024-1024.jpg",
-      "precio": 264100,
-      "lista": 278000,
-      "vendidas": 0,
-      "caps": [],
-      "principal": "mln"
     },
     {
       "id": 356749974,
@@ -527,30 +338,6 @@
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
-    },
-    {
-      "id": 330540927,
-      "nombre": "Glory Gummies",
-      "formato": "Gomitas",
-      "ing": [
-        "trm",
-        "rsh",
-        "ash",
-        "mln",
-        "cor"
-      ],
-      "why": "Los cinco adaptógenos. El sistema entero.",
-      "objetivos": [
-        "dia",
-        "piel"
-      ],
-      "handle": "glorygummies",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e3bc1500f11ff5c9f417853803206380-1024-1024.jpg",
-      "precio": 330125,
-      "lista": 347500,
-      "vendidas": 0,
-      "caps": [],
-      "principal": "trm"
     }
   ],
   "x3": [
@@ -576,14 +363,6 @@
       "detalle": "Gummies",
       "handle": "combo-relaxation-suplementacion-por-3-meses",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/relaxation-reishi-gummies-x3-9130335d94cb99b5e817860673172228-240-0.jpg",
-      "precio": 208500
-    },
-    {
-      "id": 268209140,
-      "nombre": "Cordyceps",
-      "detalle": "Gummies",
-      "handle": "combo-energy-support-suplementacion-por-3-meses",
-      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/energy-support-cordyceps-gummies-x3-544ef31b7d8d9c486c17860673075427-240-0.jpg",
       "precio": 208500
     },
     {
@@ -618,9 +397,6 @@
     "mln": {
       "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-240-0.png",
       "cap": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/mdl_frasco_sq-cd3bf40bb0a8de7d3017846899477616-240-0.png"
-    },
-    "cor": {
-      "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-240-0.png"
     },
     "ash": {
       "gom": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-240-0.png",
@@ -737,19 +513,15 @@
     ]
   },
   "destacado": {
-    "id": 330540927,
+    "id": 370942354,
     "kicker": "El combo más completo",
-    "titulo": "Los cinco adaptógenos, en un solo ritual.",
-    "bajada": "Todos los demás combos son un recorte de éste. Glory Gummies es la fórmula entera: cada adaptógeno cubriendo su frente, los cinco a la vez.",
-    "cta": "Ver Glory Gummies",
+    "titulo": "Cuatro adaptógenos, en un solo ritual.",
+    "bajada": "Ultimate Glow Balance junta la mente, la calma, el descanso y la piel: cada adaptógeno cubriendo su frente, los cuatro en gomitas.",
+    "cta": "Ver Ultimate Glow Balance",
     "quienes": [
       {
         "k": "mln",
         "t": "Foco y claridad mental"
-      },
-      {
-        "k": "cor",
-        "t": "Energía y resistencia física"
       },
       {
         "k": "ash",

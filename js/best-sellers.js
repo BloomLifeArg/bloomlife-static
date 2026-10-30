@@ -10,7 +10,73 @@ s2.textContent = [
 ].join('\n');
 document.head.appendChild(s2);
 var ICONS = ["<svg viewBox=\"0 0 16 16\"><path d=\"M3 8h10M9 4l4 4-4 4\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z\"/></svg>", "<svg viewBox=\"0 0 16 16\" style=\"width:11px;height:11px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round\"><path d=\"M3 8h10M9 4l4 4-4 4\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3H6a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3V6a3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 3 3 0 0 0-3-3z\"/></svg>", "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/></svg>", "<svg viewBox=\"0 0 24 24\"><polyline points=\"22 12 18 12 15 21 9 3 6 12 2 12\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12c0-2.76 1.12-5.26 2.93-7.07\"/><path d=\"M12 6v6l4 2\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M12 2C8.5 2 6 4.5 6 8c0 5 6 12 6 12s6-7 6-12c0-3.5-2.5-6-6-6z\"/></svg>", "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"5\"/><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"/><line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"/><line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"/><line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"/><line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"/><line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"width:13px;height:13px;stroke:var(--dark);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9 12l2 2 4-4\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z\"/></svg>", "<svg viewBox=\"0 0 24 24\"><ellipse cx=\"12\" cy=\"12\" rx=\"10\" ry=\"6\"/><path d=\"M12 2v20M2 12h20\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"width:13px;height:13px;stroke:var(--dark);stroke-width:1.5;fill:none;stroke-linecap:round;stroke-linejoin:round\"><path d=\"M12 22c4.97 0 9-4.03 9-9-4.97 0-9 4.03-9 9z\"/><path d=\"M12 22c0-4.97-4.03-9-9-9 0 4.97 4.03 9 9 9z\"/><path d=\"M12 3v19\"/></svg>", "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M12 8v4M12 16h.01\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z\"/></svg>", "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M6 20v-2a6 6 0 0112 0v2\"/></svg>", "<svg viewBox=\"0 0 24 24\"><polygon points=\"13 2 3 14 12 14 11 22 21 10 12 10 13 2\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M22 12h-4l-3 9L9 3l-3 9H2\"/></svg>", "<svg viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"M8 14s1.5 2 4 2 4-2 4-2\"/><line x1=\"9\" y1=\"9\" x2=\"9.01\" y2=\"9\"/><line x1=\"15\" y1=\"9\" x2=\"15.01\" y2=\"9\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"/></svg>", "<svg viewBox=\"0 0 24 24\"><path d=\"M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z\"/><polyline points=\"9 22 9 12 15 12 15 22\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"width:12px;height:12px;stroke:var(--mid);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><polyline points=\"12 6 12 12 16 14\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"stroke:var(--mid)\"><polyline points=\"22 12 18 12 15 21 9 3 6 12 2 12\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"width:12px;height:12px;stroke:var(--gold);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round\"><circle cx=\"12\" cy=\"12\" r=\"5\"/><line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"/><line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"/><line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"/><line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"/><line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"/><line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"stroke:var(--gold)\"><polygon points=\"13 2 3 14 12 14 11 22 21 10 12 10 13 2\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"width:12px;height:12px;stroke:var(--terra);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round\"><path d=\"M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z\"/></svg>", "<svg viewBox=\"0 0 24 24\" style=\"stroke:var(--terra)\"><path d=\"M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z\"/></svg>", "<svg viewBox=\"0 0 24 24\" width=\"19\" height=\"19\"><path d=\"M9 13.5L3.5 9 2 10.5l7 6 13-13L20.5 2\"/></svg>", "<svg viewBox=\"0 0 24 24\" width=\"19\" height=\"19\"><path d=\"M5 12h14M12 5l7 7-7 7\"/></svg>", "<svg viewBox=\"0 0 24 24\" width=\"19\" height=\"19\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2\"/><path d=\"M16 2v4M8 2v4M3 10h18\"/></svg>", "<svg viewBox=\"0 0 24 24\" width=\"19\" height=\"19\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"/></svg>", "<svg viewBox=\"0 0 24 24\"><polyline points=\"20 6 9 17 4 12\"/></svg>", "<svg viewBox=\"0 0 10 10\"><polyline points=\"2,5 4,7.5 8,3\"/></svg>", "<svg viewBox=\"0 0 24 24\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"/><line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"/></svg>", "<svg viewBox=\"0 0 24 24\" width=\"28\" height=\"28\" fill=\"white\">\n    <path d=\"M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z\"/>\n    <path d=\"M12 0C5.373 0 0 5.373 0 12c0 2.136.564 4.14 1.547 5.874L0 24l6.315-1.525A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.028-1.389l-.36-.214-3.736.902.937-3.628-.235-.373A9.818 9.818 0 1112 21.818z\"/>\n  </svg>"];
+/* ===== Baja de Cordyceps (2026-10): la landing deja de ofrecerlo =====
+   El contenido vive en la página de TN y su API borra los style="" al guardar,
+   así que la corrección se hace acá, sobre el DOM, apenas carga la landing. */
+function sinCordyceps(){
+  var R = document.querySelector('.user-content') || document;
+  var txt = function(el){ return (el && el.textContent || '').toLowerCase(); };
+  var fuera = function(el){ if (el && el.parentNode) el.parentNode.removeChild(el); };
+  // 1. La pastilla "Energía" del hero pasa a "Calma".
+  R.querySelectorAll('.hero-pill').forEach(function(p){ if (/energ/i.test(p.textContent)) p.textContent = '🌿 Calma'; });
+  // 2. La tarjeta de dolor de Cordyceps pasa a ser la de la rutina completa (la grilla queda en 6).
+  R.querySelectorAll('.pain-card').forEach(function(c){
+    if (txt(c).indexOf('cordyceps') < 0) return;
+    var q = c.querySelector('.pain-q'), a = c.querySelector('.pain-a'), l = c.querySelector('.pain-link');
+    if (q) q.textContent = '"Quiero cubrir todo el día con una sola rutina."';
+    if (a) a.textContent = 'Glow your Mind combina Melena de León a la mañana, Tremella en el día y Ashwagandha a la noche. Foco, piel y calma en un solo combo.';
+    if (l) { l.setAttribute('href', '#bl-rutina'); l.firstChild && (l.firstChild.nodeValue = 'Ver Glow your Mind '); }
+  });
+  // 3. Fuera la sección de Cordyceps y su fila/tarjeta del comparador.
+  fuera(R.querySelector('#sec-cordyceps'));
+  R.querySelectorAll('.objt-row, .objt-card').forEach(function(r){ if (/cordyceps/i.test(r.textContent)) fuera(r); });
+  // 4. La rutina del día: Glow your Mind en vez de Full Day (que lleva Cordyceps).
+  var fd = R.querySelector('.fullday');
+  if (fd) {
+    fd.id = 'bl-rutina';
+    var sub = fd.querySelector('.fullday-sub');
+    if (sub) sub.textContent = 'Glow your Mind hace exactamente eso. Tres adaptógenos, tres momentos, un solo combo.';
+    fd.querySelectorAll('.day-slot').forEach(function(s){
+      var p = s.querySelector('.day-product'), d = s.querySelector('.day-desc');
+      if (!p) return;
+      if (/melena/i.test(p.textContent) && d) d.textContent = 'Foco y claridad mental para arrancar el día con la mente despejada.';
+      if (/cordyceps/i.test(p.textContent)) {
+        p.textContent = 'Tremella';
+        if (d) d.textContent = 'Hidratación y brillo de la piel desde adentro, con biotina.';
+      }
+    });
+    var h3 = fd.querySelector('.fullday-cta-text h3'), pp = fd.querySelector('.fullday-cta-text p');
+    if (h3) h3.textContent = 'Glow your Mind — los tres, juntos.';
+    if (pp) pp.textContent = 'Melena de León + Tremella + Ashwagandha. Un mes completo de suplementación integral.';
+    var pr = fd.querySelector('.fullday-price');
+    if (pr) pr.innerHTML = '$207.765 <small>o $196.830 con suscripción</small>';
+    var bt = fd.querySelector('.btn-full');
+    if (bt) bt.setAttribute('href', 'https://www.bloomlife.co/productos/glowyourmindgummies/?utm_source=meta&utm_medium=paid_social&utm_campaign=gummies-landing&utm_content=glow-your-mind');
+  }
+  // La tarjeta "Ideal para empezar" también llevaba a Full Day.
+  R.querySelectorAll('.fd-link').forEach(function(a){
+    a.setAttribute('href', 'https://www.bloomlife.co/productos/glowyourmindgummies/?utm_source=meta&utm_medium=paid_social&utm_campaign=gummies-landing&utm_content=glow-your-mind');
+    a.textContent = 'Glow your Mind \u2192';
+  });
+  // Si el barrido de productos dados de baja (js/baja-productos.js) llegó antes y escondió
+  // estos links cuando todavía apuntaban a Full Day, se destapan: ya no apuntan ahí.
+  R.querySelectorAll('.btn-full, .fd-link, .why-tile').forEach(function(e){
+    if (e.getAttribute('data-bl-baja') === '1') { e.removeAttribute('data-bl-baja'); e.style.removeProperty('display'); }
+  });
+  // 5. Reseñas: fuera las de productos dados de baja o que nombran Cordyceps.
+  R.querySelectorAll('.rcard').forEach(function(r){ if (/cordyceps|glory/i.test(r.textContent)) fuera(r); });
+  // 6. Botón de suscripción a Cordyceps.
+  R.querySelectorAll('.btn-sub').forEach(function(b){ if (/cordyceps/i.test(b.textContent)) fuera(b); });
+  // 7. FAQ.
+  R.querySelectorAll('.faq-a').forEach(function(a){
+    a.innerHTML = a.innerHTML
+      .replace('el Cordyceps favorece la energía sostenida y el rendimiento; ', '')
+      .replace('más calma, más foco, mejor energía y mejor descanso', 'más calma, más foco, mejor descanso y una piel más luminosa')
+      .replace('Ashwagandha, Tremella, Cordyceps y Reishi:', 'Ashwagandha, Tremella y Reishi:');
+  });
+}
 function initLanding() {
+try { sinCordyceps(); } catch(e) {}
 /* Newsweek: el dominio dejo de responder (HTTP 000) y el logo llevaba a la nada.
    Se saca de la franja de prensa.
    Va por JS y no editando el HTML de la pagina a proposito: el contenido vive en
@@ -41,7 +107,6 @@ var ROW_MAP = {
 'ashwagandha': ['ashwagandha-equilibrio-hormonal-gummies', 'ashwagandha'],
 'melena': ['melena-de-leon-claridad-mental-gummies', 'melena-de-leon'],
 'tremella': ['tremella-hongo-de-la-belleza-gummies-1n9ff', 'tremella'],
-'cordyceps': ['cordyceps-energia-sostenida-gummies', 'cordyceps'],
 'reishi': ['reishi-descanso-profundo-gummies-kjqoe', 'reishi'],
 'bye bye': ['combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q', 'combo-bye-bye-anxiety']
 };
@@ -51,7 +116,7 @@ var m = document.querySelector('meta[' + attr + '="' + key + '"]');
 if (!m) { m = document.createElement('meta'); m.setAttribute(attr, key); document.head.appendChild(m); }
 m.setAttribute('content', content);
 }
-upsertMeta('name', 'description', 'Foco, energia y descanso en gummies adaptogenas. Ashwagandha, Melena de Leon, Reishi y mas. 6 cuotas sin interes y envio gratis desde $180.000.');
+upsertMeta('name', 'description', 'Foco, calma y descanso en gummies adaptogenas. Ashwagandha, Melena de Leon, Reishi y Tremella. 6 cuotas sin interes y envio gratis desde $180.000.');
 upsertMeta('property', 'og:title', 'Wellness Gummies | Bloom Life');
 upsertMeta('property', 'og:description', 'Suplementarse tambien puede ser rico. Gummies adaptogenas para tu dia a dia.');
 upsertMeta('property', 'og:image', 'https://d1a9qnv764bsoo.cloudfront.net/stores/004/969/223/rte/reishi-padded.png');

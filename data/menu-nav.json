@@ -28,7 +28,6 @@
    "bajadas": {
     "melena": "Foco para las horas que importan.",
     "ashwagandha": "Calma para tu día a día.",
-    "cordyceps": "Energía que no se apaga a media tarde.",
     "reishi": "Noches de descanso profundo.",
     "tremella": "Piel y pelo cuidados, con biotina."
    },
@@ -42,7 +41,7 @@
    "titulo": "Combos",
    "pie": [
     {
-     "texto": "Ver los 26 combos",
+     "texto": "Ver los 12 combos",
      "href": "https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/"
     }
    ]

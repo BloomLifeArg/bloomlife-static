@@ -219,7 +219,7 @@
 .bli-links a:hover span:last-child{transform:translateX(4px)}
 
 /* cinco páginas de beneficio en el cierre */
-.blp-next.bli-next5{grid-template-columns:repeat(5,1fr)}
+.blp-next.bli-next5{grid-template-columns:repeat(4,1fr)}
 .bli-final-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:38px}
 
 /* ───────── tokens por página ───────── */

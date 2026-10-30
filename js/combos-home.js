@@ -38,20 +38,20 @@
     eyebrow: 'Combos',
     titulo: 'Un combo para cada momento.',
     bajada:
-      'Adaptógenos en gummies que se potencian entre sí para ir directo a lo que buscás.',
+      'Adaptógenos que se potencian entre sí para ir directo a lo que buscás.',
     nota: 'Suscribite y ahorrá 10% todos los meses.',
     cta: 'Ver todos los combos',
     cta_url:
       'https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/',
     combos: [
-      { id: 294593106, nombre: 'Full Day Stack', titulo: 'Tu día completo, de la mañana a la noche', ing: 'Melena de León + Cordyceps + Reishi', color: '#A85713', url: 'https://www.bloomlife.co/productos/full-day-gummies-melena-de-leon-cordyceps-reishi/' },
-      { id: 342427990, nombre: 'Radiance & Mind', titulo: 'Brillo por fuera, claridad por dentro', ing: 'Tremella + Melena de León + Reishi', color: '#8A6F9C', url: 'https://www.bloomlife.co/productos/radiance-mind-combo-1y7mt/' },
+      { id: 305609431, nombre: 'Bye Bye Anxiety Gummies', titulo: 'Calma sin perder el foco', ing: 'Ashwagandha + Melena de León', color: '#6E7A2C', url: 'https://www.bloomlife.co/productos/combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q/' },
+      { id: 339648634, nombre: 'Glow your Mind', titulo: 'Piel radiante y mente enfocada', ing: 'Tremella + Melena de León + Ashwagandha', color: '#A85713', url: 'https://www.bloomlife.co/productos/glowyourmindgummies/' },
       { id: 294585978, nombre: 'Deep Sleep', titulo: 'Noches de descanso profundo', ing: 'Ashwagandha + Reishi', color: '#6E9E88', url: 'https://www.bloomlife.co/productos/deepsleep/' },
-      { id: 341180946, nombre: 'Glow & Go', titulo: 'Verte bien y rendir todo el día', ing: 'Tremella + Cordyceps', color: '#3E7C9C', url: 'https://www.bloomlife.co/productos/glow-go-combo-tremella-y-cordyceps-gummies-134yf/' },
+      { id: 342427990, nombre: 'Radiance & Mind', titulo: 'Brillo por fuera, claridad por dentro', ing: 'Tremella + Melena de León + Reishi', color: '#8A6F9C', url: 'https://www.bloomlife.co/productos/radiance-mind-combo-1y7mt/' },
+      { id: 279852999, nombre: 'Bye Bye Anxiety Cápsulas', titulo: 'Calma y foco, en cápsulas', ing: 'Ashwagandha + Melena de León · Cápsulas', color: '#A85713', url: 'https://www.bloomlife.co/productos/combo-bye-bye-anxiety-suplementacion-por-1-mes/' },
       { id: 357970722, nombre: 'Menopause Balance', titulo: 'Menopausia con calma y buen descanso', ing: 'Ashwagandha + Melena de León + Reishi', color: '#6E7A2C', url: 'https://www.bloomlife.co/productos/menopausebalancegummies/' },
       { id: 330540800, nombre: 'Beauty & Balance', titulo: 'Piel luminosa, mente en calma', ing: 'Tremella + Reishi', color: '#8A6F9C', url: 'https://www.bloomlife.co/productos/combo-beauty-balance-tremella-reishi-wb97u/' },
-      { id: 325250064, nombre: 'All Day Stack', titulo: 'Foco y energía de día, calma a la tarde', ing: 'Melena de León + Cordyceps + Ashwagandha', color: '#A85713', url: 'https://www.bloomlife.co/productos/fulldaygummies2/' },
-      { id: 330540927, nombre: 'Glory Gummies', titulo: 'Los cinco adaptógenos, en una rutina', ing: 'Los 5 adaptógenos', color: '#6E9E88', url: 'https://www.bloomlife.co/productos/glorygummies/', zoom: true }
+      { id: 349316562, nombre: 'Glow & Regulate', titulo: 'Belleza y calma en un mismo ritual', ing: 'Tremella + Ashwagandha', color: '#6E7A2C', url: 'https://www.bloomlife.co/productos/glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0/' }
     ]
   };
 

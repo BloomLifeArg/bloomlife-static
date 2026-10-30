@@ -186,7 +186,7 @@
 .bfn-copied{font-size:13px;font-weight:300;color:var(--mid)}
 
 /* cinco páginas de beneficio en el cierre */
-.blp-next.bfn-next5{grid-template-columns:repeat(5,1fr)}
+.blp-next.bfn-next5{grid-template-columns:repeat(4,1fr)}
 
 /* ───────── responsive ───────── */
 @media (max-width:900px){

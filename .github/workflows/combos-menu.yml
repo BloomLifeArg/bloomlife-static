@@ -3,11 +3,10 @@ name: Actualizar combos del menú
 # Regenera data/combos-menu.json, que es la columna "Combos" del megamenú de
 # navegación de bloomlife.co.
 #
-# LA FUENTE DE VERDAD ES EL HOME. Los combos destacados se eligen en el editor
-# de Tienda Nube (Diseño → módulo "Novedades") y este job los sigue: dentro de
-# la hora el menú se actualiza solo, sin tocar código ni publicar nada en TN.
+# LA FUENTE DE VERDAD ES EL HOME: data/combos-home.json (la sección "Combos" propia,
+# desde 2026-10-18). Los de data/productos-baja.json nunca entran.
 #
-# Para cambiar QUÉ combos aparecen → editor de TN.
+# Para cambiar QUÉ combos aparecen → data/combos-home.json.
 # Para cambiar el TEXTO de una bajada → data/combos-copy.json (y este job corre).
 # Para refrescar al toque → pestaña Actions → este workflow → Run workflow.
 #
@@ -23,6 +22,8 @@ on:
       - 'scripts/build-combos-menu.mjs'
       - '.github/workflows/combos-menu.yml'
       - 'data/combos-copy.json' # cambiar una bajada regenera la salida
+      - 'data/combos-home.json'
+      - 'data/productos-baja.json'
 
 concurrency:
   group: combos-menu

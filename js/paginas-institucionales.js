@@ -241,7 +241,6 @@
         '<div class="blp-next bli-next5">' +
           '<a href="https://www.bloomlife.co/foco/"><span class="blp-nx-n">Foco<span class="blp-nx-a">→</span></span><span class="blp-nx-t">Claridad mental.</span></a>' +
           '<a href="https://www.bloomlife.co/calma/"><span class="blp-nx-n">Calma<span class="blp-nx-a">→</span></span><span class="blp-nx-t">Menos ansiedad y estrés.</span></a>' +
-          '<a href="https://www.bloomlife.co/energia/"><span class="blp-nx-n">Energía<span class="blp-nx-a">→</span></span><span class="blp-nx-t">Estable, sin picos.</span></a>' +
           '<a href="https://www.bloomlife.co/descanso/"><span class="blp-nx-n">Descanso<span class="blp-nx-a">→</span></span><span class="blp-nx-t">Recuperate de verdad.</span></a>' +
           '<a href="https://www.bloomlife.co/piel/"><span class="blp-nx-n">Piel<span class="blp-nx-a">→</span></span><span class="blp-nx-t">Hidratación desde adentro.</span></a>' +
         '</div>' +

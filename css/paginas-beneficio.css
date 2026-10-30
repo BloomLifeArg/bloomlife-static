@@ -189,7 +189,7 @@
 .blp-final-sub{font-weight:300;font-size:17px;line-height:1.7;color:rgba(255,255,255,.82);
  max-width:52ch;margin-top:18px}
 
-.blp-next{display:grid;grid-template-columns:repeat(4,1fr);margin-top:48px;
+.blp-next{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;
  border-top:1px solid rgba(255,255,255,.32)}
 .blp-next a{display:block;padding:26px 24px 28px 0;
  border-bottom:1px solid rgba(255,255,255,.32);transition:background .2s ease}

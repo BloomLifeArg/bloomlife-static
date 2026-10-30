@@ -33,8 +33,6 @@
                 frase: 'apoya los factores que el cerebro usa para regenerarse y conectar: la base de una mente despierta.' },
     calma:    { corto: 'calma', t: 'Calma y menos estrés',  d: 'Bajar un cambio cuando la mente no para.',             ing: 'ash', cobj: 'calma',   art: 'la calma',
                 frase: 'se asocia con una respuesta más equilibrada del cuerpo frente al estrés sostenido.' },
-    energia:  { corto: 'energía', t: 'Energía sostenida',     d: 'Llegar a la tarde sin el tercer café.',                 ing: 'cor', cobj: 'energia', art: 'la energía',
-                frase: 'se asocia con un mejor aprovechamiento del oxígeno y con la producción de energía en las células.' },
     dormir:   { corto: 'dormir mejor', t: 'Dormir mejor',          d: 'Descansar de verdad, no solo dormir horas.',           ing: 'rsh', cobj: 'dormir',  art: 'el descanso',
                 frase: 'se asocia con un descanso más profundo, no solo con más horas.' },
     piel:     { corto: 'piel', t: 'Piel e hidratación',    d: 'Piel hidratada, desde adentro.',            ing: 'trm', cobj: 'piel',    art: 'la piel',
@@ -42,7 +40,7 @@
     defensas: { corto: 'defensas', t: 'Defensas',              d: 'Acompañar al cuerpo cuando le pedís de más.',           ing: 'rsh', cobj: 'dormir',  art: 'las defensas',
                 frase: 'acompaña al sistema inmune, sobre todo cuando venís exigiéndole demasiado al cuerpo.' }
   };
-  var OBJ_ORDEN = ['foco', 'calma', 'energia', 'dormir', 'piel', 'defensas'];
+  var OBJ_ORDEN = ['foco', 'calma', 'dormir', 'piel', 'defensas'];  // Energía salió del quiz con la baja del producto (2026-10)
 
   // Ingredientes. `ventana` = cuándo rinde más (decide si la alternativa es el
   // pack x3 o un combo que sume el compañero del momento). `orden` ordena las
@@ -60,10 +58,6 @@
                   x3: 'combo-hormonal-balance-suplementacion-con-ashwagandha-gummies-por-3-meses' },
            cap: { handle: 'ashwagandha-equilibrio-hormonal-capsulas', img: 'ash_frasco_sq-1de3135a64ac514e1317846899679453-480-0.png',
                   x3: 'combo-hormonal-balance-suplementacion-por-3-meses-con-ashwagandha-capsulas' } },
-    cor: { nombre: 'Cordyceps', pc: 'blp-p-cordyceps', rol: 'la energía', orden: 1, ventana: ['manana'],
-           cuando: 'a la mañana, o un rato antes de entrenar.',
-           gum: { handle: 'cordyceps-energia-sostenida-gummies', img: 'glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-480-0.png',
-                  x3: 'combo-energy-support-suplementacion-por-3-meses' } },
     rsh: { nombre: 'Reishi', pc: 'blp-p-reishi', rol: 'el descanso', orden: 4, ventana: ['noche'],
            cuando: 'a la noche, un rato antes de acostarte.',
            gum: { handle: 'reishi-descanso-profundo-gummies-kjqoe', img: 'glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-480-0.png',
@@ -87,7 +81,7 @@
   // Pregunta 3. `comp` es el adaptógeno que suma cuando el momento difícil no
   // coincide con la ventana del que ya cubre el objetivo.
   var MOM = {
-    manana: { t: 'Mañana',       d: 'Te cuesta arrancar y la mente tarda en despertarse.',        comp: 'cor', la: 'la mañana' },
+    manana: { t: 'Mañana',       d: 'Te cuesta arrancar y la mente tarda en despertarse.',        comp: 'mln', la: 'la mañana' },
     tarde:  { t: 'Tarde',        d: 'Después de almorzar se te va la energía.',                       comp: 'ash', la: 'la tarde' },
     noche:  { t: 'Noche',        d: 'Llegás acelerado y te cuesta desconectar.',       comp: 'rsh', la: 'la noche' },
     dia:    { t: 'Todo el día',  d: 'Un poco de todo, a cualquier hora.',                          comp: null,  la: 'el día entero' }
@@ -97,25 +91,16 @@
   // Copia mínima de data/combos-categoria.json por si el fetch falla. Mismos
   // campos que usa el puntaje. Si el JSON llega, manda el JSON.
   var FALLBACK = [
-    { id: 270150341, nombre: 'High Performance', formato: 'Gomitas', ing: ['cor', 'mln'], caps: [], objetivos: ['energia', 'foco'], handle: 'combo-performance-gummies-suplementacion-por-1-mes', precio: 132050, lista: 139000, vendidas: 163, why: 'Cuerpo y mente para las horas que exigen.' },
     { id: 279852999, nombre: 'Bye Bye Anxiety', formato: 'Cápsulas', ing: ['ash', 'mln'], caps: ['ash', 'mln'], objetivos: ['calma', 'foco'], handle: 'combo-bye-bye-anxiety-suplementacion-por-1-mes', precio: 132050, lista: 139000, vendidas: 434, why: 'Bajar un cambio sin perder la mente clara.' },
     { id: 305609431, nombre: 'Bye Bye Anxiety', formato: 'Gomitas', ing: ['ash', 'mln'], caps: [], objetivos: ['calma', 'foco'], handle: 'combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q', precio: 132050, lista: 139000, vendidas: 159, why: 'La misma fórmula, en gomita: calma y claridad.' },
     { id: 294585978, nombre: 'Deep Sleep', formato: 'Gomitas', ing: ['ash', 'rsh'], caps: [], objetivos: ['dormir', 'calma'], handle: 'deepsleep', precio: 132050, lista: 139000, vendidas: 0, why: 'Cerrar el día de verdad y despertarte repuesto.' },
     { id: 294591691, nombre: 'Clarity & Defense', formato: 'Gomitas', ing: ['mln', 'rsh'], caps: [], objetivos: ['foco'], handle: 'comboclarityanddefense', precio: 132050, lista: 139000, vendidas: 0, why: 'Foco sostenido, con las defensas acompañadas.' },
     { id: 330540800, nombre: 'Beauty & Balance', formato: 'Gomitas', ing: ['trm', 'rsh'], caps: [], objetivos: ['piel', 'dormir'], handle: 'combo-beauty-balance-tremella-reishi-wb97u', precio: 132050, lista: 139000, vendidas: 0, why: 'Lo que se ve, y el descanso que lo sostiene.' },
-    { id: 341180946, nombre: 'Glow & Go', formato: 'Gomitas', ing: ['trm', 'cor'], caps: [], objetivos: ['piel', 'energia'], handle: 'glow-go-combo-tremella-y-cordyceps-gummies-134yf', precio: 132050, lista: 139000, vendidas: 0, why: 'Verte bien sin quedarte sin energía.' },
     { id: 349316562, nombre: 'Glow & Regulate', formato: 'Gomitas', ing: ['trm', 'ash'], caps: [], objetivos: ['piel', 'calma'], handle: 'glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0', precio: 132050, lista: 139000, vendidas: 0, why: 'Belleza desde adentro, con el estrés en su lugar.' },
-    { id: 294593106, nombre: 'Full Day Stack', formato: 'Gomitas', ing: ['mln', 'cor', 'rsh'], caps: [], objetivos: ['dia', 'dormir'], handle: 'full-day-gummies-melena-de-leon-cordyceps-reishi', precio: 198075, lista: 208500, vendidas: 0, why: 'Foco, energía y descanso: el arco entero del día.' },
-    { id: 325250064, nombre: 'All Day Stack', formato: 'Gomitas', ing: ['mln', 'cor', 'ash'], caps: [], objetivos: ['dia', 'calma'], handle: 'fulldaygummies2', precio: 198075, lista: 208500, vendidas: 0, why: 'El día completo, cerrando con calma en vez de sueño.' },
-    { id: 331475056, nombre: 'All Day Mix', formato: 'Mixto', ing: ['mln', 'cor', 'ash'], caps: ['mln', 'ash'], objetivos: ['dia', 'foco'], handle: 'fulldaymix', precio: 198075, lista: 208500, vendidas: 0, why: 'El mismo día completo, para quien prefiere la cápsula.' },
     { id: 339648634, nombre: 'Glow your Mind', formato: 'Gomitas', ing: ['trm', 'mln', 'ash'], caps: [], objetivos: ['piel', 'foco'], handle: 'glowyourmindgummies', precio: 198075, lista: 208500, vendidas: 0, why: 'Verse bien, pensar mejor, sentirse en calma.' },
     { id: 342427990, nombre: 'Radiance & Mind', formato: 'Gomitas', ing: ['trm', 'mln', 'rsh'], caps: [], objetivos: ['piel', 'foco'], handle: 'radiance-mind-combo-1y7mt', precio: 198075, lista: 208500, vendidas: 0, why: 'Piel cuidada, mente clara, cuerpo que se repone.' },
-    { id: 357970572, nombre: 'Glow & Energy', formato: 'Mixto', ing: ['trm', 'cor', 'ash'], caps: ['ash'], objetivos: ['piel', 'energia'], handle: 'glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq', precio: 198075, lista: 208500, vendidas: 0, why: 'Piel, energía pareja y una mente tranquila.' },
     { id: 357970722, nombre: 'Menopause Balance', formato: 'Gomitas', ing: ['ash', 'mln', 'rsh'], caps: [], objetivos: ['calma', 'dormir'], handle: 'menopausebalancegummies', precio: 198075, lista: 208500, vendidas: 0, why: 'Para transitar la etapa con calma y descanso.' },
-    { id: 294595560, nombre: 'Ultimate Balance', formato: 'Gomitas', ing: ['mln', 'cor', 'ash', 'rsh'], caps: [], objetivos: ['dia', 'dormir'], handle: 'combo-gloria-adaptogena-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-ubwy1', precio: 264100, lista: 278000, vendidas: 0, why: 'Los cuatro tramos del día, sin huecos.' },
-    { id: 341313375, nombre: 'Fresh Flow', formato: 'Gomitas', ing: ['mln', 'cor', 'trm', 'ash'], caps: [], objetivos: ['dia', 'piel'], handle: 'fresh-flow-combo-1km44', precio: 264100, lista: 278000, vendidas: 0, why: 'Mente, cuerpo, piel y calma a la vez.' },
-    { id: 356749974, nombre: 'Ultimate Balance Mix', formato: 'Mixto', ing: ['mln', 'ash', 'trm', 'rsh'], caps: ['mln', 'ash'], objetivos: ['dia', 'piel'], handle: 'ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws', precio: 264100, lista: 278000, vendidas: 0, why: 'El combo completo, en dos formatos.' },
-    { id: 330540927, nombre: 'Glory Gummies', formato: 'Gomitas', ing: ['trm', 'rsh', 'ash', 'mln', 'cor'], caps: [], objetivos: ['dia', 'piel'], handle: 'glorygummies', precio: 330125, lista: 347500, vendidas: 0, why: 'Los cinco adaptógenos. El sistema entero.' }
+    { id: 356749974, nombre: 'Ultimate Balance Mix', formato: 'Mixto', ing: ['mln', 'ash', 'trm', 'rsh'], caps: ['mln', 'ash'], objetivos: ['dia', 'piel'], handle: 'ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws', precio: 264100, lista: 278000, vendidas: 0, why: 'El combo completo, en dos formatos.' }
   ];
 
   /* ══════════════ 2. UTILIDADES ══════════════ */

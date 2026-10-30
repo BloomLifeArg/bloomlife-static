@@ -95,7 +95,7 @@
   margin: 0 auto;
   padding: 0 24px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(var(--n, 5), 1fr); /* --n lo pone el JS: cuántas cards trae el JSON */
   /* 20px y no 2px: sin fondo de card, el aire ES la separación */
   gap: 20px;
 }

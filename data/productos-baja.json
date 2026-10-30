@@ -1,0 +1,67 @@
+{
+ "_leeme": "Productos dados de baja que la web NO debe exponer (2026-10, baja de Cordyceps, decisión de Sergio). Siguen publicados en Tienda Nube y con stock para no cortar las suscripciones activas: la web los saca de listados, menús, buscador y recomendados, y su ficha muestra 'Agotado'. Lo usan build-combos-menu.mjs y, como copia, el snippet BL-BAJA del seal (que es el que oculta en vivo).",
+ "productos": [
+  {
+   "id": 237070392,
+   "handle": "cordyceps-energia-sostenida-gummies"
+  },
+  {
+   "id": 268209140,
+   "handle": "combo-energy-support-suplementacion-por-3-meses"
+  },
+  {
+   "id": 270150341,
+   "handle": "combo-performance-gummies-suplementacion-por-1-mes"
+  },
+  {
+   "id": 294588163,
+   "handle": "combo-go-strong-cordyceps-reishi"
+  },
+  {
+   "id": 294593106,
+   "handle": "full-day-gummies-melena-de-leon-cordyceps-reishi"
+  },
+  {
+   "id": 294595560,
+   "handle": "combo-gloria-adaptogena-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-ubwy1"
+  },
+  {
+   "id": 325250064,
+   "handle": "fulldaygummies2"
+  },
+  {
+   "id": 330540927,
+   "handle": "glorygummies"
+  },
+  {
+   "id": 331475056,
+   "handle": "fulldaymix"
+  },
+  {
+   "id": 341180946,
+   "handle": "glow-go-combo-tremella-y-cordyceps-gummies-134yf"
+  },
+  {
+   "id": 341313375,
+   "handle": "fresh-flow-combo-1km44"
+  },
+  {
+   "id": 357970572,
+   "handle": "glow-energy-combo-tremella-ashwagandha-capsulas-cordyceps-y48oq"
+  },
+  {
+   "id": 358469040,
+   "handle": "steady-energy-combo-ashwagandha-capsulas-cordyceps-gummies-35kuu"
+  },
+  {
+   "id": 366402429,
+   "handle": "combo-tremella-ashwagandha-cordyceps-gummies"
+  }
+ ],
+ "paginas": [
+  "/energia/",
+  "/blog/posts/cordyceps-36376cbe2d25/",
+  "/elegi-tu-suplemento/cordyceps/",
+  "/tipo-de-adaptogenos/gummies1/cordyceps1/"
+ ]
+}

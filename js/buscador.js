@@ -489,7 +489,11 @@
     /* las cards se juntan POR PÁGINA y se concatenan en orden de página: si se aterriza
        en /page/2/, los productos de la 1 van primero (en categoría el orden es el nativo) */
     var porPagina = {}, vistos = {};
+    // Productos dados de baja (window.BL_BAJA, snippet del seal): no entran ni en la grilla ni en la cuenta.
+    var BAJA = {};
+    try { (window.BL_BAJA && window.BL_BAJA.ids || []).forEach(function (i) { BAJA[String(i)] = 1; }); } catch (e) {}
     var sumar = function (el, n) {
+      if (BAJA[el.getAttribute('data-product-id')]) return;
       var p = leerCard(el);
       if (!p.id || vistos[p.id] || !p.url) return;
       vistos[p.id] = 1;

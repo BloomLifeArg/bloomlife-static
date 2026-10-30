@@ -1,6 +1,6 @@
 {
- "_leeme": "Los 4 combos que muestra el buscador del header (js/header.js) con el campo vacío: los mas vendidos por unidades en pedidos pagos de los ultimos 120 dias (relevado 2026-09-13 con la API: Bye Bye Anxiety Capsulas 472, Bye Bye Anxiety Gummies 192, High Performance 184, Glory 82). Editar y commitear alcanza; si el archivo falla, header.js usa los combos del megamenu.",
- "actualizado": "2026-09-13",
+ "_leeme": "Los 4 combos que muestra el buscador del header (js/header.js) con el campo vacío: los más vendidos sin Cordyceps (dado de baja en 2026-10) en pedidos pagos de los últimos 90 días al 2026-10-30: Bye Bye Anxiety Cápsulas 64, Bye Bye Anxiety Gummies 62, Deep Sleep 26, Glow your Mind 24. Editar y commitear alcanza; si el archivo falla, header.js usa los combos del megamenú.",
+ "actualizado": "2026-10-30",
  "items": [
   {
    "handle": "combo-bye-bye-anxiety-suplementacion-por-1-mes",
@@ -17,18 +17,18 @@
    "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add5a37476bac282d617853803647110-320-0.jpg"
   },
   {
-   "handle": "combo-performance-gummies-suplementacion-por-1-mes",
-   "nombre": "High Performance",
-   "bajada": "Melena de León y Cordyceps.",
-   "href": "https://www.bloomlife.co/productos/combo-performance-gummies-suplementacion-por-1-mes/",
-   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add7452d4a1df21fb917853805473765-320-0.jpg"
+   "handle": "deepsleep",
+   "nombre": "Deep Sleep",
+   "bajada": "Ashwagandha y Reishi, de noche.",
+   "href": "https://www.bloomlife.co/productos/deepsleep/",
+   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-aa1c6ad0b7a9d319a817853804728910-320-0.jpg"
   },
   {
-   "handle": "glorygummies",
-   "nombre": "Glory Gummies",
-   "bajada": "Los cinco adaptógenos, juntos.",
-   "href": "https://www.bloomlife.co/productos/glorygummies/",
-   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e3bc1500f11ff5c9f417853803206380-320-0.jpg"
+   "handle": "glowyourmindgummies",
+   "nombre": "Glow your Mind",
+   "bajada": "Tremella, Melena de León y Ashwagandha.",
+   "href": "https://www.bloomlife.co/productos/glowyourmindgummies/",
+   "imagen": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-994e4695c9f85bb91017853802487925-320-0.jpg"
   }
  ]
 }

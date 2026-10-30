@@ -84,11 +84,10 @@
   var FRASCOS = [
     { img: P + 'glo_frasco_trm_aligned-5c8a6794e8d4bcffeb17852036898521-240-0.png', alt: 'Tremella' },
     { img: P + 'glo_frasco_mlg_aligned-cdf69710d3ae1ba92f17852036974149-240-0.png', alt: 'Melena de León' },
-    { img: P + 'glo_frasco_cor_aligned-f687f8835f6b10a31c17852037001289-240-0.png', alt: 'Cordyceps' },
     { img: P + 'glo_frasco_ashg_aligned-81dc67e47c74152bf817852036948664-240-0.png', alt: 'Ashwagandha' },
     { img: P + 'glo_frasco_rsh_aligned-219725eb8c5265ca8017852036922133-240-0.png', alt: 'Reishi' }
   ];
-  var PIE = 'Cinco adaptógenos. Todas las combinaciones que necesitás.';
+  var PIE = 'Cuatro adaptógenos. Todas las combinaciones que necesitás.';
 
 
   var CSS = [
