@@ -826,7 +826,13 @@
     // sin ese duplicado quedaba en 19 contra 25 nativos y el guard tiraba la góndola.
     var pintadas = raiz.querySelectorAll('.c, .dest-cta, .x3').length;
     var cardsCombo = raiz.querySelectorAll('.c').length;   // los x3 y el destacado solos no alcanzan: sin cards no hay góndola
-    var nativas = document.querySelectorAll('.js-item-product').length;
+    // Los productos dados de baja (window.BL_BAJA, baja de Cordyceps 2026-10) siguen publicados y en la
+    // categoría por las suscripciones, pero la góndola no los pinta a propósito: no cuentan.
+    var bajaIds = {};
+    try { (window.BL_BAJA && window.BL_BAJA.ids || []).forEach(function (i) { bajaIds[String(i)] = 1; }); } catch (e) {}
+    var nativas = [].filter.call(document.querySelectorAll('.js-item-product'), function (el) {
+      return !bajaIds[el.getAttribute('data-product-id')];
+    }).length;
     if (cardsCombo < 1 || pintadas < Math.max(1, Math.floor(nativas * 0.8))) {
       raiz.parentNode.removeChild(raiz);
       st.remove();
