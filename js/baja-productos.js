@@ -11,7 +11,7 @@
  *      el texto. Si al ocultar una tarjeta una fila de una sola línea queda con
  *      columnas vacías, se reacomoda la grilla.
  *   2. En la ficha de uno de esos productos esconde precio, opciones, botones de
- *      compra y la barra fija, y muestra "Agotado". El stock real no se toca.
+ *      compra y la barra fija, y muestra "Sold out" (antes "Agotado", Sergio 2026-10-31). El stock real no se toca.
  *
  * LA LISTA vive en el seal (snippet BL-BAJA, window.BL_BAJA), junto con el CSS
  * crítico que esconde las cards nativas antes del primer paint. Copia de
@@ -240,7 +240,7 @@
     var ref = v ? (v.querySelector('.chips') || v.querySelector('.rating') || v.querySelector('.name')) : null;
     var d = document.createElement('div');
     d.className = 'bl-agotado';
-    d.innerHTML = '<span class="bl-ag-pill">Agotado</span>' +
+    d.innerHTML = '<span class="bl-ag-pill">Sold out</span>' +
       '<p>Este producto no está disponible por el momento.</p>' +
       '<a href="https://www.bloomlife.co/productos/">Ver todos los productos &rarr;</a>';
     if (nativo) { nativo.parentNode.insertBefore(d, nativo); return; }
