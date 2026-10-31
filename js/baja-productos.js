@@ -97,9 +97,49 @@
     }
   }
   function rehacerGrillas() { for (var i = 0; i < grillas.length; i++) regrilla(grillas[i]); }
+  // Un slide escondido sigue contando para el carrusel: el contador decía "6 / 7" y la flecha se
+  // trababa antes del final. Se saca del carrusel (no sólo se esconde) y se recalcula.
+  function slideBaja(sl) {
+    if (sl.getAttribute('data-bl-baja') === '1' || sl.querySelector('[data-bl-baja="1"]')) return true;
+    var it = sl.querySelector('[data-product-id]');
+    return !!(it && IDS[String(it.getAttribute('data-product-id'))]);
+  }
   function swipers() {
     var s = document.querySelectorAll('.swiper-container, .swiper');
-    for (var i = 0; i < s.length; i++) { try { if (s[i].swiper && s[i].querySelector('[data-bl-baja="1"]')) s[i].swiper.update(); } catch (e) {} }
+    for (var i = 0; i < s.length; i++) {
+      var sw = s[i].swiper;
+      if (!sw || !sw.slides) continue;
+      try {
+        // removeSlide cuenta sólo los slides reales (con loop, saca y rearma los duplicados solo)
+        var fuera = [], k = 0;
+        for (var j = 0; j < sw.slides.length; j++) {
+          var sl = sw.slides[j];
+          if (sl.classList.contains('swiper-slide-duplicate')) continue;
+          if (slideBaja(sl)) fuera.push(k);
+          k++;
+        }
+        if (!fuera.length) continue;
+        if (typeof sw.removeSlide === 'function') sw.removeSlide(fuera);
+        else sw.update();
+      } catch (e) {}
+    }
+  }
+
+  // Las cards nativas (.js-item-product) las esconde el CSS del seal antes de que corra esto, así
+  // que su fila no pasaba por regrilla: quedaba un hueco al final ("We Love Gummies" 3+2, "combina
+  // bien con" 2+1 en mobile). Las filas de Bootstrap son flex con wrap: centrar la última alcanza.
+  function centrarFilas() {
+    var it = document.querySelectorAll('.js-item-product[data-product-id], .item-product[data-product-id]');
+    for (var i = 0; i < it.length; i++) {
+      if (!IDS[String(it[i].getAttribute('data-product-id'))]) continue;
+      var p = it[i].parentElement;
+      if (!p || p.getAttribute('data-bl-centrada') || p.classList.contains('swiper-wrapper')) continue;
+      var cs = getComputedStyle(p);
+      if (cs.display === 'grid' || cs.display === 'inline-grid') { regrilla(p); continue; }
+      if (cs.display.indexOf('flex') < 0 || cs.flexWrap !== 'wrap') continue;
+      p.setAttribute('data-bl-centrada', '1');
+      p.style.setProperty('justify-content', 'center', 'important');
+    }
   }
 
   function barrer(raiz) {
@@ -124,6 +164,7 @@
     var regr = tocados.splice(0);
     for (var k = 0; k < regr.length; k++) regrilla(regr[k]);
     if (regr.length) swipers();
+    centrarFilas();
   }
 
   /* ---------- Bloqueo de compra ----------

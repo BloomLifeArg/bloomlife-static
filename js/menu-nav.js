@@ -288,10 +288,11 @@
     cs.forEach(function (it) { ul.appendChild(fila(it, null, false)); });
     p.appendChild(ul);
     var pie = el('div', 'bls__pie');
-    var v = el('a', 'bls__vertodo', 'Ver los 26 combos');
+    // el texto sale del JSON, como en el megamenú: escrito acá decía "26" cuando ya eran 12
     var meta = (datos && datos.nav && datos.nav.columnas) || {};
-    v.href = ((meta.combos && meta.combos.pie && meta.combos.pie[0]) || {}).href
-      || 'https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/';
+    var pie0 = (meta.combos && meta.combos.pie && meta.combos.pie[0]) || {};
+    var v = el('a', 'bls__vertodo', pie0.texto || 'Ver todos los combos');
+    v.href = pie0.href || 'https://www.bloomlife.co/elegi-tu-suplemento/combos-bienestar-integral/';
     pie.appendChild(v); p.appendChild(pie);
     return p;
   }
