@@ -64,7 +64,7 @@
     {
       "k": "4",
       "titulo": "El sistema entero",
-      "chip": "4 y 5 frascos",
+      "chip": "4 frascos",
       "vacio": "Ningún combo grande para ese objetivo."
     }
   ],
@@ -432,9 +432,9 @@
         "estrellas": 5
       },
       {
-        "cita": "Estoy muy contenta con la forma de tomar. Me siento mucho mejor desde que las consumo, y el gusto es mejor que en otras formas de tomar.",
-        "nombre": "Maria",
-        "producto": "Glory Gummies",
+        "cita": "Excelente producto, 100% lo recomiendo. Las gummies hacen que sean muy fáciles de consumir diariamente.",
+        "nombre": "Paula R.",
+        "producto": "Bye Bye Anxiety",
         "estrellas": 5
       },
       {
@@ -500,7 +500,7 @@
     "pasos": [
       {
         "t": "Qué querés resolver",
-        "d": "Foco, calma, dormir, energía, piel. Los botones de arriba dejan sólo los combos que trabajan sobre eso."
+        "d": "Foco, calma, dormir, piel. Los botones de arriba dejan sólo los combos que trabajan sobre eso."
       },
       {
         "t": "De cuántos frascos",
