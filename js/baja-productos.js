@@ -126,6 +126,57 @@
     if (regr.length) swipers();
   }
 
+  /* ---------- Bloqueo de compra ----------
+     Aunque alguien destape un botón escondido, nada de estos productos entra al carrito desde
+     la página: se frena el envío del formulario y cualquier pedido a /comprar/ hecho por el
+     código de la página (fetch o XMLHttpRequest) que traiga uno de estos productos. El carrito
+     en sí no se toca: si ya lo tenía, lo puede ver, cambiar la cantidad o sacar. */
+  function pideBaja(datos) {
+    try {
+      var ids = [];
+      if (datos && typeof datos.getAll === 'function') ids = datos.getAll('add_to_cart');
+      else if (typeof datos === 'string') {
+        var m, re = /(?:^|&)add_to_cart=(\d+)/g;
+        while ((m = re.exec(datos))) ids.push(m[1]);
+      }
+      for (var i = 0; i < ids.length; i++) if (IDS[String(ids[i])]) return true;
+    } catch (e) {}
+    return false;
+  }
+  function aComprar(url) { try { return /\/comprar\/?(\?|$)/.test(new URL(url, location.href).pathname + '?'); } catch (e) { return false; } }
+  // El tema agrega al carrito desde el clic del botón (no siempre pasa por 'submit'): se frena el clic
+  // en fase de captura, antes que cualquier otro manejador.
+  ['click', 'touchend', 'keydown'].forEach(function (tipo) {
+    document.addEventListener(tipo, function (ev) {
+      if (tipo === 'keydown' && ev.key !== 'Enter' && ev.key !== ' ') return;
+      var t = ev.target && ev.target.closest ? ev.target.closest('button, input[type=submit], .js-addtocart, a') : null;
+      var f = t && (t.form || t.closest('form'));
+      if (f && f.querySelector('input[name="add_to_cart"]') && pideBaja(new FormData(f))) {
+        ev.preventDefault(); ev.stopImmediatePropagation();
+      }
+    }, true);
+  });
+  document.addEventListener('submit', function (ev) {
+    var f = ev.target;
+    if (f && f.tagName === 'FORM' && pideBaja(new FormData(f))) { ev.preventDefault(); ev.stopImmediatePropagation(); }
+  }, true);
+  if (window.fetch) {
+    var fetchOrig = window.fetch;
+    window.fetch = function (url, opt) {
+      var u = (url && url.url) || url;
+      if (opt && aComprar(u) && pideBaja(opt.body)) {
+        return Promise.resolve(new Response(JSON.stringify({ success: false, errors: ['producto no disponible'] }), { status: 409, headers: { 'Content-Type': 'application/json' } }));
+      }
+      return fetchOrig.apply(this, arguments);
+    };
+  }
+  var xOpen = XMLHttpRequest.prototype.open, xSend = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.open = function (m, url) { this.__blUrl = url; return xOpen.apply(this, arguments); };
+  XMLHttpRequest.prototype.send = function (body) {
+    if (aComprar(this.__blUrl) && pideBaja(body)) { try { this.abort(); } catch (e) {} return; }
+    return xSend.apply(this, arguments);
+  };
+
   /* ---------- Ficha de un producto dado de baja ---------- */
   function idDeFicha() {
     try { if (window.LS && LS.product && LS.product.id) return String(LS.product.id); } catch (e) {}
