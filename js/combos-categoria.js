@@ -288,7 +288,7 @@
     '.bl-cc .dest-cab p{font-size:14.5px!important;color:rgba(255,255,255,.72);margin:0 auto;max-width:56ch;line-height:1.55}',
     '.bl-cc .cinco{list-style:none;margin:32px 0 30px;padding:0;display:grid;gap:16px 8px;',
     'grid-template-columns:repeat(2,1fr)}',
-    '@media(min-width:680px){.bl-cc .cinco{grid-template-columns:repeat(5,1fr);gap:10px}}',
+    '@media(min-width:680px){.bl-cc .cinco{grid-template-columns:repeat(var(--n,5),1fr);gap:10px}}',
     '.bl-cc .cinco li{display:flex;flex-direction:column;align-items:center;gap:7px;position:relative;',
     'padding:14px 6px 16px;border-radius:13px;transition:background .25s}',
     '.bl-cc .cinco li:hover{background:rgba(255,255,255,.045)}',
@@ -346,8 +346,8 @@
     '.bl-cc .cierre h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:22px;line-height:1.15;color:var(--dark);margin:0 0 8px}',
     '.bl-cc .cierre p{font-size:14.5px!important;color:var(--muted);margin:0 0 18px;max-width:62ch}',
     '.bl-cc .x3row{display:grid;gap:10px;grid-template-columns:repeat(2,1fr)}',
-    '@media(min-width:700px){.bl-cc .x3row{grid-template-columns:repeat(4,1fr)}}',
-    '@media(min-width:1000px){.bl-cc .x3row{grid-template-columns:repeat(7,1fr)}}',
+    '@media(min-width:700px){.bl-cc .x3row{grid-template-columns:repeat(var(--n2,4),1fr)}}',
+    '@media(min-width:1000px){.bl-cc .x3row{grid-template-columns:repeat(var(--n,7),1fr)}}',
     '.bl-cc .x3{display:flex;flex-direction:column;align-items:center;gap:5px;text-decoration:none;',
     'border:1px solid var(--line);border-radius:12px;padding:12px 8px 13px;background:#fff;',
     'transition:border-color .15s,transform .15s}',
@@ -466,7 +466,7 @@
           '<h3>' + esc(dz.titulo) + '</h3>' +
           '<p>' + esc(dz.bajada) + '</p>' +
         '</div>' +
-        '<ul class="cinco">' + fila + '</ul>' +
+        '<ul class="cinco" style="--n:' + dz.quienes.length + '">' + fila + '</ul>' +
         (combo ? '<a class="dest-cta" href="/productos/' + encodeURIComponent(combo.handle) +
                  '/">' + esc(dz.cta || 'Ver combo') + '</a>' : '') +
       '</div>';
@@ -609,6 +609,8 @@
         // un combo malformado no puede tumbar la página entera: se descarta solo esa card
         try { g2.appendChild(card(c, ING, esTop(c), cfg.frascos)); } catch (e) {}
       });
+      // una card sola en su escalón deja dos huecos al lado: va a lo ancho, como la de cinco
+      if (lista.length === 1 && g2.firstChild) g2.firstChild.classList.add('ancha', 'sola');
       g2.appendChild(el('p', 'vacio', b.vacio)).hidden = true;
       sec.appendChild(g2);
       escalera.appendChild(sec);
@@ -643,6 +645,8 @@
       var ci = el('div', 'cierre');
       ci.innerHTML = '<h3>' + esc(cfg.cierre.titulo) + '</h3><p>' + esc(cfg.cierre.bajada) + '</p>';
       var row = el('div', 'x3row');
+      row.style.setProperty('--n', cfg.x3.length);   // las columnas siguen a los packs que hay
+      row.style.setProperty('--n2', cfg.x3.length % 3 === 0 ? 3 : 4);   // en tablet, filas completas
       cfg.x3.forEach(function (p) {
         var a = el('a', 'x3');
         a.href = '/productos/' + encodeURIComponent(p.handle) + '/';
@@ -781,6 +785,8 @@
         // Con un objetivo elegido la escalera pierde sentido: es un criterio de navegación, no
         // de resultado. Se colapsan los encabezados y queda una lista, sin filas huérfanas.
         raiz.classList.toggle('filtrado', g !== 'all');
+        // con filtro las cards quedan en una sola lista: la que iba sola a lo ancho vuelve a su tamaño
+        [].forEach.call(raiz.querySelectorAll('.c.sola'), function (c) { c.classList.toggle('ancha', g === 'all'); });
         var etq = (b.textContent || '').toLowerCase();
         var res = raiz.querySelector('.resumen');
         if (res) {
