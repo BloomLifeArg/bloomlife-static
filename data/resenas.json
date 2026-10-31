@@ -1,19 +1,19 @@
 {
-  "total": 273,
+  "total": 274,
   "promedio": 4.84,
   "promedioTexto": "4,8",
-  "actualizado": "2026-10-30",
+  "actualizado": "2026-10-31",
   "productos": {
     "221344275": {
       "n": 16,
       "promedio": 4.8
     },
     "221344713": {
-      "n": 9,
+      "n": 10,
       "promedio": 4.6
     },
     "221345057": {
-      "n": 30,
+      "n": 29,
       "promedio": 4.9
     },
     "237070392": {
