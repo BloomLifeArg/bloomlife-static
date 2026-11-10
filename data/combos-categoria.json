@@ -88,8 +88,8 @@
       ],
       "handle": "combo-bye-bye-anxiety-suplementacion-por-1-mes",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-e578516853d9ca5cb817853805215691-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
+      "precio": 138510,
+      "lista": 145800,
       "vendidas": 434,
       "caps": [
         "ash",
@@ -112,8 +112,8 @@
       ],
       "handle": "combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-add5a37476bac282d617853803647110-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
+      "precio": 138510,
+      "lista": 145800,
       "vendidas": 159,
       "caps": [],
       "principal": "ash"
@@ -133,8 +133,8 @@
       ],
       "handle": "deepsleep",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-aa1c6ad0b7a9d319a817853804728910-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
+      "precio": 138510,
+      "lista": 145800,
       "vendidas": 0,
       "caps": [],
       "principal": "rsh"
@@ -153,8 +153,8 @@
       ],
       "handle": "comboclarityanddefense",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/clarity-y-defense-6e4b1b97340e62ac4917860672615043-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
+      "precio": 138510,
+      "lista": 145800,
       "vendidas": 0,
       "caps": [],
       "principal": "mln"
@@ -174,8 +174,8 @@
       ],
       "handle": "combo-beauty-balance-tremella-reishi-wb97u",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beauty-balance-perfil-washi-1600-2a31246c6043b99aef17860595940383-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
+      "precio": 138510,
+      "lista": 145800,
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
@@ -195,8 +195,8 @@
       ],
       "handle": "combo-beauty-focus-tremella-melena-de-leon-gummies",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beauty-focus-perfil-1600-7bf2091058703fdfc017895147614983-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
+      "precio": 138510,
+      "lista": 145800,
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
@@ -216,8 +216,8 @@
       ],
       "handle": "glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/glow-y-regulate-50422e4e9aa3bcea9917860671938108-1024-1024.jpg",
-      "precio": 132050,
-      "lista": 139000,
+      "precio": 138510,
+      "lista": 145800,
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
@@ -238,8 +238,8 @@
       ],
       "handle": "glowyourmindgummies",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-994e4695c9f85bb91017853802487925-1024-1024.jpg",
-      "precio": 198075,
-      "lista": 208500,
+      "precio": 207765,
+      "lista": 218700,
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
@@ -260,8 +260,31 @@
       ],
       "handle": "radiance-mind-combo-1y7mt",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/radiance-mind-perfil-washi-1600-b99af3b7ce763d62bc17860594673609-1024-1024.jpg",
-      "precio": 198075,
-      "lista": 208500,
+      "precio": 207765,
+      "lista": 218700,
+      "vendidas": 0,
+      "caps": [],
+      "principal": "trm"
+    },
+    {
+      "id": 380224437,
+      "nombre": "Calm & Glow",
+      "formato": "Gomitas",
+      "ing": [
+        "trm",
+        "ash",
+        "rsh"
+      ],
+      "why": "Piel cuidada, mente en calma y noches que reponen.",
+      "objetivos": [
+        "piel",
+        "calma",
+        "dormir"
+      ],
+      "handle": "combo-calm-glow-tremella-ashwagandha-reishi-gummies",
+      "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/calm-glow-perfil-1600-187730428741971bd217943458690985-1024-1024.jpg",
+      "precio": 207765,
+      "lista": 218700,
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
@@ -282,8 +305,8 @@
       ],
       "handle": "menopausebalancegummies",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/01-perfil-8bc5bd64ef9e630dbd17853801947475-1024-1024.jpg",
-      "precio": 198075,
-      "lista": 208500,
+      "precio": 207765,
+      "lista": 218700,
       "vendidas": 0,
       "caps": [],
       "principal": "ash"
@@ -305,8 +328,8 @@
       ],
       "handle": "ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-balance-mix-6e2144576cd496136517860671835044-1024-1024.jpg",
-      "precio": 264100,
-      "lista": 278000,
+      "precio": 277020,
+      "lista": 291600,
       "vendidas": 0,
       "caps": [
         "mln",
@@ -333,8 +356,8 @@
       ],
       "handle": "combo-ultimate-glow-balance-gummies",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/ultimate-glow-balance-perfil-1600-1ad8d7b9e091c6451917907818273865-1024-1024.jpg",
-      "precio": 264100,
-      "lista": 278000,
+      "precio": 277020,
+      "lista": 291600,
       "vendidas": 0,
       "caps": [],
       "principal": "trm"
@@ -347,7 +370,7 @@
       "detalle": "Gummies",
       "handle": "combo-brain-health-gummies-suplementacion-por-3-meses",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/brain-health-melena-gummies-x3-5bc0935d098623b9d517860673399605-240-0.jpg",
-      "precio": 208500
+      "precio": 207765
     },
     {
       "id": 268207436,
@@ -355,7 +378,7 @@
       "detalle": "Cápsulas",
       "handle": "combo-hormonal-balance-suplementacion-por-3-meses-con-ashwagandha-capsulas",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/hormonal-balance-ashwagandha-capsulas-x3-f24a5dc8f795fb713217860673276715-240-0.jpg",
-      "precio": 208500
+      "precio": 207765
     },
     {
       "id": 268208596,
@@ -363,7 +386,7 @@
       "detalle": "Gummies",
       "handle": "combo-relaxation-suplementacion-por-3-meses",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/relaxation-reishi-gummies-x3-9130335d94cb99b5e817860673172228-240-0.jpg",
-      "precio": 208500
+      "precio": 207765
     },
     {
       "id": 286699791,
@@ -371,7 +394,7 @@
       "detalle": "Gummies",
       "handle": "combo-hormonal-balance-suplementacion-con-ashwagandha-gummies-por-3-meses",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/hormonal-balance-ashwagandha-gummies-x3-fd09ae0e2896759e3117860672978464-240-0.jpg",
-      "precio": 208500
+      "precio": 207765
     },
     {
       "id": 286700321,
@@ -379,7 +402,7 @@
       "detalle": "Cápsulas",
       "handle": "combo-brain-health-capsulas-suplementacion-por-3-meses",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/brain-health-melena-capsulas-x3-80f9cc5f2db741102d17860672806577-240-0.jpg",
-      "precio": 208500
+      "precio": 207765
     },
     {
       "id": 331418228,
@@ -387,7 +410,7 @@
       "detalle": "Gummies",
       "handle": "combobeautiful",
       "img": "https://acdn-us.mitiendanube.com/stores/004/969/223/products/beautiful-tremella-gummies-x3-a1eceda76a3ccc04ca17860672325228-240-0.jpg",
-      "precio": 208500
+      "precio": 207765
     }
   ],
   "frascos": {
