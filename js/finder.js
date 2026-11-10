@@ -68,7 +68,7 @@
                   x3: 'combobeautiful' } }
   };
   // Precios de los sueltos: no están en ningún JSON del repo estático.
-  var PRECIO = { single: 69500, x3: 198075, x3lista: 208500 };
+  var PRECIO = { single: 72900, x3: 207765, x3lista: 218700 };
 
   // Pregunta 2.
   var FMT = {
@@ -91,16 +91,16 @@
   // Copia mínima de data/combos-categoria.json por si el fetch falla. Mismos
   // campos que usa el puntaje. Si el JSON llega, manda el JSON.
   var FALLBACK = [
-    { id: 279852999, nombre: 'Bye Bye Anxiety', formato: 'Cápsulas', ing: ['ash', 'mln'], caps: ['ash', 'mln'], objetivos: ['calma', 'foco'], handle: 'combo-bye-bye-anxiety-suplementacion-por-1-mes', precio: 132050, lista: 139000, vendidas: 434, why: 'Bajar un cambio sin perder la mente clara.' },
-    { id: 305609431, nombre: 'Bye Bye Anxiety', formato: 'Gomitas', ing: ['ash', 'mln'], caps: [], objetivos: ['calma', 'foco'], handle: 'combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q', precio: 132050, lista: 139000, vendidas: 159, why: 'La misma fórmula, en gomita: calma y claridad.' },
-    { id: 294585978, nombre: 'Deep Sleep', formato: 'Gomitas', ing: ['ash', 'rsh'], caps: [], objetivos: ['dormir', 'calma'], handle: 'deepsleep', precio: 132050, lista: 139000, vendidas: 0, why: 'Cerrar el día de verdad y despertarte repuesto.' },
-    { id: 294591691, nombre: 'Clarity & Defense', formato: 'Gomitas', ing: ['mln', 'rsh'], caps: [], objetivos: ['foco'], handle: 'comboclarityanddefense', precio: 132050, lista: 139000, vendidas: 0, why: 'Foco sostenido, con las defensas acompañadas.' },
-    { id: 330540800, nombre: 'Beauty & Balance', formato: 'Gomitas', ing: ['trm', 'rsh'], caps: [], objetivos: ['piel', 'dormir'], handle: 'combo-beauty-balance-tremella-reishi-wb97u', precio: 132050, lista: 139000, vendidas: 0, why: 'Lo que se ve, y el descanso que lo sostiene.' },
-    { id: 349316562, nombre: 'Glow & Regulate', formato: 'Gomitas', ing: ['trm', 'ash'], caps: [], objetivos: ['piel', 'calma'], handle: 'glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0', precio: 132050, lista: 139000, vendidas: 0, why: 'Belleza desde adentro, con el estrés en su lugar.' },
-    { id: 339648634, nombre: 'Glow your Mind', formato: 'Gomitas', ing: ['trm', 'mln', 'ash'], caps: [], objetivos: ['piel', 'foco'], handle: 'glowyourmindgummies', precio: 198075, lista: 208500, vendidas: 0, why: 'Verse bien, pensar mejor, sentirse en calma.' },
-    { id: 342427990, nombre: 'Radiance & Mind', formato: 'Gomitas', ing: ['trm', 'mln', 'rsh'], caps: [], objetivos: ['piel', 'foco'], handle: 'radiance-mind-combo-1y7mt', precio: 198075, lista: 208500, vendidas: 0, why: 'Piel cuidada, mente clara, cuerpo que se repone.' },
-    { id: 357970722, nombre: 'Menopause Balance', formato: 'Gomitas', ing: ['ash', 'mln', 'rsh'], caps: [], objetivos: ['calma', 'dormir'], handle: 'menopausebalancegummies', precio: 198075, lista: 208500, vendidas: 0, why: 'Para transitar la etapa con calma y descanso.' },
-    { id: 356749974, nombre: 'Ultimate Balance Mix', formato: 'Mixto', ing: ['mln', 'ash', 'trm', 'rsh'], caps: ['mln', 'ash'], objetivos: ['dia', 'piel'], handle: 'ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws', precio: 264100, lista: 278000, vendidas: 0, why: 'El combo completo, en dos formatos.' }
+    { id: 279852999, nombre: 'Bye Bye Anxiety', formato: 'Cápsulas', ing: ['ash', 'mln'], caps: ['ash', 'mln'], objetivos: ['calma', 'foco'], handle: 'combo-bye-bye-anxiety-suplementacion-por-1-mes', precio: 138510, lista: 145800, vendidas: 434, why: 'Bajar un cambio sin perder la mente clara.' },
+    { id: 305609431, nombre: 'Bye Bye Anxiety', formato: 'Gomitas', ing: ['ash', 'mln'], caps: [], objetivos: ['calma', 'foco'], handle: 'combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q', precio: 138510, lista: 145800, vendidas: 159, why: 'La misma fórmula, en gomita: calma y claridad.' },
+    { id: 294585978, nombre: 'Deep Sleep', formato: 'Gomitas', ing: ['ash', 'rsh'], caps: [], objetivos: ['dormir', 'calma'], handle: 'deepsleep', precio: 138510, lista: 145800, vendidas: 0, why: 'Cerrar el día de verdad y despertarte repuesto.' },
+    { id: 294591691, nombre: 'Clarity & Defense', formato: 'Gomitas', ing: ['mln', 'rsh'], caps: [], objetivos: ['foco'], handle: 'comboclarityanddefense', precio: 138510, lista: 145800, vendidas: 0, why: 'Foco sostenido, con las defensas acompañadas.' },
+    { id: 330540800, nombre: 'Beauty & Balance', formato: 'Gomitas', ing: ['trm', 'rsh'], caps: [], objetivos: ['piel', 'dormir'], handle: 'combo-beauty-balance-tremella-reishi-wb97u', precio: 138510, lista: 145800, vendidas: 0, why: 'Lo que se ve, y el descanso que lo sostiene.' },
+    { id: 349316562, nombre: 'Glow & Regulate', formato: 'Gomitas', ing: ['trm', 'ash'], caps: [], objetivos: ['piel', 'calma'], handle: 'glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0', precio: 138510, lista: 145800, vendidas: 0, why: 'Belleza desde adentro, con el estrés en su lugar.' },
+    { id: 339648634, nombre: 'Glow your Mind', formato: 'Gomitas', ing: ['trm', 'mln', 'ash'], caps: [], objetivos: ['piel', 'foco'], handle: 'glowyourmindgummies', precio: 207765, lista: 218700, vendidas: 0, why: 'Verse bien, pensar mejor, sentirse en calma.' },
+    { id: 342427990, nombre: 'Radiance & Mind', formato: 'Gomitas', ing: ['trm', 'mln', 'rsh'], caps: [], objetivos: ['piel', 'foco'], handle: 'radiance-mind-combo-1y7mt', precio: 207765, lista: 218700, vendidas: 0, why: 'Piel cuidada, mente clara, cuerpo que se repone.' },
+    { id: 357970722, nombre: 'Menopause Balance', formato: 'Gomitas', ing: ['ash', 'mln', 'rsh'], caps: [], objetivos: ['calma', 'dormir'], handle: 'menopausebalancegummies', precio: 207765, lista: 218700, vendidas: 0, why: 'Para transitar la etapa con calma y descanso.' },
+    { id: 356749974, nombre: 'Ultimate Balance Mix', formato: 'Mixto', ing: ['mln', 'ash', 'trm', 'rsh'], caps: ['mln', 'ash'], objetivos: ['dia', 'piel'], handle: 'ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws', precio: 277020, lista: 291600, vendidas: 0, why: 'El combo completo, en dos formatos.' }
   ];
 
   /* ══════════════ 2. UTILIDADES ══════════════ */
