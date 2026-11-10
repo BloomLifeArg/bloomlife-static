@@ -28,6 +28,7 @@ const FUENTE = 'https://revie-reviewcache.b-cdn.net/tiendanube/4969223/4969223.t
 const OUT = 'data/resenas.json';
 const TESTIMONIOS = 'data/testimonios-home.json';
 const COMBOS = 'data/combos-categoria.json';
+const MINIMO = 'data/resenas-minimo.json';
 
 // Si Revie devuelve mucho menos de lo que ya teníamos, algo se rompió de su lado:
 // preferimos fallar y que llegue el mail de GitHub antes que publicar un conteo
@@ -54,7 +55,11 @@ async function main() {
   // 250 mientras la tienda ya tenía 273). El total es el `reviewCount` que publica Revie; el
   // promedio sale de los items que sí vienen (con 268 de 273 visibles daba 4,84 y aun con las
   // faltantes en 1 estrella seguiría en 4,8).
-  const total = Math.max(Number(datos.reviewCount) || 0, items.length);
+  // Piso manual (data/resenas-minimo.json): desde el 2026-10-07 el caché público de Revie dejó de
+  // actualizarse (quedó en 277 mientras el panel ya marcaba 329). El número que Sergio ve en el panel
+  // se carga ahí a mano y el conteo nunca baja de él; cuando el caché vuelva a andar, lo supera solo.
+  const minimo = JSON.parse(await readFile(MINIMO, 'utf8').catch(() => '{}'));
+  const total = Math.max(Number(datos.reviewCount) || 0, items.length, Number(minimo.total) || 0);
   const suma = items.reduce((a, x) => a + (Number(x.stars) || 0), 0);
   const promedio = suma / items.length;
 

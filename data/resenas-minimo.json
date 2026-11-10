@@ -1,0 +1,6 @@
+{
+  "_leeme": "Piso del conteo de reseñas. El caché público de Revie dejó de actualizarse el 2026-10-07 (marca 277). Cargar acá el número del panel de Revie; scripts/build-resenas.mjs nunca publica menos.",
+  "total": 329,
+  "fuente": "panel de Revie, informado por Sergio",
+  "fecha": "2026-11-09"
+}
