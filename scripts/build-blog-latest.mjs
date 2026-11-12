@@ -17,6 +17,7 @@ import { dirname } from 'node:path';
 const SOURCE = 'https://www.bloomlife.co/blog';
 const OUT = 'data/blog-latest.json';
 const COUNT = 3;
+const MAX_PAGINAS = 10; // tope de seguridad: 120 notas
 
 /** Extrae los bloques JSON-LD de tipo BlogPosting. */
 function extractPostings(html) {
@@ -53,16 +54,46 @@ function toCard(node) {
   };
 }
 
-const res = await fetch(SOURCE, {
-  headers: { 'User-Agent': 'bloomlife-static blog-latest builder' },
-});
-if (!res.ok) throw new Error(`El blog respondió ${res.status}`);
+/** Todas las notas del blog, recorriendo la paginación (TN pagina de a 12).
+ *
+ * Antes se leía sólo la página 1. Alcanzó mientras hubo pocas notas, pero el
+ * 2026-11-12 se publicaron diez juntas y una de las destacadas (kaizen) pasó a
+ * la página 2: el cron dejaba de encontrarla y la reemplazaba por la más
+ * reciente sin avisar. Una página más allá de la última responde 200 sin
+ * notas, así que se corta cuando una página no suma ninguna.
+ */
+async function leerBlog() {
+  const vistas = new Set();
+  const nodos = [];
+  for (let page = 1; page <= MAX_PAGINAS; page++) {
+    const res = await fetch(page > 1 ? `${SOURCE}/?page=${page}` : SOURCE, {
+      headers: { 'User-Agent': 'bloomlife-static blog-latest builder' },
+    });
+    if (!res.ok) {
+      // La página 1 es obligatoria; si falla una posterior se sigue con lo que hay.
+      if (page === 1) throw new Error(`El blog respondió ${res.status}`);
+      console.warn(`Aviso: la página ${page} del blog respondió ${res.status}. Sigo con las anteriores.`);
+      break;
+    }
+    let nuevas = 0;
+    for (const node of extractPostings(await res.text())) {
+      const id = typeof node.url === 'string' ? node.url : node.mainEntityOfPage?.['@id'];
+      if (!id || vistas.has(id)) continue;
+      vistas.add(id);
+      nodos.push(node);
+      nuevas++;
+    }
+    if (nuevas === 0) break; // página sin notas nuevas: fin
+  }
+  return nodos;
+}
 
 // Selección manual, si la hay. data/blog-destacados.json fija qué 3 notas se
 // muestran (hoy: las que empujan Cordyceps, Tremella y Reishi). El cron sigue
 // corriendo igual y refresca título, resumen y portada de esas notas — sólo deja
 // de decidir CUÁLES. Si el archivo no existe, o le falta alguno de los slugs en
-// el blog, se cae solo a los más recientes y la sección nunca queda vacía.
+// el blog (en cualquiera de sus páginas), se cae solo a los más recientes y la
+// sección nunca queda vacía.
 let destacados = [];
 try {
   const raw = await readFile(new URL('../data/blog-destacados.json', import.meta.url), 'utf8');
@@ -75,7 +106,7 @@ try {
   /* sin selección manual: siguen mandando los más recientes */
 }
 
-const todas = extractPostings(await res.text())
+const todas = (await leerBlog())
   .map(toCard)
   .filter(Boolean)
   .filter((c) => c.image) // sin portada no entra: la card quedaría rota
