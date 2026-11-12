@@ -1,16 +1,16 @@
 {
-  "_comentario": "Los 3 artículos que muestra la sección 'Del blog' del home. Elegidos a mano. Rotación del 2026-09-29 (pedido de Sergio): las 3 notas más nuevas que todavía no se habían mostrado. Antes estaban: qué son los adaptógenos, sistema inmunológico e insomnio. Se identifican por un fragmento de su URL. Si este archivo se borra, el cron vuelve solo a los 3 más recientes. El cron solo lee la página 1 del blog: una nota de la página 2 no se encuentra.",
+  "_comentario": "Los 3 artículos que muestra la sección 'Del blog' del home. Elegidos a mano. Rotación del 2026-11-12 (pedido de Sergio): entra la nota del combo ashwagandha + melena de león, que es la que ataca la cola larga donde ya estábamos al borde de la página 1, y sale 'cortisol alto' porque la nueva cubre el mismo ángulo (estrés) y además empuja el combo más vendido. Se identifican por un fragmento de su URL. Si este archivo se borra, el cron vuelve solo a los 3 más recientes. El cron solo lee la página 1 del blog: una nota de la página 2 no se encuentra.",
   "_titulo_manual": "Dos de estas notas tienen keywords cargadas como título en el blog ('sistema inmunológico, hongos, reishi...'), así que acá se sobreescribe con su H1 real. Cuando se corrija el título en el admin del blog, se puede borrar el campo 'titulo' y el cron lo toma solo.",
-  "_revisado": "2026-09-29",
+  "_revisado": "2026-11-12",
   "posts": [
+    {
+      "slug": "ashwagandha-y-melena-de-leon-por-que-se-toman-juntos",
+      "porque": "los dos más vendidos juntos; empuja el combo Bye Bye Anxiety, el combo #1"
+    },
     {
       "slug": "niebla-mental-concentracion-melena-de-leon",
       "resumen": "¿Mente nublada, te cuesta concentrarte? Qué causa la niebla mental, qué hábitos ayudan y cómo acompaña la Melena de León.",
       "porque": "Melena de León, el más vendido, por el lado del foco"
-    },
-    {
-      "slug": "cortisol-alto-estres-cronico-ashwagandha",
-      "porque": "Ashwagandha, el otro más vendido, por el lado del estrés"
     },
     {
       "slug": "kaizen-mejora-continua-adaptogenos",
