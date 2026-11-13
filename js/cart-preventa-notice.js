@@ -134,9 +134,13 @@
 
     for (var i = 0; i < items.length; i++) {
       var id = productId(items[i]);
-      if (FULL[id]) full++;
-      else if (PARCIAL[id]) parcial++;
-      else otros++;
+      // Unidades, no líneas: 2 del mismo combo son "esos frascos" (QA 2026-11-13).
+      var q = items[i].querySelector('input[type="number"], .js-cart-quantity-input, [data-component="line-item.quantity"] input');
+      var n = q ? parseInt(q.value, 10) : 1;
+      if (!(n > 0)) n = 1;
+      if (FULL[id]) full += n;
+      else if (PARCIAL[id]) parcial += n;
+      else otros += n;
     }
     return { lista: lista, full: full, parcial: parcial, otros: otros };
   }
@@ -199,6 +203,13 @@
       var m = CARD.exec(card.getAttribute('data-store') || '');
       if (!m || !enPreventa(m[1])) continue;
 
+      // Desde 2026-11-13 la etiqueta es la misma pastilla dorada que en el resto de la web,
+      // sobre la foto (QA: el rótulo gris de LerenTools convivía con otro estilo en el mismo home).
+      // Dentro de la placa de la foto (el <a> que envuelve la imagen): el contenedor de imagen de
+      // las cards del home también lleva el kicker y la pregunta, y la pastilla los pisaba.
+      var img = card.querySelector('[data-store^="product-item-image-"] img');
+      var placa = img && (img.closest('a') || img.parentElement);
+      if (placa) { pill(placa); continue; }
       var grupo = card.querySelector('[data-store="product-item-labels"]');
       if (!grupo) continue;
 
@@ -258,36 +269,28 @@
     var id = HANDLES[handleDe(href)];
     return id ? enPreventa(String(id)) : false;
   }
-  function pill(contenedor) {
+  function pill(contenedor, chica) {
     if (contenedor.querySelector('.' + TAG)) return;
     if (getComputedStyle(contenedor).position === 'static') contenedor.style.position = 'relative';
     var el = document.createElement('span');
     el.className = TAG;
     el.textContent = 'Preventa';
     el.style.cssText = PILL_CSS;
-    el.style.setProperty('font-size', '10px', 'important');
+    if (chica) { el.style.top = '6px'; el.style.right = '6px'; el.style.padding = '4px 7px'; el.style.letterSpacing = '.08em'; }
+    el.style.setProperty('font-size', chica ? '9px' : '10px', 'important');
     contenedor.appendChild(el);
   }
 
   function pintarTarjetasPropias() {
     var i, c;
-    // Listados y buscador: la etiqueta va con las otras (Gummies · Combo · …), con su mismo estilo.
+    // Listados y buscador: pastilla sobre la miniatura. Como etiqueta de la fila bajaba a una
+    // segunda línea en 9 de 10 tarjetas (+27 px, filas desalineadas) y se leía como "Combo".
     var bsq = document.querySelectorAll('.bsq-c[data-id]');
     for (i = 0; i < bsq.length; i++) {
       c = bsq[i];
-      if (!enPreventa(c.getAttribute('data-id')) || c.querySelector('.' + TAG)) continue;
-      var tags = c.querySelector('.bsq-tags');
-      if (!tags) {
-        var info = c.querySelector('.bsq-info');
-        if (!info) continue;
-        tags = document.createElement('span');
-        tags.className = 'bsq-tags';
-        info.insertBefore(tags, info.firstChild);
-      }
-      var t = document.createElement('span');
-      t.className = 'bsq-tag ' + TAG;
-      t.textContent = 'Preventa';
-      tags.appendChild(t);
+      if (!enPreventa(c.getAttribute('data-id'))) continue;
+      var th = c.querySelector('.bsq-thumb');
+      if (th) pill(th, true);
     }
     // Góndola de combos: sobre la foto, arriba a la derecha (la izquierda es de "Más vendido").
     var gon = document.querySelectorAll('.bl-cc a.c');
@@ -301,7 +304,15 @@
     var dest = document.querySelectorAll('.bl-cc .dest');
     for (i = 0; i < dest.length; i++) {
       var cta = dest[i].querySelector('.dest-cta');
-      if (cta && enPreventaHref(cta.getAttribute('href'))) pill(dest[i]);
+      if (!cta || !enPreventaHref(cta.getAttribute('href'))) continue;
+      var cab = dest[i].querySelector('.dest-cab');
+      if (!cab || cab.querySelector('.' + TAG)) continue;
+      var pd = document.createElement('span');
+      pd.className = TAG;
+      pd.textContent = 'Preventa';
+      pd.style.cssText = PILL_CSS.replace('position:absolute;top:10px;right:10px;', 'position:static;margin:0 auto 12px;');
+      pd.style.setProperty('font-size', '10px', 'important');
+      cab.insertBefore(pd, cab.firstChild);
     }
     // Sección de combos del home.
     var cmb = document.querySelectorAll('.bl-cmb-card');
