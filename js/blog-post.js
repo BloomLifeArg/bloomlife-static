@@ -43,6 +43,21 @@
     ? yo.src.replace(/\/js\/blog-post\.js.*$/, '')
     : 'https://cdn.jsdelivr.net/gh/BloomLifeArg/bloomlife-static@main';
 
+  /* Fecha que se muestra en notas cuya fecha real no se quiere mostrar (Tienda Nube no deja
+   * cambiarla). Misma lista que data/blog-fechas-manual.json: si se cambia una, cambiar las dos. */
+  var FECHA_FIJA = {
+    '/blog/posts/como-bajar-el-cortisol-de-forma-natural-1ea1855974bb': '2026-08-19',
+    '/blog/posts/burnout-sintomas-etapas-y-como-recuperarse-da2b17a77f20': '2026-08-28',
+    '/blog/posts/memoria-y-concentracion-suplementos-con-evidencia-eacfdd1a01f6': '2026-09-08',
+    '/blog/posts/magnesio-para-dormir-y-para-el-estres-2366009b0434': '2026-09-17',
+    '/blog/posts/astenia-y-cansancio-constante-causas-3b076d7d8515': '2026-09-25',
+    '/blog/posts/perimenopausia-que-es-sintomas-y-edad-30caad74ef22': '2026-10-06',
+    '/blog/posts/biotina-para-el-pelo-para-que-sirve-2cae9c48d500': '2026-10-15',
+    '/blog/posts/dopamina-y-serotonina-diferencias-y-como-cuidarlas-e5acc68188e7': '2026-10-22',
+    '/blog/posts/melatonina-que-es-cuando-sirve-y-alternativas-cae27235b523': '2026-10-29',
+    '/blog/posts/colageno-para-que-sirve-y-alternativas-d1f93b78660e': '2026-11-05'
+  };
+
   var TIMEOUT_FETCH = 3500;
   var PALABRAS_MIN = 200;     // ritmo de lectura para el "N min de lectura"
   var MAS = 3;                // notas en "Seguí leyendo"
@@ -292,7 +307,7 @@
       // primero la fecha nativa ("Publicado el dd/mm/aaaa"): es la original de la nota.
       // El datePublished del JSON-LD dice 2026-09-06 en las 10 notas que la
       // integración republicó ese día, y eso no es cuando se escribieron.
-      var fecha = fechaNativa(sec.querySelector('.post-date')) || aFecha(ld && ld.fecha);
+      var fecha = aFecha(FECHA_FIJA[actual]) || fechaNativa(sec.querySelector('.post-date')) || aFecha(ld && ld.fecha);
       var palabras = trim(content.textContent).split(' ').length;
       var minutos = Math.max(1, Math.round(palabras / PALABRAS_MIN));
 

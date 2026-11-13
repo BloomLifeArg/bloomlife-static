@@ -56,6 +56,11 @@ for (const p of paths) {
   fechas[p] = `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
 }
 
+// Fechas fijadas a mano (data/blog-fechas-manual.json): mandan sobre la nativa. Ver el comentario
+// de ese archivo; js/blog-post.js tiene la misma lista para el encabezado de la nota.
+const manual = await readFile('data/blog-fechas-manual.json', 'utf8').then((s) => JSON.parse(s).fechas || {}).catch(() => ({}));
+Object.assign(fechas, manual);
+
 const ordenado = Object.fromEntries(Object.entries(fechas).sort(([a], [b]) => a.localeCompare(b)));
 await writeFile(OUT, JSON.stringify(ordenado, null, 1) + '\n');
 console.log(`${Object.keys(ordenado).length} notas → ${OUT}`);

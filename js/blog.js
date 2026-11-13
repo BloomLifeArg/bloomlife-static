@@ -308,6 +308,19 @@
       // fecha ORIGINAL de cada nota (data/blog-fechas.json, mismo commit): el JSON-LD
       // trae la de la última republicación, que en 10 notas es 2026-09-06
       if (F) posts.forEach(function (p) { var k = pathDe(p.url); if (F[k]) p.fecha = F[k]; });
+      // Con las fechas originales (o fijadas a mano en data/blog-fechas-manual.json) el orden
+      // nativo, que es el de publicación real, deja de coincidir con la fecha que se muestra:
+      // se ordena por fecha, de la más nueva a la más vieja (estable: a igual fecha, orden nativo).
+      if (F) {
+        var ts = function (p) {
+          var dm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(p.fecha || '');
+          var t = dm ? new Date(+dm[1], +dm[2] - 1, +dm[3]) : new Date(p.fecha || 0);
+          return isNaN(t.getTime()) ? 0 : t.getTime();
+        };
+        posts = posts.map(function (p, i) { return { p: p, i: i }; })
+          .sort(function (a, b) { return (ts(b.p) - ts(a.p)) || (a.i - b.i); })
+          .map(function (x) { return x.p; });
+      }
       try {
         pintar({ sec: sec, posts: posts, pag: pag, actual: actual, total: total,
           pagPropia: total > 1 && !completo });

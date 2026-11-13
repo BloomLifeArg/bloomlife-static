@@ -1,0 +1,15 @@
+{
+ "_comentario": "Fecha que se MUESTRA en el blog para estas notas, por pedido de Sergio (2026-11-13): se publicaron las diez el 12/11 y no tenía que parecer que salieron el mismo día. Tienda Nube no deja cambiar la fecha real (la de 'Publicado el', el JSON-LD y el sitemap siguen diciendo 12/11). build-blog-fechas.mjs las aplica sobre blog-fechas.json y js/blog-post.js tiene la misma lista en FECHA_FIJA para el encabezado de la nota: si se cambia una, cambiar las dos.",
+ "fechas": {
+  "/blog/posts/como-bajar-el-cortisol-de-forma-natural-1ea1855974bb": "2026-08-19",
+  "/blog/posts/burnout-sintomas-etapas-y-como-recuperarse-da2b17a77f20": "2026-08-28",
+  "/blog/posts/memoria-y-concentracion-suplementos-con-evidencia-eacfdd1a01f6": "2026-09-08",
+  "/blog/posts/magnesio-para-dormir-y-para-el-estres-2366009b0434": "2026-09-17",
+  "/blog/posts/astenia-y-cansancio-constante-causas-3b076d7d8515": "2026-09-25",
+  "/blog/posts/perimenopausia-que-es-sintomas-y-edad-30caad74ef22": "2026-10-06",
+  "/blog/posts/biotina-para-el-pelo-para-que-sirve-2cae9c48d500": "2026-10-15",
+  "/blog/posts/dopamina-y-serotonina-diferencias-y-como-cuidarlas-e5acc68188e7": "2026-10-22",
+  "/blog/posts/melatonina-que-es-cuando-sirve-y-alternativas-cae27235b523": "2026-10-29",
+  "/blog/posts/colageno-para-que-sirve-y-alternativas-d1f93b78660e": "2026-11-05"
+ }
+}
