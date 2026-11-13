@@ -1,7 +1,8 @@
 /*
  * Bloom Life — Aviso de preventa en el cart drawer
  * ------------------------------------------------
- * Avisa que Ashwagandha Gummies se despacha a partir del 14 de septiembre de 2026.
+ * Avisa que Ashwagandha Gummies está en preventa: se entrega cuando ingrese el stock,
+ * la primera semana de diciembre de 2026 (segunda preventa, prendida el 2026-11-13).
  *
  * Detección: por product ID, que el drawer de Morelia ya expone en cada línea como
  * `data-store="cart-item-<PRODUCT_ID>"`. Es exacta y sobrevive a renombres del producto.
@@ -9,20 +10,21 @@
  * publicados, entre ellos el Full Day Mix Combo, donde la Ashwagandha es cápsula y el
  * "gummies" lo aporta el Cordyceps.
  *
- * Los combos NO se despachan enteros el 14/9: el único componente demorado es la
- * Ashwagandha Gummies. El copy lo dice explícitamente.
+ * En los combos el único componente demorado es la Ashwagandha Gummies; el resto de
+ * los suplementos ya está disponible para su entrega. El copy lo dice explícitamente.
  *
- * Se autodesactiva el 14/9/2026 (hora local del visitante).
+ * Se autodesactiva el 15/12/2026 (hora local del visitante): una semana de margen sobre
+ * la fecha anunciada. Apagar la preventa de verdad es manual (fichas + este loader).
  */
 (function () {
   'use strict';
 
   /* ── Autoexpiración ──────────────────────────────────────────────────── */
-  // Mes 8 = septiembre (los meses de Date van de 0 a 11).
-  var CUTOFF = new Date(2026, 8, 14, 0, 0, 0);
+  // Mes 11 = diciembre (los meses de Date van de 0 a 11).
+  var CUTOFF = new Date(2026, 11, 15, 0, 0, 0);
   if (new Date() >= CUTOFF) return;
 
-  var FECHA = '14 de septiembre';
+  var FECHA = 'la primera semana de diciembre';
 
   /* ── Qué ítems arrastran la preventa ─────────────────────────────────── */
 
@@ -37,17 +39,15 @@
   // ASHWAGANDHAGUMMIES), no contra el nombre del producto.
   var PARCIAL = {
     294585978: 1, // Deep Sleep Combo | Ashwagandha + Reishi
-    294595560: 1, // Ultimate Balance Combo | Ashwagandha + Reishi + Cordyceps + Melena de León
-    305609431: 1, // Bye Bye Anxiety Combo | Ashwagandha + Melena de León
-    325250064: 1, // Full Day Gummies 2 Combo | Melena de León + Cordyceps + Ashwagandha
-    330540927: 1, // Glory Gummies Combo | Tremella + Reishi + Ashwagandha + Melena de León + Cordyceps
+    305609431: 1, // Bye Bye Anxiety Combo | Ashwagandha + Melena de León | Gummies
     332298698: 1, // Clear Mind Combo | Melena de León + Reishi + Ashwagandha
-    336900602: 1, // Balance Combo | Melena de León + Reishi + Ashwagandha (oculto)
     339648634: 1, // Glow your Mind Combo | Tremella + Melena de León + Ashwagandha
-    341313375: 1, // Fresh Flow Combo | Melena de León + Cordyceps + Tremella + Ashwagandha
     349316562: 1, // Glow & Regulate Combo | Tremella y Ashwagandha
     357970722: 1, // Menopause Balance Combo | Ashwagandha + Melena de León + Reishi
-    366402429: 1  // Glow & Energy Combo | Tremella + Ashwagandha + Cordyceps | Gummies
+    370942354: 1, // Ultimate Glow Balance Combo | Melena de León + Ashwagandha + Reishi + Tremella
+    380224437: 1  // Calm & Glow Combo | Tremella + Ashwagandha + Reishi | Gummies
+    // Fuera: los que llevan Cordyceps (dados de baja, la web no los vende) y los de
+    // Ashwagandha en cápsulas. Cruzado por SKU (ASHG…), no por nombre.
   };
 
   // Red de seguridad por si TN cambiara el `data-store`: el handle del producto
@@ -84,34 +84,34 @@
 
   function mensaje(full, parcial, otros) {
     if (!full && !parcial) return '';
+    var CUANDO = 'se entrega cuando ingrese el stock, ' + FECHA;
 
-    // Solo Ashwagandha Gummies (o su combo x3 meses), nada más en el carrito.
+    // Solo Ashwagandha Gummies (o su pack x3 meses), nada más en el carrito.
     if (full && !parcial && !otros) {
-      return 'Ashwagandha Gummies está en preventa. Se despacha a partir del ' + FECHA + '.';
+      return 'Ashwagandha Gummies está en preventa: ' + CUANDO + '.';
     }
 
     // Ashwagandha Gummies suelta + otros productos disponibles.
     if (full && !parcial) {
-      return 'Ashwagandha Gummies está en preventa y se despacha a partir del ' + FECHA +
-             '. El resto de tus productos está disponible para entrega inmediata.';
+      return 'Ashwagandha Gummies está en preventa: ' + CUANDO +
+             '. El resto de tus productos ya está disponible para su entrega.';
     }
 
     // Solo combos que la incluyen: hay que aclarar que el demorado es ese frasco.
     if (!full && parcial) {
       return parcial === 1
-        ? 'Tu combo incluye Ashwagandha Gummies, que está en preventa: ese frasco se ' +
-          'despacha a partir del ' + FECHA + '. Los demás productos de tu pedido están ' +
-          'disponibles para entrega inmediata.'
+        ? 'Tu combo incluye Ashwagandha Gummies, que está en preventa: ese frasco ' + CUANDO +
+          '. El resto de los suplementos del combo ya están disponibles para su entrega.'
         : 'Tus combos incluyen Ashwagandha Gummies, que está en preventa: esos frascos se ' +
-          'despachan a partir del ' + FECHA + '. Los demás productos de tu pedido están ' +
-          'disponibles para entrega inmediata.';
+          'entregan cuando ingrese el stock, ' + FECHA + '. El resto de los suplementos de ' +
+          'los combos ya están disponibles para su entrega.';
     }
 
     // Suelta + dentro de un combo.
-    return 'Ashwagandha Gummies está en preventa y se despacha a partir del ' + FECHA +
-           ', también la que viene dentro de tu combo. El resto de tus productos está ' +
-           'disponible para entrega inmediata.';
+    return 'Ashwagandha Gummies está en preventa: ' + CUANDO + ', también la que viene ' +
+           'dentro de tu combo. El resto de los suplementos ya están disponibles para su entrega.';
   }
+
 
   /* ── Lectura del carrito ─────────────────────────────────────────────── */
 
@@ -225,6 +225,95 @@
     }
   }
 
+  /* ── Etiqueta en las tarjetas PROPIAS (2026-11-13) ─────────────────────
+   * Desde septiembre los listados (/productos/, categorías, /search/) los dibuja
+   * js/buscador.js (.bsq-c, con data-id), la góndola de combos js/combos-categoria.js
+   * (.bl-cc a.c) y la sección de combos del home js/combos-home.js (.bl-cmb-card).
+   * Ninguna usa la card nativa, así que la cucarda de arriba no tiene dónde pegarse.
+   * Se marcan desde acá para no duplicar la lista de productos en preventa: la
+   * góndola y el home no exponen el ID, así que van por el handle de la URL. */
+  var HANDLES = {
+    'ashwagandha-equilibrio-hormonal-gummies': 281944575,
+    'combo-hormonal-balance-suplementacion-con-ashwagandha-gummies-por-3-meses': 286699791,
+    'deepsleep': 294585978,
+    'combo-bye-bye-anxiety-ashwagandha-melena-de-leon-gummies-56w9q': 305609431,
+    'focusandchill': 332298698,
+    'glowyourmindgummies': 339648634,
+    'glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0': 349316562,
+    'menopausebalancegummies': 357970722,
+    'combo-ultimate-glow-balance-gummies': 370942354,
+    'combo-calm-glow-tremella-ashwagandha-reishi-gummies': 380224437
+  };
+  var TAG = 'bl-preventa-tag';
+  var PILL_CSS = 'position:absolute;top:10px;right:10px;z-index:4;display:inline-block;' +
+                 'font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1;' +
+                 'color:#7E5F2A;background:rgba(255,255,255,.94);border:1px solid #CCA352;' +
+                 'border-radius:999px;padding:6px 10px;pointer-events:none';
+
+  function handleDe(href) {
+    var m = /\/productos\/([^\/?#]+)/.exec(href || '');
+    return m ? m[1] : '';
+  }
+  function enPreventaHref(href) {
+    var id = HANDLES[handleDe(href)];
+    return id ? enPreventa(String(id)) : false;
+  }
+  function pill(contenedor) {
+    if (contenedor.querySelector('.' + TAG)) return;
+    if (getComputedStyle(contenedor).position === 'static') contenedor.style.position = 'relative';
+    var el = document.createElement('span');
+    el.className = TAG;
+    el.textContent = 'Preventa';
+    el.style.cssText = PILL_CSS;
+    el.style.setProperty('font-size', '10px', 'important');
+    contenedor.appendChild(el);
+  }
+
+  function pintarTarjetasPropias() {
+    var i, c;
+    // Listados y buscador: la etiqueta va con las otras (Gummies · Combo · …), con su mismo estilo.
+    var bsq = document.querySelectorAll('.bsq-c[data-id]');
+    for (i = 0; i < bsq.length; i++) {
+      c = bsq[i];
+      if (!enPreventa(c.getAttribute('data-id')) || c.querySelector('.' + TAG)) continue;
+      var tags = c.querySelector('.bsq-tags');
+      if (!tags) {
+        var info = c.querySelector('.bsq-info');
+        if (!info) continue;
+        tags = document.createElement('span');
+        tags.className = 'bsq-tags';
+        info.insertBefore(tags, info.firstChild);
+      }
+      var t = document.createElement('span');
+      t.className = 'bsq-tag ' + TAG;
+      t.textContent = 'Preventa';
+      tags.appendChild(t);
+    }
+    // Góndola de combos: sobre la foto, arriba a la derecha (la izquierda es de "Más vendido").
+    var gon = document.querySelectorAll('.bl-cc a.c');
+    for (i = 0; i < gon.length; i++) {
+      c = gon[i];
+      if (!enPreventaHref(c.getAttribute('href'))) continue;
+      var esc = c.querySelector('.escena');
+      if (esc) pill(esc);
+    }
+    // El combo destacado de la góndola va en un bloque propio (.dest), no como tarjeta.
+    var dest = document.querySelectorAll('.bl-cc .dest');
+    for (i = 0; i < dest.length; i++) {
+      var cta = dest[i].querySelector('.dest-cta');
+      if (cta && enPreventaHref(cta.getAttribute('href'))) pill(dest[i]);
+    }
+    // Sección de combos del home.
+    var cmb = document.querySelectorAll('.bl-cmb-card');
+    for (i = 0; i < cmb.length; i++) {
+      c = cmb[i];
+      var a = c.querySelector('a.bl-cmb-link');
+      if (!a || !enPreventaHref(a.getAttribute('href'))) continue;
+      var tile = c.querySelector('.bl-cmb-tile');
+      if (tile) pill(tile);
+    }
+  }
+
   /* ── Arranque + observador ───────────────────────────────────────────── */
 
   var pendiente = null;
@@ -265,11 +354,13 @@
     pendienteCuc = setTimeout(function () {
       pendienteCuc = null;
       pintarCucardas();
+      pintarTarjetasPropias();
     }, 120);
   }
 
   function iniciarCucardas() {
     pintarCucardas();
+    pintarTarjetasPropias();
     // Los listados se rellenan async (filtros, "ver más", carruseles del home).
     // `pintarCucardas` es idempotente —no repinta lo ya puesto—, así que la
     // mutación que provoca no realimenta el observador más de una vuelta.
