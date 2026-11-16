@@ -1,8 +1,9 @@
 /*
  * Bloom Life — Aviso de preventa en el cart drawer
  * ------------------------------------------------
- * Avisa que Ashwagandha Gummies está en preventa: se entrega cuando ingrese el stock,
- * la primera semana de diciembre de 2026 (segunda preventa, prendida el 2026-11-13).
+ * Avisa que Ashwagandha Gummies (desde el 2026-11-13) y Melena de León Cápsulas (desde el
+ * 2026-11-16) están en preventa: se entregan cuando ingrese el stock, la primera semana de
+ * diciembre de 2026.
  *
  * Detección: por product ID, que el drawer de Morelia ya expone en cada línea como
  * `data-store="cart-item-<PRODUCT_ID>"`. Es exacta y sobrevive a renombres del producto.
@@ -50,6 +51,18 @@
     // Ashwagandha en cápsulas. Cruzado por SKU (ASHG…), no por nombre.
   };
 
+  // Melena de León CÁPSULAS (2026-11-16). Cruzado por SKU (MELENACAPSULAS / MELC…).
+  // Fuera: All Day Mix (lleva Cordyceps, dado de baja) y los combos ocultos.
+  var FULL_MELC = {
+    221344275: 1, // Melena de León · Foco y Claridad · Cápsulas
+    286700321: 1  // Melena de León Cápsulas x3 meses
+  };
+  var PARCIAL_MELC = {
+    279852999: 1, // Bye Bye Anxiety Combo | Ashwagandha + Melena de León | Cápsulas
+    356749974: 1  // Ultimate Balance Mix | Melena de León + Ashwagandha + Reishi + Tremella
+  };
+  var ASHG = 'Ashwagandha Gummies', MELC = 'Melena de León Cápsulas';
+
   // Red de seguridad por si TN cambiara el `data-store`: el handle del producto
   // individual, que viaja en el href de la línea.
   var HANDLE = 'ashwagandha-equilibrio-hormonal-gummies';
@@ -82,34 +95,47 @@
 
   /* ── Copy ────────────────────────────────────────────────────────────── */
 
-  function mensaje(full, parcial, otros) {
+  // Un solo producto en preventa en el carrito (el otro no está).
+  function mensajeDe(N, full, parcial, otros) {
     if (!full && !parcial) return '';
     var CUANDO = 'se entrega cuando ingrese el stock, ' + FECHA;
 
-    // Solo Ashwagandha Gummies (o su pack x3 meses), nada más en el carrito.
+    // Solo el frasco suelto (o su pack x3 meses), nada más en el carrito.
     if (full && !parcial && !otros) {
-      return 'Ashwagandha Gummies está en preventa: ' + CUANDO + '.';
+      return N + ' está en preventa: ' + CUANDO + '.';
     }
 
-    // Ashwagandha Gummies suelta + otros productos disponibles.
+    // Suelto + otros productos disponibles.
     if (full && !parcial) {
-      return 'Ashwagandha Gummies está en preventa: ' + CUANDO +
+      return N + ' está en preventa: ' + CUANDO +
              '. El resto de tus productos ya está disponible para su entrega.';
     }
 
-    // Solo combos que la incluyen: hay que aclarar que el demorado es ese frasco.
+    // Solo combos que lo incluyen: hay que aclarar que el demorado es ese frasco.
     if (!full && parcial) {
       return parcial === 1
-        ? 'Tu combo incluye Ashwagandha Gummies, que está en preventa: ese frasco ' + CUANDO +
+        ? 'Tu combo incluye ' + N + ', que está en preventa: ese frasco ' + CUANDO +
           '. El resto de los suplementos del combo ya están disponibles para su entrega.'
-        : 'Tus combos incluyen Ashwagandha Gummies, que está en preventa: esos frascos se ' +
+        : 'Tus combos incluyen ' + N + ', que está en preventa: esos frascos se ' +
           'entregan cuando ingrese el stock, ' + FECHA + '. El resto de los suplementos de ' +
           'los combos ya están disponibles para su entrega.';
     }
 
-    // Suelta + dentro de un combo.
-    return 'Ashwagandha Gummies está en preventa: ' + CUANDO + ', también la que viene ' +
+    // Suelto + dentro de un combo.
+    return N + ' está en preventa: ' + CUANDO + ', también la que viene ' +
            'dentro de tu combo. El resto de los suplementos ya están disponibles para su entrega.';
+  }
+
+  function mensaje(e) {
+    var hayA = e.aFull || e.aParcial, hayM = e.mFull || e.mParcial;
+    if (hayA && !hayM) return mensajeDe(ASHG, e.aFull, e.aParcial, e.otros);
+    if (hayM && !hayA) return mensajeDe(MELC, e.mFull, e.mParcial, e.otros);
+    if (!hayA && !hayM) return '';
+    // Los dos a la vez: un solo aviso, sin prometer "el resto" si no hay resto.
+    var combos = e.aParcial || e.mParcial;
+    return ASHG + ' y ' + MELC + ' están en preventa: se entregan cuando ingrese el stock, ' + FECHA +
+           (combos ? ', también los frascos que vienen dentro de tus combos' : '') + '.' +
+           (combos || e.otros ? ' El resto de tus productos ya está disponible para su entrega.' : '');
   }
 
 
@@ -122,6 +148,7 @@
     // Sin data-store: lo deducimos del link a la ficha.
     var a = item.querySelector('a[href*="/productos/"]');
     if (a && a.getAttribute('href').indexOf(HANDLE) !== -1) return '281944575';
+    if (a && a.getAttribute('href').indexOf('melena-de-leon-claridad-mental-capsulas') !== -1) return '221344275';
     return '';
   }
 
@@ -130,7 +157,7 @@
     if (!lista) return null;
 
     var items = lista.querySelectorAll('.js-cart-item');
-    var full = 0, parcial = 0, otros = 0;
+    var e = { aFull: 0, aParcial: 0, mFull: 0, mParcial: 0, otros: 0 };
 
     for (var i = 0; i < items.length; i++) {
       var id = productId(items[i]);
@@ -138,11 +165,14 @@
       var q = items[i].querySelector('input[type="number"], .js-cart-quantity-input, [data-component="line-item.quantity"] input');
       var n = q ? parseInt(q.value, 10) : 1;
       if (!(n > 0)) n = 1;
-      if (FULL[id]) full += n;
-      else if (PARCIAL[id]) parcial += n;
-      else otros += n;
+      if (FULL[id]) e.aFull += n;
+      else if (PARCIAL[id]) e.aParcial += n;
+      else if (FULL_MELC[id]) e.mFull += n;
+      else if (PARCIAL_MELC[id]) e.mParcial += n;
+      else e.otros += n;
     }
-    return { lista: lista, full: full, parcial: parcial, otros: otros };
+    e.lista = lista;
+    return e;
   }
 
   /* ── Render ──────────────────────────────────────────────────────────── */
@@ -162,7 +192,7 @@
     var estado = leerCarrito();
     if (!estado) return;
 
-    var texto = mensaje(estado.full, estado.parcial, estado.otros);
+    var texto = mensaje(estado);
     var el = document.getElementById(NOTICE_ID);
 
     if (!texto) {
@@ -193,7 +223,7 @@
   /* ── Cucarda en las cards ────────────────────────────────────────────── */
 
   function enPreventa(id) {
-    return FULL[id] === 1 || PARCIAL[id] === 1;
+    return FULL[id] === 1 || PARCIAL[id] === 1 || FULL_MELC[id] === 1 || PARCIAL_MELC[id] === 1;
   }
 
   function pintarCucardas() {
@@ -253,7 +283,11 @@
     'glow-calma-combo-tremella-y-ashwagandha-gummies-3tmb0': 349316562,
     'menopausebalancegummies': 357970722,
     'combo-ultimate-glow-balance-gummies': 370942354,
-    'combo-calm-glow-tremella-ashwagandha-reishi-gummies': 380224437
+    'combo-calm-glow-tremella-ashwagandha-reishi-gummies': 380224437,
+    'melena-de-leon-claridad-mental-capsulas': 221344275,
+    'combo-brain-health-capsulas-suplementacion-por-3-meses': 286700321,
+    'combo-bye-bye-anxiety-suplementacion-por-1-mes': 279852999,
+    'ultimate-balance-mix-ashwagandha-reishi-cordyceps-melena-de-leon-gummies-copia-8qbws': 356749974
   };
   var TAG = 'bl-preventa-tag';
   var PILL_CSS = 'position:absolute;top:10px;right:10px;z-index:4;display:inline-block;' +
